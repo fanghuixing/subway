@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<sspaceex xmlns="http://www-verimag.imag.fr/xml-namespaces/sspaceex" version="0.2" math="SpaceEx">
+  <component id="train">
+    <location id="1" name="loc1" x="210.0" y="110.0" />
+  </component>
+  <component id="traindoors">
+    <location id="1" name="loc1" x="210.0" y="110.0" />
+  </component>
+  <component id="screendoors">
+    <location id="1" name="loc1" x="210.0" y="110.0" />
+  </component>
+  <component id="controller">
+    <location id="1" name="loc1" x="210.0" y="110.0" />
+  </component>
+  <component id="urgentcontrol">
+    <location id="1" name="loc1" x="210.0" y="110.0" />
+  </component>
+</sspaceex>
+
