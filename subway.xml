@@ -11,6 +11,7 @@
     <param name="Delay" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="false" />
     <param name="S" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="false" />
     <param name="acc" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="stop" type="real" local="false" d1="1" d2="1" dynamics="any" />
     <location id="1" name="init" x="886.0" y="227.0">
       <invariant>time&lt;=Delay</invariant>
       <flow>time'==1</flow>
@@ -160,13 +161,129 @@
     </transition>
   </component>
   <component id="traindoors">
-    <location id="1" name="loc1" x="210.0" y="110.0" />
+    <param name="y" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="openTD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
+    <param name="closeTD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
+    <param name="v_shut" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <location id="1" name="part" x="426.0" y="168.0">
+      <invariant>y&lt;=2</invariant>
+      <flow>y'==1</flow>
+    </location>
+    <location id="2" name="open" x="626.0" y="292.0">
+      <invariant>y==2</invariant>
+      <flow>y'==0</flow>
+    </location>
+    <location id="3" name="closed" x="213.0" y="274.0">
+      <invariant>y==0</invariant>
+      <flow>y'==0</flow>
+    </location>
+    <location id="4" name="shut" x="425.0" y="388.0" width="160.0" height="68.0">
+      <invariant>y&gt;=0 &amp; -1&lt;=v_shut&lt;=0</invariant>
+      <flow>y'==v_shut</flow>
+    </location>
+    <transition source="1" target="2">
+      <guard>y==2</guard>
+      <labelposition x="-67.0" y="-55.0" />
+      <middlepoint x="569.0" y="171.0" />
+    </transition>
+    <transition source="2" target="4">
+      <guard>closeTD==1</guard>
+      <labelposition x="-79.0" y="-11.0" width="126.0" height="50.0" />
+      <middlepoint x="571.5" y="390.0" />
+    </transition>
+    <transition source="3" target="1">
+      <guard>openTD==1</guard>
+      <labelposition x="-2.0" y="-51.0" width="92.0" height="66.0" />
+      <middlepoint x="276.0" y="168.5" />
+    </transition>
+    <transition source="4" target="3">
+      <guard>y==0</guard>
+      <labelposition x="-11.0" y="-13.0" />
+      <middlepoint x="277.5" y="388.5" />
+    </transition>
+    <transition source="4" target="1">
+      <guard>y&gt;0 &amp; v_shut==0</guard>
+      <labelposition x="-131.0" y="-31.0" width="142.0" height="50.0" />
+    </transition>
   </component>
   <component id="screendoors">
-    <location id="1" name="loc1" x="210.0" y="110.0" />
+    <param name="y" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
+    <param name="closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
+    <param name="v_shut" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="id" type="label" local="false" />
+    <location id="3" name="closed" x="213.0" y="274.0">
+      <invariant>y==0</invariant>
+      <flow>y'==0</flow>
+    </location>
+    <location id="4" name="shut" x="425.0" y="388.0" width="160.0" height="68.0">
+      <invariant>y&gt;=0 &amp; -1&lt;=v_shut&lt;=0</invariant>
+      <flow>y'==v_shut</flow>
+    </location>
+    <location id="2" name="part" x="426.0" y="168.0">
+      <invariant>y&lt;=2</invariant>
+      <flow>y'==1</flow>
+    </location>
+    <location id="5" name="open" x="626.0" y="292.0">
+      <invariant>y==2</invariant>
+      <flow>y'==0</flow>
+    </location>
+    <transition source="3" target="2">
+      <guard>openSD==1</guard>
+      <labelposition x="-2.0" y="-51.0" width="92.0" height="66.0" />
+      <middlepoint x="276.0" y="168.5" />
+    </transition>
+    <transition source="4" target="2">
+      <guard>y&gt;0 &amp; v_shut==0</guard>
+      <labelposition x="-131.0" y="-31.0" width="142.0" height="50.0" />
+    </transition>
+    <transition source="4" target="3">
+      <guard>y==0</guard>
+      <labelposition x="-11.0" y="-13.0" />
+      <middlepoint x="277.5" y="388.5" />
+    </transition>
+    <transition source="5" target="4">
+      <guard>closeSD==1</guard>
+      <labelposition x="-79.0" y="-11.0" width="126.0" height="50.0" />
+      <middlepoint x="571.5" y="390.0" />
+    </transition>
+    <transition source="2" target="5">
+      <guard>y==2</guard>
+      <labelposition x="-67.0" y="-55.0" />
+      <middlepoint x="569.0" y="171.0" />
+    </transition>
   </component>
   <component id="controller">
-    <location id="1" name="loc1" x="210.0" y="110.0" />
+    <param name="z" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="sd_1_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_2_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_3_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_4_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_5_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_6_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_7_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_8_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="openTD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="closeTD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="stop" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
+    <param name="sd_1_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_2_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_3_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_4_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_5_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_6_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_7_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="sd_8_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <location id="1" name="idle" x="545.0" y="208.0" />
+    <location id="2" name="about_to_open2" x="278.0" y="208.0" width="128.0" height="62.0">
+      <invariant>z&lt;=5</invariant>
+      <flow>z'==1</flow>
+    </location>
+    <transition source="1" target="2">
+      <guard>stop==1</guard>
+      <assignment>z=0</assignment>
+      <labelposition x="-41.0" y="-69.0" width="102.0" height="66.0" />
+    </transition>
   </component>
   <component id="urgentcontrol">
     <param name="time" type="real" local="true" d1="1" d2="1" dynamics="any" />
@@ -198,20 +315,179 @@
       <labelposition x="-46.0" y="-10.0" width="106.0" height="64.0" />
     </transition>
   </component>
+  <component id="trainsys">
+    <param name="pos" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="dir" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="openTD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="closeTD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_1_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_2_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_3_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_4_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_5_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_6_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_7_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_8_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="stop" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_1_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" placement="west" />
+    <param name="sd_2_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" placement="west" />
+    <param name="sd_3_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" placement="west" />
+    <param name="sd_4_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" placement="west" />
+    <param name="sd_5_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" placement="west" />
+    <param name="sd_6_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" placement="west" />
+    <param name="sd_7_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" placement="west" />
+    <param name="sd_8_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" placement="west" />
+    <bind component="train" as="train_1" x="542.0" y="100.0" width="106.0" height="108.0">
+      <map key="pos">pos</map>
+      <map key="dir">dir</map>
+      <map key="stop">stop</map>
+    </bind>
+    <bind component="traindoors" as="traindoors_1" x="795.0" y="176.0" width="132.0" height="64.0">
+      <map key="openTD">openTD</map>
+      <map key="closeTD">closeTD</map>
+    </bind>
+    <bind component="controller" as="controller_1" width="286.0" height="384.0" x="539.0" y="397.0">
+      <map key="sd_1_openSD">sd_1_openSD</map>
+      <map key="sd_2_openSD">sd_2_openSD</map>
+      <map key="sd_3_openSD">sd_3_openSD</map>
+      <map key="sd_4_openSD">sd_4_openSD</map>
+      <map key="sd_5_openSD">sd_5_openSD</map>
+      <map key="sd_6_openSD">sd_6_openSD</map>
+      <map key="sd_7_openSD">sd_7_openSD</map>
+      <map key="sd_8_openSD">sd_8_openSD</map>
+      <map key="openTD">openTD</map>
+      <map key="closeTD">closeTD</map>
+      <map key="stop">stop</map>
+      <map key="sd_1_closeSD">sd_1_closeSD</map>
+      <map key="sd_2_closeSD">sd_2_closeSD</map>
+      <map key="sd_3_closeSD">sd_3_closeSD</map>
+      <map key="sd_4_closeSD">sd_4_closeSD</map>
+      <map key="sd_5_closeSD">sd_5_closeSD</map>
+      <map key="sd_6_closeSD">sd_6_closeSD</map>
+      <map key="sd_7_closeSD">sd_7_closeSD</map>
+      <map key="sd_8_closeSD">sd_8_closeSD</map>
+    </bind>
+  </component>
   <component id="system">
-    <param name="pos1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="335.0" y="294.0" />
-    <param name="pos2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="306.0" y="161.0" />
-    <param name="pos3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="280.0" y="22.0" />
-    <param name="pos4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="279.0" y="391.0" />
-    <param name="dir1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="548.0" y="213.0" />
-    <param name="dir2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="590.0" y="84.0" />
-    <param name="dir3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="633.0" y="-56.0" />
-    <param name="dir4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="634.0" y="313.0" />
-    <bind component="train" as="train_1" width="156.0" height="70.0" x="516.0" y="273.0">
+    <param name="pos1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="85.0" y="-37.0" />
+    <param name="pos2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="86.0" y="-44.0" />
+    <param name="pos3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="85.0" y="-52.0" />
+    <param name="pos4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="85.0" y="-59.0" />
+    <param name="dir1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="dir2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="dir3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="dir4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="id" type="label" local="false" />
+    <param name="sd_1_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_2_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_3_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_4_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_5_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_6_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_7_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_8_openSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_1_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_2_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_3_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_4_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_5_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_6_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_7_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_8_closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <bind component="trainsys" as="trainsys_1" x="473.0" y="174.0" width="200.0" height="280.0">
       <map key="pos">pos1</map>
       <map key="dir">dir1</map>
+      <map key="openTD" />
+      <map key="closeTD" />
+      <map key="sd_1_openSD">sd_1_openSD</map>
+      <map key="sd_2_openSD">sd_2_openSD</map>
+      <map key="sd_3_openSD">sd_3_openSD</map>
+      <map key="sd_4_openSD">sd_4_openSD</map>
+      <map key="sd_5_openSD">sd_5_openSD</map>
+      <map key="sd_6_openSD">sd_6_openSD</map>
+      <map key="sd_7_openSD">sd_7_openSD</map>
+      <map key="sd_8_openSD">sd_8_openSD</map>
+      <map key="stop" />
+      <map key="sd_2_closeSD">sd_2_closeSD</map>
+      <map key="sd_3_closeSD">sd_3_closeSD</map>
+      <map key="sd_4_closeSD">sd_4_closeSD</map>
+      <map key="sd_5_closeSD">sd_5_closeSD</map>
+      <map key="sd_6_closeSD">sd_6_closeSD</map>
+      <map key="sd_7_closeSD">sd_7_closeSD</map>
+      <map key="sd_8_closeSD">sd_8_closeSD</map>
+      <map key="sd_1_closeSD">sd_1_closeSD</map>
     </bind>
-    <bind component="urgentcontrol" as="urgentcontrol_1" width="76.0" height="130.0" x="512.0" y="418.0">
+    <bind component="trainsys" as="trainsys_2" x="475.0" y="505.0" width="196.0" height="280.0">
+      <map key="pos">pos2</map>
+      <map key="dir">dir2</map>
+      <map key="openTD" />
+      <map key="closeTD" />
+      <map key="sd_1_openSD">sd_1_openSD</map>
+      <map key="sd_2_openSD">sd_2_openSD</map>
+      <map key="sd_3_openSD">sd_3_openSD</map>
+      <map key="sd_4_openSD">sd_4_openSD</map>
+      <map key="sd_5_openSD">sd_5_openSD</map>
+      <map key="sd_6_openSD">sd_6_openSD</map>
+      <map key="sd_7_openSD">sd_7_openSD</map>
+      <map key="sd_8_openSD">sd_8_openSD</map>
+      <map key="stop" />
+      <map key="sd_2_closeSD">sd_2_closeSD</map>
+      <map key="sd_3_closeSD">sd_3_closeSD</map>
+      <map key="sd_4_closeSD">sd_4_closeSD</map>
+      <map key="sd_5_closeSD">sd_5_closeSD</map>
+      <map key="sd_6_closeSD">sd_6_closeSD</map>
+      <map key="sd_7_closeSD">sd_7_closeSD</map>
+      <map key="sd_8_closeSD">sd_8_closeSD</map>
+      <map key="sd_1_closeSD">sd_1_closeSD</map>
+    </bind>
+    <bind component="trainsys" as="trainsys_3" x="787.0" y="174.0" width="188.0" height="280.0">
+      <map key="pos">pos3</map>
+      <map key="dir">dir3</map>
+      <map key="openTD" />
+      <map key="closeTD" />
+      <map key="sd_1_openSD">sd_1_openSD</map>
+      <map key="sd_2_openSD">sd_2_openSD</map>
+      <map key="sd_3_openSD">sd_3_openSD</map>
+      <map key="sd_4_openSD">sd_4_openSD</map>
+      <map key="sd_5_openSD">sd_5_openSD</map>
+      <map key="sd_6_openSD">sd_6_openSD</map>
+      <map key="sd_7_openSD">sd_7_openSD</map>
+      <map key="sd_8_openSD">sd_8_openSD</map>
+      <map key="stop" />
+      <map key="sd_2_closeSD">sd_2_closeSD</map>
+      <map key="sd_3_closeSD">sd_3_closeSD</map>
+      <map key="sd_4_closeSD">sd_4_closeSD</map>
+      <map key="sd_5_closeSD">sd_5_closeSD</map>
+      <map key="sd_6_closeSD">sd_6_closeSD</map>
+      <map key="sd_7_closeSD">sd_7_closeSD</map>
+      <map key="sd_8_closeSD">sd_8_closeSD</map>
+      <map key="sd_1_closeSD">sd_1_closeSD</map>
+    </bind>
+    <bind component="trainsys" as="trainsys_4" x="801.0" y="505.0" width="196.0" height="280.0">
+      <map key="pos">pos4</map>
+      <map key="dir">dir4</map>
+      <map key="openTD" />
+      <map key="closeTD" />
+      <map key="sd_1_openSD">sd_1_openSD</map>
+      <map key="sd_2_openSD">sd_2_openSD</map>
+      <map key="sd_3_openSD">sd_3_openSD</map>
+      <map key="sd_4_openSD">sd_4_openSD</map>
+      <map key="sd_5_openSD">sd_5_openSD</map>
+      <map key="sd_6_openSD">sd_6_openSD</map>
+      <map key="sd_7_openSD">sd_7_openSD</map>
+      <map key="sd_8_openSD">sd_8_openSD</map>
+      <map key="stop" />
+      <map key="sd_2_closeSD">sd_2_closeSD</map>
+      <map key="sd_3_closeSD">sd_3_closeSD</map>
+      <map key="sd_4_closeSD">sd_4_closeSD</map>
+      <map key="sd_5_closeSD">sd_5_closeSD</map>
+      <map key="sd_6_closeSD">sd_6_closeSD</map>
+      <map key="sd_7_closeSD">sd_7_closeSD</map>
+      <map key="sd_8_closeSD">sd_8_closeSD</map>
+      <map key="sd_1_closeSD">sd_1_closeSD</map>
+    </bind>
+    <bind component="urgentcontrol" as="urgentcontrol_1" x="171.0" y="481.0" width="114.0" height="102.0">
       <map key="pos1">pos1</map>
       <map key="pos2">pos2</map>
       <map key="pos3">pos3</map>
@@ -221,17 +497,45 @@
       <map key="dir3">dir3</map>
       <map key="dir4">dir4</map>
     </bind>
-    <bind component="train" as="train_2" x="520.0" y="168.0" width="162.0" height="70.0">
-      <map key="pos">pos2</map>
-      <map key="dir">dir2</map>
+    <bind component="screendoors" as="screendoors_1" x="1032.0" y="171.0" width="128.0" height="80.0">
+      <map key="openSD">sd_1_openSD</map>
+      <map key="closeSD">sd_1_closeSD</map>
+      <map key="id">id</map>
     </bind>
-    <bind component="train" as="train_3" x="521.0" y="70.0" width="164.0" height="76.0">
-      <map key="pos">pos3</map>
-      <map key="dir">dir3</map>
+    <bind component="screendoors" as="screendoors_2" x="1027.0" y="293.0" width="130.0" height="88.0">
+      <map key="openSD">sd_2_openSD</map>
+      <map key="closeSD">sd_2_closeSD</map>
+      <map key="id">id</map>
     </bind>
-    <bind component="train" as="train_4" x="521.0" y="558.0" width="162.0" height="76.0">
-      <map key="pos">pos4</map>
-      <map key="dir">dir4</map>
+    <bind component="screendoors" as="screendoors_3" x="1032.0" y="422.0" width="128.0" height="80.0">
+      <map key="openSD">sd_3_openSD</map>
+      <map key="closeSD">sd_3_closeSD</map>
+      <map key="id">id</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_4" x="1033.0" y="540.0" width="130.0" height="80.0">
+      <map key="openSD">sd_4_openSD</map>
+      <map key="closeSD">sd_4_closeSD</map>
+      <map key="id">id</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_5" x="1206.0" y="171.0" width="118.0" height="80.0">
+      <map key="openSD">sd_5_openSD</map>
+      <map key="closeSD">sd_5_closeSD</map>
+      <map key="id">id</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_6" width="122.0" height="80.0" x="1209.0" y="298.0">
+      <map key="openSD">sd_6_openSD</map>
+      <map key="closeSD">sd_6_closeSD</map>
+      <map key="id">id</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_7" width="126.0" height="84.0" x="1207.0" y="421.0">
+      <map key="openSD">sd_7_openSD</map>
+      <map key="closeSD">sd_7_closeSD</map>
+      <map key="id">id</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_8" x="1207.0" y="546.0" width="122.0" height="80.0">
+      <map key="openSD">sd_8_openSD</map>
+      <map key="closeSD">sd_8_closeSD</map>
+      <map key="id">id</map>
     </bind>
   </component>
 </sspaceex>
