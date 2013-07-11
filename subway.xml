@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <sspaceex xmlns="http://www-verimag.imag.fr/xml-namespaces/sspaceex" version="0.2" math="SpaceEx">
   <component id="train">
-    <location id="1" name="loc1" x="210.0" y="110.0" />
+    <param name="i" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="j" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="pos" type="real" local="false" d1="1" d2="1" dynamics="any" placement="west" />
+    <param name="v" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="dir" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" placement="east" />
+    <param name="time" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="urstopped" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="Delay" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="false" />
+    <param name="S" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="false" />
+    <location id="1" name="init" x="751.0" y="249.0">
+      <invariant>time&lt;=Delay</invariant>
+      <flow>time'==1</flow>
+    </location>
+    <location id="2" name="stop" x="749.0" y="410.0" width="110.0" height="64.0">
+      <invariant>v==0,pos==S</invariant>
+      <flow>pos'==v &amp; v'==0</flow>
+    </location>
+    <location id="3" name="loc1" x="645.0" y="521.0" />
+    <transition source="1" target="2">
+      <label>stop</label>
+      <guard>time==Delay</guard>
+      <assignment>j=0</assignment>
+      <labelposition x="6.0" y="-21.0" width="122.0" height="84.0" />
+    </transition>
   </component>
   <component id="traindoors">
     <location id="1" name="loc1" x="210.0" y="110.0" />
@@ -13,7 +36,70 @@
     <location id="1" name="loc1" x="210.0" y="110.0" />
   </component>
   <component id="urgentcontrol">
-    <location id="1" name="loc1" x="210.0" y="110.0" />
+    <param name="time" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="pos1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
+    <param name="pos2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
+    <param name="pos3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
+    <param name="pos4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
+    <param name="dir1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="dir2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="dir3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="dir4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <location id="1" name="init" x="385.0" y="217.0">
+      <invariant>time&lt;=200</invariant>
+      <flow>time'==1</flow>
+    </location>
+    <location id="2" name="decide" x="570.0" y="218.0">
+      <invariant>time&lt;=1</invariant>
+      <flow>time'==1</flow>
+    </location>
+    <location id="3" name="loc1" x="751.0" y="217.0" />
+    <transition source="1" target="2">
+      <guard>time==200</guard>
+      <assignment>time=0</assignment>
+      <labelposition x="-63.0" y="-47.0" width="128.0" height="86.0" />
+    </transition>
+    <transition source="2" target="3">
+      <guard>time==1</guard>
+      <assignment>train1.</assignment>
+      <labelposition x="-46.0" y="-10.0" width="106.0" height="64.0" />
+    </transition>
+  </component>
+  <component id="system">
+    <param name="pos1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="335.0" y="294.0" />
+    <param name="pos2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="306.0" y="161.0" />
+    <param name="pos3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="280.0" y="22.0" />
+    <param name="pos4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="279.0" y="391.0" />
+    <param name="dir1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="548.0" y="213.0" />
+    <param name="dir2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="590.0" y="84.0" />
+    <param name="dir3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="633.0" y="-56.0" />
+    <param name="dir4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="634.0" y="313.0" />
+    <bind component="train" as="train_1" width="156.0" height="70.0" x="516.0" y="273.0">
+      <map key="pos">pos1</map>
+      <map key="dir">dir1</map>
+    </bind>
+    <bind component="urgentcontrol" as="urgentcontrol_1" width="76.0" height="130.0" x="512.0" y="418.0">
+      <map key="pos1">pos1</map>
+      <map key="pos2">pos2</map>
+      <map key="pos3">pos3</map>
+      <map key="pos4">pos4</map>
+      <map key="dir1">dir1</map>
+      <map key="dir2">dir2</map>
+      <map key="dir3">dir3</map>
+      <map key="dir4">dir4</map>
+    </bind>
+    <bind component="train" as="train_2" x="520.0" y="168.0" width="162.0" height="70.0">
+      <map key="pos">pos2</map>
+      <map key="dir">dir2</map>
+    </bind>
+    <bind component="train" as="train_3" x="521.0" y="70.0" width="164.0" height="76.0">
+      <map key="pos">pos3</map>
+      <map key="dir">dir3</map>
+    </bind>
+    <bind component="train" as="train_4" x="521.0" y="558.0" width="162.0" height="76.0">
+      <map key="pos">pos4</map>
+      <map key="dir">dir4</map>
+    </bind>
   </component>
 </sspaceex>
 
