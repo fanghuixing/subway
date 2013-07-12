@@ -42,6 +42,59 @@ unsigned int sf_subwaycontrolsystem_method_dispatcher(SimStruct *simstructPtr,
   return 0;
 }
 
+unsigned int sf_subwaycontrolsystem_process_testpoint_info_call( int nlhs,
+  mxArray * plhs[], int nrhs, const mxArray * prhs[] )
+{
+
+#ifdef MATLAB_MEX_FILE
+
+  char commandName[32];
+  char machineName[128];
+  if (nrhs < 3 || !mxIsChar(prhs[0]) || !mxIsChar(prhs[1]))
+    return 0;
+
+  /* Possible call to get testpoint info. */
+  mxGetString(prhs[0], commandName,sizeof(commandName)/sizeof(char));
+  commandName[(sizeof(commandName)/sizeof(char)-1)] = '\0';
+  if (strcmp(commandName,"get_testpoint_info"))
+    return 0;
+  mxGetString(prhs[1], machineName, sizeof(machineName)/sizeof(char));
+  machineName[(sizeof(machineName)/sizeof(char)-1)] = '\0';
+  if (!strcmp(machineName, "subwaycontrolsystem")) {
+    unsigned int chartFileNumber;
+    chartFileNumber = (unsigned int)mxGetScalar(prhs[2]);
+    switch (chartFileNumber) {
+     case 1:
+      {
+        extern mxArray *sf_c1_subwaycontrolsystem_get_testpoint_info(void);
+        plhs[0] = sf_c1_subwaycontrolsystem_get_testpoint_info();
+        break;
+      }
+
+     case 2:
+      {
+        extern mxArray *sf_c2_subwaycontrolsystem_get_testpoint_info(void);
+        plhs[0] = sf_c2_subwaycontrolsystem_get_testpoint_info();
+        break;
+      }
+
+     default:
+      plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+    }
+
+    return 1;
+  }
+
+  return 0;
+
+#else
+
+  return 0;
+
+#endif
+
+}
+
 unsigned int sf_subwaycontrolsystem_process_check_sum_call( int nlhs, mxArray *
   plhs[], int nrhs, const mxArray * prhs[] )
 {
@@ -72,10 +125,10 @@ unsigned int sf_subwaycontrolsystem_process_check_sum_call( int nlhs, mxArray *
       ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(0U);
       ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(0U);
     } else if (!strcmp(commandName,"makefile")) {
-      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1038116146U);
-      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(790683566U);
-      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1868137159U);
-      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2441430215U);
+      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3352752171U);
+      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1791307654U);
+      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(222175657U);
+      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1363737667U);
     } else if (nrhs==3 && !strcmp(commandName,"chart")) {
       unsigned int chartFileNumber;
       chartFileNumber = (unsigned int)mxGetScalar(prhs[2]);
@@ -101,18 +154,18 @@ unsigned int sf_subwaycontrolsystem_process_check_sum_call( int nlhs, mxArray *
         ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(0.0);
       }
     } else if (!strcmp(commandName,"target")) {
-      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3564696471U);
-      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(678668628U);
-      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1090454852U);
-      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3896867807U);
+      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(784597580U);
+      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(508478511U);
+      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1608615269U);
+      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1082679159U);
     } else {
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2330606854U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4125938251U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(483001764U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(899051670U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(4236826762U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3069287108U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(4209769298U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1499995291U);
   }
 
   return 1;
@@ -150,7 +203,7 @@ unsigned int sf_subwaycontrolsystem_autoinheritance_info( int nlhs, mxArray *
     switch (chartFileNumber) {
      case 1:
       {
-        if (strcmp(aiChksum, "BibHsCcvom7tUTQs51GIBC") == 0) {
+        if (strcmp(aiChksum, "7FYHC0j7iIbpg6VTNez76B") == 0) {
           extern mxArray *sf_c1_subwaycontrolsystem_get_autoinheritance_info
             (void);
           plhs[0] = sf_c1_subwaycontrolsystem_get_autoinheritance_info();

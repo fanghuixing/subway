@@ -7,7 +7,7 @@
 %endfunction
 %function ChartDataMap(block, system) void
   %createrecord ChartDataElements {\
-    NumChartData   93 \
+    NumChartData   94 \
     ChartDataDefaults {\
       RecordType   "ChartData"\
       Dimensions   []\
@@ -76,15 +76,27 @@
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_Train0"\
-      SFName       "is_Train0"\
-      Path         "Train0.is_Train0"\
+      Name         "is_Screen_door20"\
+      SFName       "is_Screen_door20"\
+      Path         "Screen_door20.is_Screen_door20"\
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_active_Train0"\
-      SFName       "is_active_Train0"\
-      Path         "Train0.is_active_Train0"\
+      Name         "is_active_Screen_door20"\
+      SFName       "is_active_Screen_door20"\
+      Path         "Screen_door20.is_active_Screen_door20"\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "is_Screen_door21"\
+      SFName       "is_Screen_door21"\
+      Path         "Screen_door21.is_Screen_door21"\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "is_active_Screen_door21"\
+      SFName       "is_active_Screen_door21"\
+      Path         "Screen_door21.is_active_Screen_door21"\
       IsTestPoint  1\
     }\
     ChartData {\
@@ -112,15 +124,27 @@
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_Train1"\
-      SFName       "is_Train1"\
-      Path         "Train1.is_Train1"\
+      Name         "is_Screen_door31"\
+      SFName       "is_Screen_door31"\
+      Path         "Screen_door31.is_Screen_door31"\
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_active_Train1"\
-      SFName       "is_active_Train1"\
-      Path         "Train1.is_active_Train1"\
+      Name         "is_active_Screen_door31"\
+      SFName       "is_active_Screen_door31"\
+      Path         "Screen_door31.is_active_Screen_door31"\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "is_Screen_door30"\
+      SFName       "is_Screen_door30"\
+      Path         "Screen_door30.is_Screen_door30"\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "is_active_Screen_door30"\
+      SFName       "is_active_Screen_door30"\
+      Path         "Screen_door30.is_active_Screen_door30"\
       IsTestPoint  1\
     }\
     ChartData {\
@@ -148,15 +172,39 @@
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_Train2"\
-      SFName       "is_Train2"\
-      Path         "Train2.is_Train2"\
+      Name         "is_Screen_door00"\
+      SFName       "is_Screen_door00"\
+      Path         "Screen_door00.is_Screen_door00"\
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_active_Train2"\
-      SFName       "is_active_Train2"\
-      Path         "Train2.is_active_Train2"\
+      Name         "is_active_Screen_door00"\
+      SFName       "is_active_Screen_door00"\
+      Path         "Screen_door00.is_active_Screen_door00"\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "is_Screen_door01"\
+      SFName       "is_Screen_door01"\
+      Path         "Screen_door01.is_Screen_door01"\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "is_active_Screen_door01"\
+      SFName       "is_active_Screen_door01"\
+      Path         "Screen_door01.is_active_Screen_door01"\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "is_Screen_door11"\
+      SFName       "is_Screen_door11"\
+      Path         "Screen_door11.is_Screen_door11"\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "is_active_Screen_door11"\
+      SFName       "is_active_Screen_door11"\
+      Path         "Screen_door11.is_active_Screen_door11"\
       IsTestPoint  1\
     }\
     ChartData {\
@@ -208,87 +256,39 @@
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_Screen_door11"\
-      SFName       "is_Screen_door11"\
-      Path         "Screen_door11.is_Screen_door11"\
+      Name         "is_Train0"\
+      SFName       "is_Train0"\
+      Path         "Train0.is_Train0"\
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_active_Screen_door11"\
-      SFName       "is_active_Screen_door11"\
-      Path         "Screen_door11.is_active_Screen_door11"\
+      Name         "is_active_Train0"\
+      SFName       "is_active_Train0"\
+      Path         "Train0.is_active_Train0"\
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_Screen_door01"\
-      SFName       "is_Screen_door01"\
-      Path         "Screen_door01.is_Screen_door01"\
+      Name         "is_Train1"\
+      SFName       "is_Train1"\
+      Path         "Train1.is_Train1"\
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_active_Screen_door01"\
-      SFName       "is_active_Screen_door01"\
-      Path         "Screen_door01.is_active_Screen_door01"\
+      Name         "is_active_Train1"\
+      SFName       "is_active_Train1"\
+      Path         "Train1.is_active_Train1"\
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_Screen_door00"\
-      SFName       "is_Screen_door00"\
-      Path         "Screen_door00.is_Screen_door00"\
+      Name         "is_Train2"\
+      SFName       "is_Train2"\
+      Path         "Train2.is_Train2"\
       IsTestPoint  1\
     }\
     ChartData {\
-      Name         "is_active_Screen_door00"\
-      SFName       "is_active_Screen_door00"\
-      Path         "Screen_door00.is_active_Screen_door00"\
-      IsTestPoint  1\
-    }\
-    ChartData {\
-      Name         "is_Screen_door30"\
-      SFName       "is_Screen_door30"\
-      Path         "Screen_door30.is_Screen_door30"\
-      IsTestPoint  1\
-    }\
-    ChartData {\
-      Name         "is_active_Screen_door30"\
-      SFName       "is_active_Screen_door30"\
-      Path         "Screen_door30.is_active_Screen_door30"\
-      IsTestPoint  1\
-    }\
-    ChartData {\
-      Name         "is_Screen_door31"\
-      SFName       "is_Screen_door31"\
-      Path         "Screen_door31.is_Screen_door31"\
-      IsTestPoint  1\
-    }\
-    ChartData {\
-      Name         "is_active_Screen_door31"\
-      SFName       "is_active_Screen_door31"\
-      Path         "Screen_door31.is_active_Screen_door31"\
-      IsTestPoint  1\
-    }\
-    ChartData {\
-      Name         "is_Screen_door21"\
-      SFName       "is_Screen_door21"\
-      Path         "Screen_door21.is_Screen_door21"\
-      IsTestPoint  1\
-    }\
-    ChartData {\
-      Name         "is_active_Screen_door21"\
-      SFName       "is_active_Screen_door21"\
-      Path         "Screen_door21.is_active_Screen_door21"\
-      IsTestPoint  1\
-    }\
-    ChartData {\
-      Name         "is_Screen_door20"\
-      SFName       "is_Screen_door20"\
-      Path         "Screen_door20.is_Screen_door20"\
-      IsTestPoint  1\
-    }\
-    ChartData {\
-      Name         "is_active_Screen_door20"\
-      SFName       "is_active_Screen_door20"\
-      Path         "Screen_door20.is_active_Screen_door20"\
+      Name         "is_active_Train2"\
+      SFName       "is_active_Train2"\
+      Path         "Train2.is_active_Train2"\
       IsTestPoint  1\
     }\
     ChartData {\
@@ -386,28 +386,18 @@
       Path         ""\
     }\
     ChartData {\
-      Name         "j"\
-      SFName       ""\
-      Path         ""\
-    }\
-    ChartData {\
       Name         "RelevantIndex"\
       SFName       ""\
       Path         ""\
       Dimensions   [1,4]\
     }\
     ChartData {\
-      Name         "stationid"\
+      Name         "tdis"\
       SFName       ""\
       Path         ""\
     }\
     ChartData {\
-      Name         "side"\
-      SFName       ""\
-      Path         ""\
-    }\
-    ChartData {\
-      Name         "i"\
+      Name         "dis"\
       SFName       ""\
       Path         ""\
     }\
@@ -443,6 +433,21 @@
     }\
     ChartData {\
       Name         "acc"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "stationid"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "side"\
+      SFName       ""\
+      Path         ""\
+    }\
+    ChartData {\
+      Name         "i"\
       SFName       ""\
       Path         ""\
     }\

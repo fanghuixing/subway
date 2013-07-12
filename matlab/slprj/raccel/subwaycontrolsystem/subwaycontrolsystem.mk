@@ -75,7 +75,7 @@ ALT_MATLAB_ROOT        = D:\PROGRA~2\MATLAB\R2012b
 MATLAB_BIN             = D:\Program Files\MATLAB\R2012b\bin
 ALT_MATLAB_BIN         = D:\PROGRA~2\MATLAB\R2012b\bin
 MASTER_ANCHOR_DIR      = 
-START_DIR              = D:\FANGHU~1\csfile\HYBRID~1\DOC\subway\CLEARS~1\matlab
+START_DIR              = D:\fanghuixing\GitHub\subway\matlab
 S_FUNCTIONS            = 
 S_FUNCTIONS_LIB        = 
 BUILDARGS              =  GENERATE_REPORT=0 RSIM_SOLVER_SELECTION=2
