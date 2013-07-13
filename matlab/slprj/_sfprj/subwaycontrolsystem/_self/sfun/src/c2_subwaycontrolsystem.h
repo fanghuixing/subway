@@ -15,6 +15,10 @@ typedef struct {
   ChartInfoStruct chartInfo;
   uint32_T chartNumber;
   uint32_T instanceNumber;
+  int32_T c2_sfEvent;
+  boolean_T c2_isStable;
+  boolean_T c2_doneDoubleBufferReInit;
+  uint8_T c2_is_active_c2_subwaycontrolsystem;
 } SFc2_subwaycontrolsystemInstanceStruct;
 
 #endif                                 /*typedef_SFc2_subwaycontrolsystemInstanceStruct*/

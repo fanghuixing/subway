@@ -29,8 +29,6 @@ static void disable_c2_subwaycontrolsystem
   (SFc2_subwaycontrolsystemInstanceStruct *chartInstance);
 static void c2_update_debugger_state_c2_subwaycontrolsystem
   (SFc2_subwaycontrolsystemInstanceStruct *chartInstance);
-static void ext_mode_exec_c2_subwaycontrolsystem
-  (SFc2_subwaycontrolsystemInstanceStruct *chartInstance);
 static const mxArray *get_sim_state_c2_subwaycontrolsystem
   (SFc2_subwaycontrolsystemInstanceStruct *chartInstance);
 static void set_sim_state_c2_subwaycontrolsystem
@@ -67,7 +65,7 @@ static int32_T c2_d_emlrt_marshallIn(SFc2_subwaycontrolsystemInstanceStruct
 static void c2_c_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c2_mxArrayInData, const char_T *c2_varName, void *c2_outData);
 static uint8_T c2_e_emlrt_marshallIn(SFc2_subwaycontrolsystemInstanceStruct
-  *chartInstance, const mxArray *c2_is_active_c2_subwaycontrolsystem, const
+  *chartInstance, const mxArray *c2_b_is_active_c2_subwaycontrolsystem, const
   char_T *c2_identifier);
 static uint8_T c2_f_emlrt_marshallIn(SFc2_subwaycontrolsystemInstanceStruct
   *chartInstance, const mxArray *c2_u, const emlrtMsgIdentifier *c2_parentId);
@@ -78,14 +76,9 @@ static void init_dsm_address_info(SFc2_subwaycontrolsystemInstanceStruct
 static void initialize_c2_subwaycontrolsystem
   (SFc2_subwaycontrolsystemInstanceStruct *chartInstance)
 {
-  int32_T *c2_sfEvent;
-  uint8_T *c2_is_active_c2_subwaycontrolsystem;
-  c2_is_active_c2_subwaycontrolsystem = (uint8_T *)ssGetDWork(chartInstance->S,
-    3);
-  c2_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
-  *c2_sfEvent = CALL_EVENT;
+  chartInstance->c2_sfEvent = CALL_EVENT;
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  *c2_is_active_c2_subwaycontrolsystem = 0U;
+  chartInstance->c2_is_active_c2_subwaycontrolsystem = 0U;
 }
 
 static void initialize_params_c2_subwaycontrolsystem
@@ -110,12 +103,6 @@ static void c2_update_debugger_state_c2_subwaycontrolsystem
 {
 }
 
-static void ext_mode_exec_c2_subwaycontrolsystem
-  (SFc2_subwaycontrolsystemInstanceStruct *chartInstance)
-{
-  c2_update_debugger_state_c2_subwaycontrolsystem(chartInstance);
-}
-
 static const mxArray *get_sim_state_c2_subwaycontrolsystem
   (SFc2_subwaycontrolsystemInstanceStruct *chartInstance)
 {
@@ -127,11 +114,8 @@ static const mxArray *get_sim_state_c2_subwaycontrolsystem
   uint8_T c2_hoistedGlobal;
   uint8_T c2_b_u;
   const mxArray *c2_c_y = NULL;
-  uint8_T *c2_is_active_c2_subwaycontrolsystem;
   real_T (*c2_d_y)[8];
   c2_d_y = (real_T (*)[8])ssGetOutputPortSignal(chartInstance->S, 1);
-  c2_is_active_c2_subwaycontrolsystem = (uint8_T *)ssGetDWork(chartInstance->S,
-    3);
   c2_st = NULL;
   c2_st = NULL;
   c2_y = NULL;
@@ -143,7 +127,7 @@ static const mxArray *get_sim_state_c2_subwaycontrolsystem
   c2_b_y = NULL;
   sf_mex_assign(&c2_b_y, sf_mex_create("y", c2_u, 0, 0U, 1U, 0U, 2, 4, 2), FALSE);
   sf_mex_setcell(c2_y, 0, c2_b_y);
-  c2_hoistedGlobal = *c2_is_active_c2_subwaycontrolsystem;
+  c2_hoistedGlobal = chartInstance->c2_is_active_c2_subwaycontrolsystem;
   c2_b_u = c2_hoistedGlobal;
   c2_c_y = NULL;
   sf_mex_assign(&c2_c_y, sf_mex_create("y", &c2_b_u, 3, 0U, 0U, 0U, 0), FALSE);
@@ -158,14 +142,9 @@ static void set_sim_state_c2_subwaycontrolsystem
   const mxArray *c2_u;
   real_T c2_dv0[8];
   int32_T c2_i1;
-  boolean_T *c2_doneDoubleBufferReInit;
-  uint8_T *c2_is_active_c2_subwaycontrolsystem;
   real_T (*c2_y)[8];
   c2_y = (real_T (*)[8])ssGetOutputPortSignal(chartInstance->S, 1);
-  c2_is_active_c2_subwaycontrolsystem = (uint8_T *)ssGetDWork(chartInstance->S,
-    3);
-  c2_doneDoubleBufferReInit = (boolean_T *)ssGetDWork(chartInstance->S, 2);
-  *c2_doneDoubleBufferReInit = TRUE;
+  chartInstance->c2_doneDoubleBufferReInit = TRUE;
   c2_u = sf_mex_dup(c2_st);
   c2_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c2_u, 0)), "y",
                       c2_dv0);
@@ -173,8 +152,9 @@ static void set_sim_state_c2_subwaycontrolsystem
     (*c2_y)[c2_i1] = c2_dv0[c2_i1];
   }
 
-  *c2_is_active_c2_subwaycontrolsystem = c2_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c2_u, 1)), "is_active_c2_subwaycontrolsystem");
+  chartInstance->c2_is_active_c2_subwaycontrolsystem = c2_e_emlrt_marshallIn
+    (chartInstance, sf_mex_dup(sf_mex_getcell(c2_u, 1)),
+     "is_active_c2_subwaycontrolsystem");
   sf_mex_destroy(&c2_u);
   c2_update_debugger_state_c2_subwaycontrolsystem(chartInstance);
   sf_mex_destroy(&c2_st);
@@ -202,14 +182,12 @@ static void sf_c2_subwaycontrolsystem(SFc2_subwaycontrolsystemInstanceStruct
   int32_T c2_i;
   real_T c2_b_i;
   int32_T c2_i6;
-  int32_T *c2_sfEvent;
   real_T (*c2_b_y)[8];
   real_T (*c2_b_u)[8];
   c2_b_y = (real_T (*)[8])ssGetOutputPortSignal(chartInstance->S, 1);
   c2_b_u = (real_T (*)[8])ssGetInputPortSignal(chartInstance->S, 0);
-  c2_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 1U, *c2_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 1U, chartInstance->c2_sfEvent);
   for (c2_i2 = 0; c2_i2 < 8; c2_i2++) {
     _SFD_DATA_RANGE_CHECK((*c2_b_u)[c2_i2], 0U);
   }
@@ -218,8 +196,8 @@ static void sf_c2_subwaycontrolsystem(SFc2_subwaycontrolsystemInstanceStruct
     _SFD_DATA_RANGE_CHECK((*c2_b_y)[c2_i3], 1U);
   }
 
-  *c2_sfEvent = CALL_EVENT;
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 1U, *c2_sfEvent);
+  chartInstance->c2_sfEvent = CALL_EVENT;
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 1U, chartInstance->c2_sfEvent);
   for (c2_i4 = 0; c2_i4 < 8; c2_i4++) {
     c2_u[c2_i4] = (*c2_b_u)[c2_i4];
   }
@@ -238,34 +216,34 @@ static void sf_c2_subwaycontrolsystem(SFc2_subwaycontrolsystemInstanceStruct
   sf_debug_symbol_scope_add_eml_importable(c2_y, 5U, c2_sf_marshallOut,
     c2_sf_marshallIn);
   CV_EML_FCN(0, 0);
-  _SFD_EML_CALL(0U, *c2_sfEvent, 3);
+  _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, 3);
   for (c2_i5 = 0; c2_i5 < 8; c2_i5++) {
     c2_y[c2_i5] = 0.0;
   }
 
-  _SFD_EML_CALL(0U, *c2_sfEvent, 4);
+  _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, 4);
   c2_j = 1.0;
-  _SFD_EML_CALL(0U, *c2_sfEvent, 5);
+  _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, 5);
   c2_k = 1.0;
-  _SFD_EML_CALL(0U, *c2_sfEvent, 6);
+  _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, 6);
   c2_i = 0;
   while (c2_i < 8) {
     c2_b_i = 1.0 + (real_T)c2_i;
     CV_EML_FOR(0, 1, 0, 1);
-    _SFD_EML_CALL(0U, *c2_sfEvent, 7);
+    _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, 7);
     c2_y[(_SFD_EML_ARRAY_BOUNDS_CHECK("y", (int32_T)_SFD_INTEGER_CHECK("j", c2_j),
            1, 4, 1, 0) + ((_SFD_EML_ARRAY_BOUNDS_CHECK("y", (int32_T)
              _SFD_INTEGER_CHECK("k", c2_k), 1, 2, 2, 0) - 1) << 2)) - 1] =
       c2_u[_SFD_EML_ARRAY_BOUNDS_CHECK("u", (int32_T)_SFD_INTEGER_CHECK("i",
       c2_b_i), 1, 8, 1, 0) - 1];
-    _SFD_EML_CALL(0U, *c2_sfEvent, 8);
+    _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, 8);
     if (CV_EML_IF(0, 1, 0, c2_k == 2.0)) {
-      _SFD_EML_CALL(0U, *c2_sfEvent, 9);
+      _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, 9);
       c2_k = 1.0;
-      _SFD_EML_CALL(0U, *c2_sfEvent, 10);
+      _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, 10);
       c2_j++;
     } else {
-      _SFD_EML_CALL(0U, *c2_sfEvent, 12);
+      _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, 12);
       c2_k++;
     }
 
@@ -274,13 +252,13 @@ static void sf_c2_subwaycontrolsystem(SFc2_subwaycontrolsystemInstanceStruct
   }
 
   CV_EML_FOR(0, 1, 0, 0);
-  _SFD_EML_CALL(0U, *c2_sfEvent, -12);
+  _SFD_EML_CALL(0U, chartInstance->c2_sfEvent, -12);
   sf_debug_symbol_scope_pop();
   for (c2_i6 = 0; c2_i6 < 8; c2_i6++) {
     (*c2_b_y)[c2_i6] = c2_y[c2_i6];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 1U, *c2_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 1U, chartInstance->c2_sfEvent);
   sf_debug_check_for_state_inconsistency(_subwaycontrolsystemMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);
 }
@@ -500,24 +478,25 @@ static int32_T c2_d_emlrt_marshallIn(SFc2_subwaycontrolsystemInstanceStruct
 static void c2_c_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c2_mxArrayInData, const char_T *c2_varName, void *c2_outData)
 {
-  const mxArray *c2_sfEvent;
+  const mxArray *c2_b_sfEvent;
   const char_T *c2_identifier;
   emlrtMsgIdentifier c2_thisId;
   int32_T c2_y;
   SFc2_subwaycontrolsystemInstanceStruct *chartInstance;
   chartInstance = (SFc2_subwaycontrolsystemInstanceStruct *)chartInstanceVoid;
-  c2_sfEvent = sf_mex_dup(c2_mxArrayInData);
+  c2_b_sfEvent = sf_mex_dup(c2_mxArrayInData);
   c2_identifier = c2_varName;
   c2_thisId.fIdentifier = c2_identifier;
   c2_thisId.fParent = NULL;
-  c2_y = c2_d_emlrt_marshallIn(chartInstance, sf_mex_dup(c2_sfEvent), &c2_thisId);
-  sf_mex_destroy(&c2_sfEvent);
+  c2_y = c2_d_emlrt_marshallIn(chartInstance, sf_mex_dup(c2_b_sfEvent),
+    &c2_thisId);
+  sf_mex_destroy(&c2_b_sfEvent);
   *(int32_T *)c2_outData = c2_y;
   sf_mex_destroy(&c2_mxArrayInData);
 }
 
 static uint8_T c2_e_emlrt_marshallIn(SFc2_subwaycontrolsystemInstanceStruct
-  *chartInstance, const mxArray *c2_is_active_c2_subwaycontrolsystem, const
+  *chartInstance, const mxArray *c2_b_is_active_c2_subwaycontrolsystem, const
   char_T *c2_identifier)
 {
   uint8_T c2_y;
@@ -525,8 +504,8 @@ static uint8_T c2_e_emlrt_marshallIn(SFc2_subwaycontrolsystemInstanceStruct
   c2_thisId.fIdentifier = c2_identifier;
   c2_thisId.fParent = NULL;
   c2_y = c2_f_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (c2_is_active_c2_subwaycontrolsystem), &c2_thisId);
-  sf_mex_destroy(&c2_is_active_c2_subwaycontrolsystem);
+    (c2_b_is_active_c2_subwaycontrolsystem), &c2_thisId);
+  sf_mex_destroy(&c2_b_is_active_c2_subwaycontrolsystem);
   return c2_y;
 }
 
@@ -547,7 +526,6 @@ static void init_dsm_address_info(SFc2_subwaycontrolsystemInstanceStruct
 }
 
 /* SFunction Glue Code */
-static uint32_T* sf_get_sfun_dwork_checksum();
 void sf_c2_subwaycontrolsystem_get_check_sum(mxArray *plhs[])
 {
   ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(441764613U);
@@ -754,35 +732,8 @@ static const char* sf_get_instance_specialization()
   return "XBkeqmIerf2oq2JfULQ6D";
 }
 
-static void sf_check_dwork_consistency(SimStruct *S)
-{
-  if (sim_mode_is_rtw_gen(S) || sim_mode_is_external(S)) {
-    const uint32_T *sfunDWorkChecksum = sf_get_sfun_dwork_checksum();
-    mxArray *infoStruct = load_subwaycontrolsystem_optimization_info();
-    mxArray* mxRTWDWorkChecksum = sf_get_dwork_info_from_mat_file(S,
-      sf_get_instance_specialization(), infoStruct, 2, "dworkChecksum");
-    if (mxRTWDWorkChecksum != NULL) {
-      double *pr = mxGetPr(mxRTWDWorkChecksum);
-      if ((uint32_T)pr[0] != sfunDWorkChecksum[0] ||
-          (uint32_T)pr[1] != sfunDWorkChecksum[1] ||
-          (uint32_T)pr[2] != sfunDWorkChecksum[2] ||
-          (uint32_T)pr[3] != sfunDWorkChecksum[3]) {
-        sf_mex_error_message("Code generation and simulation targets registered different sets of persistent variables for the block. "
-                             "External or Rapid Accelerator mode simulation requires code generation and simulation targets to "
-                             "register the same set of persistent variables for this block. "
-                             "This discrepancy is typically caused by MATLAB functions that have different code paths for "
-                             "simulation and code generation targets where these code paths define different sets of persistent variables. "
-                             "Please identify these code paths in the offending block and rewrite the MATLAB code so that "
-                             "the set of persistent variables is the same between simulation and code generation.");
-      }
-    }
-  }
-}
-
 static void sf_opaque_initialize_c2_subwaycontrolsystem(void *chartInstanceVar)
 {
-  sf_check_dwork_consistency(((SFc2_subwaycontrolsystemInstanceStruct*)
-    chartInstanceVar)->S);
   chart_debug_initialization(((SFc2_subwaycontrolsystemInstanceStruct*)
     chartInstanceVar)->S,0);
   initialize_params_c2_subwaycontrolsystem
@@ -806,13 +757,6 @@ static void sf_opaque_disable_c2_subwaycontrolsystem(void *chartInstanceVar)
 static void sf_opaque_gateway_c2_subwaycontrolsystem(void *chartInstanceVar)
 {
   sf_c2_subwaycontrolsystem((SFc2_subwaycontrolsystemInstanceStruct*)
-    chartInstanceVar);
-}
-
-static void sf_opaque_ext_mode_exec_c2_subwaycontrolsystem(void
-  *chartInstanceVar)
-{
-  ext_mode_exec_c2_subwaycontrolsystem((SFc2_subwaycontrolsystemInstanceStruct*)
     chartInstanceVar);
 }
 
@@ -920,33 +864,6 @@ static void mdlProcessParameters_c2_subwaycontrolsystem(SimStruct *S)
   }
 }
 
-mxArray *sf_c2_subwaycontrolsystem_get_testpoint_info(void)
-{
-  const char *infoEncStr[] = {
-    "100 S'varName','path'{{T\"is_active_c2_subwaycontrolsystem\",T\"is_active_c2_subwaycontrolsystem\"}}"
-  };
-
-  mxArray *mxTpInfo = sf_mex_decode_encoded_mx_struct_array(infoEncStr, 1, 10);
-  return mxTpInfo;
-}
-
-static void sf_set_sfun_dwork_info(SimStruct *S)
-{
-  const char *dworkEncStr[] = {
-    "100 S1x4'type','isSigned','wordLength','bias','slope','exponent','isComplex','size'{{T\"int32\",,,,,,M[0],M[]},{T\"boolean\",,,,,,M[0],M[]},{T\"boolean\",,,,,,M[0],M[]},{T\"uint8\",,,,,,M[0],M[]}}"
-  };
-
-  sf_set_encoded_dwork_info(S, dworkEncStr, 4, 10);
-}
-
-static uint32_T* sf_get_sfun_dwork_checksum()
-{
-  static uint32_T checksum[4] = { 3851270630U, 3363230343U, 1651207761U,
-    946165807U };
-
-  return checksum;
-}
-
 static void mdlSetWorkWidths_c2_subwaycontrolsystem(SimStruct *S)
 {
   if (sim_mode_is_rtw_gen(S) || sim_mode_is_external(S)) {
@@ -973,7 +890,6 @@ static void mdlSetWorkWidths_c2_subwaycontrolsystem(SimStruct *S)
     sf_set_rtw_dwork_info(S,sf_get_instance_specialization(),infoStruct,2);
     ssSetHasSubFunctions(S,!(chartIsInlinable));
   } else {
-    sf_set_sfun_dwork_info(S);
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
@@ -1028,8 +944,7 @@ static void mdlStart_c2_subwaycontrolsystem(SimStruct *S)
   chartInstance->chartInfo.mdlStart = mdlStart_c2_subwaycontrolsystem;
   chartInstance->chartInfo.mdlSetWorkWidths =
     mdlSetWorkWidths_c2_subwaycontrolsystem;
-  chartInstance->chartInfo.extModeExec =
-    sf_opaque_ext_mode_exec_c2_subwaycontrolsystem;
+  chartInstance->chartInfo.extModeExec = NULL;
   chartInstance->chartInfo.restoreLastMajorStepConfiguration = NULL;
   chartInstance->chartInfo.restoreBeforeLastMajorStepConfiguration = NULL;
   chartInstance->chartInfo.storeCurrentConfiguration = NULL;
