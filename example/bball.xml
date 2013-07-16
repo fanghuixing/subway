@@ -7,6 +7,7 @@
     <param name="c" type="real" local="false" d1="1" d2="1" dynamics="const" />
     <param name="eps" type="real" local="false" d1="1" d2="1" dynamics="const" />
     <param name="hop" type="label" local="false" />
+    <param name="x1" type="real" local="false" d1="1" d2="1" dynamics="any" />
     <location id="1" name="always" x="174.5" y="225.5" width="135.0" height="73.0">
       <invariant>x &gt;= 0</invariant>
       <flow>x' == v &amp; v' == -g</flow>
@@ -28,6 +29,7 @@ Variables: x,v</note>
     <param name="x" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
     <param name="v" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
     <param name="hop" type="label" local="false" />
+    <param name="x1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
     <bind component="ball_template" as="ball" x="238.0" y="106.0">
       <map key="x">x</map>
       <map key="v">v</map>
@@ -35,6 +37,7 @@ Variables: x,v</note>
       <map key="c">0.75</map>
       <map key="eps">0</map>
       <map key="hop">hop</map>
+      <map key="x1">x1</map>
     </bind>
   </component>
 </sspaceex>

@@ -4,10 +4,10 @@
     <param name="j" type="real" local="false" d1="1" d2="1" dynamics="any" />
     <param name="pos" type="real" local="false" d1="1" d2="1" dynamics="any" placement="west" />
     <param name="v" type="real" local="true" d1="1" d2="1" dynamics="any" />
-    <param name="dir" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" placement="east" />
+    <param name="dir" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="true" placement="east" />
     <param name="time" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <param name="urstopped" type="real" local="false" d1="1" d2="1" dynamics="any" />
-    <param name="Delay" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="false" />
+    <param name="Delay" type="real" local="false" d1="1" d2="1" dynamics="const" controlled="false" />
     <param name="S" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="false" />
     <param name="acc" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <param name="stop" type="label" local="false" />
@@ -16,14 +16,14 @@
     <param name="urstop" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
     <param name="maxp" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <param name="N" type="real" local="false" d1="1" d2="1" dynamics="const" />
-    <param name="tmpv" type="real" local="true" d1="1" d2="1" dynamics="any" />
-    <location id="1" name="init" x="960.0" y="226.0">
+    <location id="1" name="init" x="960.0" y="226.0" width="194.0" height="72.0">
       <invariant>time&lt;=Delay</invariant>
-      <flow>time'==1</flow>
+      <flow>time'==1 &amp; v'==0 &amp; 
+pos'==0 &amp; dir'==0</flow>
     </location>
-    <location id="2" name="stop" x="960.0" y="380.0" width="110.0" height="64.0">
+    <location id="2" name="stopAtStation" x="960.0" y="380.0" width="110.0" height="64.0">
       <invariant>v==0 &amp; pos==S</invariant>
-      <flow>pos'==v &amp; v'==0</flow>
+      <flow>pos'==v &amp; v'==0 &amp; dir'==0</flow>
     </location>
     <location id="3" name="ChangeDirection" x="961.0" y="515.0" width="106.0" height="58.0">
       <invariant>time&lt;=30</invariant>
@@ -78,7 +78,7 @@
       <flow>pos'==v &amp; v'==0.5</flow>
     </location>
     <location id="10" name="urgent_recover" x="810.0" y="95.0" width="142.0" height="62.0">
-      <invariant>v&gt;=0</invariant>
+      <invariant>v&gt;=0 &amp; pos&lt;=S+1</invariant>
       <flow>pos'==v &amp; v'==-0.5</flow>
     </location>
     <location id="16" name="urgent_inc1" x="1437.0" y="96.0" width="142.0" height="62.0">
@@ -93,7 +93,7 @@
       <label>stop</label>
       <guard>time==Delay</guard>
       <assignment>j=0 &amp; S=0</assignment>
-      <labelposition x="-11.0" y="-38.0" width="120.0" height="68.0" />
+      <labelposition x="-11.0" y="-39.0" width="120.0" height="68.0" />
     </transition>
     <transition source="3" target="2" bezier="true">
       <label>stop</label>
@@ -157,8 +157,8 @@
     </transition>
     <transition source="7" target="8">
       <guard>v&lt;=0.1</guard>
-      <assignment>urstopped=1</assignment>
-      <labelposition x="-11.0" y="-74.0" width="108.0" height="62.0" />
+      <assignment>urstopped=1 &amp; v=0</assignment>
+      <labelposition x="-20.0" y="-69.0" width="168.0" height="64.0" />
       <middlepoint x="295.0" y="249.0" />
       <waypoints>
         <aftermiddle>295.0,204.0</aftermiddle>
@@ -200,7 +200,7 @@
       <label>start</label>
       <guard>dir==1 &amp; j&lt;N-1</guard>
       <assignment>j=j+dir &amp; time=0</assignment>
-      <labelposition x="-162.0" y="-35.0" width="160.0" height="58.0" />
+      <labelposition x="-147.0" y="-32.0" width="160.0" height="58.0" />
       <middlepoint x="1030.5" y="577.0" />
       <waypoints>
         <beforemiddle>1088.0,381.0,1087.0,514.0</beforemiddle>
@@ -210,7 +210,7 @@
     <transition source="11" target="12">
       <guard>dir==-1 &amp; j==0</guard>
       <assignment>S=0</assignment>
-      <labelposition x="-131.0" y="-42.0" width="108.0" height="58.0" />
+      <labelposition x="-112.0" y="-35.0" width="108.0" height="58.0" />
       <middlepoint x="1110.0" y="620.5" />
       <waypoints>
         <beforemiddle>949.0,625.0</beforemiddle>
@@ -219,7 +219,7 @@
     <transition source="11" target="12">
       <guard>dir==-1 &amp; j==1</guard>
       <assignment>S=2284</assignment>
-      <labelposition x="48.0" y="-36.0" width="148.0" height="54.0" />
+      <labelposition x="54.0" y="-35.0" width="148.0" height="54.0" />
       <middlepoint x="953.0" y="648.5" />
       <waypoints>
         <aftermiddle>1126.0,647.0,1173.0,603.0</aftermiddle>
@@ -257,7 +257,7 @@
       <label>stop</label>
       <guard>pos-S&lt;=1</guard>
       <assignment>v=0 &amp; pos=S</assignment>
-      <labelposition x="-3.0" y="-20.0" width="118.0" height="54.0" />
+      <labelposition x="-9.0" y="-50.0" width="134.0" height="78.0" />
       <middlepoint x="1107.5" y="327.0" />
     </transition>
     <transition source="13" target="18">
@@ -333,6 +333,7 @@
     <transition source="10" target="2">
       <label>stop</label>
       <guard>pos&gt;=S-1 &amp; pos &lt;=S+1</guard>
+      <assignment>v=0 &amp; pos=S</assignment>
       <labelposition x="-3.0" y="-57.0" width="182.0" height="66.0" />
       <middlepoint x="808.5" y="189.0" />
     </transition>
@@ -389,16 +390,16 @@
     <param name="v_shut" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <param name="trainDoorsClosed" type="label" local="false" />
     <param name="needclose" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <location id="3" name="closed" x="213.0" y="274.0">
+      <invariant>y==0</invariant>
+      <flow>y'==0</flow>
+    </location>
     <location id="1" name="part" x="426.0" y="168.0">
       <invariant>y&lt;=2</invariant>
       <flow>y'==1</flow>
     </location>
     <location id="2" name="open" x="626.0" y="292.0">
       <invariant>y==2</invariant>
-      <flow>y'==0</flow>
-    </location>
-    <location id="3" name="closed" x="213.0" y="274.0">
-      <invariant>y==0</invariant>
       <flow>y'==0</flow>
     </location>
     <location id="4" name="shut" x="425.0" y="388.0" width="160.0" height="68.0">
@@ -445,25 +446,25 @@
     <param name="v_shut" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <param name="screenDoorsClosed" type="label" local="false" />
     <param name="needclose" type="real" local="true" d1="1" d2="1" dynamics="any" />
-    <location id="3" name="closed" x="213.0" y="274.0">
+    <location id="3" name="closed" x="257.0" y="270.0">
       <invariant>y==0</invariant>
       <flow>y'==0</flow>
     </location>
-    <location id="4" name="shut" x="425.0" y="388.0" width="160.0" height="68.0">
+    <location id="4" name="shut" x="443.0" y="388.0" width="160.0" height="68.0">
       <invariant>y&gt;=0 &amp; -1&lt;=v_shut&lt;=0</invariant>
       <flow>y'==v_shut</flow>
     </location>
-    <location id="2" name="part" x="426.0" y="168.0">
+    <location id="2" name="part" x="438.0" y="168.0">
       <invariant>y&lt;=2</invariant>
       <flow>y'==1</flow>
     </location>
-    <location id="5" name="open" x="626.0" y="292.0">
+    <location id="5" name="open" x="649.0" y="281.0">
       <invariant>y==2</invariant>
       <flow>y'==0</flow>
     </location>
     <transition source="3" target="2">
       <label>openSD</label>
-      <labelposition x="7.0" y="-34.0" width="92.0" height="66.0" />
+      <labelposition x="17.0" y="-31.0" width="92.0" height="66.0" />
       <middlepoint x="276.0" y="168.5" />
     </transition>
     <transition source="4" target="2">
@@ -474,7 +475,7 @@
       <label>screenDoorsClosed</label>
       <guard>y==0</guard>
       <assignment>needclose=0</assignment>
-      <labelposition x="-196.0" y="-42.0" width="220.0" height="76.0" />
+      <labelposition x="-171.0" y="-51.0" width="220.0" height="76.0" />
       <middlepoint x="277.5" y="388.5" />
     </transition>
     <transition source="5" target="4">
@@ -486,7 +487,7 @@
     <transition source="2" target="5">
       <guard>y==2</guard>
       <labelposition x="-67.0" y="-55.0" />
-      <middlepoint x="569.0" y="171.0" />
+      <middlepoint x="610.0" y="169.0" />
     </transition>
     <transition source="5" target="4">
       <guard>needclose==1</guard>
@@ -526,7 +527,7 @@
     <param name="sd_7_closed" type="label" local="false" placement="east" />
     <param name="sd_8_closed" type="label" local="false" placement="east" />
     <param name="stationid" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
-    <param name="dir" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="dir" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
     <param name="sdid" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <location id="1" name="idle" x="1255.0" y="229.0" />
     <location id="2" name="about_to_open2" x="378.0" y="499.0" width="126.0" height="62.0">
@@ -564,6 +565,7 @@
       <invariant>z&lt;=5</invariant>
       <flow>z'==1</flow>
     </location>
+    <location id="11" name="loc1" x="282.0" y="634.0" />
     <transition source="1" target="2">
       <label>stop</label>
       <assignment>z=0</assignment>
@@ -572,8 +574,8 @@
     </transition>
     <transition source="2" target="9">
       <label>sd_1_openSD</label>
-      <guard>stationid==1 &amp; dir == 1 &amp; z==5</guard>
-      <assignment>sdid=1</assignment>
+      <guard>stationid==0 &amp; dir == 1 &amp; z&gt;=0</guard>
+      <assignment>sdid=1 &amp; z=0</assignment>
       <labelposition x="-103.0" y="-18.0" width="198.0" height="58.0" />
       <middlepoint x="543.0" y="277.0" />
       <waypoints>
@@ -583,8 +585,8 @@
     </transition>
     <transition source="2" target="9">
       <label>sd_2_openSD</label>
-      <guard>stationid==2 &amp; dir == 1 &amp; z==5</guard>
-      <assignment>sdid=2</assignment>
+      <guard>stationid==1 &amp; dir == 1 &amp; z&gt;=5</guard>
+      <assignment>sdid=2 &amp; z=0</assignment>
       <labelposition x="-98.0" y="-17.0" width="212.0" height="58.0" />
       <middlepoint x="531.0" y="342.0" />
       <waypoints>
@@ -594,8 +596,8 @@
     </transition>
     <transition source="2" target="9">
       <label>sd_3_openSD</label>
-      <guard>stationid==3 &amp; dir == 1 &amp; z==5</guard>
-      <assignment>sdid=3</assignment>
+      <guard>stationid==2 &amp; dir == 1 &amp; z&gt;=5</guard>
+      <assignment>sdid=3 &amp; z=0</assignment>
       <labelposition x="-93.0" y="-17.0" width="198.0" height="54.0" />
       <middlepoint x="534.0" y="405.0" />
       <waypoints>
@@ -605,8 +607,8 @@
     </transition>
     <transition source="2" target="9">
       <label>sd_4_openSD</label>
-      <guard>stationid==4 &amp; dir ==1 &amp; z==5</guard>
-      <assignment>sdid=4</assignment>
+      <guard>stationid==3 &amp; dir ==1 &amp; z&gt;=5</guard>
+      <assignment>sdid=4 &amp; z=0</assignment>
       <labelposition x="-104.0" y="-20.0" width="202.0" height="62.0" />
       <middlepoint x="537.0" y="460.0" />
       <waypoints>
@@ -616,9 +618,9 @@
     </transition>
     <transition source="2" target="9">
       <label>sd_5_openSD</label>
-      <guard>stationid==4 &amp; dir==-1 &amp; z==5</guard>
-      <assignment>sdid=5</assignment>
-      <labelposition x="-100.0" y="-26.0" width="204.0" height="70.0" />
+      <guard>stationid==3 &amp; dir==-1 &amp; z&gt;=5</guard>
+      <assignment>sdid=5 &amp; z=0</assignment>
+      <labelposition x="-104.0" y="-39.0" width="204.0" height="70.0" />
       <middlepoint x="537.0" y="524.0" />
       <waypoints>
         <beforemiddle>452.0,523.0</beforemiddle>
@@ -627,9 +629,9 @@
     </transition>
     <transition source="2" target="9">
       <label>sd_6_openSD</label>
-      <guard>stationid==3 &amp; dir==-1 &amp; z==5</guard>
-      <assignment>sdid=6</assignment>
-      <labelposition x="-23.0" y="-20.0" width="200.0" height="54.0" />
+      <guard>stationid==2 &amp; dir==-1 &amp; z&gt;=5</guard>
+      <assignment>sdid=6 &amp; z=0</assignment>
+      <labelposition x="-106.0" y="-24.0" width="200.0" height="54.0" />
       <middlepoint x="535.0" y="586.0" />
       <waypoints>
         <beforemiddle>447.0,585.0</beforemiddle>
@@ -638,9 +640,9 @@
     </transition>
     <transition source="2" target="9">
       <label>sd_7_openSD</label>
-      <guard>stationid==2 &amp; dir ==-1 &amp; z==5</guard>
-      <assignment>sdid=7</assignment>
-      <labelposition x="-21.0" y="-21.0" width="200.0" height="54.0" />
+      <guard>stationid==1 &amp; dir ==-1 &amp; z&gt;=5</guard>
+      <assignment>sdid=7 &amp; z=0</assignment>
+      <labelposition x="-103.0" y="-21.0" width="200.0" height="54.0" />
       <middlepoint x="538.5" y="639.5" />
       <waypoints>
         <beforemiddle>446.0,639.0</beforemiddle>
@@ -649,8 +651,8 @@
     </transition>
     <transition source="2" target="9">
       <label>sd_8_openSD</label>
-      <guard>stationid==1 &amp; dir==-1 &amp; z==5</guard>
-      <assignment>sdid=8</assignment>
+      <guard>stationid==0 &amp; dir==-1 &amp; z&gt;=5</guard>
+      <assignment>sdid=8 &amp; z=0</assignment>
       <labelposition x="-99.0" y="-22.0" width="204.0" height="66.0" />
       <middlepoint x="539.5" y="695.5" />
       <waypoints>
@@ -863,6 +865,10 @@
         <aftermiddle>1631.0,230.0</aftermiddle>
       </waypoints>
     </transition>
+    <transition source="2" target="11">
+      <guard>stationid&gt;=0</guard>
+      <labelposition x="-97.0" y="-51.0" width="110.0" height="52.0" />
+    </transition>
   </component>
   <component id="urgentcontrol">
     <param name="t" type="real" local="true" d1="1" d2="1" dynamics="any" />
@@ -870,10 +876,10 @@
     <param name="pos2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
     <param name="pos3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
     <param name="pos4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
-    <param name="dir1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
-    <param name="dir2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
-    <param name="dir3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
-    <param name="dir4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="dir1" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="dir2" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="dir3" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="dir4" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
     <param name="urstopped_1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
     <param name="urstopped_2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
     <param name="urstopped_3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" />
@@ -888,233 +894,243 @@
     <param name="urstart_4" type="real" local="false" d1="1" d2="1" dynamics="any" />
     <param name="i" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <param name="N" type="real" local="false" d1="1" d2="1" dynamics="const" />
-    <location id="1" name="Delay" x="244.0" y="575.0">
+    <location id="1" name="Delay" x="875.0" y="784.0">
       <invariant>t&lt;=150</invariant>
       <flow>t'==1</flow>
     </location>
-    <location id="2" name="D1" x="444.0" y="576.0">
+    <location id="2" name="D1" x="874.0" y="656.0" width="164.0" height="84.0">
       <invariant>t&lt;=1</invariant>
       <flow>t'==1</flow>
     </location>
-    <location id="3" name="loc1" x="716.0" y="575.0">
+    <location id="3" name="loc1" x="1414.0" y="701.0">
       <invariant>t&lt;=0.1</invariant>
       <flow>t'==1</flow>
     </location>
-    <location id="4" name="loc2" x="922.0" y="575.0">
+    <location id="4" name="loc2" x="1628.0" y="491.0">
       <invariant>t&lt;=0.1</invariant>
       <flow>t'==1</flow>
     </location>
-    <location id="5" name="tmp" x="813.0" y="379.0" width="60.0" height="134.0">
+    <location id="5" name="tmp" x="1526.0" y="281.0" width="60.0" height="134.0">
       <invariant>t&lt;=0.1</invariant>
       <flow>t'==1</flow>
     </location>
-    <location id="6" name="loc3" x="573.0" y="378.0" width="74.0" height="120.0">
+    <location id="6" name="loc3" x="881.0" y="273.0" width="150.0" height="98.0">
       <invariant>t&lt;=0.1</invariant>
       <flow>t'==1</flow>
     </location>
-    <location id="7" name="loc4" x="921.0" y="656.0">
+    <location id="7" name="loc4" x="1782.0" y="495.0">
       <invariant>t&lt;=0.1</invariant>
       <flow>t'==1</flow>
     </location>
-    <location id="10" name="loc7" x="922.0" y="738.0">
+    <location id="10" name="loc7" x="1707.0" y="598.0">
       <invariant>t&lt;=0.1</invariant>
       <flow>t'==1</flow>
     </location>
-    <location id="8" name="loc5" x="924.0" y="819.0">
+    <location id="8" name="loc5" x="1712.0" y="688.0">
       <invariant>t&lt;=0.1</invariant>
       <flow>t'==1</flow>
     </location>
     <transition source="1" target="2">
       <guard>t==150</guard>
       <assignment>t=0</assignment>
-      <labelposition x="-63.0" y="-47.0" width="128.0" height="86.0" />
+      <labelposition x="-95.0" y="-47.0" width="128.0" height="86.0" />
     </transition>
     <transition source="2" target="2">
       <guard>i==N &amp; t==1</guard>
       <assignment>i=0</assignment>
       <labelposition x="5.0" y="-27.0" width="90.0" height="66.0" />
-      <middlepoint x="48.0" y="67.0" />
+      <middlepoint x="53.0" y="74.0" />
     </transition>
     <transition source="2" target="3">
       <guard>i &lt; N  &amp; t==1</guard>
       <assignment>t=0</assignment>
-      <labelposition x="-87.0" y="-71.0" width="172.0" height="74.0" />
+      <labelposition x="18.0" y="-48.0" width="172.0" height="74.0" />
+      <middlepoint x="1203.5" y="598.0" />
+      <waypoints>
+        <aftermiddle>1382.0,599.0</aftermiddle>
+      </waypoints>
     </transition>
     <transition source="3" target="4">
       <guard>i==1 &amp; dir1==dir2</guard>
       <assignment>t=0</assignment>
-      <labelposition x="-65.0" y="-51.0" width="146.0" height="86.0" />
+      <labelposition x="-24.0" y="-94.0" width="146.0" height="60.0" />
+      <middlepoint x="1484.5" y="570.5" />
     </transition>
     <transition source="4" target="5">
-      <guard>dir1*(pos1-pos2)&lt;=300</guard>
-      <assignment>urstop_2=1 &amp; t=0 &amp; urstart_2=0</assignment>
-      <labelposition x="-151.0" y="19.0" width="236.0" height="68.0" />
-      <middlepoint x="883.5" y="432.0" />
+      <guard>dir1==1 &amp; 
+pos1-pos2&lt;=300</guard>
+      <assignment>urstop_2=1 &amp; t=0 
+&amp; urstart_2=0</assignment>
+      <labelposition x="-124.0" y="18.0" width="132.0" height="108.0" />
+      <middlepoint x="1596.5" y="334.0" />
       <waypoints>
-        <beforemiddle>884.0,527.0</beforemiddle>
+        <beforemiddle>1597.0,429.0</beforemiddle>
       </waypoints>
     </transition>
     <transition source="5" target="6">
       <guard>urstopped_1==1</guard>
       <assignment>urstop_1=0</assignment>
-      <labelposition x="-172.0" y="-35.0" width="198.0" height="62.0" />
-      <middlepoint x="774.0" y="311.5" />
+      <labelposition x="-482.0" y="-38.0" width="198.0" height="62.0" />
+      <middlepoint x="1487.0" y="213.5" />
       <waypoints>
-        <aftermiddle>626.0,312.0</aftermiddle>
+        <aftermiddle>952.0,214.0</aftermiddle>
       </waypoints>
     </transition>
     <transition source="6" target="2">
-      <guard>(!(dir1 == dir2) | dir1*(pos1-pos2)&gt;300)
-&amp; urstopped_2==1</guard>
+      <guard>dir1 + dir2==0 &amp; urstopped_2==1</guard>
       <assignment>urstart_2=1 &amp; i=i+1</assignment>
-      <labelposition x="-240.0" y="-75.0" width="254.0" height="90.0" />
-      <middlepoint x="572.0" y="497.5" />
+      <labelposition x="-458.0" y="211.0" width="412.0" height="64.0" />
+      <middlepoint x="864.0" y="420.5" />
       <waypoints>
-        <beforemiddle>571.0,461.0</beforemiddle>
-        <aftermiddle>468.0,514.0</aftermiddle>
+        <aftermiddle>863.0,456.0,850.0,552.0</aftermiddle>
       </waypoints>
     </transition>
     <transition source="3" target="7">
       <guard>i==2 &amp; dir2==dir3</guard>
       <assignment>t=0</assignment>
-      <labelposition x="-26.0" y="-60.0" width="144.0" height="58.0" />
-      <middlepoint x="781.0" y="654.5" />
+      <labelposition x="-3.0" y="-43.0" width="144.0" height="58.0" />
+      <middlepoint x="1540.0" y="564.5" />
+      <waypoints>
+        <aftermiddle>1716.0,552.0</aftermiddle>
+      </waypoints>
     </transition>
     <transition source="3" target="10">
       <guard>i==3 &amp; dir3==dir4</guard>
       <assignment>t=0</assignment>
-      <labelposition x="-21.0" y="-60.0" width="124.0" height="56.0" />
-      <middlepoint x="777.0" y="738.0" />
+      <labelposition x="-69.0" y="-58.0" width="124.0" height="56.0" />
+      <middlepoint x="1578.0" y="656.0" />
       <waypoints>
-        <beforemiddle>749.0,722.0</beforemiddle>
+        <beforemiddle>1508.0,657.0</beforemiddle>
       </waypoints>
     </transition>
     <transition source="7" target="5">
-      <guard>dir2*(pos2-pos3)&lt;=300</guard>
-      <assignment>urstop_3=1 &amp; t=0 &amp;urstart_3=0</assignment>
-      <labelposition x="-13.0" y="88.0" width="216.0" height="94.0" />
-      <middlepoint x="992.0" y="408.5" />
+      <guard>dir2==1 &amp; 
+pos2-pos3&lt;=300</guard>
+      <assignment>urstop_3=1 &amp; t=0 
+&amp;urstart_3=0</assignment>
+      <labelposition x="67.0" y="34.0" width="118.0" height="92.0" />
+      <middlepoint x="1705.0" y="310.5" />
       <waypoints>
-        <beforemiddle>993.0,654.0</beforemiddle>
-        <aftermiddle>939.0,377.0</aftermiddle>
+        <beforemiddle>1771.0,349.0</beforemiddle>
+        <aftermiddle>1652.0,279.0</aftermiddle>
       </waypoints>
     </transition>
     <transition source="5" target="6">
       <guard>urstopped_2==1</guard>
       <assignment>urstop_2=0</assignment>
-      <labelposition x="-32.0" y="-40.0" width="196.0" height="64.0" />
-      <middlepoint x="631.0" y="358.5" />
+      <labelposition x="263.0" y="-42.0" width="196.0" height="64.0" />
+      <middlepoint x="990.0" y="246.5" />
       <waypoints>
-        <beforemiddle>765.0,359.0</beforemiddle>
+        <beforemiddle>1478.0,246.0</beforemiddle>
       </waypoints>
     </transition>
     <transition source="5" target="6">
       <guard>urstopped_3==1</guard>
       <assignment>urstop_3=0</assignment>
-      <labelposition x="-12.0" y="-40.0" width="138.0" height="64.0" />
-      <middlepoint x="639.0" y="402.5" />
+      <labelposition x="169.0" y="-44.0" width="138.0" height="64.0" />
+      <middlepoint x="979.0" y="292.5" />
       <waypoints>
-        <beforemiddle>759.0,403.0</beforemiddle>
+        <beforemiddle>1463.0,290.0</beforemiddle>
       </waypoints>
     </transition>
     <transition source="5" target="6">
       <guard>urstopped_4==1</guard>
       <assignment>urstop_4=0</assignment>
-      <labelposition x="20.0" y="-39.0" width="110.0" height="60.0" />
-      <middlepoint x="622.0" y="443.5" />
+      <labelposition x="364.0" y="-42.0" width="110.0" height="60.0" />
+      <middlepoint x="991.0" y="320.5" />
       <waypoints>
-        <beforemiddle>769.0,443.0</beforemiddle>
+        <beforemiddle>1478.0,319.0</beforemiddle>
       </waypoints>
     </transition>
     <transition source="10" target="5">
-      <guard>dir3*(pos3-pos4)&lt;=300</guard>
+      <guard>dir3==1 &amp; pos3-pos4&lt;=300</guard>
       <assignment>urstop_4=1 &amp; t=0 &amp; urstart_4=0</assignment>
-      <labelposition x="-191.0" y="-42.0" width="218.0" height="82.0" />
-      <middlepoint x="1153.0" y="736.0" />
+      <labelposition x="-192.0" y="-41.0" width="218.0" height="82.0" />
+      <middlepoint x="2010.0" y="521.0" />
       <waypoints>
-        <aftermiddle>1151.0,471.0,958.0,358.0,892.0,357.0</aftermiddle>
+        <beforemiddle>1756.0,542.0</beforemiddle>
+        <aftermiddle>2011.0,352.0,1671.0,260.0,1605.0,259.0</aftermiddle>
       </waypoints>
     </transition>
     <transition source="6" target="2">
-      <guard>(!(dir2 == dir3) | dir2*(pos2-pos3)&gt;300)
-&amp; urstopped_3==1</guard>
+      <guard>dir2 + dir3 ==0&amp; urstopped_3==1</guard>
       <assignment>urstart_3=1&amp; i=i+1</assignment>
-      <labelposition x="-37.0" y="-56.0" width="264.0" height="86.0" />
-      <middlepoint x="337.5" y="376.0" />
+      <labelposition x="-360.0" y="91.0" width="210.0" height="58.0" />
+      <middlepoint x="847.5" y="374.0" />
       <waypoints>
-        <beforemiddle>515.0,375.0</beforemiddle>
-        <aftermiddle>338.0,482.0</aftermiddle>
+        <aftermiddle>838.0,449.0,829.0,549.0,841.0,590.0</aftermiddle>
       </waypoints>
     </transition>
     <transition source="6" target="2">
-      <guard>(!(dir3 == dir4) | dir3*(pos3-pos4)&gt;300)
-&amp; urstopped_4==1</guard>
+      <guard>dir3 + dir4 ==0 &amp; urstopped_4==1</guard>
       <assignment>urstart_4=1 &amp; i=i+1</assignment>
-      <labelposition x="3.0" y="-245.0" width="266.0" height="88.0" />
-      <middlepoint x="288.5" y="477.0" />
+      <labelposition x="-352.0" y="-354.0" width="346.0" height="54.0" />
+      <middlepoint x="811.5" y="536.0" />
       <waypoints>
-        <beforemiddle>533.0,292.0,288.0,290.0</beforemiddle>
+        <beforemiddle>825.0,356.0</beforemiddle>
+        <aftermiddle>814.0,570.0</aftermiddle>
       </waypoints>
     </transition>
     <transition source="6" target="2">
-      <guard>(!(dir4 == dir1) | dir4*(pos4-pos1)&gt;300)
-&amp; urstopped_1==1</guard>
+      <guard>dir4 + dir1==0&amp; urstopped_1==1</guard>
       <assignment>urstart_1=1 &amp; i=i+1</assignment>
-      <labelposition x="19.0" y="-292.0" width="304.0" height="78.0" />
-      <middlepoint x="247.5" y="464.0" />
+      <labelposition x="-318.0" y="-261.0" width="238.0" height="64.0" />
+      <middlepoint x="801.5" y="595.0" />
       <waypoints>
-        <beforemiddle>560.0,230.0,247.0,228.0</beforemiddle>
+        <beforemiddle>818.0,325.0,794.0,349.0,787.0,568.0</beforemiddle>
+        <aftermiddle>811.0,610.0</aftermiddle>
       </waypoints>
     </transition>
     <transition source="3" target="8">
       <guard>i==4 &amp; dir4==dir1</guard>
       <assignment>t=0</assignment>
-      <labelposition x="-7.0" y="-46.0" width="140.0" height="74.0" />
-      <middlepoint x="742.0" y="818.0" />
+      <labelposition x="39.0" y="-49.0" width="140.0" height="74.0" />
+      <middlepoint x="1477.0" y="690.0" />
     </transition>
     <transition source="8" target="5">
-      <guard>dir4*(pos4-pos1)&lt;=300</guard>
+      <guard>dir4==1 &amp; pos4-pos1&lt;=300</guard>
       <assignment>urstop_1=1 &amp; t=0 &amp; urstart_1=0</assignment>
-      <labelposition x="-213.0" y="-44.0" width="208.0" height="88.0" />
-      <middlepoint x="1179.5" y="819.0" />
+      <labelposition x="-236.0" y="-49.0" width="208.0" height="88.0" />
+      <middlepoint x="2064.5" y="660.0" />
       <waypoints>
-        <aftermiddle>1177.0,454.0,981.0,340.0,855.0,340.0</aftermiddle>
+        <beforemiddle>1762.0,665.0</beforemiddle>
+        <aftermiddle>2063.0,285.0,1694.0,242.0,1568.0,242.0</aftermiddle>
       </waypoints>
     </transition>
     <transition source="3" target="2">
-      <guard>i==1 &amp; !(dir1 == dir2)</guard>
+      <guard>i==1 &amp; dir1 + dir2 ==0</guard>
       <assignment>i=i+1</assignment>
-      <labelposition x="-12.0" y="-40.0" width="166.0" height="62.0" />
-      <middlepoint x="461.0" y="702.5" />
+      <labelposition x="36.0" y="-43.0" width="166.0" height="62.0" />
+      <middlepoint x="1165.0" y="636.5" />
       <waypoints>
-        <beforemiddle>627.0,704.0</beforemiddle>
+        <beforemiddle>1374.0,632.0</beforemiddle>
       </waypoints>
     </transition>
     <transition source="3" target="2">
-      <guard>i==2 &amp; !(dir2 == dir3)</guard>
+      <guard>i==2 &amp; dir2 + dir3==0</guard>
       <assignment>i=i+1</assignment>
-      <labelposition x="61.0" y="-35.0" width="190.0" height="56.0" />
-      <middlepoint x="454.0" y="731.5" />
+      <labelposition x="40.0" y="-39.0" width="190.0" height="56.0" />
+      <middlepoint x="1135.0" y="669.5" />
       <waypoints>
-        <beforemiddle>667.0,734.0</beforemiddle>
+        <beforemiddle>1374.0,670.0</beforemiddle>
       </waypoints>
     </transition>
     <transition source="3" target="2">
-      <guard>i==3 &amp; !(dir3 == dir4)</guard>
+      <guard>i==3 &amp; dir3 + dir4==0</guard>
       <assignment>i=i+1</assignment>
-      <labelposition x="0.0" y="-37.0" width="142.0" height="58.0" />
-      <middlepoint x="451.0" y="759.5" />
+      <labelposition x="45.0" y="-36.0" width="142.0" height="58.0" />
+      <middlepoint x="1138.0" y="714.5" />
       <waypoints>
-        <beforemiddle>677.0,762.0</beforemiddle>
+        <beforemiddle>1358.0,714.0</beforemiddle>
       </waypoints>
     </transition>
     <transition source="3" target="2">
-      <guard>i==4 &amp; !(dir4 == dir1)</guard>
+      <guard>i==4 &amp; dir4 + dir1==0</guard>
       <assignment>i=i+1</assignment>
-      <labelposition x="80.0" y="-44.0" width="192.0" height="70.0" />
-      <middlepoint x="442.0" y="791.5" />
+      <labelposition x="33.0" y="-41.0" width="192.0" height="70.0" />
+      <middlepoint x="1118.0" y="754.5" />
       <waypoints>
-        <beforemiddle>691.0,794.0</beforemiddle>
+        <beforemiddle>1370.0,754.0</beforemiddle>
       </waypoints>
     </transition>
     <transition source="5" target="2">
@@ -1122,16 +1138,200 @@
 urstopped_2+
 urstopped_3+
 urstopped_4==0</guard>
-      <labelposition x="-157.0" y="-26.0" width="140.0" height="104.0" />
-      <middlepoint x="609.5" y="484.5" />
+      <labelposition x="-114.0" y="-97.0" width="140.0" height="104.0" />
+      <middlepoint x="1449.5" y="551.5" />
       <waypoints>
-        <beforemiddle>803.0,460.0</beforemiddle>
+        <beforemiddle>1484.0,357.0</beforemiddle>
+        <aftermiddle>1248.0,567.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="4" target="5">
+      <guard>dir1==-1 &amp; 
+pos2-pos1&lt;=300</guard>
+      <assignment>urstop_2=1 &amp; t=0 
+&amp; urstart_2=0</assignment>
+      <labelposition x="1.0" y="-16.0" width="120.0" height="88.0" />
+      <middlepoint x="1634.5" y="333.0" />
+    </transition>
+    <transition source="7" target="5">
+      <guard>dir2==-1 &amp; 
+pos3-pos2&lt;=300</guard>
+      <assignment>urstop_3=1 &amp; t=0 
+&amp;urstart_3=0</assignment>
+      <labelposition x="3.0" y="-102.0" width="118.0" height="94.0" />
+      <middlepoint x="1889.0" y="472.5" />
+      <waypoints>
+        <aftermiddle>1888.0,346.0,1623.0,266.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="10" target="5">
+      <guard>dir3==-1 &amp; pos4-pos3&lt;=300</guard>
+      <assignment>urstop_4=1 &amp; t=0 &amp; urstart_4=0</assignment>
+      <labelposition x="-294.0" y="-42.0" width="228.0" height="72.0" />
+      <middlepoint x="2040.5" y="600.0" />
+      <waypoints>
+        <aftermiddle>2039.0,323.0,1685.0,249.0,1596.0,249.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="8" target="5">
+      <guard>dir4==-1 &amp; pos1-pos4&lt;=300</guard>
+      <assignment>urstop_1=1 &amp; t=0 &amp; urstart_1=0</assignment>
+      <labelposition x="-212.0" y="-531.0" width="214.0" height="84.0" />
+      <middlepoint x="2089.5" y="709.0" />
+      <waypoints>
+        <beforemiddle>1770.0,712.0</beforemiddle>
+        <aftermiddle>2090.0,227.0,1567.0,224.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir1==1 &amp; dir1 == dir4 &amp; pos4-pos1&gt;300 &amp; urstopped_1==1</guard>
+      <assignment>urstart_1=1 &amp; i=i+1</assignment>
+      <labelposition x="-437.0" y="27.0" width="432.0" height="58.0" />
+      <middlepoint x="806.0" y="352.5" />
+      <waypoints>
+        <beforemiddle>823.0,326.0</beforemiddle>
+        <aftermiddle>804.0,380.0,800.0,573.0,821.0,608.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir1==-1 &amp; dir1 == dir4 &amp; pos1-pos4&gt;300 &amp; urstopped_1==1</guard>
+      <assignment>urstart_1=1 &amp; i=i+1</assignment>
+      <labelposition x="-431.0" y="67.0" width="408.0" height="68.0" />
+      <middlepoint x="817.0" y="350.5" />
+      <waypoints>
+        <aftermiddle>806.0,564.0,816.0,591.0,825.0,607.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir4==1 &amp; dir4==dir3 &amp; pos3-pos4&gt;300 &amp; urstopped_4==1</guard>
+      <assignment>urstart_4=1 &amp; i=i+1</assignment>
+      <labelposition x="-397.0" y="-144.0" width="354.0" height="70.0" />
+      <middlepoint x="833.0" y="363.5" />
+      <waypoints>
+        <aftermiddle>815.0,556.0,820.0,568.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir4==-1 &amp; dir4==dir3 &amp; pos4-pos3&gt;300 &amp; urstopped_4==1</guard>
+      <assignment>urstart_4=1 &amp; i=i+1</assignment>
+      <labelposition x="-431.0" y="-90.0" width="372.0" height="68.0" />
+      <middlepoint x="840.0" y="369.5" />
+      <waypoints>
+        <aftermiddle>820.0,552.0,826.0,573.0,843.0,601.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir3==1 &amp; dir3 ==dir2 &amp; pos2-pos3&gt;300 &amp; urstopped_3==1</guard>
+      <assignment>urstart_3=1 &amp; i=i+1</assignment>
+      <labelposition x="-436.0" y="133.0" width="356.0" height="64.0" />
+      <middlepoint x="855.0" y="381.5" />
+      <waypoints>
+        <aftermiddle>836.0,556.0,845.0,587.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir3==-1 &amp; dir3 ==dir2 &amp; pos3-pos2&gt;300 &amp; urstopped_3==1</guard>
+      <assignment>urstart_3=1 &amp; i=i+1</assignment>
+      <labelposition x="-455.0" y="178.0" width="382.0" height="60.0" />
+      <middlepoint x="861.0" y="385.0" />
+      <waypoints>
+        <aftermiddle>840.0,550.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir2 == 1 &amp; dir2==dir1 &amp;  pos1-pos2&gt;300 &amp; urstopped_2==1</guard>
+      <assignment>urstart_2=1 &amp; i=i+1</assignment>
+      <labelposition x="-467.0" y="252.0" width="384.0" height="64.0" />
+      <middlepoint x="876.0" y="423.0" />
+      <waypoints>
+        <aftermiddle>860.0,546.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir2 == -1 &amp; dir2==dir1 &amp;  pos2-pos1&gt;300 &amp; urstopped_2==1</guard>
+      <assignment>urstart_2=1 &amp; i=i+1</assignment>
+      <labelposition x="-470.0" y="179.0" width="378.0" height="92.0" />
+      <middlepoint x="886.0" y="523.0" />
+      <waypoints>
+        <beforemiddle>899.0,410.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir1==1 &amp; dir4==dir1 &amp; pos4-pos1&lt;=300 &amp; urstopped_1==1</guard>
+      <labelposition x="1.0" y="-95.0" width="416.0" height="50.0" />
+      <middlepoint x="906.5" y="409.0" />
+      <waypoints>
+        <aftermiddle>893.0,523.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir1==-1 &amp; dir4==dir1 &amp; pos1-pos4&lt;=300 &amp; urstopped_1==1</guard>
+      <labelposition x="23.0" y="-68.0" width="402.0" height="50.0" />
+      <middlepoint x="913.5" y="402.0" />
+      <waypoints>
+        <aftermiddle>900.0,525.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir2==1 &amp; dir1==dir2 &amp; pos1-pos2&lt;=300 &amp; urstopped_2==1</guard>
+      <labelposition x="24.0" y="-39.0" width="392.0" height="50.0" />
+      <middlepoint x="921.5" y="405.0" />
+      <waypoints>
+        <aftermiddle>906.0,527.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir2==-1 &amp; dir1==dir2 &amp; pos2-pos1&lt;=300 &amp; urstopped_2==1</guard>
+      <labelposition x="21.0" y="-18.0" width="378.0" height="50.0" />
+      <middlepoint x="929.5" y="409.0" />
+      <waypoints>
+        <beforemiddle>920.0,381.0</beforemiddle>
+        <aftermiddle>912.0,531.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir3==1 &amp; dir2==dir3 &amp; pos2-pos3&lt;=300 &amp; urstopped_3==1</guard>
+      <labelposition x="23.0" y="-92.0" width="410.0" height="50.0" />
+      <middlepoint x="920.5" y="536.0" />
+      <waypoints>
+        <beforemiddle>926.0,376.0,935.0,408.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir3==-1 &amp; dir2==dir3 &amp; pos3-pos2&lt;=300 &amp; urstopped_3==1</guard>
+      <labelposition x="-7.0" y="10.0" width="402.0" height="52.0" />
+      <middlepoint x="943.5" y="404.0" />
+      <waypoints>
+        <aftermiddle>930.0,536.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir4==1 &amp; dir3==dir4 &amp; pos3-pos4&lt;=300 &amp; urstopped_4==1</guard>
+      <labelposition x="-3.0" y="65.0" width="384.0" height="58.0" />
+      <middlepoint x="951.5" y="400.0" />
+      <waypoints>
+        <aftermiddle>939.0,536.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="2">
+      <guard>dir4==-1 &amp; dir3==dir4 &amp; pos4-pos3&lt;=300 &amp; urstopped_4==1</guard>
+      <labelposition x="0.0" y="97.0" width="364.0" height="50.0" />
+      <middlepoint x="957.5" y="400.0" />
+      <waypoints>
+        <aftermiddle>948.0,537.0</aftermiddle>
       </waypoints>
     </transition>
   </component>
+  <component id="clock">
+    <param name="globalTime" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <location id="1" name="idle" x="345.0" y="225.0" width="324.0" height="118.0">
+      <invariant>globalTime&gt;=0</invariant>
+      <flow>globalTime'==1</flow>
+    </location>
+  </component>
   <component id="trainsys">
     <param name="pos" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
-    <param name="dir" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="dir" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
     <param name="openTD" type="label" local="true" controlled="true" />
     <param name="closeTD" type="label" local="true" controlled="true" />
     <param name="sd_1_openSD" type="label" controlled="true" local="false" />
@@ -1165,6 +1365,7 @@ urstopped_4==0</guard>
     <param name="urstart" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
     <param name="urstop" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
     <param name="stationid" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="Delay" type="real" local="false" d1="1" d2="1" dynamics="const" controlled="false" />
     <bind component="train" as="train" x="405.0" y="106.0" width="192.0" height="120.0">
       <map key="pos">pos</map>
       <map key="dir">dir</map>
@@ -1173,8 +1374,9 @@ urstopped_4==0</guard>
       <map key="urstopped">urstopped</map>
       <map key="urstart">urstart</map>
       <map key="urstop">urstop</map>
-      <map key="N">4</map>
       <map key="j">stationid</map>
+      <map key="N">4</map>
+      <map key="Delay">Delay</map>
     </bind>
     <bind component="traindoors" as="traindoors" x="432.0" y="239.0" width="248.0" height="80.0">
       <map key="openTD">openTD</map>
@@ -1220,10 +1422,10 @@ urstopped_4==0</guard>
     <param name="pos2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="86.0" y="-44.0" />
     <param name="pos3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="85.0" y="-52.0" />
     <param name="pos4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="85.0" y="-59.0" />
-    <param name="dir1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
-    <param name="dir2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
-    <param name="dir3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
-    <param name="dir4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="dir1" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="dir2" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="dir3" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="dir4" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
     <param name="closeSD" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
     <param name="sd_1_openSD" type="label" controlled="true" local="false" />
     <param name="sd_2_openSD" type="label" controlled="true" local="false" />
@@ -1261,6 +1463,7 @@ urstopped_4==0</guard>
     <param name="urstart_2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
     <param name="urstart_3" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
     <param name="urstart_4" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="globalTime" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
     <bind component="trainsys" as="trainsys_1" x="472.0" y="427.0" width="270.0" height="342.0">
       <map key="dir">dir1</map>
       <map key="sd_1_openSD">sd_1_openSD</map>
@@ -1291,6 +1494,7 @@ urstopped_4==0</guard>
       <map key="urstart">urstart_1</map>
       <map key="urstop">urstop_1</map>
       <map key="pos">pos1</map>
+      <map key="Delay">0</map>
     </bind>
     <bind component="trainsys" as="trainsys_2" x="474.0" y="796.0" width="276.0" height="342.0">
       <map key="dir">dir2</map>
@@ -1322,6 +1526,7 @@ urstopped_4==0</guard>
       <map key="urstart">urstart_2</map>
       <map key="urstop">urstop_2</map>
       <map key="pos">pos2</map>
+      <map key="Delay">50</map>
     </bind>
     <bind component="trainsys" as="trainsys_3" x="799.0" y="428.0" width="258.0" height="340.0">
       <map key="dir">dir3</map>
@@ -1353,6 +1558,7 @@ urstopped_4==0</guard>
       <map key="urstart">urstart_3</map>
       <map key="urstop">urstop_3</map>
       <map key="pos">pos3</map>
+      <map key="Delay">100</map>
     </bind>
     <bind component="trainsys" as="trainsys_4" x="795.0" y="794.0" width="264.0" height="340.0">
       <map key="dir">dir4</map>
@@ -1384,6 +1590,7 @@ urstopped_4==0</guard>
       <map key="urstart">urstart_4</map>
       <map key="urstop">urstop_4</map>
       <map key="pos">pos4</map>
+      <map key="Delay">150</map>
     </bind>
     <bind component="urgentcontrol" as="urgentcontrol" x="1162.0" y="337.0" width="286.0" height="260.0">
       <map key="pos1">pos1</map>
@@ -1447,6 +1654,9 @@ urstopped_4==0</guard>
       <map key="openSD">sd_8_openSD</map>
       <map key="closeSD">sd_8_closeSD</map>
       <map key="screenDoorsClosed">sd_8_closed</map>
+    </bind>
+    <bind component="clock" as="clock" x="474.0" y="121.0" width="158.0" height="52.0">
+      <map key="globalTime">globalTime</map>
     </bind>
   </component>
 </sspaceex>
