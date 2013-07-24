@@ -1,0 +1,1459 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<sspaceex xmlns="http://www-verimag.imag.fr/xml-namespaces/sspaceex" version="0.2" math="SpaceEx">
+  <component id="train">
+    <param name="j" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="pos" type="real" local="false" d1="1" d2="1" dynamics="any" placement="west" />
+    <param name="v" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="dir" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="true" placement="east" />
+    <param name="time" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="urstopped" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="Delay" type="real" local="false" d1="1" d2="1" dynamics="const" controlled="false" />
+    <param name="S" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="acc" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="stop" type="label" local="false" />
+    <param name="start" type="label" local="false" />
+    <param name="maxp" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="N" type="real" local="false" d1="1" d2="1" dynamics="const" />
+    <param name="tau" type="label" local="true" />
+    <param name="urStop" type="label" local="false" />
+    <param name="urStart" type="label" local="false" />
+    <location id="1" name="init" x="961.0" y="101.0" width="168.0" height="90.0">
+      <invariant>time&lt;=Delay</invariant>
+      <flow>time'==1 &amp; v'==0 &amp; S'==0 &amp;
+pos'==0 &amp; dir'==0&amp;j'==0</flow>
+    </location>
+    <location id="2" name="stopAtStation" x="961.0" y="377.0" width="270.0" height="62.0">
+      <invariant>v==0 &amp; pos==S &amp; time==0</invariant>
+      <flow>pos'==v &amp; v'==0 &amp; dir'==0&amp;j'==0 &amp; S'==0</flow>
+    </location>
+    <location id="3" name="ChangeDirection" x="960.0" y="531.0" width="174.0" height="80.0">
+      <invariant>0&lt;=time&lt;=30</invariant>
+      <flow>time'==1 &amp; dir'==0&amp;j'==0 
+&amp; S'==0 &amp; v'==0 &amp; pos'==0</flow>
+    </location>
+    <location id="4" name="run" x="711.0" y="512.0" width="162.0" height="90.0">
+      <invariant>S-pos&gt;=500 &amp; 0&lt;=v&lt;=20</invariant>
+      <flow>v'==0.5 &amp;  pos'==v 
+&amp; S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="5" name="stablerun" x="462.0" y="474.0" width="130.0" height="90.0">
+      <invariant>S-pos&gt;=500</invariant>
+      <flow>pos'==v &amp; v'==0 
+&amp; j'==0 &amp; dir'==0
+&amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="6" name="near" x="651.0" y="306.0" width="180.0" height="106.0">
+      <invariant>S-pos&gt;=0 &amp; 0&gt;=acc&gt;=-0.4
+&amp; v&gt;=0</invariant>
+      <flow>pos'==v &amp; v'==acc
+&amp; j'==0 &amp; dir'==0
+&amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="7" name="urgent_dec" x="413.0" y="318.0" width="132.0" height="102.0">
+      <invariant>v&gt;=0</invariant>
+      <flow>pos'==v &amp; v'==-1.5
+&amp; j'==0 &amp; dir'==0
+&amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="8" name="urgent_stop" x="325.0" y="162.0" width="126.0" height="96.0">
+      <invariant>v==0</invariant>
+      <flow>pos'==v &amp; v'==0
+&amp; j'==0 &amp; dir'==0
+&amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="11" name="preRun" x="924.0" y="689.0" width="126.0" height="82.0">
+      <invariant>0&lt;=time&lt;=0.1</invariant>
+      <flow>time'==1 &amp; S'==0 &amp;
+pos'==0 &amp; v'==0</flow>
+    </location>
+    <location id="12" name="run1" x="1220.0" y="508.0" width="168.0" height="98.0">
+      <invariant>pos-S&gt;=500 &amp; 0&lt;= v&lt;=20</invariant>
+      <flow>pos'==-v &amp; v'==0.5
+&amp; j'==0 &amp; dir'==0
+&amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="13" name="stablerun1" x="1482.0" y="483.0" width="146.0" height="94.0">
+      <invariant>pos-S&gt;=500</invariant>
+      <flow>pos'==-v &amp; v'==0
+&amp; j'==0 &amp; dir'==0
+&amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="14" name="urgent_dec1" x="1541.0" y="327.0" width="142.0" height="94.0">
+      <invariant>v&gt;=0</invariant>
+      <flow>pos'==-v &amp; v'==-1.5
+&amp; j'==0 &amp; dir'==0
+&amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="15" name="urgent_stop1" x="1613.0" y="159.0" width="132.0" height="96.0">
+      <invariant>v==0</invariant>
+      <flow>pos'==-v &amp; v'==0
+&amp; j'==0 &amp; dir'==0
+&amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="18" name="near1" x="1317.0" y="327.0" width="182.0" height="92.0">
+      <invariant>pos-S&gt;=0 &amp; 0&gt;=acc&gt;=-0.4</invariant>
+      <flow>pos'==-v &amp; v'==acc
+&amp; j'==0 &amp; dir'==0
+&amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="9" name="urgent_inc" x="517.0" y="109.0" width="174.0" height="100.0">
+      <invariant>pos&lt;=maxp</invariant>
+      <flow>pos'==v &amp; v'==0.5 &amp; 
+maxp'==0 &amp; j'==0 &amp; 
+dir'==0 &amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="10" name="urgent_recover" x="750.0" y="108.0" width="138.0" height="102.0">
+      <invariant>v&gt;=0 &amp; pos&lt;=S+1</invariant>
+      <flow>pos'==v &amp; v'==-0.5
+&amp; j'==0 &amp; dir'==0
+&amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="16" name="urgent_inc1" x="1422.0" y="96.0" width="172.0" height="104.0">
+      <invariant>pos&gt;=maxp</invariant>
+      <flow>pos'==-v &amp; v'==0.5 &amp; 
+maxp'==0 &amp; j'==0 &amp; 
+dir'==0 &amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <location id="17" name="urgent_recover1" x="1171.0" y="96.0" width="132.0" height="108.0">
+      <invariant>v&gt;=0 &amp; pos&gt;=S-1</invariant>
+      <flow>pos'==-v &amp; v'==-0.5
+&amp; j'==0 &amp; dir'==0
+&amp;S'==0 &amp; time'==0</flow>
+    </location>
+    <transition source="1" target="2">
+      <label>stop</label>
+      <guard>time==Delay</guard>
+      <assignment>j:=0 &amp; S:=0 &amp; v:=0 
+&amp; pos:=0 &amp; time:=0</assignment>
+      <labelposition x="-32.0" y="-26.0" width="198.0" height="76.0" />
+    </transition>
+    <transition source="3" target="2" bezier="true">
+      <label>stop</label>
+      <guard>time==30</guard>
+      <assignment>dir:=-1*dir 
+&amp; time:=0</assignment>
+      <labelposition x="-8.0" y="-13.0" width="122.0" height="76.0" />
+      <middlepoint x="983.0" y="428.0" />
+      <waypoints>
+        <beforemiddle>999.0,476.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="3">
+      <label>start</label>
+      <guard>j==N-1 &amp; dir ==1</guard>
+      <assignment>time:=0</assignment>
+      <labelposition x="-130.0" y="-38.0" width="124.0" height="66.0" />
+    </transition>
+    <transition source="4" target="5">
+      <label>tau</label>
+      <guard>v==20</guard>
+      <labelposition x="-19.0" y="-47.0" />
+      <middlepoint x="571.5" y="513.0" />
+    </transition>
+    <transition source="6" target="2">
+      <label>stop</label>
+      <guard>-1&lt;=S-pos&lt;=1 
+&amp; 0&lt;=v&lt;=0.1</guard>
+      <assignment>v:=0 &amp; pos:=S &amp; time:=0</assignment>
+      <labelposition x="-144.0" y="-33.0" width="192.0" height="70.0" />
+      <middlepoint x="871.0" y="305.0" />
+    </transition>
+    <transition source="4" target="6">
+      <label>tau</label>
+      <guard>S-pos&lt;=500</guard>
+      <labelposition x="-1.0" y="-40.0" width="96.0" height="50.0" />
+      <middlepoint x="652.0" y="415.0" />
+    </transition>
+    <transition source="5" target="6">
+      <label>tau</label>
+      <guard>S-pos&lt;=500</guard>
+      <labelposition x="6.0" y="6.0" width="110.0" height="50.0" />
+      <middlepoint x="479.5" y="375.0" />
+      <waypoints>
+        <beforemiddle>466.0,389.0</beforemiddle>
+        <aftermiddle>502.0,364.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="5" target="7">
+      <label>urStop</label>
+      <labelposition x="-95.0" y="-8.0" width="106.0" height="50.0" />
+      <middlepoint x="446.0" y="390.0" />
+    </transition>
+    <transition source="4" target="7">
+      <label>urStop</label>
+      <labelposition x="-8.0" y="-44.0" width="98.0" height="54.0" />
+      <middlepoint x="323.5" y="539.0" />
+      <waypoints>
+        <beforemiddle>601.0,538.0</beforemiddle>
+        <aftermiddle>324.0,377.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="6" target="7">
+      <label>urStop</label>
+      <labelposition x="-64.0" y="-28.0" width="114.0" height="50.0" />
+    </transition>
+    <transition source="7" target="8">
+      <label>tau</label>
+      <guard>v&lt;=0.1</guard>
+      <assignment>urstopped:=1 &amp; v:=0</assignment>
+      <labelposition x="-5.0" y="-43.0" width="168.0" height="64.0" />
+      <middlepoint x="295.0" y="249.0" />
+      <waypoints>
+        <aftermiddle>295.0,204.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="11" target="4">
+      <label>tau</label>
+      <guard>dir==1 &amp; j==1 
+&amp; time&gt;=0</guard>
+      <assignment>S:=2284</assignment>
+      <labelposition x="-20.0" y="-92.0" width="130.0" height="96.0" />
+      <middlepoint x="747.0" y="646.5" />
+    </transition>
+    <transition source="11" target="4">
+      <label>tau</label>
+      <guard>dir==1 &amp; j==2 &amp; 
+time&gt;=0</guard>
+      <assignment>S:=3292</assignment>
+      <labelposition x="-33.0" y="-88.0" width="182.0" height="90.0" />
+      <middlepoint x="637.0" y="672.5" />
+      <waypoints>
+        <beforemiddle>796.0,674.0</beforemiddle>
+        <aftermiddle>636.0,593.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="11" target="4">
+      <label>tau</label>
+      <guard>dir==1 &amp; j==3 &amp; 
+time&gt;=0</guard>
+      <assignment>S:=9097</assignment>
+      <labelposition x="-109.0" y="-88.0" width="122.0" height="80.0" />
+      <middlepoint x="600.0" y="708.5" />
+      <waypoints>
+        <beforemiddle>804.0,708.0</beforemiddle>
+        <aftermiddle>600.0,590.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="11">
+      <label>start</label>
+      <guard>dir==1 &amp; j&lt;N-1</guard>
+      <assignment>j:=j+dir &amp; time:=0</assignment>
+      <labelposition x="-226.0" y="-3.0" width="150.0" height="66.0" />
+      <middlepoint x="1055.5" y="581.0" />
+      <waypoints>
+        <beforemiddle>1089.0,413.0,1087.0,514.0</beforemiddle>
+        <aftermiddle>979.0,589.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="11" target="12">
+      <label>tau</label>
+      <guard>dir==-1 &amp; j==0 &amp; time&gt;=0</guard>
+      <assignment>S:=0</assignment>
+      <labelposition x="-162.0" y="-60.0" width="172.0" height="66.0" />
+      <middlepoint x="1220.0" y="623.5" />
+      <waypoints>
+        <beforemiddle>1011.0,622.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="11" target="12">
+      <label>tau</label>
+      <guard>dir==-1 &amp; j==1 &amp; time&gt;=0</guard>
+      <assignment>S:=2284</assignment>
+      <labelposition x="-13.0" y="-23.0" width="204.0" height="60.0" />
+      <middlepoint x="1004.0" y="647.5" />
+      <waypoints>
+        <aftermiddle>1256.0,646.0,1256.0,584.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="11" target="12">
+      <label>tau</label>
+      <guard>dir==-1 &amp; j==2 &amp; time&gt;=0</guard>
+      <assignment>S:=3292</assignment>
+      <labelposition x="72.0" y="-22.0" width="172.0" height="62.0" />
+      <middlepoint x="1054.0" y="689.5" />
+      <waypoints>
+        <aftermiddle>1292.0,687.0,1291.0,580.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="12" target="13">
+      <label>tau</label>
+      <guard>v==20</guard>
+      <labelposition x="-35.0" y="-49.0" />
+      <middlepoint x="1355.0" y="518.0" />
+    </transition>
+    <transition source="12" target="18">
+      <label>tau</label>
+      <guard>pos-S&lt;=500</guard>
+      <labelposition x="-118.0" y="-74.0" width="118.0" height="80.0" />
+      <middlepoint x="1316.5" y="449.5" />
+    </transition>
+    <transition source="18" target="2">
+      <label>stop</label>
+      <guard>-1&lt;=pos-S&lt;=1 
+&amp; 0&lt;=v&lt;=0.1</guard>
+      <assignment>v:=0 &amp; pos:=S &amp; time:=0</assignment>
+      <labelposition x="-7.0" y="-56.0" width="160.0" height="80.0" />
+      <middlepoint x="1077.5" y="307.0" />
+      <waypoints>
+        <beforemiddle>1198.0,306.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="13" target="18">
+      <label>tau</label>
+      <guard>pos-S&lt;=500</guard>
+      <labelposition x="-110.0" y="-2.0" width="112.0" height="82.0" />
+      <middlepoint x="1480.0" y="384.5" />
+    </transition>
+    <transition source="13" target="14">
+      <label>urStop</label>
+      <labelposition x="5.0" y="-30.0" width="86.0" height="54.0" />
+      <middlepoint x="1500.0" y="423.5" />
+    </transition>
+    <transition source="12" target="14">
+      <label>urStop</label>
+      <labelposition x="-81.0" y="-48.0" width="114.0" height="50.0" />
+      <middlepoint x="1617.0" y="543.5" />
+      <waypoints>
+        <beforemiddle>1373.0,544.0</beforemiddle>
+        <aftermiddle>1621.0,394.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="14" target="15">
+      <label>tau</label>
+      <guard>v&lt;=0.1</guard>
+      <assignment>urstopped:=1 &amp; v:=0</assignment>
+      <labelposition x="-143.0" y="-7.0" width="142.0" height="58.0" />
+      <middlepoint x="1641.5" y="218.5" />
+      <waypoints>
+        <beforemiddle>1642.0,259.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="18" target="14">
+      <label>urStop</label>
+      <labelposition x="-47.0" y="-31.0" width="126.0" height="52.0" />
+    </transition>
+    <transition source="2" target="3">
+      <label>start</label>
+      <guard>j==0 &amp; dir == -1</guard>
+      <assignment>time:=0</assignment>
+      <labelposition x="-109.0" y="-4.0" width="118.0" height="56.0" />
+      <middlepoint x="836.5" y="413.5" />
+      <waypoints>
+        <aftermiddle>838.0,463.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="15" target="12">
+      <label>urStart</label>
+      <guard>pos-S&gt;800</guard>
+      <labelposition x="65.0" y="-18.0" width="198.0" height="50.0" />
+      <middlepoint x="1386.5" y="578.0" />
+      <waypoints>
+        <beforemiddle>1667.0,218.0,1665.0,574.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="11">
+      <label>start</label>
+      <guard>dir==-1 &amp; j&gt;0</guard>
+      <assignment>j:=j+dir &amp; time:=0</assignment>
+      <labelposition x="-4.0" y="25.0" width="132.0" height="62.0" />
+      <middlepoint x="1103.0" y="371.0" />
+      <waypoints>
+        <aftermiddle>1104.0,545.0,1058.0,589.0,971.0,618.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="8" target="9">
+      <label>urStart</label>
+      <guard>0&lt;=S-pos&lt;=800</guard>
+      <assignment>maxp:=0.5*(S+pos)</assignment>
+      <labelposition x="-61.0" y="-60.0" width="198.0" height="64.0" />
+      <middlepoint x="333.5" y="107.0" />
+    </transition>
+    <transition source="9" target="10">
+      <label>tau</label>
+      <guard>pos==maxp</guard>
+      <labelposition x="-42.0" y="-46.0" width="112.0" height="50.0" />
+    </transition>
+    <transition source="10" target="2">
+      <label>stop</label>
+      <guard>-1&lt;=pos-S&lt;=1 &amp; 
+0&lt;=v&lt;=0.1</guard>
+      <assignment>v:=0 &amp; pos:=S 
+&amp; time:=0</assignment>
+      <labelposition x="-1.0" y="-39.0" width="186.0" height="96.0" />
+      <middlepoint x="761.5" y="204.0" />
+      <waypoints>
+        <aftermiddle>832.0,253.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="9" target="7">
+      <label>urStop</label>
+      <labelposition x="-109.0" y="-1.0" width="138.0" height="56.0" />
+      <middlepoint x="495.0" y="169.0" />
+    </transition>
+    <transition source="10" target="7">
+      <label>urStop</label>
+      <labelposition x="-91.0" y="-19.0" width="104.0" height="50.0" />
+      <middlepoint x="684.0" y="185.5" />
+    </transition>
+    <transition source="8" target="4">
+      <label>urStart</label>
+      <guard>S-pos &gt; 800</guard>
+      <labelposition x="77.0" y="5.0" width="172.0" height="54.0" />
+      <middlepoint x="271.0" y="547.5" />
+      <waypoints>
+        <beforemiddle>266.0,222.0</beforemiddle>
+        <aftermiddle>273.0,576.0,584.0,572.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="15" target="16">
+      <label>urStart</label>
+      <guard>0&lt;=pos-S&lt;=800</guard>
+      <assignment>maxp:=0.5*(S+pos)</assignment>
+      <labelposition x="-120.0" y="-64.0" width="182.0" height="70.0" />
+      <middlepoint x="1611.5" y="96.5" />
+    </transition>
+    <transition source="16" target="17">
+      <label>tau</label>
+      <guard>pos==maxp</guard>
+      <labelposition x="-54.0" y="-47.0" width="102.0" height="60.0" />
+    </transition>
+    <transition source="17" target="14">
+      <label>urStop</label>
+      <labelposition x="10.0" y="-24.0" width="104.0" height="50.0" />
+      <middlepoint x="1275.0" y="186.5" />
+    </transition>
+    <transition source="16" target="14">
+      <label>urStop</label>
+      <labelposition x="10.0" y="-7.0" width="110.0" height="50.0" />
+      <middlepoint x="1438.5" y="164.5" />
+    </transition>
+    <transition source="17" target="2">
+      <label>stop</label>
+      <guard>-1&lt;=S-pos &lt;=1 &amp; 
+0&lt;=v&lt;=0.1</guard>
+      <assignment>v:=0 &amp; pos:=S 
+&amp; time:=0</assignment>
+      <labelposition x="-155.0" y="-46.0" width="200.0" height="100.0" />
+      <middlepoint x="1166.0" y="198.0" />
+      <waypoints>
+        <aftermiddle>1131.0,249.0</aftermiddle>
+      </waypoints>
+    </transition>
+  </component>
+  <component id="traindoors">
+    <param name="y" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="openTD" type="label" local="false" controlled="false" />
+    <param name="closeTD" type="label" local="false" controlled="false" />
+    <param name="v_shut" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="trainDoorsClosed" type="label" local="false" />
+    <param name="needclose" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="opencomplete" type="label" local="true" />
+    <param name="reclose" type="label" local="true" />
+    <param name="clamping" type="label" local="true" />
+    <location id="3" name="closed" x="213.0" y="274.0" width="152.0" height="74.0">
+      <invariant>y==0 &amp; v_shut==0</invariant>
+      <flow>y'==0</flow>
+    </location>
+    <location id="1" name="part" x="426.0" y="168.0" width="144.0" height="74.0">
+      <invariant>y&lt;=2 &amp; v_shut==0</invariant>
+      <flow>y'==1</flow>
+    </location>
+    <location id="2" name="open" x="646.0" y="292.0" width="156.0" height="66.0">
+      <invariant>y==2 &amp; v_shut==0</invariant>
+      <flow>y'==0</flow>
+    </location>
+    <location id="4" name="shut" x="425.0" y="389.0" width="160.0" height="68.0">
+      <invariant>y&gt;=0 &amp; -1&lt;=v_shut&lt;=0</invariant>
+      <flow>y'==v_shut</flow>
+    </location>
+    <transition source="1" target="2">
+      <label>opencomplete</label>
+      <guard>y==2</guard>
+      <labelposition x="-128.0" y="-19.0" width="114.0" height="50.0" />
+      <middlepoint x="647.0" y="168.0" />
+    </transition>
+    <transition source="2" target="4">
+      <label>closeTD</label>
+      <assignment>needclose:=1</assignment>
+      <labelposition x="-122.0" y="-23.0" width="126.0" height="50.0" />
+      <middlepoint x="647.5" y="390.0" />
+    </transition>
+    <transition source="3" target="1">
+      <label>openTD</label>
+      <labelposition x="25.0" y="-28.0" width="92.0" height="66.0" />
+      <middlepoint x="214.0" y="167.5" />
+    </transition>
+    <transition source="4" target="3">
+      <label>trainDoorsClosed</label>
+      <guard>y==0</guard>
+      <assignment>needclose:=0 &amp; v_shut:=0</assignment>
+      <labelposition x="-30.0" y="-35.0" width="166.0" height="74.0" />
+      <middlepoint x="216.5" y="388.5" />
+    </transition>
+    <transition source="4" target="1">
+      <label>clamping</label>
+      <guard>y&gt;0 &amp; v_shut==0</guard>
+      <labelposition x="-126.0" y="-29.0" width="142.0" height="50.0" />
+    </transition>
+    <transition source="2" target="4">
+      <label>reclose</label>
+      <guard>needclose==1</guard>
+      <labelposition x="1.0" y="-27.0" width="112.0" height="64.0" />
+      <middlepoint x="470.5" y="293.0" />
+    </transition>
+  </component>
+  <component id="screendoors">
+    <param name="y" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="needclose" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="openSD_T1" type="label" local="false" controlled="false" placement="east" />
+    <param name="closeSD_T1" type="label" local="false" controlled="false" placement="east" />
+    <param name="openSD_T2" type="label" local="false" placement="east" />
+    <param name="closeSD_T2" type="label" local="false" placement="east" />
+    <param name="screenDoorsClosed_T1" type="label" local="false" />
+    <param name="screenDoorsClosed_T2" type="label" local="false" />
+    <param name="v_shut" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="opencomplete" type="label" local="true" />
+    <param name="reclose" type="label" local="true" />
+    <param name="clamping" type="label" local="true" />
+    <location id="3" name="closed" x="257.0" y="270.0" width="132.0" height="64.0">
+      <invariant>y==0  &amp; v_shut==0</invariant>
+      <flow>y'==0</flow>
+    </location>
+    <location id="4" name="shut" x="504.0" y="421.0" width="160.0" height="68.0">
+      <invariant>y&gt;=0 &amp; -1&lt;=v_shut&lt;=0</invariant>
+      <flow>y'==v_shut</flow>
+    </location>
+    <location id="2" name="part" x="503.0" y="149.0" width="126.0" height="72.0">
+      <invariant>y&lt;=2 &amp; v_shut==0</invariant>
+      <flow>y'==1</flow>
+    </location>
+    <location id="5" name="open" x="833.0" y="275.0" width="128.0" height="72.0">
+      <invariant>y==2&amp; v_shut==0</invariant>
+      <flow>y'==0</flow>
+    </location>
+    <transition source="3" target="2">
+      <label>openSD_T1</label>
+      <labelposition x="43.0" y="-28.0" width="84.0" height="50.0" />
+      <middlepoint x="258.0" y="149.5" />
+      <waypoints>
+        <aftermiddle>414.0,148.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="4" target="2">
+      <label>clamping</label>
+      <guard>y&gt;0 &amp; v_shut==0</guard>
+      <labelposition x="-131.0" y="-31.0" width="142.0" height="50.0" />
+    </transition>
+    <transition source="4" target="3">
+      <label>screenDoorsClosed_T1</label>
+      <guard>y==0</guard>
+      <assignment>needclose:=0 &amp;  v_shut:=0</assignment>
+      <labelposition x="-188.0" y="-2.0" width="208.0" height="62.0" />
+      <middlepoint x="426.5" y="317.5" />
+      <waypoints>
+        <beforemiddle>449.0,345.0</beforemiddle>
+        <aftermiddle>377.0,301.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="5" target="4">
+      <label>closeSD_T1</label>
+      <assignment>needclose:=1</assignment>
+      <labelposition x="-103.0" y="-52.0" width="126.0" height="50.0" />
+      <middlepoint x="694.5" y="398.0" />
+    </transition>
+    <transition source="2" target="5">
+      <label>opencomplete</label>
+      <guard>y==2</guard>
+      <labelposition x="-205.0" y="-23.0" width="162.0" height="50.0" />
+      <middlepoint x="832.0" y="150.0" />
+    </transition>
+    <transition source="5" target="4">
+      <label>reclose</label>
+      <guard>needclose==1</guard>
+      <labelposition x="-17.0" y="-19.0" width="130.0" height="52.0" />
+      <middlepoint x="603.5" y="277.0" />
+    </transition>
+    <transition source="3" target="2">
+      <label>openSD_T2</label>
+      <labelposition x="10.0" y="-27.0" width="92.0" height="50.0" />
+      <middlepoint x="338.5" y="218.0" />
+      <waypoints>
+        <aftermiddle>460.0,217.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="5" target="4">
+      <label>closeSD_T2</label>
+      <assignment>needclose:=1</assignment>
+      <labelposition x="-125.0" y="-51.0" width="120.0" height="50.0" />
+      <middlepoint x="833.0" y="444.5" />
+      <waypoints>
+        <aftermiddle>612.0,448.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="4" target="3">
+      <label>screenDoorsClosed_T2</label>
+      <guard>y==0</guard>
+      <assignment>needclose:=0 &amp;  v_shut:=0</assignment>
+      <labelposition x="-24.0" y="15.0" width="184.0" height="60.0" />
+      <middlepoint x="210.5" y="450.0" />
+      <waypoints>
+        <beforemiddle>398.0,451.0</beforemiddle>
+        <aftermiddle>210.0,316.0</aftermiddle>
+      </waypoints>
+    </transition>
+  </component>
+  <component id="controller">
+    <param name="z" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="sd_1_openSD" type="label" local="false" />
+    <param name="sd_2_openSD" type="label" local="false" />
+    <param name="sd_3_openSD" type="label" local="false" />
+    <param name="sd_4_openSD" type="label" local="false" />
+    <param name="sd_5_openSD" type="label" local="false" />
+    <param name="sd_6_openSD" type="label" local="false" />
+    <param name="sd_7_openSD" type="label" local="false" />
+    <param name="sd_8_openSD" type="label" local="false" />
+    <param name="openTD" type="label" local="false" />
+    <param name="closeTD" type="label" local="false" />
+    <param name="sd_1_closeSD" type="label" local="false" />
+    <param name="sd_2_closeSD" type="label" local="false" />
+    <param name="sd_3_closeSD" type="label" local="false" />
+    <param name="sd_4_closeSD" type="label" local="false" />
+    <param name="sd_5_closeSD" type="label" local="false" />
+    <param name="sd_6_closeSD" type="label" local="false" />
+    <param name="sd_7_closeSD" type="label" local="false" />
+    <param name="sd_8_closeSD" type="label" local="false" />
+    <param name="start" type="label" local="false" />
+    <param name="stop" type="label" local="false" />
+    <param name="trainDoorsClosed" type="label" local="false" />
+    <param name="sd_1_closed" type="label" local="false" placement="east" />
+    <param name="sd_2_closed" type="label" local="false" placement="east" />
+    <param name="sd_3_closed" type="label" local="false" placement="east" />
+    <param name="sd_4_closed" type="label" local="false" placement="east" />
+    <param name="sd_5_closed" type="label" local="false" placement="east" />
+    <param name="sd_6_closed" type="label" local="false" placement="east" />
+    <param name="sd_7_closed" type="label" local="false" placement="east" />
+    <param name="sd_8_closed" type="label" local="false" placement="east" />
+    <param name="stationid" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="dir" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="sdid" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="lab1" type="label" local="true" />
+    <param name="lab2" type="label" local="true" />
+    <param name="toRing" type="label" local="true" />
+    <param name="toCloseTrainDoors" type="label" local="true" />
+    <location id="1" name="idle" x="1255.0" y="229.0">
+      <flow>z'==1</flow>
+    </location>
+    <location id="2" name="about_to_open2" x="378.0" y="499.0" width="126.0" height="62.0">
+      <invariant>z&lt;=5</invariant>
+      <flow>z'==1</flow>
+    </location>
+    <location id="9" name="about_to_open1" x="701.0" y="500.0" width="144.0" height="66.0">
+      <invariant>z&lt;=1</invariant>
+      <flow>z'==1</flow>
+    </location>
+    <location id="4" name="ring" x="1064.0" y="498.0" width="106.0" height="72.0">
+      <invariant>z&lt;=30</invariant>
+      <flow>z'==1</flow>
+    </location>
+    <location id="5" name="about_to_close1" x="1286.0" y="500.0" width="134.0" height="84.0">
+      <invariant>z&lt;=5</invariant>
+      <flow>z'==1</flow>
+    </location>
+    <location id="6" name="waiting" x="1472.0" y="499.0" width="130.0" height="80.0">
+      <invariant>z&gt;=0</invariant>
+      <flow>z'==1</flow>
+    </location>
+    <location id="7" name="about_to_close2" x="1714.0" y="499.0" width="106.0" height="54.0">
+      <invariant>z&lt;=5</invariant>
+      <flow>z'==1</flow>
+    </location>
+    <location id="8" name="closeScreenDoors" x="2127.0" y="519.0" width="122.0" height="58.0">
+      <invariant>z&gt;=0</invariant>
+      <flow>z'==1</flow>
+    </location>
+    <location id="10" name="ReadyToStart" x="2401.0" y="507.0" width="172.0" height="68.0">
+      <invariant>z&lt;=5</invariant>
+      <flow>z'==1</flow>
+    </location>
+    <location id="3" name="openTrainDoors" x="892.0" y="501.0" width="116.0" height="64.0">
+      <invariant>z&lt;=1</invariant>
+      <flow>z'==1</flow>
+    </location>
+    <transition source="1" target="2">
+      <label>stop</label>
+      <assignment>z:=0</assignment>
+      <labelposition x="526.0" y="-54.0" />
+      <middlepoint x="419.5" y="228.0" />
+    </transition>
+    <transition source="2" target="9">
+      <label>sd_1_openSD</label>
+      <guard>stationid==0 &amp; dir == 1 &amp; z&gt;=5</guard>
+      <assignment>sdid:=1 &amp; z:=0</assignment>
+      <labelposition x="-103.0" y="-18.0" width="198.0" height="58.0" />
+      <middlepoint x="543.0" y="277.0" />
+      <waypoints>
+        <beforemiddle>438.0,279.0</beforemiddle>
+        <aftermiddle>639.0,277.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="9">
+      <label>sd_2_openSD</label>
+      <guard>stationid==1 &amp; dir == 1 &amp; z&gt;=5</guard>
+      <assignment>sdid:=2 &amp; z:=0</assignment>
+      <labelposition x="-98.0" y="-17.0" width="212.0" height="58.0" />
+      <middlepoint x="531.0" y="342.0" />
+      <waypoints>
+        <beforemiddle>436.0,342.0</beforemiddle>
+        <aftermiddle>632.0,345.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="9">
+      <label>sd_3_openSD</label>
+      <guard>stationid==2 &amp; dir == 1 &amp; z&gt;=5</guard>
+      <assignment>sdid:=3 &amp; z:=0</assignment>
+      <labelposition x="-93.0" y="-17.0" width="198.0" height="54.0" />
+      <middlepoint x="534.0" y="405.0" />
+      <waypoints>
+        <beforemiddle>443.0,407.0</beforemiddle>
+        <aftermiddle>625.0,406.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="9">
+      <label>sd_4_openSD</label>
+      <guard>stationid==3 &amp; dir ==1 &amp; z&gt;=5</guard>
+      <assignment>sdid:=4 &amp; z:=0</assignment>
+      <labelposition x="-104.0" y="-20.0" width="202.0" height="62.0" />
+      <middlepoint x="537.0" y="460.0" />
+      <waypoints>
+        <beforemiddle>447.0,462.0</beforemiddle>
+        <aftermiddle>615.0,461.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="9">
+      <label>sd_5_openSD</label>
+      <guard>stationid==3 &amp; dir==-1 &amp; z&gt;=5</guard>
+      <assignment>sdid:=5 &amp; z:=0</assignment>
+      <labelposition x="-100.0" y="-22.0" width="198.0" height="56.0" />
+      <middlepoint x="537.0" y="524.0" />
+      <waypoints>
+        <beforemiddle>452.0,523.0</beforemiddle>
+        <aftermiddle>612.0,522.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="9">
+      <label>sd_6_openSD</label>
+      <guard>stationid==2 &amp; dir==-1 &amp; z&gt;=5</guard>
+      <assignment>sdid:=6 &amp; z:=0</assignment>
+      <labelposition x="-106.0" y="-24.0" width="200.0" height="54.0" />
+      <middlepoint x="535.0" y="586.0" />
+      <waypoints>
+        <beforemiddle>447.0,585.0</beforemiddle>
+        <aftermiddle>618.0,584.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="9">
+      <label>sd_7_openSD</label>
+      <guard>stationid==1 &amp; dir ==-1 &amp; z&gt;=5</guard>
+      <assignment>sdid:=7 &amp; z:=0</assignment>
+      <labelposition x="-103.0" y="-21.0" width="200.0" height="54.0" />
+      <middlepoint x="538.5" y="639.5" />
+      <waypoints>
+        <beforemiddle>446.0,639.0</beforemiddle>
+        <aftermiddle>627.0,636.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="9">
+      <label>sd_8_openSD</label>
+      <guard>stationid==0 &amp; dir==-1 &amp; z&gt;=5</guard>
+      <assignment>sdid:=8 &amp; z:=0</assignment>
+      <labelposition x="-99.0" y="-22.0" width="204.0" height="66.0" />
+      <middlepoint x="539.5" y="695.5" />
+      <waypoints>
+        <beforemiddle>438.0,695.0</beforemiddle>
+        <aftermiddle>632.0,692.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="4" target="5">
+      <label>toCloseTrainDoors</label>
+      <guard>z&lt;=30 &amp; z&gt;=20</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-62.0" y="-67.0" width="116.0" height="64.0" />
+    </transition>
+    <transition source="5" target="6">
+      <label>closeTD</label>
+      <guard>z&gt;=5</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-30.0" y="-54.0" width="74.0" height="54.0" />
+    </transition>
+    <transition source="6" target="7">
+      <label>trainDoorsClosed</label>
+      <assignment>z:=0</assignment>
+      <labelposition x="-59.0" y="-42.0" width="130.0" height="50.0" />
+    </transition>
+    <transition source="7" target="8">
+      <label>sd_1_closeSD</label>
+      <guard>z==5 &amp; sdid==1</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-80.0" y="-21.0" width="160.0" height="54.0" />
+      <middlepoint x="1958.0" y="323.5" />
+      <waypoints>
+        <beforemiddle>1843.0,325.0</beforemiddle>
+        <aftermiddle>2061.0,323.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="7" target="8">
+      <label>sd_2_closeSD</label>
+      <guard>z==5 &amp; sdid==2</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-104.0" y="-22.0" width="144.0" height="56.0" />
+      <middlepoint x="1951.5" y="368.5" />
+      <waypoints>
+        <beforemiddle>1858.0,368.0</beforemiddle>
+        <aftermiddle>2050.0,369.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="7" target="8">
+      <label>sd_3_closeSD</label>
+      <guard>z==5 &amp; sdid==3</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-35.0" y="-19.0" width="128.0" height="54.0" />
+      <middlepoint x="1946.5" y="416.5" />
+      <waypoints>
+        <beforemiddle>1856.0,415.0</beforemiddle>
+        <aftermiddle>2048.0,420.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="7" target="8">
+      <label>sd_4_closeSD</label>
+      <guard>z==5 &amp; sdid==4</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-27.0" y="-37.0" width="124.0" height="56.0" />
+      <middlepoint x="1927.5" y="486.5" />
+      <waypoints>
+        <beforemiddle>1863.0,485.0</beforemiddle>
+        <aftermiddle>2006.0,487.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="7" target="8">
+      <label>sd_5_closeSD</label>
+      <guard>z==5 &amp; sdid==5</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-53.0" y="-20.0" width="130.0" height="56.0" />
+      <middlepoint x="1925.5" y="539.5" />
+      <waypoints>
+        <beforemiddle>1851.0,539.0</beforemiddle>
+        <aftermiddle>2010.0,539.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="7" target="8">
+      <label>sd_6_closeSD</label>
+      <guard>z==5 &amp; sdid==6</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-49.0" y="-23.0" width="156.0" height="56.0" />
+      <middlepoint x="1914.5" y="594.5" />
+      <waypoints>
+        <beforemiddle>1843.0,593.0</beforemiddle>
+        <aftermiddle>2014.0,593.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="7" target="8">
+      <label>sd_7_closeSD</label>
+      <guard>z==5 &amp; sdid==7</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-96.0" y="-19.0" width="168.0" height="58.0" />
+      <middlepoint x="1968.0" y="652.0" />
+      <waypoints>
+        <beforemiddle>1864.0,649.0</beforemiddle>
+        <aftermiddle>2043.0,650.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="7" target="8">
+      <label>sd_8_closeSD</label>
+      <guard>z==5 &amp; sdid==8</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-82.0" y="-21.0" width="162.0" height="54.0" />
+      <middlepoint x="1967.0" y="703.0" />
+      <waypoints>
+        <beforemiddle>1849.0,697.0</beforemiddle>
+        <aftermiddle>2053.0,700.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="8" target="10">
+      <label>sd_1_closed</label>
+      <guard>sdid==1</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-168.0" y="-40.0" width="116.0" height="64.0" />
+      <middlepoint x="2313.0" y="329.5" />
+      <waypoints>
+        <beforemiddle>2158.0,330.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="8" target="10">
+      <label>sd_2_closed</label>
+      <guard>sdid==2</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-116.0" y="-37.0" width="154.0" height="56.0" />
+      <middlepoint x="2309.0" y="381.5" />
+      <waypoints>
+        <beforemiddle>2179.0,379.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="8" target="10">
+      <label>sd_3_closed</label>
+      <guard>sdid==3</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-153.0" y="-35.0" width="102.0" height="54.0" />
+      <middlepoint x="2324.0" y="429.5" />
+      <waypoints>
+        <beforemiddle>2182.0,429.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="8" target="10">
+      <label>sd_4_closed</label>
+      <guard>sdid==4</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-98.0" y="-23.0" width="130.0" height="60.0" />
+      <middlepoint x="2297.0" y="476.5" />
+      <waypoints>
+        <beforemiddle>2197.0,475.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="8" target="10">
+      <label>sd_5_closed</label>
+      <guard>sdid==5</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-142.0" y="-21.0" width="138.0" height="54.0" />
+      <middlepoint x="2301.5" y="544.0" />
+      <waypoints>
+        <beforemiddle>2191.0,542.0,2212.0,545.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="8" target="10">
+      <label>sd_6_closed</label>
+      <guard>sdid==6</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="3.0" y="-20.0" width="160.0" height="58.0" />
+      <middlepoint x="2198.5" y="592.0" />
+      <waypoints>
+        <aftermiddle>2320.0,592.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="8" target="10">
+      <label>sd_7_closed</label>
+      <guard>sdid==7</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-47.0" y="-36.0" width="156.0" height="54.0" />
+      <middlepoint x="2211.5" y="654.0" />
+      <waypoints>
+        <aftermiddle>2336.0,652.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="8" target="10">
+      <label>sd_8_closed</label>
+      <guard>sdid==8</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="45.0" y="-21.0" width="122.0" height="64.0" />
+      <middlepoint x="2188.5" y="689.0" />
+      <waypoints>
+        <aftermiddle>2339.0,691.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="10" target="1">
+      <label>start</label>
+      <guard>z==5</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-811.0" y="-70.0" width="100.0" height="70.0" />
+      <middlepoint x="2339.0" y="230.0" />
+      <waypoints>
+        <aftermiddle>1631.0,230.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="9" target="3">
+      <label>openTD</label>
+      <guard>z&gt;=1</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-33.0" y="-59.0" width="78.0" height="62.0" />
+    </transition>
+    <transition source="3" target="4">
+      <label>toRing</label>
+      <guard>z&gt;=1</guard>
+      <assignment>z:=0</assignment>
+      <labelposition x="-20.0" y="-74.0" width="54.0" height="76.0" />
+    </transition>
+  </component>
+  <component id="urgentcontrol">
+    <param name="t" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <param name="pos1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="pos2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="dir1" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="dir2" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="false" placement="east" />
+    <param name="urstopped_1" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="urstopped_2" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="tau" type="label" local="true" />
+    <param name="distance" type="real" local="false" d1="1" d2="1" dynamics="any" />
+    <param name="urStart_T1" type="label" local="false" />
+    <param name="urStart_T2" type="label" local="false" />
+    <param name="urStop_T1" type="label" local="false" />
+    <param name="urStop_T2" type="label" local="false" />
+    <param name="globalTime" type="real" local="true" d1="1" d2="1" dynamics="any" />
+    <location id="1" name="Delay" x="696.0" y="44.0" width="174.0" height="70.0">
+      <invariant>t&lt;=100 &amp; distance==-1</invariant>
+      <flow>t'==1 &amp; globalTime'==1</flow>
+    </location>
+    <location id="2" name="D1" x="699.0" y="301.0" width="148.0" height="306.0">
+      <invariant>1&gt;=t&gt;=0</invariant>
+      <flow>t'==1 &amp; distance'==0 
+&amp; globalTime'==1</flow>
+    </location>
+    <location id="3" name="stopTain" x="1115.0" y="249.0" width="146.0" height="192.0">
+      <invariant>0&lt;=t&lt;=0.1</invariant>
+      <flow>t'==1 &amp; distance'==0 
+&amp;  globalTime'==1</flow>
+    </location>
+    <location id="4" name="startTrain" x="228.0" y="252.0" width="136.0" height="178.0">
+      <invariant>0&lt;=t&lt;=0.1</invariant>
+      <flow>t'==1 &amp; distance'==0
+&amp; globalTime'==1</flow>
+    </location>
+    <transition source="1" target="2">
+      <label>tau</label>
+      <guard>t==100</guard>
+      <assignment>t:=0</assignment>
+      <labelposition x="-97.0" y="-31.0" width="120.0" height="54.0" />
+      <middlepoint x="696.5" y="121.0" />
+    </transition>
+    <transition source="2" target="3">
+      <label>urStop_T2</label>
+      <guard>dir1==dir2 &amp; dir1==1 &amp;
+0&lt;=pos1-pos2&lt;=300</guard>
+      <assignment>t:=0&amp; distance:=pos1-pos2</assignment>
+      <labelposition x="-35.0" y="-51.0" width="254.0" height="74.0" />
+      <middlepoint x="805.5" y="196.0" />
+      <waypoints>
+        <aftermiddle>981.0,196.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="3">
+      <label>urStop_T2</label>
+      <guard>dir1==dir2 &amp; dir1==-1 &amp;
+0&lt;=pos2-pos1&lt;=300</guard>
+      <assignment>t:=0 &amp;  distance:=pos2-pos1</assignment>
+      <labelposition x="5.0" y="-96.0" width="194.0" height="76.0" />
+      <middlepoint x="789.5" y="144.0" />
+      <waypoints>
+        <aftermiddle>1006.0,144.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="3">
+      <label>urStop_T1</label>
+      <guard>dir1==dir2 &amp; dir1==1 &amp;
+0&lt;=pos2-pos1&lt;=300</guard>
+      <assignment>t:=0 &amp; distance:=pos2-pos1</assignment>
+      <labelposition x="0.0" y="-55.0" width="180.0" height="76.0" />
+      <middlepoint x="806.5" y="288.0" />
+      <waypoints>
+        <aftermiddle>985.0,289.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="3">
+      <label>urStop_T1</label>
+      <guard>dir1==dir2 &amp; dir1==-1 &amp;
+0&lt;=pos1-pos2&lt;=300</guard>
+      <assignment>t:=0 &amp; distance:=pos1-pos2</assignment>
+      <labelposition x="-16.0" y="-41.0" width="194.0" height="96.0" />
+      <middlepoint x="814.5" y="353.0" />
+      <waypoints>
+        <aftermiddle>1005.0,353.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="4">
+      <label>urStart_T2</label>
+      <guard>dir1==dir2 &amp; dir1==1 &amp;
+pos1-pos2&gt;300 &amp; urstopped_2==1</guard>
+      <assignment>t:=0&amp; distance:=pos1-pos2 
+&amp; urstopped_2:=0</assignment>
+      <labelposition x="-255.0" y="-93.0" width="224.0" height="90.0" />
+      <middlepoint x="604.5" y="144.0" />
+      <waypoints>
+        <aftermiddle>326.0,144.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="4">
+      <label>urStart_T1</label>
+      <guard>dir1==dir2 &amp; dir1==1 &amp;
+pos2-pos1&gt;300 &amp; urstopped_1==1</guard>
+      <assignment>t:=0 &amp; distance:=pos2-pos1 &amp; urstopped_1:=0</assignment>
+      <labelposition x="-17.0" y="-36.0" width="282.0" height="86.0" />
+      <middlepoint x="335.5" y="189.0" />
+      <waypoints>
+        <beforemiddle>591.0,193.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="4">
+      <label>urStart_T2</label>
+      <guard>dir1==dir2 &amp; dir1==-1 &amp;
+pos2-pos1&gt;300 &amp; urstopped_2==1</guard>
+      <assignment>t:=0 &amp; distance:=pos2-pos1 &amp; urstopped_2:=0</assignment>
+      <labelposition x="-7.0" y="-43.0" width="292.0" height="90.0" />
+      <middlepoint x="336.0" y="278.0" />
+      <waypoints>
+        <beforemiddle>593.0,279.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="4">
+      <label>urStart_T1</label>
+      <guard>dir1==dir2 &amp; dir1==-1 &amp;
+pos1-pos2&gt;300 &amp; urstopped_1==1</guard>
+      <assignment>t:=0 &amp; distance:=pos1-pos2 &amp; urstopped_1:=0</assignment>
+      <labelposition x="-10.0" y="-15.0" width="294.0" height="92.0" />
+      <middlepoint x="343.0" y="339.0" />
+      <waypoints>
+        <beforemiddle>594.0,342.0</beforemiddle>
+      </waypoints>
+    </transition>
+    <transition source="4" target="2">
+      <label>tau</label>
+      <guard>t&gt;=0</guard>
+      <assignment>t:=0</assignment>
+      <labelposition x="92.0" y="-21.0" width="100.0" height="62.0" />
+      <middlepoint x="306.0" y="434.0" />
+      <waypoints>
+        <aftermiddle>560.0,434.0,599.0,424.0,621.0,406.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="3" target="2">
+      <label>tau</label>
+      <guard>t&gt;=0</guard>
+      <assignment>t:=0</assignment>
+      <labelposition x="56.0" y="-20.0" width="52.0" height="60.0" />
+      <middlepoint x="838.0" y="437.5" />
+      <waypoints>
+        <beforemiddle>1002.0,436.0</beforemiddle>
+        <aftermiddle>800.0,415.0,784.0,406.0</aftermiddle>
+      </waypoints>
+    </transition>
+    <transition source="2" target="2">
+      <label>tau</label>
+      <guard>dir1==dir2 &amp; 
+pos1&gt;pos2 &amp; t==1</guard>
+      <assignment>distance := pos1 - pos2 
+&amp; t:=0</assignment>
+      <labelposition x="-221.0" y="12.0" width="152.0" height="110.0" />
+      <middlepoint x="4.0" y="169.0" />
+    </transition>
+    <transition source="2" target="2">
+      <label>tau</label>
+      <guard>dir1==dir2 &amp; 
+pos2&gt;pos1 &amp; t==1</guard>
+      <assignment>distance := pos2 - pos1
+ &amp; t:=0</assignment>
+      <labelposition x="-297.0" y="19.0" width="150.0" height="106.0" />
+      <middlepoint x="-68.0" y="162.0" />
+    </transition>
+    <transition source="2" target="2">
+      <label>tau</label>
+      <guard>dir1+dir2==0 &amp;  t==1 &amp;
+2*9097-pos1-pos2&gt;pos1+pos2</guard>
+      <assignment>distance:=pos1+pos2 &amp; t:=0</assignment>
+      <labelposition x="-146.0" y="33.0" width="206.0" height="82.0" />
+      <middlepoint x="74.0" y="157.0" />
+    </transition>
+    <transition source="2" target="2">
+      <label>tau</label>
+      <guard>dir1+dir2==0 &amp;  t==1 &amp;
+2*9097-pos1-pos2&lt;=pos1+pos2</guard>
+      <assignment>distance:=2*9097-pos1-pos2 &amp; t:=0</assignment>
+      <labelposition x="107.0" y="13.0" width="242.0" height="84.0" />
+      <middlepoint x="6.0" y="177.0" />
+    </transition>
+  </component>
+  <component id="trainsys">
+    <param name="pos" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="dir" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="openTD" type="label" local="true" controlled="true" />
+    <param name="closeTD" type="label" local="true" controlled="true" />
+    <param name="sd_1_openSD" type="label" controlled="true" local="false" />
+    <param name="sd_2_openSD" type="label" controlled="true" local="false" />
+    <param name="sd_3_openSD" type="label" controlled="true" local="false" />
+    <param name="sd_4_openSD" type="label" controlled="true" local="false" />
+    <param name="sd_5_openSD" type="label" controlled="true" local="false" />
+    <param name="sd_6_openSD" type="label" controlled="true" local="false" />
+    <param name="sd_7_openSD" type="label" controlled="true" local="false" />
+    <param name="sd_8_openSD" type="label" controlled="true" local="false" />
+    <param name="sd_1_closeSD" type="label" controlled="true" placement="west" local="false" />
+    <param name="sd_2_closeSD" type="label" controlled="true" placement="west" local="false" />
+    <param name="sd_3_closeSD" type="label" controlled="true" placement="west" local="false" />
+    <param name="sd_4_closeSD" type="label" controlled="true" placement="west" local="false" />
+    <param name="sd_5_closeSD" type="label" controlled="true" placement="west" local="false" />
+    <param name="sd_6_closeSD" type="label" controlled="true" placement="west" local="false" />
+    <param name="sd_7_closeSD" type="label" controlled="true" placement="west" local="false" />
+    <param name="sd_8_closeSD" type="label" controlled="true" placement="west" local="false" />
+    <param name="start" type="label" local="true" />
+    <param name="stop" type="label" local="true" />
+    <param name="trainDoorsClosed" type="label" local="true" />
+    <param name="sd_1_closed" type="label" local="false" placement="east" />
+    <param name="sd_2_closed" type="label" local="false" placement="east" />
+    <param name="sd_3_closed" type="label" local="false" placement="east" />
+    <param name="sd_4_closed" type="label" local="false" placement="east" />
+    <param name="sd_5_closed" type="label" local="false" placement="east" />
+    <param name="sd_6_closed" type="label" local="false" placement="east" />
+    <param name="sd_7_closed" type="label" local="false" placement="east" />
+    <param name="sd_8_closed" type="label" local="false" placement="east" />
+    <param name="urstopped" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="stationid" type="real" local="true" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="Delay" type="real" local="false" d1="1" d2="1" dynamics="const" controlled="false" />
+    <param name="urStop" type="label" local="false" placement="east" />
+    <param name="urStart" type="label" local="false" placement="east" />
+    <bind component="train" as="train" x="405.0" y="106.0" width="192.0" height="120.0">
+      <map key="pos">pos</map>
+      <map key="dir">dir</map>
+      <map key="start">start</map>
+      <map key="stop">stop</map>
+      <map key="urstopped">urstopped</map>
+      <map key="j">stationid</map>
+      <map key="N">4</map>
+      <map key="Delay">Delay</map>
+      <map key="urStop">urStop</map>
+      <map key="urStart">urStart</map>
+    </bind>
+    <bind component="traindoors" as="traindoors" x="432.0" y="239.0" width="248.0" height="80.0">
+      <map key="openTD">openTD</map>
+      <map key="closeTD">closeTD</map>
+      <map key="trainDoorsClosed">trainDoorsClosed</map>
+    </bind>
+    <bind component="controller" as="controller" width="286.0" height="384.0" x="452.0" y="527.0">
+      <map key="sd_1_openSD">sd_1_openSD</map>
+      <map key="sd_2_openSD">sd_2_openSD</map>
+      <map key="sd_3_openSD">sd_3_openSD</map>
+      <map key="sd_4_openSD">sd_4_openSD</map>
+      <map key="sd_5_openSD">sd_5_openSD</map>
+      <map key="sd_6_openSD">sd_6_openSD</map>
+      <map key="sd_7_openSD">sd_7_openSD</map>
+      <map key="sd_8_openSD">sd_8_openSD</map>
+      <map key="openTD">openTD</map>
+      <map key="closeTD">closeTD</map>
+      <map key="sd_1_closeSD">sd_1_closeSD</map>
+      <map key="sd_2_closeSD">sd_2_closeSD</map>
+      <map key="sd_3_closeSD">sd_3_closeSD</map>
+      <map key="sd_4_closeSD">sd_4_closeSD</map>
+      <map key="sd_5_closeSD">sd_5_closeSD</map>
+      <map key="sd_6_closeSD">sd_6_closeSD</map>
+      <map key="sd_7_closeSD">sd_7_closeSD</map>
+      <map key="sd_8_closeSD">sd_8_closeSD</map>
+      <map key="start">start</map>
+      <map key="stop">stop</map>
+      <map key="trainDoorsClosed">trainDoorsClosed</map>
+      <map key="sd_1_closed">sd_1_closed</map>
+      <map key="sd_2_closed">sd_2_closed</map>
+      <map key="sd_3_closed">sd_3_closed</map>
+      <map key="sd_4_closed">sd_4_closed</map>
+      <map key="sd_5_closed">sd_5_closed</map>
+      <map key="sd_6_closed">sd_6_closed</map>
+      <map key="sd_7_closed">sd_7_closed</map>
+      <map key="sd_8_closed">sd_8_closed</map>
+      <map key="stationid">stationid</map>
+      <map key="dir">dir</map>
+    </bind>
+  </component>
+  <component id="system">
+    <param name="pos1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="85.0" y="-37.0" />
+    <param name="pos2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" x="86.0" y="-44.0" />
+    <param name="dir1" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="dir2" type="int" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="urstopped_1" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="urstopped_2" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="openSD_T1_SD1" type="label" local="false" />
+    <param name="closeSD_T1_SD1" type="label" local="false" />
+    <param name="openSD_T2_SD1" type="label" local="false" />
+    <param name="closeSD_T2_SD1" type="label" local="false" />
+    <param name="screenDoorsClosed_T1_SD1" type="label" local="false" />
+    <param name="screenDoorsClosed_T2_SD1" type="label" local="false" />
+    <param name="openSD_T1_SD2" type="label" local="false" />
+    <param name="closeSD_T1_SD2" type="label" local="false" />
+    <param name="openSD_T2_SD2" type="label" local="false" />
+    <param name="closeSD_T2_SD2" type="label" local="false" />
+    <param name="screenDoorsClosed_T1_SD2" type="label" local="false" />
+    <param name="screenDoorsClosed_T2_SD2" type="label" local="false" />
+    <param name="openSD_T1_SD3" type="label" local="false" />
+    <param name="closeSD_T1_SD3" type="label" local="false" />
+    <param name="openSD_T2_SD3" type="label" local="false" />
+    <param name="closeSD_T2_SD3" type="label" local="false" />
+    <param name="screenDoorsClosed_T1_SD3" type="label" local="false" />
+    <param name="screenDoorsClosed_T2_SD3" type="label" local="false" />
+    <param name="openSD_T1_SD4" type="label" local="false" />
+    <param name="closeSD_T1_SD4" type="label" local="false" />
+    <param name="openSD_T2_SD4" type="label" local="false" />
+    <param name="closeSD_T2_SD4" type="label" local="false" />
+    <param name="screenDoorsClosed_T1_SD4" type="label" local="false" />
+    <param name="screenDoorsClosed_T2_SD4" type="label" local="false" />
+    <param name="openSD_T1_SD5" type="label" local="false" />
+    <param name="closeSD_T1_SD5" type="label" local="false" />
+    <param name="openSD_T2_SD5" type="label" local="false" />
+    <param name="closeSD_T2_SD5" type="label" local="false" />
+    <param name="screenDoorsClosed_T1_SD5" type="label" local="false" />
+    <param name="screenDoorsClosed_T2_SD5" type="label" local="false" />
+    <param name="openSD_T1_SD6" type="label" local="false" />
+    <param name="closeSD_T1_SD6" type="label" local="false" />
+    <param name="openSD_T2_SD6" type="label" local="false" />
+    <param name="closeSD_T2_SD6" type="label" local="false" />
+    <param name="screenDoorsClosed_T1_SD6" type="label" local="false" />
+    <param name="screenDoorsClosed_T2_SD6" type="label" local="false" />
+    <param name="openSD_T1_SD7" type="label" local="false" />
+    <param name="closeSD_T1_SD7" type="label" local="false" />
+    <param name="openSD_T2_SD7" type="label" local="false" />
+    <param name="closeSD_T2_SD7" type="label" local="false" />
+    <param name="screenDoorsClosed_T1_SD7" type="label" local="false" />
+    <param name="screenDoorsClosed_T2_SD7" type="label" local="false" />
+    <param name="openSD_T1_SD8" type="label" local="false" />
+    <param name="closeSD_T1_SD8" type="label" local="false" />
+    <param name="openSD_T2_SD8" type="label" local="false" />
+    <param name="closeSD_T2_SD8" type="label" local="false" />
+    <param name="screenDoorsClosed_T1_SD8" type="label" local="false" />
+    <param name="screenDoorsClosed_T2_SD8" type="label" local="false" />
+    <param name="distance" type="real" local="false" d1="1" d2="1" dynamics="any" controlled="true" />
+    <param name="urStart_T1" type="label" local="false" />
+    <param name="urStart_T2" type="label" local="false" />
+    <param name="urStop_T1" type="label" local="false" />
+    <param name="urStop_T2" type="label" local="false" />
+    <bind component="trainsys" as="trainsys_1" x="494.0" y="181.0" width="274.0" height="340.0">
+      <map key="dir">dir1</map>
+      <map key="sd_1_openSD">openSD_T1_SD1</map>
+      <map key="sd_2_openSD">openSD_T1_SD2</map>
+      <map key="sd_3_openSD">openSD_T1_SD3</map>
+      <map key="sd_4_openSD">openSD_T1_SD4</map>
+      <map key="sd_5_openSD">openSD_T1_SD5</map>
+      <map key="sd_6_openSD">openSD_T1_SD6</map>
+      <map key="sd_7_openSD">openSD_T1_SD7</map>
+      <map key="sd_8_openSD">openSD_T1_SD8</map>
+      <map key="sd_1_closeSD">closeSD_T1_SD1</map>
+      <map key="sd_2_closeSD">closeSD_T1_SD2</map>
+      <map key="sd_3_closeSD">closeSD_T1_SD3</map>
+      <map key="sd_4_closeSD">closeSD_T1_SD4</map>
+      <map key="sd_5_closeSD">closeSD_T1_SD5</map>
+      <map key="sd_6_closeSD">closeSD_T1_SD6</map>
+      <map key="sd_7_closeSD">closeSD_T1_SD7</map>
+      <map key="sd_8_closeSD">closeSD_T1_SD8</map>
+      <map key="sd_1_closed">screenDoorsClosed_T1_SD1</map>
+      <map key="sd_2_closed">screenDoorsClosed_T1_SD2</map>
+      <map key="sd_3_closed">screenDoorsClosed_T1_SD3</map>
+      <map key="sd_4_closed">screenDoorsClosed_T1_SD4</map>
+      <map key="sd_5_closed">screenDoorsClosed_T1_SD5</map>
+      <map key="sd_6_closed">screenDoorsClosed_T1_SD6</map>
+      <map key="sd_7_closed">screenDoorsClosed_T1_SD7</map>
+      <map key="sd_8_closed">screenDoorsClosed_T1_SD8</map>
+      <map key="urstopped">urstopped_1</map>
+      <map key="pos">pos1</map>
+      <map key="Delay">0</map>
+      <map key="urStop">urStop_T1</map>
+      <map key="urStart">urStart_T1</map>
+    </bind>
+    <bind component="trainsys" as="trainsys_2" x="498.0" y="561.0" width="276.0" height="340.0">
+      <map key="dir">dir2</map>
+      <map key="sd_1_openSD">openSD_T2_SD1</map>
+      <map key="sd_2_openSD">openSD_T2_SD2</map>
+      <map key="sd_3_openSD">openSD_T2_SD3</map>
+      <map key="sd_4_openSD">openSD_T2_SD4</map>
+      <map key="sd_5_openSD">openSD_T2_SD5</map>
+      <map key="sd_6_openSD">openSD_T2_SD6</map>
+      <map key="sd_7_openSD">openSD_T2_SD7</map>
+      <map key="sd_8_openSD">openSD_T2_SD8</map>
+      <map key="sd_1_closeSD">closeSD_T2_SD1</map>
+      <map key="sd_2_closeSD">closeSD_T2_SD2</map>
+      <map key="sd_3_closeSD">closeSD_T2_SD3</map>
+      <map key="sd_4_closeSD">closeSD_T2_SD4</map>
+      <map key="sd_5_closeSD">closeSD_T2_SD5</map>
+      <map key="sd_6_closeSD">closeSD_T2_SD6</map>
+      <map key="sd_7_closeSD">closeSD_T2_SD7</map>
+      <map key="sd_8_closeSD">closeSD_T2_SD8</map>
+      <map key="sd_1_closed">screenDoorsClosed_T2_SD1</map>
+      <map key="sd_2_closed">screenDoorsClosed_T2_SD2</map>
+      <map key="sd_3_closed">screenDoorsClosed_T2_SD3</map>
+      <map key="sd_4_closed">screenDoorsClosed_T2_SD4</map>
+      <map key="sd_5_closed">screenDoorsClosed_T2_SD5</map>
+      <map key="sd_6_closed">screenDoorsClosed_T2_SD6</map>
+      <map key="sd_7_closed">screenDoorsClosed_T2_SD7</map>
+      <map key="sd_8_closed">screenDoorsClosed_T2_SD8</map>
+      <map key="urstopped">urstopped_2</map>
+      <map key="pos">pos2</map>
+      <map key="Delay">50</map>
+      <map key="urStop">urStop_T2</map>
+      <map key="urStart">urStart_T2</map>
+    </bind>
+    <bind component="urgentcontrol" as="urgentcontrol" x="825.0" y="81.0" width="294.0" height="120.0">
+      <map key="pos1">pos1</map>
+      <map key="pos2">pos2</map>
+      <map key="dir1">dir1</map>
+      <map key="dir2">dir2</map>
+      <map key="distance">distance</map>
+      <map key="urStart_T1">urStart_T1</map>
+      <map key="urStart_T2">urStart_T2</map>
+      <map key="urStop_T1">urStop_T1</map>
+      <map key="urStop_T2">urStop_T2</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_1" x="824.0" y="229.0" width="286.0" height="108.0">
+      <map key="openSD_T1">openSD_T1_SD1</map>
+      <map key="closeSD_T1">closeSD_T1_SD1</map>
+      <map key="openSD_T2">openSD_T2_SD1</map>
+      <map key="closeSD_T2">closeSD_T2_SD1</map>
+      <map key="screenDoorsClosed_T1">screenDoorsClosed_T1_SD1</map>
+      <map key="screenDoorsClosed_T2">screenDoorsClosed_T2_SD1</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_2" x="826.0" y="377.0" width="290.0" height="102.0">
+      <map key="openSD_T1">openSD_T1_SD2</map>
+      <map key="closeSD_T1">closeSD_T1_SD2</map>
+      <map key="openSD_T2">openSD_T2_SD2</map>
+      <map key="closeSD_T2">closeSD_T2_SD2</map>
+      <map key="screenDoorsClosed_T1">screenDoorsClosed_T1_SD2</map>
+      <map key="screenDoorsClosed_T2">screenDoorsClosed_T2_SD2</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_3" x="829.0" y="525.0" width="290.0" height="100.0">
+      <map key="openSD_T1">openSD_T1_SD3</map>
+      <map key="closeSD_T1">closeSD_T1_SD3</map>
+      <map key="openSD_T2">openSD_T2_SD3</map>
+      <map key="closeSD_T2">closeSD_T2_SD3</map>
+      <map key="screenDoorsClosed_T1">screenDoorsClosed_T1_SD3</map>
+      <map key="screenDoorsClosed_T2">screenDoorsClosed_T2_SD3</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_4" x="831.0" y="677.0" width="288.0" height="102.0">
+      <map key="openSD_T1">openSD_T1_SD4</map>
+      <map key="closeSD_T1">closeSD_T1_SD4</map>
+      <map key="openSD_T2">openSD_T2_SD4</map>
+      <map key="closeSD_T2">closeSD_T2_SD4</map>
+      <map key="screenDoorsClosed_T1">screenDoorsClosed_T1_SD4</map>
+      <map key="screenDoorsClosed_T2">screenDoorsClosed_T2_SD4</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_5" x="1168.0" y="228.0" width="290.0" height="100.0">
+      <map key="openSD_T1">openSD_T1_SD5</map>
+      <map key="closeSD_T1">closeSD_T1_SD5</map>
+      <map key="openSD_T2">openSD_T2_SD5</map>
+      <map key="closeSD_T2">closeSD_T2_SD5</map>
+      <map key="screenDoorsClosed_T1">screenDoorsClosed_T1_SD5</map>
+      <map key="screenDoorsClosed_T2">screenDoorsClosed_T2_SD5</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_6" width="296.0" height="100.0" x="1170.0" y="379.0">
+      <map key="openSD_T1">openSD_T1_SD6</map>
+      <map key="closeSD_T1">closeSD_T1_SD6</map>
+      <map key="openSD_T2">openSD_T2_SD6</map>
+      <map key="closeSD_T2">closeSD_T2_SD6</map>
+      <map key="screenDoorsClosed_T1">screenDoorsClosed_T1_SD6</map>
+      <map key="screenDoorsClosed_T2">screenDoorsClosed_T2_SD6</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_7" width="296.0" height="106.0" x="1174.0" y="527.0">
+      <map key="openSD_T1">openSD_T1_SD7</map>
+      <map key="closeSD_T1">closeSD_T1_SD7</map>
+      <map key="openSD_T2">openSD_T2_SD7</map>
+      <map key="closeSD_T2">closeSD_T2_SD7</map>
+      <map key="screenDoorsClosed_T1">screenDoorsClosed_T1_SD7</map>
+      <map key="screenDoorsClosed_T2">screenDoorsClosed_T2_SD7</map>
+    </bind>
+    <bind component="screendoors" as="screendoors_8" x="1177.0" y="677.0" width="292.0" height="100.0">
+      <map key="openSD_T1">openSD_T1_SD8</map>
+      <map key="closeSD_T1">closeSD_T1_SD8</map>
+      <map key="openSD_T2">openSD_T2_SD8</map>
+      <map key="closeSD_T2">closeSD_T2_SD8</map>
+      <map key="screenDoorsClosed_T1">screenDoorsClosed_T1_SD8</map>
+      <map key="screenDoorsClosed_T2">screenDoorsClosed_T2_SD8</map>
+    </bind>
+  </component>
+</sspaceex>
+
