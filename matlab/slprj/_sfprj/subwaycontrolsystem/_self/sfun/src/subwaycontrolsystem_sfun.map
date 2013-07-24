@@ -1,6 +1,6 @@
  subwaycontrolsystem_sfun
 
- Timestamp is 51e0da76 (Sat Jul 13 12:41:26 2013)
+ Timestamp is 51ef96f5 (Wed Jul 24 16:57:25 2013)
 
  Preferred load address is 0000000180000000
 
@@ -928,10 +928,10 @@
  0002:000004b8       __xc_z                     00000001801174b8     MSVCRT:cinitexe.obj
  0002:000004c0       __xi_a                     00000001801174c0     MSVCRT:cinitexe.obj
  0002:000004d0       __xi_z                     00000001801174d0     MSVCRT:cinitexe.obj
- 0002:000004e0       __real@41e0ad7966400000    00000001801174e0     c1_subwaycontrolsystem.obj
- 0002:000004e8       __real@41e2ef20c2400000    00000001801174e8     c1_subwaycontrolsystem.obj
- 0002:000004f0       __real@41eaa5b354600000    00000001801174f0     c1_subwaycontrolsystem.obj
- 0002:000004f8       __real@41d720c20dc00000    00000001801174f8     c1_subwaycontrolsystem.obj
+ 0002:000004e0       __real@41d62e7b73400000    00000001801174e0     c1_subwaycontrolsystem.obj
+ 0002:000004e8       __real@41e468d4dd400000    00000001801174e8     c1_subwaycontrolsystem.obj
+ 0002:000004f0       __real@41de2dd59e000000    00000001801174f0     c1_subwaycontrolsystem.obj
+ 0002:000004f8       __real@41ed1abbfd000000    00000001801174f8     c1_subwaycontrolsystem.obj
  0002:00000500       __real@4000000000000000    0000000180117500     c1_subwaycontrolsystem.obj
  0002:00000508       __real@4024000000000000    0000000180117508     c1_subwaycontrolsystem.obj
  0002:00000510       __real@3ff0000000000000    0000000180117510     c1_subwaycontrolsystem.obj
@@ -969,18 +969,18 @@
  0002:00000960       _ssBadLevel2ZeroDirectFeedMsg 0000000180117960     subwaycontrolsystem_sfun_registry.obj
  0002:00000aa0       _ssBadLevel2ZeroDirectFeedMsg2 0000000180117aa0     subwaycontrolsystem_sfun_registry.obj
  0002:00000b88       __real@41602cbca0000000    0000000180117b88     subwaycontrolsystem_sfun_registry.obj
- 0002:00000b90       __real@41ee4bfcf3000000    0000000180117b90     subwaycontrolsystem_sfun.obj
- 0002:00000b98       __real@41e5dba2c2e00000    0000000180117b98     subwaycontrolsystem_sfun.obj
- 0002:00000ba0       __real@41c9be7bce800000    0000000180117ba0     subwaycontrolsystem_sfun.obj
- 0002:00000ba8       __real@4186980ff8000000    0000000180117ba8     subwaycontrolsystem_sfun.obj
+ 0002:00000b90       __real@41d78fa7cf800000    0000000180117b90     subwaycontrolsystem_sfun.obj
+ 0002:00000b98       __real@41d78337ec000000    0000000180117b98     subwaycontrolsystem_sfun.obj
+ 0002:00000ba0       __real@41effa0d28200000    0000000180117ba0     subwaycontrolsystem_sfun.obj
+ 0002:00000ba8       __real@41e9407116c00000    0000000180117ba8     subwaycontrolsystem_sfun.obj
  0002:00000bb0       __real@41ed08af7be00000    0000000180117bb0     subwaycontrolsystem_sfun.obj
  0002:00000bb8       __real@41d03fc151000000    0000000180117bb8     subwaycontrolsystem_sfun.obj
  0002:00000bc0       __real@41c439d4aa000000    0000000180117bc0     subwaycontrolsystem_sfun.obj
  0002:00000bc8       __real@41ea8f1e72e00000    0000000180117bc8     subwaycontrolsystem_sfun.obj
- 0002:00000bd0       __real@41e230a898e00000    0000000180117bd0     subwaycontrolsystem_sfun.obj
- 0002:00000bd8       __real@41dbd660b1c00000    0000000180117bd8     subwaycontrolsystem_sfun.obj
- 0002:00000be0       __real@41c7906fd7000000    0000000180117be0     subwaycontrolsystem_sfun.obj
- 0002:00000be8       __real@41cef03299000000    0000000180117be8     subwaycontrolsystem_sfun.obj
+ 0002:00000bd0       __real@41e942cb5c600000    0000000180117bd0     subwaycontrolsystem_sfun.obj
+ 0002:00000bd8       __real@41e4a9706ae00000    0000000180117bd8     subwaycontrolsystem_sfun.obj
+ 0002:00000be0       __real@41df8e4705800000    0000000180117be0     subwaycontrolsystem_sfun.obj
+ 0002:00000be8       __real@41ebdf7ff6c00000    0000000180117be8     subwaycontrolsystem_sfun.obj
  0002:00000bf0       __real@41b8235a4e000000    0000000180117bf0     subwaycontrolsystem_sfun.obj
  0002:00000bf8       __real@41b02f57cf000000    0000000180117bf8     subwaycontrolsystem_sfun.obj
  0002:00000c00       __real@41e672a56d400000    0000000180117c00     subwaycontrolsystem_sfun.obj

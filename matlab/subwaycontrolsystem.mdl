@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.565"
+    ComputedModelVersion    "1.580"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -30,7 +30,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [-8.0, -8.0, 1456.0, 876.0]
+      Location		      [1432.0, -8.0, 1936.0, 1092.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -55,7 +55,7 @@ Model {
 	  IsActive		  [0]
 	  ViewObjType		  "StateflowState"
 	  LoadSaveID		  "1421"
-	  Extents		  [1404.0, 693.0]
+	  Extents		  [1884.0, 909.0]
 	  ZoomFactor		  [1.1717042311605974]
 	  Offset		  [-67.190687160704442, 10.146507581632825]
 	}
@@ -63,10 +63,10 @@ Model {
 	  $ObjectID		  6
 	  IsActive		  [1]
 	  ViewObjType		  "StateflowState"
-	  LoadSaveID		  "1267"
-	  Extents		  [1404.0, 693.0]
-	  ZoomFactor		  [2.2043108653357741]
-	  Offset		  [2505.0901217391306, 1451.6400152173915]
+	  LoadSaveID		  "1639"
+	  Extents		  [1884.0, 909.0]
+	  ZoomFactor		  [1.6323831281528745]
+	  Offset		  [6.2608073450427515, -51.332840430195844]
 	}
 	PropName		"EditorsInfo"
       }
@@ -78,9 +78,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "fofo"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Jul 22 20:47:28 2013"
-  RTWModifiedTimeStamp	  296424656
-  ModelVersionFormat	  "1.%<AutoIncrement:565>"
+  LastModifiedDate	  "Wed Jul 24 21:25:10 2013"
+  RTWModifiedTimeStamp	  296595552
+  ModelVersionFormat	  "1.%<AutoIncrement:580>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -683,7 +683,7 @@ Model {
 	  $ObjectID		  20
 	  Version		  "1.12.1"
 	  StartTime		  "0.0"
-	  StopTime		  "25000"
+	  StopTime		  "10000"
 	  AbsTol		  "auto"
 	  FixedStep		  "auto"
 	  InitialStep		  "auto"
@@ -1355,7 +1355,7 @@ Model {
   }
   System {
     Name		    "subwaycontrolsystem"
-    Location		    [-8, -8, 1448, 868]
+    Location		    [1432, -8, 3368, 1084]
     Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1574,7 +1574,7 @@ Model {
       }
       System {
 	Name			"PSDS stateflow chart"
-	Location		[-8, -8, 1448, 868]
+	Location		[1432, -8, 3368, 1084]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -2534,8 +2534,8 @@ Stateflow {
     id			    2
     name		    "PSDS stateflow chart"
     windowPosition	    [-8 -8 1456 876]
-    viewLimits		    [2505.09 3142.024 1451.64 1766.024]
-    zoomFactor		    0.605
+    viewLimits		    [6.261 1160.402 -51.333 505.522]
+    zoomFactor		    0.817
     screen		    [1 1 1440 900 1.333333333333333]
     treeNode		    [0 3 0 0]
     viewObj		    31
@@ -2559,7 +2559,7 @@ Stateflow {
     position		    [1529.4633 40.3539 404.344 283.031]
     fontSize		    14
     chart		    2
-    treeNode		    [2 4 0 9]
+    treeNode		    [2 7 0 9]
     firstTransition	    163
     firstJunction	    162
     superState		    SUBCHART
@@ -2569,7 +2569,7 @@ Stateflow {
       x1		      5826.583
       y1		      3186.37
       zoomFactor	      0.839
-      pos		      [2510.534 1457.518 351.584 301.538]
+      pos		      [2381.401 1472.068 646.478 106.556]
     }
     ssIdNumber		    1267
     type		    AND_STATE
@@ -2580,10 +2580,10 @@ Stateflow {
   state {
     id			    4
     labelString		    "tmp\nen:t=0;\ndu:t_dot=0.5;"
-    position		    [2717.7306 1509.3796 80.3203 48.2824]
+    position		    [2823.5716 1524.2173 80.3203 48.2824]
     fontSize		    12
     chart		    2
-    treeNode		    [3 0 0 5]
+    treeNode		    [3 0 6 5]
     visible		    0
     subviewer		    3
     ssIdNumber		    1615
@@ -2593,10 +2593,10 @@ Stateflow {
   state {
     id			    5
     labelString		    "Delay\nen:t=0;\ndu:t_dot=1;"
-    position		    [2523.1884 1509.872 88.1854 47.2976]
+    position		    [2387.9222 1524.7097 88.1854 47.2976]
     fontSize		    12
     chart		    2
-    treeNode		    [3 0 4 6]
+    treeNode		    [3 0 4 8]
     visible		    0
     subviewer		    3
     ssIdNumber		    1286
@@ -2605,11 +2605,11 @@ Stateflow {
   }
   state {
     id			    6
-    labelString		    "D1\nen:t=0;\ndu:t_dot=0.5;"
-    position		    [2522.2811 1633.5873 90 60]
+    labelString		    "idle\nen:t=0;\ndu:t_dot=0.5;"
+    position		    [2553.0701 1524.0934 89.6524 48.5302]
     fontSize		    12
     chart		    2
-    treeNode		    [3 0 5 7]
+    treeNode		    [3 0 7 4]
     visible		    0
     subviewer		    3
     ssIdNumber		    1288
@@ -2619,10 +2619,10 @@ Stateflow {
   state {
     id			    7
     labelString		    "CalDistance"
-    position		    [2744.691 1694.0418 100.9171 41.8831]
+    position		    [2918.1111 1479.3122 101.6122 39.1025]
     fontSize		    12
     chart		    2
-    treeNode		    [3 0 6 8]
+    treeNode		    [3 0 0 6]
     superState		    SUBCHART
     visible		    0
     subviewer		    3
@@ -2640,10 +2640,10 @@ Stateflow {
   state {
     id			    8
     labelString		    "stopDecision(a)"
-    position		    [2633.0817 1694.0694 100.9366 41.8278]
+    position		    [2918.4489 1527.4446 100.9366 41.8278]
     fontSize		    12
     chart		    2
-    treeNode		    [3 0 7 0]
+    treeNode		    [3 0 5 0]
     superState		    SUBCHART
     visible		    0
     subviewer		    3
@@ -2655,9 +2655,9 @@ Stateflow {
       isEML		      1
       script		      "function stopDecision(a)\n\ndis=int32(10000);\nneedstop=0;\n\nfor index=0:N-1\n    if a~= index &"
       "& dir(a+1)==dir(index+1)\n            tdis=dir(a+1)*(position(index+1)-position(a+1));\n            if tdis<=300"
-      " && tdis>0\n                if tdis<dis\n                        dis=tdis\n                        RelevantIndex"
-      "(a+1)=index+1;\n                        needstop=1;                    \n                end\n            end   "
-      "        \n    end\nend\n\nif needstop==1\n    urstop(a+1) = 1;\nend\n\n"
+      " && tdis>0\n                if tdis<dis\n                        dis=tdis;\n                        RelevantInde"
+      "x(a+1)=index+1;\n                        needstop=1;                    \n                end\n            end  "
+      "         \n    end\nend\n\nif needstop==1\n    urstop(a+1) = 1;\nend\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -2811,7 +2811,7 @@ Stateflow {
     subviewS {
       x1		      181
       y1		      222
-      pos		      [20.075 20.388 1008.361 555.601]
+      pos		      [13.612 20.388 1139.438 413.413]
     }
     ssIdNumber		    1639
     type		    AND_STATE
@@ -2821,8 +2821,8 @@ Stateflow {
   }
   state {
     id			    19
-    labelString		    "urgent_inc\nen:urstart[i]=0;\ndu:\ndistance_dot=dir[i]*v;\nv_dot=0.5;\ndistance_out[i]=distance;"
-    position		    [314.704 42.2888 173.5973 95.0302]
+    labelString		    "urgent_inc\nen:urstart[i]=0;\ndu:distance_dot=dir[i]*v;\nv_dot=0.5;\ndistance_out[i]=distance;"
+    position		    [138.8152 28.2242 146.1797 82.1805]
     fontSize		    12
     arrowSize		    10
     chart		    2
@@ -2836,11 +2836,11 @@ Stateflow {
   state {
     id			    20
     labelString		    "recover\ndu:distance_dot=dir[i]*v;\nv_dot=-0.5;\ndistance_out[i]=distance;"
-    position		    [564.6531 43.255 185.7748 66.1943]
+    position		    [475.482 59.5404 145.3144 65.5718]
     fontSize		    12
     arrowSize		    10
     chart		    2
-    treeNode		    [18 0 19 21]
+    treeNode		    [18 0 19 26]
     visible		    0
     subviewer		    18
     ssIdNumber		    1667
@@ -2850,11 +2850,11 @@ Stateflow {
   state {
     id			    21
     labelString		    "select\n"
-    position		    [91.7857 68.1816 129.2591 39.388]
+    position		    [25.9758 151.7752 40.2127 30]
     fontSize		    12
     arrowSize		    10
     chart		    2
-    treeNode		    [18 0 20 22]
+    treeNode		    [18 0 23 25]
     visible		    0
     subviewer		    18
     ssIdNumber		    1668
@@ -2865,11 +2865,11 @@ Stateflow {
     id			    22
     labelString		    "urgent_stop\ndu:distance_dot=0;\nv_dot=0;distance_out[i]=distance;\nex:maxv=sqrt(0.5*abs(S[j]-di"
     "stance))"
-    position		    [57.8535 149.7379 204.7574 68.3798]
+    position		    [138.8152 181.2975 204.7574 68.3798]
     fontSize		    12
     arrowSize		    10
     chart		    2
-    treeNode		    [18 0 21 23]
+    treeNode		    [18 0 25 24]
     visible		    0
     subviewer		    18
     ssIdNumber		    1669
@@ -2879,11 +2879,11 @@ Stateflow {
   state {
     id			    23
     labelString		    "init\ndu:time_dot=1;\n"
-    position		    [795.954 157.2429 120.7283 61.661]
+    position		    [1045.6379 86.2167 91.1304 38.623]
     fontSize		    12
     arrowSize		    10
     chart		    2
-    treeNode		    [18 0 22 24]
+    treeNode		    [18 0 26 21]
     visible		    0
     subviewer		    18
     ssIdNumber		    1670
@@ -2893,11 +2893,11 @@ Stateflow {
   state {
     id			    24
     labelString		    "near\ndu:\ndistance_dot=dir[i]*v;\nv_dot=acc;\ndistance_out[i]=distance;"
-    position		    [415.5786 269.9041 160.4787 84.7055]
+    position		    [694.4757 186.1128 144.2945 83.4606]
     fontSize		    12
     arrowSize		    10
     chart		    2
-    treeNode		    [18 0 23 25]
+    treeNode		    [18 0 22 29]
     visible		    0
     subviewer		    18
     ssIdNumber		    1671
@@ -2907,11 +2907,11 @@ Stateflow {
   state {
     id			    25
     labelString		    "urgent_dec\ndu:\ndistance_dot=dir[i]*v;\nv_dot=-1.5;\ndistance_out[i]=distance;"
-    position		    [69.1669 277.124 166.7684 81.3595]
+    position		    [462.3397 175.1196 144.3053 80.7355]
     fontSize		    12
     arrowSize		    10
     chart		    2
-    treeNode		    [18 0 24 26]
+    treeNode		    [18 0 21 22]
     visible		    0
     subviewer		    18
     ssIdNumber		    1672
@@ -2921,11 +2921,11 @@ Stateflow {
   state {
     id			    26
     labelString		    "stop\nen:v=0;"
-    position		    [768.1894 281.4628 133.9623 62.9302]
+    position		    [792.5408 72.4047 76.5566 39.8431]
     fontSize		    12
     arrowSize		    10
     chart		    2
-    treeNode		    [18 0 25 27]
+    treeNode		    [18 0 20 23]
     visible		    0
     subviewer		    18
     ssIdNumber		    1673
@@ -2935,11 +2935,11 @@ Stateflow {
   state {
     id			    27
     labelString		    "tmp"
-    position		    [801.364 395.0045 49.1014 32.4915]
+    position		    [860.677 347.1887 49.1014 32.4915]
     fontSize		    12
     arrowSize		    10
     chart		    2
-    treeNode		    [18 0 26 28]
+    treeNode		    [18 0 30 0]
     visible		    0
     subviewer		    18
     ssIdNumber		    1674
@@ -2948,12 +2948,12 @@ Stateflow {
   }
   state {
     id			    28
-    labelString		    "stablerun\ndu:\ndistance_dot=dir[i]*v;\nv_dot=0;\ndistance_out[i]=distance;\n"
-    position		    [241.3923 413.0981 167.762 80.0225]
+    labelString		    "stablerun\ndu:distance_dot=dir[i]*v;\nv_dot=0;\ndistance_out[i]=distance;\n"
+    position		    [448.1235 300.2816 143.4382 66.5296]
     fontSize		    12
     arrowSize		    10
     chart		    2
-    treeNode		    [18 0 27 29]
+    treeNode		    [18 0 29 30]
     visible		    0
     subviewer		    18
     ssIdNumber		    1675
@@ -2963,11 +2963,11 @@ Stateflow {
   state {
     id			    29
     labelString		    "run\ndu:distance_dot=dir[i]*v;\nv_dot=0.5;\ndistance_out[i]=distance;"
-    position		    [536.5572 453.5963 170.5845 83.1844]
+    position		    [138.8152 271.3119 146.2495 67.585]
     fontSize		    12
     arrowSize		    10
     chart		    2
-    treeNode		    [18 0 28 30]
+    treeNode		    [18 0 24 28]
     visible		    0
     subviewer		    18
     ssIdNumber		    1676
@@ -2977,11 +2977,11 @@ Stateflow {
   state {
     id			    30
     labelString		    "ChangeDirection\ndu:time_dot=1;"
-    position		    [813.002 498.4753 111.6946 38.3054]
+    position		    [1035.3558 344.2817 111.6946 38.3054]
     fontSize		    12
     arrowSize		    10
     chart		    2
-    treeNode		    [18 0 29 0]
+    treeNode		    [18 0 28 27]
     visible		    0
     subviewer		    18
     ssIdNumber		    1677
@@ -2999,9 +2999,9 @@ Stateflow {
     superState		    SUBCHART
     subviewer		    2
     subviewS {
-      x1		      2470.689
-      y1		      1404.882
-      zoomFactor	      0.762
+      x1		      2365.367
+      y1		      1453.429
+      zoomFactor	      0.454
       pos		      [7218.138 3633 868.785 255.54]
     }
     ssIdNumber		    64
@@ -4990,7 +4990,7 @@ Stateflow {
   }
   junction {
     id			    162
-    position		    [2842.4043 1657.6898 7]
+    position		    [2717.016 1548.3585 7]
     chart		    2
     linkNode		    [3 0 0]
     subviewer		    3
@@ -4999,71 +4999,21 @@ Stateflow {
   }
   transition {
     id			    163
-    labelString		    ""
-    labelPosition	    [2585.622 1467.555 2 17]
-    fontSize		    12
-    src {
-      intersection	      [0 -0 1 0 2570.4166 1483.8868 0 0]
-    }
-    dst {
-      id		      5
-      intersection	      [1 0 -1 0.5356 2570.4166 1509.872 0 0]
-    }
-    midPoint		    [2570.4166 1492.8794]
-    chart		    2
-    linkNode		    [3 0 164]
-    dataLimits		    [2568.017 2572.817 1483.887 1509.872]
-    subviewer		    3
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    1287
-  }
-  transition {
-    id			    164
-    labelString		    "\n{stopDecision(i);}"
-    labelPosition	    [2752.817 1583.427 92.5 32]
-    fontSize		    12
-    src {
-      id		      162
-      intersection	      [1 0 -1 0 2842.4043 1650.6898 0 0]
-    }
-    dst {
-      id		      4
-      intersection	      [2 1 0 0.4558 2798.0509 1531.3878 0 0]
-    }
-    midPoint		    [2839.8173 1575.4491]
-    chart		    2
-    linkNode		    [3 163 165]
-    dataLimits		    [2798.051 2843.664 1528.988 1650.69]
-    stampAngle		    -0.7854
-    subviewer		    3
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    1313
-  }
-  transition {
-    id			    165
-    labelString		    "[t>=0]\n{CalDistance(),\ni=i+1;}"
-    labelPosition	    [2625.754 1504.69 82 47]
+    labelString		    "[t>=0]{CalDistance(),i=i+1;}"
+    labelPosition	    [2665.774 1480.51 145.5 17]
     fontSize		    12
     src {
       id		      4
-      intersection	      [4 -1 0 0.5903 2717.7306 1529.1619 0 0]
+      intersection	      [1 0 -1 0.187 2838.591 1524.2173 0 0]
     }
     dst {
       id		      6
-      intersection	      [1 0 -1 0.7392 2588.8116 1633.5873 0 0]
+      intersection	      [1 0 -1 0.8339 2627.8271 1524.0934 0 0]
     }
-    midPoint		    [2656.1577 1545.4512]
+    midPoint		    [2708.1155 1497.7141]
     chart		    2
-    linkNode		    [3 164 166]
-    dataLimits		    [2586.412 2717.731 1529.162 1633.587]
+    linkNode		    [3 0 164]
+    dataLimits		    [2625.427 2838.591 1497.635 1524.217]
     subviewer		    3
     drawStyle		    SMART
     slide {
@@ -5073,22 +5023,71 @@ Stateflow {
     ssIdNumber		    1316
   }
   transition {
-    id			    166
-    labelString		    "[t>=150]\n{i=0;}"
-    labelPosition	    [2529.811 1583.119 46 32]
+    id			    164
+    labelString		    "[i==N&&t>=1]{i=0;}"
+    labelPosition	    [2526.717 1484.321 101.25 17]
     fontSize		    12
     src {
-      id		      5
-      intersection	      [3 0 1 0.444 2572.2219 1557.1696 0 0]
+      id		      6
+      intersection	      [1 0 -1 0.7081 2616.5523 1524.0934 0 0]
     }
     dst {
       id		      6
-      intersection	      [1 0 -1 0.5549 2572.2219 1633.5873 0 0]
+      intersection	      [1 0 -1 0.1629 2567.6779 1524.0934 0 0]
     }
-    midPoint		    [2572.2219 1591.3785]
+    midPoint		    [2596.188 1502.916]
+    chart		    2
+    linkNode		    [3 163 165]
+    dataLimits		    [2565.278 2616.552 1501.945 1524.093]
+    subviewer		    3
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    2
+    ssIdNumber		    1621
+  }
+  transition {
+    id			    165
+    labelString		    ""
+    labelPosition	    [2450.215 1488.103 2 17]
+    fontSize		    12
+    src {
+      intersection	      [0 -0 1 0 2434.874 1504.2541 0 0]
+    }
+    dst {
+      id		      5
+      intersection	      [1 0 -1 0.5324 2434.874 1524.7097 0 0]
+    }
+    midPoint		    [2434.874 1510.4819]
+    chart		    2
+    linkNode		    [3 164 166]
+    dataLimits		    [2432.474 2437.274 1504.254 1524.71]
+    subviewer		    3
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1287
+  }
+  transition {
+    id			    166
+    labelString		    "[t>=150]{i=0;}"
+    labelPosition	    [2482.004 1526.019 73.5 17]
+    fontSize		    12
+    src {
+      id		      5
+      intersection	      [2 1 0 0.4475 2476.1076 1545.8767 0 0]
+    }
+    dst {
+      id		      6
+      intersection	      [4 -1 0 0.5511 2553.0701 1545.8767 0 0]
+    }
+    midPoint		    [2510.5889 1545.8767]
     chart		    2
     linkNode		    [3 165 167]
-    dataLimits		    [2569.822 2574.622 1557.17 1633.587]
+    dataLimits		    [2476.108 2553.07 1543.477 1548.277]
     subviewer		    3
     drawStyle		    SMART
     slide {
@@ -5100,20 +5099,20 @@ Stateflow {
   transition {
     id			    167
     labelString		    "[i!=N&&t>=0]"
-    labelPosition	    [2649.318 1638.387 70.25 17]
+    labelPosition	    [2650.265 1528.39 70.25 17]
     fontSize		    12
     src {
       id		      6
-      intersection	      [2 1 0 0.4017 2612.2811 1657.6898 0 0]
+      intersection	      [2 1 0 0.5 2642.7226 1548.3585 0 0]
     }
     dst {
       id		      162
-      intersection	      [4 -1 0 0 2835.4043 1657.6898 0 0]
+      intersection	      [4 -1 0 0 2710.016 1548.3585 0 0]
     }
-    midPoint		    [2719.8427 1657.6898]
+    midPoint		    [2672.3693 1548.3585]
     chart		    2
     linkNode		    [3 166 168]
-    dataLimits		    [2612.281 2835.404 1655.29 1660.09]
+    dataLimits		    [2642.723 2710.016 1545.959 1550.759]
     stampAngle		    -0.7854
     subviewer		    3
     drawStyle		    SMART
@@ -5125,28 +5124,29 @@ Stateflow {
   }
   transition {
     id			    168
-    labelString		    "[i==N&&t>=1]{i=0}"
-    labelPosition	    [2519.983 1736.056 98 17]
+    labelString		    "\n{stopDecision(i);}"
+    labelPosition	    [2731.914 1515.693 92.5 32]
     fontSize		    12
     src {
-      id		      6
-      intersection	      [2 1 0 0.7464 2612.2811 1678.3725 0 0]
+      id		      162
+      intersection	      [2 1 0 0 2724.016 1548.3585 0 0]
     }
     dst {
-      id		      6
-      intersection	      [3 0 1 0.8331 2537.2997 1693.5873 0 0]
+      id		      4
+      intersection	      [4 -1 0 0.5 2823.5716 1548.3585 0 0]
     }
-    midPoint		    [2598.7904 1709.9799]
+    midPoint		    [2769.7938 1548.3585]
     chart		    2
     linkNode		    [3 167 0]
-    dataLimits		    [2534.9 2616.379 1678.373 1722.508]
+    dataLimits		    [2724.016 2823.572 1545.959 1550.759]
+    stampAngle		    -0.7854
     subviewer		    3
     drawStyle		    SMART
     slide {
       sticky		      BOTH_STICK
     }
-    executionOrder	    2
-    ssIdNumber		    1621
+    executionOrder	    1
+    ssIdNumber		    1313
   }
   data {
     id			    169
@@ -5676,7 +5676,7 @@ Stateflow {
   }
   junction {
     id			    193
-    position		    [376.1188 208.7155 7]
+    position		    [384.232 141.4627 7]
     arrowSize		    10
     chart		    2
     linkNode		    [18 0 194]
@@ -5687,7 +5687,7 @@ Stateflow {
   }
   junction {
     id			    194
-    position		    [482.712 427.4362 7]
+    position		    [766.623 339.9809 7]
     arrowSize		    10
     chart		    2
     linkNode		    [18 193 0]
@@ -5698,22 +5698,22 @@ Stateflow {
   }
   transition {
     id			    195
-    labelString		    "{i=0,start[i]=0,stop[i]=0,\ntime=0,distance=0,\nv=0,dir[i]=1;}"
-    labelPosition	    [829.246 72.2 123.5 47]
+    labelString		    "{i=0,start[i]=0,stop[i]=0,time=0,distance=0,\nv=0,dir[i]=1;}"
+    labelPosition	    [898.793 35.983 224.75 32]
     fontSize		    12
     arrowSize		    10
     src {
-      intersection	      [0 -0 1 0 815.6414 60.0407 0 0]
+      intersection	      [0 -0 1 0 1122.6461 34.1341 0 0]
     }
     dst {
       id		      23
-      intersection	      [1 0 -1 0.1631 815.6414 157.2429 0 0]
+      intersection	      [1 0 -1 0.845 1122.6461 86.2167 0 0]
     }
-    midPoint		    [815.6414 104.6418]
+    midPoint		    [1122.6461 55.1754]
     chart		    2
     linkNode		    [18 0 196]
     visible		    0
-    dataLimits		    [812.641 818.641 60.041 157.243]
+    dataLimits		    [1119.646 1125.646 34.134 86.217]
     subviewer		    18
     slide {
       sticky		      BOTH_STICK
@@ -5723,77 +5723,23 @@ Stateflow {
   }
   transition {
     id			    196
-    labelString		    "[v>=maxv]"
-    labelPosition	    [502.504 57.84 57.75 17]
+    labelString		    "[maxv<=20]"
+    labelPosition	    [26.667 59.647 65 17]
     fontSize		    12
     arrowSize		    10
     src {
-      id		      19
-      intersection	      [2 1 0 0.4018 488.3013 80.4753 0 0]
+      id		      21
+      intersection	      [1 0 -1 0.2953 37.8523 151.7752 0 0]
     }
     dst {
-      id		      20
-      intersection	      [4 -1 -0 0.4377 564.6531 80.4753 0 0]
+      id		      19
+      intersection	      [4 -1 0 0.6261 138.8152 58.9542 0 0]
     }
-    midPoint		    [521.4772 80.4753]
+    midPoint		    [67.0886 89.1195]
     chart		    2
     linkNode		    [18 195 197]
     visible		    0
-    dataLimits		    [488.301 564.653 77.475 83.475]
-    subviewer		    18
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    1643
-  }
-  transition {
-    id			    197
-    labelString		    "[maxv>20]"
-    labelPosition	    [31.195 72.38 58 17]
-    fontSize		    12
-    arrowSize		    10
-    src {
-      id		      21
-      intersection	      [4 -1 0 0.5666 91.7857 85.2508 0 0]
-    }
-    dst {
-      id		      29
-      intersection	      [4 -1 0 0.1377 536.5572 525.3288 0 0]
-    }
-    midPoint		    [104.0251 471.3467]
-    chart		    2
-    linkNode		    [18 196 198]
-    visible		    0
-    dataLimits		    [22.901 536.557 85.251 559.861]
-    subviewer		    18
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    1644
-  }
-  transition {
-    id			    198
-    labelString		    "[maxv<=20]"
-    labelPosition	    [231.722 75.984 65 17]
-    fontSize		    12
-    arrowSize		    10
-    src {
-      id		      21
-      intersection	      [2 1 0 0.6067 221.0448 92.0784 0 0]
-    }
-    dst {
-      id		      19
-      intersection	      [4 -1 0 0.4761 314.704 92.0784 0 0]
-    }
-    midPoint		    [262.8744 92.0784]
-    chart		    2
-    linkNode		    [18 197 199]
-    visible		    0
-    dataLimits		    [221.045 314.704 89.078 95.078]
+    dataLimits		    [37.852 138.815 55.954 151.775]
     subviewer		    18
     drawStyle		    SMART
     slide {
@@ -5803,79 +5749,51 @@ Stateflow {
     ssIdNumber		    1645
   }
   transition {
-    id			    199
-    labelString		    "[urstart[i]==1]"
-    labelPosition	    [164.629 125.069 72.25 17]
+    id			    197
+    labelString		    "[v>=maxv]"
+    labelPosition	    [357.614 61.306 57.75 17]
     fontSize		    12
     arrowSize		    10
     src {
-      id		      22
-      intersection	      [1 0 -1 0.423 144.4668 149.7379 0 0]
+      id		      19
+      intersection	      [2 1 0 0.6628 284.995 82.6961 0 0]
     }
     dst {
-      id		      21
-      intersection	      [3 0 1 0.5924 144.4668 107.5697 0 0]
-    }
-    midPoint		    [144.4668 132.6538]
-    chart		    2
-    linkNode		    [18 198 200]
-    visible		    0
-    dataLimits		    [141.467 147.467 107.57 149.738]
-    stampAngle		    -2.3562
-    subviewer		    18
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    1646
-  }
-  transition {
-    id			    200
-    labelString		    "[urstop[i]==1]"
-    labelPosition	    [418.79 186.769 71.75 17]
-    fontSize		    12
-    arrowSize		    10
-    src {
       id		      20
-      intersection	      [3 0 1 0.7337 614.1327 109.4493 0 0]
+      intersection	      [4 -1 0 0.6469 475.482 82.6961 0 0]
     }
-    dst {
-      id		      193
-      intersection	      [2 1 0 0 383.1188 208.7155 0 0]
-    }
-    midPoint		    [533.1393 189.596]
+    midPoint		    [375.2385 82.6961]
     chart		    2
-    linkNode		    [18 199 201]
+    linkNode		    [18 196 198]
     visible		    0
-    dataLimits		    [383.119 614.133 109.449 211.715]
+    dataLimits		    [284.995 475.482 79.696 85.696]
     subviewer		    18
     drawStyle		    SMART
     slide {
       sticky		      BOTH_STICK
     }
     executionOrder	    1
-    ssIdNumber		    1647
+    ssIdNumber		    1643
   }
   transition {
-    id			    201
+    id			    198
     labelString		    "[abs(distance-S[j])<=1]\n{stop[i]=1,v=0,start[i]=0;}"
-    labelPosition	    [580.609 224.213 131.25 32]
+    labelPosition	    [653.092 50.605 131.25 32]
     fontSize		    12
     arrowSize		    10
     src {
       id		      20
-      intersection	      [3 0 1 0.2015 712.9853 109.4493 0 0]
+      intersection	      [2 1 0 0.4014 620.7964 85.8602 0 0]
     }
     dst {
       id		      26
-      intersection	      [4 -1 0 0.8192 768.1894 292.8411 0 0]
+      intersection	      [4 -1 0 0.6623 792.5408 85.8602 0 0]
     }
-    midPoint		    [710.9966 221.1337]
+    midPoint		    [701.6686 85.8602]
     chart		    2
-    linkNode		    [18 200 202]
+    linkNode		    [18 197 199]
     visible		    0
-    dataLimits		    [708.43 768.189 109.449 295.841]
+    dataLimits		    [620.796 792.541 82.86 88.86]
     subviewer		    18
     drawStyle		    SMART
     slide {
@@ -5885,24 +5803,78 @@ Stateflow {
     ssIdNumber		    1648
   }
   transition {
-    id			    202
+    id			    199
+    labelString		    "[time>=Delay[i]]{stop[i]=1,j=0;}"
+    labelPosition	    [878.478 71.772 160.75 17]
+    fontSize		    12
+    arrowSize		    10
+    src {
+      id		      23
+      intersection	      [4 -1 0 0.8179 1045.6379 93.2497 0 0]
+    }
+    dst {
+      id		      26
+      intersection	      [2 1 0 0.5232 869.0974 93.2497 0 0]
+    }
+    midPoint		    [962.3677 93.2497]
+    chart		    2
+    linkNode		    [18 198 200]
+    visible		    0
+    dataLimits		    [869.097 1045.638 90.25 96.25]
+    subviewer		    18
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1652
+  }
+  transition {
+    id			    200
+    labelString		    "[time>=30]\n{dir[i]=-dir[i],stop[i]=1,start[i]=0;}"
+    labelPosition	    [944.677 266.747 166.75 32]
+    fontSize		    12
+    arrowSize		    10
+    src {
+      id		      30
+      intersection	      [1 0 -1 0.775 1121.9183 344.2817 0 0]
+    }
+    dst {
+      id		      26
+      intersection	      [2 1 0 0.7241 869.0974 101.2549 0 0]
+    }
+    midPoint		    [1043.4511 179.8251]
+    chart		    2
+    linkNode		    [18 199 201]
+    visible		    0
+    dataLimits		    [869.097 1121.918 98.255 344.282]
+    subviewer		    18
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1656
+  }
+  transition {
+    id			    201
     labelString		    "[urstop[i]==1]"
-    labelPosition	    [392.276 150.893 71.75 17]
+    labelPosition	    [301.322 115.901 71.75 17]
     fontSize		    12
     arrowSize		    10
     src {
       id		      19
-      intersection	      [3 0 1 0.6462 376.1188 137.319 0 0]
+      intersection	      [3 0 1 0.0876 272.1904 110.4048 0 0]
     }
     dst {
       id		      193
-      intersection	      [1 0 -1 0 376.1188 201.7155 0 0]
+      intersection	      [4 -1 0 0 377.232 141.4627 0 0]
     }
-    midPoint		    [376.1188 164.5172]
+    midPoint		    [307.2128 138.4322]
     chart		    2
-    linkNode		    [18 201 203]
+    linkNode		    [18 200 202]
     visible		    0
-    dataLimits		    [373.119 379.119 137.319 201.715]
+    dataLimits		    [272.19 377.232 110.405 144.463]
     stampAngle		    0.7073
     subviewer		    18
     drawStyle		    SMART
@@ -5913,133 +5885,24 @@ Stateflow {
     ssIdNumber		    1649
   }
   transition {
-    id			    203
-    labelString		    ""
-    labelPosition	    [360.699 193.91 0 0]
-    fontSize		    12
-    arrowSize		    10
-    src {
-      id		      193
-      intersection	      [4 -1 0.0002 0 369.1188 208.7165 0 0]
-    }
-    dst {
-      id		      25
-      intersection	      [1 0 -1 0.9351 225.1145 277.124 0 0]
-    }
-    midPoint		    [277.5965 219.4031]
-    chart		    2
-    linkNode		    [18 202 204]
-    visible		    0
-    dataLimits		    [222.114 369.119 208.71 277.124]
-    stampAngle		    1.7451
-    subviewer		    18
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    1650
-  }
-  transition {
-    id			    204
-    labelString		    "[v<=0.1]\n{urstopped[i]=1;}"
-    labelPosition	    [66.02 238.005 89.75 32]
-    fontSize		    12
-    arrowSize		    10
-    src {
-      id		      25
-      intersection	      [1 0 -1 0.5788 165.6941 277.124 0 0]
-    }
-    dst {
-      id		      22
-      intersection	      [3 -0 1 0.4733 165.6941 218.1177 0 0]
-    }
-    midPoint		    [165.6941 252.6209]
-    chart		    2
-    linkNode		    [18 203 205]
-    visible		    0
-    dataLimits		    [162.694 168.694 218.118 277.124]
-    subviewer		    18
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    1651
-  }
-  transition {
-    id			    205
-    labelString		    "[time>=Delay[i]]{stop[i]=1,j=0;}"
-    labelPosition	    [830.619 248.927 160.75 17]
-    fontSize		    12
-    arrowSize		    10
-    src {
-      id		      23
-      intersection	      [3 0 1 0.8359 815.7601 218.9039 0 0]
-    }
-    dst {
-      id		      26
-      intersection	      [1 0 -1 0.3551 815.7601 281.4628 0 0]
-    }
-    midPoint		    [815.7601 247.8519]
-    chart		    2
-    linkNode		    [18 204 206]
-    visible		    0
-    dataLimits		    [812.76 818.76 218.904 281.463]
-    subviewer		    18
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    1652
-  }
-  transition {
-    id			    206
-    labelString		    "[time>=30]\n{dir[i]=-dir[i],\nstop[i]=1,\nstart[i]=0;}"
-    labelPosition	    [965.295 500.51 64.75 62]
-    fontSize		    12
-    arrowSize		    10
-    src {
-      id		      30
-      intersection	      [2 1 0 0.867 924.6966 531.6861 0 0]
-    }
-    dst {
-      id		      26
-      intersection	      [2 1 0 0.4967 902.1517 312.7222 0 0]
-    }
-    midPoint		    [973.2549 422.2041]
-    chart		    2
-    linkNode		    [18 205 207]
-    visible		    0
-    dataLimits		    [902.152 973.56 309.722 531.686]
-    subviewer		    18
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    1656
-  }
-  transition {
-    id			    207
+    id			    202
     labelString		    "[abs(distance-S[j])<=1]\n{stop[i]=1,start[i]=0;}"
-    labelPosition	    [602.315 286.545 122.5 32]
+    labelPosition	    [666.28 133.927 122.5 32]
     fontSize		    12
     arrowSize		    10
     src {
       id		      24
-      intersection	      [2 1 0 0.5428 576.0572 315.8821 0 -16.5]
+      intersection	      [1 0 -1 0.6622 790.0303 186.1128 0 -16.5]
     }
     dst {
       id		      26
-      intersection	      [4 -1 0 0.4531 768.1894 315.8821 0 16.5]
+      intersection	      [3 0 1 0.8753 802.0877 112.2478 0 16.5]
     }
-    midPoint		    [667.1233 315.8821]
+    midPoint		    [796.059 154.1803]
     chart		    2
-    linkNode		    [18 206 208]
+    linkNode		    [18 201 203]
     visible		    0
-    dataLimits		    [576.057 768.189 312.882 318.882]
+    dataLimits		    [790.03 805.088 112.248 186.113]
     stampAngle		    NaN
     subviewer		    18
     drawStyle		    SMART
@@ -6050,51 +5913,24 @@ Stateflow {
     ssIdNumber		    1653
   }
   transition {
-    id			    208
-    labelString		    "[urstop[i]==1]"
-    labelPosition	    [301.813 351.577 71.75 17]
-    fontSize		    12
-    arrowSize		    10
-    src {
-      id		      24
-      intersection	      [4 -1 0 0.3026 415.5786 328.9808 0 0]
-    }
-    dst {
-      id		      25
-      intersection	      [2 1 -0 0.6374 235.9353 328.9808 0 0]
-    }
-    midPoint		    [329.7569 328.9808]
-    chart		    2
-    linkNode		    [18 207 209]
-    visible		    0
-    dataLimits		    [235.935 415.579 325.981 331.981]
-    subviewer		    18
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    2
-    ssIdNumber		    1654
-  }
-  transition {
-    id			    209
+    id			    203
     labelString		    "[start[i]==1]\n{stop[i]=0,time=0;}"
-    labelPosition	    [859.348 368.775 98.25 32]
+    labelPosition	    [876.018 196.443 98.25 32]
     fontSize		    12
     arrowSize		    10
     src {
       id		      26
-      intersection	      [3 0 1 0.2388 870.1566 344.393 0 -12.7379]
+      intersection	      [3 0 1 0.1744 855.7495 112.2478 0 -12.7379]
     }
     dst {
       id		      27
-      intersection	      [1 0 -1 0.8868 844.9047 395.0045 0 21.6392]
+      intersection	      [1 0 -1 0.5096 885.7003 347.1887 0 21.6392]
     }
-    midPoint		    [857.5306 364.6988]
+    midPoint		    [870.7249 224.7183]
     chart		    2
-    linkNode		    [18 208 210]
+    linkNode		    [18 202 204]
     visible		    0
-    dataLimits		    [841.905 870.157 344.393 395.005]
+    dataLimits		    [855.75 888.7 112.248 347.189]
     stampAngle		    NaN
     subviewer		    18
     drawStyle		    SMART
@@ -6105,24 +5941,242 @@ Stateflow {
     ssIdNumber		    1655
   }
   transition {
+    id			    204
+    labelString		    "[urstop[i]==1]"
+    labelPosition	    [404.892 127.001 71.75 17]
+    fontSize		    12
+    arrowSize		    10
+    src {
+      id		      20
+      intersection	      [3 0 1 0.6595 524.9616 125.1122 0 0]
+    }
+    dst {
+      id		      193
+      intersection	      [2 1 0 0 391.232 141.4627 0 0]
+    }
+    midPoint		    [478.6975 148.8881]
+    chart		    2
+    linkNode		    [18 203 205]
+    visible		    0
+    dataLimits		    [391.232 524.962 125.112 149.032]
+    subviewer		    18
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1647
+  }
+  transition {
+    id			    205
+    labelString		    ""
+    labelPosition	    [466.098 184.464 0 0]
+    fontSize		    12
+    arrowSize		    10
+    src {
+      id		      193
+      intersection	      [2 0.862 0.5069 0 390.2659 145.0113 0 0]
+    }
+    dst {
+      id		      25
+      intersection	      [4 -1 0 0.7804 462.3397 192.8453 0 0]
+    }
+    midPoint		    [419.9508 173.8942]
+    chart		    2
+    linkNode		    [18 204 206]
+    visible		    0
+    dataLimits		    [390.266 462.34 145.011 195.845]
+    stampAngle		    1.7451
+    subviewer		    18
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1650
+  }
+  transition {
+    id			    206
+    labelString		    "[maxv>20]"
+    labelPosition	    [21.609 286.98 58 17]
+    fontSize		    12
+    arrowSize		    10
+    src {
+      id		      21
+      intersection	      [3 0 1 0.7512 35.9804 181.7752 0 0]
+    }
+    dst {
+      id		      29
+      intersection	      [4 -1 0 0.431 138.8152 309.768 0 0]
+    }
+    midPoint		    [62.6334 265.536]
+    chart		    2
+    linkNode		    [18 205 207]
+    visible		    0
+    dataLimits		    [35.98 138.815 181.775 312.768]
+    subviewer		    18
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1644
+  }
+  transition {
+    id			    207
+    labelString		    "[urstart[i]==1]"
+    labelPosition	    [67.391 195.064 72.25 17]
+    fontSize		    12
+    arrowSize		    10
+    src {
+      id		      22
+      intersection	      [4 -1 0 0.4512 138.8152 218.8243 0 0]
+    }
+    dst {
+      id		      21
+      intersection	      [3 0 1 0.2563 55.8815 181.7752 0 0]
+    }
+    midPoint		    [86.4442 216.2039]
+    chart		    2
+    linkNode		    [18 206 208]
+    visible		    0
+    dataLimits		    [52.882 138.815 181.775 218.854]
+    stampAngle		    -2.3562
+    subviewer		    18
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1646
+  }
+  transition {
+    id			    208
+    labelString		    "[urstop[i]==1]"
+    labelPosition	    [615.516 187.132 71.75 17]
+    fontSize		    12
+    arrowSize		    10
+    src {
+      id		      24
+      intersection	      [4 -1 0 0.7327 694.4757 208.4253 0 0]
+    }
+    dst {
+      id		      25
+      intersection	      [2 1 0 0.4125 606.645 208.4253 0 0]
+    }
+    midPoint		    [655.5604 208.4253]
+    chart		    2
+    linkNode		    [18 207 209]
+    visible		    0
+    dataLimits		    [606.645 694.476 205.425 211.425]
+    subviewer		    18
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    2
+    ssIdNumber		    1654
+  }
+  transition {
+    id			    209
+    labelString		    "[v<=0.1]\n{urstopped[i]=1;}"
+    labelPosition	    [355.565 184.76 89.75 32]
+    fontSize		    12
+    arrowSize		    10
+    src {
+      id		      25
+      intersection	      [4 -1 0 0.4725 462.3397 217.7071 0 0]
+    }
+    dst {
+      id		      22
+      intersection	      [2 1 0 0.5325 343.5726 217.7071 0 0]
+    }
+    midPoint		    [407.9562 217.7071]
+    chart		    2
+    linkNode		    [18 208 210]
+    visible		    0
+    dataLimits		    [343.573 462.34 214.707 220.707]
+    subviewer		    18
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1651
+  }
+  transition {
     id			    210
+    labelString		    "[urstop[i]==1]"
+    labelPosition	    [326.1 266.137 71.75 17]
+    fontSize		    12
+    arrowSize		    10
+    src {
+      id		      29
+      intersection	      [2 1 0 0.2622 285.0647 289.0303 0 0]
+    }
+    dst {
+      id		      25
+      intersection	      [4 -1 0 0.1496 462.3397 243.7811 0 0]
+    }
+    midPoint		    [423.5808 261.5526]
+    chart		    2
+    linkNode		    [18 209 211]
+    visible		    0
+    dataLimits		    [285.065 462.34 240.781 289.77]
+    subviewer		    18
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    3
+    ssIdNumber		    1658
+  }
+  transition {
+    id			    211
+    labelString		    "[urstop[i]==1]"
+    labelPosition	    [543.324 272.565 71.75 17]
+    fontSize		    12
+    arrowSize		    10
+    src {
+      id		      28
+      intersection	      [1 0 -1 0.5709 530.0073 300.2816 0 0]
+    }
+    dst {
+      id		      25
+      intersection	      [3 0 1 0.5311 530.0073 255.8552 0 0]
+    }
+    midPoint		    [530.0073 283.0684]
+    chart		    2
+    linkNode		    [18 210 212]
+    visible		    0
+    dataLimits		    [527.007 533.007 255.855 300.282]
+    subviewer		    18
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    2
+    ssIdNumber		    1659
+  }
+  transition {
+    id			    212
     labelString		    "{acc=-v^2*0.001}"
-    labelPosition	    [502.406 382.878 93.25 17]
+    labelPosition	    [672.528 287.405 93.25 17]
     fontSize		    12
     arrowSize		    10
     src {
       id		      194
-      intersection	      [1 0 -1 0 482.712 420.4362 0 0]
+      intersection	      [1 0 -1 0 766.623 332.9809 0 0]
     }
     dst {
       id		      24
-      intersection	      [3 0 1 0.5817 482.712 354.6097 0 0]
+      intersection	      [3 0 1 0.5 766.623 269.5734 0 0]
     }
-    midPoint		    [482.712 389.8544]
+    midPoint		    [766.623 306.2772]
     chart		    2
-    linkNode		    [18 209 211]
+    linkNode		    [18 211 213]
     visible		    0
-    dataLimits		    [479.712 485.712 354.61 420.436]
+    dataLimits		    [763.623 769.623 269.573 332.981]
     stampAngle		    2.9083
     subviewer		    18
     drawStyle		    SMART
@@ -6133,134 +6187,51 @@ Stateflow {
     ssIdNumber		    1657
   }
   transition {
-    id			    211
-    labelString		    "[urstop[i]==1]"
-    labelPosition	    [123.37 471.786 71.75 17]
+    id			    213
+    labelString		    "[v>=20]"
+    labelPosition	    [373.399 300.911 42.25 17]
     fontSize		    12
     arrowSize		    10
     src {
       id		      29
-      intersection	      [4 -1 0 0.2813 536.5572 513.384 0 0]
+      intersection	      [2 1 0 0.6516 285.0647 315.3494 0 0]
     }
     dst {
-      id		      25
-      intersection	      [3 0 1 0.3585 176.1476 358.4835 0 0]
-    }
-    midPoint		    [205.6078 472.1407]
-    chart		    2
-    linkNode		    [18 210 212]
-    visible		    0
-    dataLimits		    [173.148 536.557 358.483 534.166]
-    subviewer		    18
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    3
-    ssIdNumber		    1658
-  }
-  transition {
-    id			    212
-    labelString		    "[urstop[i]==1]"
-    labelPosition	    [232.162 398.672 71.75 17]
-    fontSize		    12
-    arrowSize		    10
-    src {
       id		      28
-      intersection	      [4 -1 0 0.7455 241.3923 433.4615 0 0]
+      intersection	      [4 -1 0 0.7735 448.1235 315.3494 0 0]
     }
-    dst {
-      id		      25
-      intersection	      [3 0 1 0.1555 210.003 358.4835 0 0]
-    }
-    midPoint		    [216.4516 409.2186]
+    midPoint		    [361.5941 315.3494]
     chart		    2
-    linkNode		    [18 211 213]
+    linkNode		    [18 212 214]
     visible		    0
-    dataLimits		    [207.003 241.392 358.483 433.462]
+    dataLimits		    [285.065 448.123 312.349 318.349]
     subviewer		    18
     drawStyle		    SMART
     slide {
       sticky		      BOTH_STICK
     }
     executionOrder	    2
-    ssIdNumber		    1659
-  }
-  transition {
-    id			    213
-    labelString		    "[(dir[i]==1&&j<N-1)||(dir[i]==-1&&j>0)]\n{j=j+dir[i];}"
-    labelPosition	    [645.53 378.428 197.75 32]
-    fontSize		    12
-    arrowSize		    10
-    src {
-      id		      27
-      intersection	      [4 -1 0 0.5036 801.364 411.1342 0 0]
-    }
-    dst {
-      id		      29
-      intersection	      [1 0 -1 0.9345 695.9715 453.5963 0 0]
-    }
-    midPoint		    [729.469 395.2699]
-    chart		    2
-    linkNode		    [18 212 214]
-    visible		    0
-    dataLimits		    [692.971 801.364 394.298 453.596]
-    stampAngle		    2.1166
-    subviewer		    18
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    3
-    ssIdNumber		    1660
+    ssIdNumber		    1665
   }
   transition {
     id			    214
-    labelString		    "[j==0&&dir[i]==-1]"
-    labelPosition	    [867.332 472.569 94.75 17]
-    fontSize		    12
-    arrowSize		    10
-    src {
-      id		      27
-      intersection	      [2 1 0 0.867 850.4654 423.1746 0 0]
-    }
-    dst {
-      id		      30
-      intersection	      [1 0 -1 0.3556 852.7162 498.4753 0 0]
-    }
-    midPoint		    [867.2498 444.7708]
-    chart		    2
-    linkNode		    [18 213 215]
-    visible		    0
-    dataLimits		    [849.716 867.762 423.175 498.475]
-    stampAngle		    2.9821
-    subviewer		    18
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    1661
-  }
-  transition {
-    id			    215
     labelString		    "[abs(distance-S[j])<=500]"
-    labelPosition	    [345.368 397.798 136 17]
+    labelPosition	    [613.985 320.044 136 17]
     fontSize		    12
     arrowSize		    10
     src {
       id		      28
-      intersection	      [2 1 0 0.1792 409.1543 427.4362 0 0]
+      intersection	      [2 1 0 0.5967 591.5616 339.9809 0 0]
     }
     dst {
       id		      194
-      intersection	      [4 -1 0 0 475.712 427.4362 0 0]
+      intersection	      [4 -1 0 0 759.623 339.9809 0 0]
     }
-    midPoint		    [438.4331 427.4362]
+    midPoint		    [670.5923 339.9809]
     chart		    2
-    linkNode		    [18 214 216]
+    linkNode		    [18 213 215]
     visible		    0
-    dataLimits		    [409.154 475.712 424.436 430.436]
+    dataLimits		    [591.562 759.623 336.981 342.981]
     stampAngle		    -1.2346
     subviewer		    18
     drawStyle		    SMART
@@ -6271,51 +6242,52 @@ Stateflow {
     ssIdNumber		    1663
   }
   transition {
-    id			    216
-    labelString		    "[j==N-1&&dir[i]==1]"
-    labelPosition	    [711.407 531.67 103.5 17]
+    id			    215
+    labelString		    "[(dir[i]==1&&j<N-1)||(dir[i]==-1&&j>0)]{j=j+dir[i];}"
+    labelPosition	    [192.026 397.123 250.25 17]
     fontSize		    12
     arrowSize		    10
     src {
       id		      27
-      intersection	      [3 0 1 0.912 805.6854 427.496 0 0]
+      intersection	      [3 0 1 0.8494 868.0738 379.6802 0 0]
     }
     dst {
-      id		      30
-      intersection	      [4 -1 0 0.4833 813.002 518.2696 0 0]
+      id		      29
+      intersection	      [3 0 1 0.9385 147.804 338.897 0 0]
     }
-    midPoint		    [789.1833 487.1261]
+    midPoint		    [582.3914 417.647]
     chart		    2
-    linkNode		    [18 215 217]
+    linkNode		    [18 214 216]
     visible		    0
-    dataLimits		    [788.692 813.002 427.496 521.27]
-    stampAngle		    -0.7854
+    dataLimits		    [144.804 868.074 338.897 427.801]
+    stampAngle		    2.1166
     subviewer		    18
+    drawStyle		    SMART
     slide {
       sticky		      BOTH_STICK
     }
-    executionOrder	    2
-    ssIdNumber		    1662
+    executionOrder	    3
+    ssIdNumber		    1660
   }
   transition {
-    id			    217
+    id			    216
     labelString		    "[abs(distance-S[j])<=500]"
-    labelPosition	    [505.278 420.092 136 17]
+    labelPosition	    [285.985 355.436 136 17]
     fontSize		    12
     arrowSize		    10
     src {
       id		      29
-      intersection	      [1 0 -1 0.138 560.1007 453.5963 0 0]
+      intersection	      [3 0 1 0.1805 258.6722 338.897 0 0]
     }
     dst {
       id		      194
-      intersection	      [2 0.9077 0.4196 0 489.0659 430.3735 0 0]
+      intersection	      [3 0 1 0 766.623 346.9809 0 0]
     }
-    midPoint		    [535.7929 438.8175]
+    midPoint		    [473.2183 376.7605]
     chart		    2
-    linkNode		    [18 216 218]
+    linkNode		    [18 215 217]
     visible		    0
-    dataLimits		    [489.066 560.101 430.373 453.596]
+    dataLimits		    [258.672 769.623 338.897 398.158]
     stampAngle		    -2.4893
     subviewer		    18
     drawStyle		    SMART
@@ -6326,31 +6298,59 @@ Stateflow {
     ssIdNumber		    1664
   }
   transition {
-    id			    218
-    labelString		    "[v>=20]"
-    labelPosition	    [459.155 450.837 42.25 17]
+    id			    217
+    labelString		    "[j==0&&dir[i]==-1]"
+    labelPosition	    [927.796 335.314 94.75 17]
     fontSize		    12
     arrowSize		    10
     src {
-      id		      29
-      intersection	      [4 -1 0 0.688 536.5572 479.5482 0 0]
+      id		      27
+      intersection	      [2 1 0 0.2505 909.7784 355.3275 0 0]
     }
     dst {
-      id		      28
-      intersection	      [2 1 0 0.4508 409.1543 449.1731 0 0]
+      id		      30
+      intersection	      [4 -1 0 0.7116 1035.3558 355.3275 0 0]
     }
-    midPoint		    [476.8557 464.3607]
+    midPoint		    [967.5671 355.3275]
     chart		    2
-    linkNode		    [18 217 0]
+    linkNode		    [18 216 218]
     visible		    0
-    dataLimits		    [409.154 536.557 446.173 479.548]
+    dataLimits		    [909.778 1035.356 352.327 358.327]
+    stampAngle		    2.9821
     subviewer		    18
     drawStyle		    SMART
     slide {
       sticky		      BOTH_STICK
     }
+    executionOrder	    1
+    ssIdNumber		    1661
+  }
+  transition {
+    id			    218
+    labelString		    "[j==N-1&&dir[i]==1]"
+    labelPosition	    [927.851 385.066 103.5 17]
+    fontSize		    12
+    arrowSize		    10
+    src {
+      id		      27
+      intersection	      [2 1 0 0.6346 909.7784 367.807 0 0]
+    }
+    dst {
+      id		      30
+      intersection	      [4 -1 0 0.3859 1035.3558 367.807 0 0]
+    }
+    midPoint		    [967.5671 367.807]
+    chart		    2
+    linkNode		    [18 217 0]
+    visible		    0
+    dataLimits		    [909.778 1035.356 364.807 370.807]
+    stampAngle		    -0.7854
+    subviewer		    18
+    slide {
+      sticky		      BOTH_STICK
+    }
     executionOrder	    2
-    ssIdNumber		    1665
+    ssIdNumber		    1662
   }
   data {
     id			    219

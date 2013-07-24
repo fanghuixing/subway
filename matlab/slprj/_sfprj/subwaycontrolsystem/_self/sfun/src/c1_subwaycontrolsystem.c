@@ -13,14 +13,14 @@
 /* Named Constants */
 #define CALL_EVENT                     (-1)
 #define c1_IN_NO_ACTIVE_CHILD          ((uint8_T)0U)
-#define c1_IN_D1                       ((uint8_T)1U)
-#define c1_IN_Delay                    ((uint8_T)2U)
+#define c1_IN_Delay                    ((uint8_T)1U)
+#define c1_IN_idle                     ((uint8_T)2U)
 #define c1_IN_tmp                      ((uint8_T)3U)
 #define c1_IN_about_to_close1          ((uint8_T)1U)
 #define c1_IN_about_to_close2          ((uint8_T)2U)
 #define c1_IN_about_to_open1           ((uint8_T)3U)
 #define c1_IN_about_to_open2           ((uint8_T)4U)
-#define c1_IN_idle                     ((uint8_T)5U)
+#define c1_b_IN_idle                   ((uint8_T)5U)
 #define c1_IN_open1                    ((uint8_T)6U)
 #define c1_IN_ring                     ((uint8_T)7U)
 #define c1_IN_start                    ((uint8_T)8U)
@@ -79,9 +79,9 @@ static void outputs_c1_subwaycontrolsystem
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance);
 static void initSimStructsc1_subwaycontrolsystem
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance);
-static void c1_eml_ini_fcn_to_be_inlined_24
+static void c1_eml_ini_fcn_to_be_inlined_502
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance);
-static void c1_eml_term_fcn_to_be_inlined_24
+static void c1_eml_term_fcn_to_be_inlined_502
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance);
 static void init_script_number_translation(uint32_T c1_machineNumber, uint32_T
   c1_chartNumber);
@@ -310,7 +310,7 @@ static void initialize_c1_subwaycontrolsystem
   chartInstance->c1_b_tp_about_to_close2 = 0U;
   chartInstance->c1_b_tp_about_to_open1 = 0U;
   chartInstance->c1_b_tp_about_to_open2 = 0U;
-  chartInstance->c1_b_tp_idle = 0U;
+  chartInstance->c1_c_tp_idle = 0U;
   chartInstance->c1_b_tp_open1 = 0U;
   chartInstance->c1_b_tp_ring = 0U;
   chartInstance->c1_b_tp_start = 0U;
@@ -321,7 +321,7 @@ static void initialize_c1_subwaycontrolsystem
   chartInstance->c1_tp_about_to_close2 = 0U;
   chartInstance->c1_tp_about_to_open1 = 0U;
   chartInstance->c1_tp_about_to_open2 = 0U;
-  chartInstance->c1_tp_idle = 0U;
+  chartInstance->c1_b_tp_idle = 0U;
   chartInstance->c1_tp_open1 = 0U;
   chartInstance->c1_tp_ring = 0U;
   chartInstance->c1_tp_start = 0U;
@@ -332,7 +332,7 @@ static void initialize_c1_subwaycontrolsystem
   chartInstance->c1_d_tp_about_to_close2 = 0U;
   chartInstance->c1_d_tp_about_to_open1 = 0U;
   chartInstance->c1_d_tp_about_to_open2 = 0U;
-  chartInstance->c1_d_tp_idle = 0U;
+  chartInstance->c1_e_tp_idle = 0U;
   chartInstance->c1_d_tp_open1 = 0U;
   chartInstance->c1_d_tp_ring = 0U;
   chartInstance->c1_d_tp_start = 0U;
@@ -343,7 +343,7 @@ static void initialize_c1_subwaycontrolsystem
   chartInstance->c1_c_tp_about_to_close2 = 0U;
   chartInstance->c1_c_tp_about_to_open1 = 0U;
   chartInstance->c1_c_tp_about_to_open2 = 0U;
-  chartInstance->c1_c_tp_idle = 0U;
+  chartInstance->c1_d_tp_idle = 0U;
   chartInstance->c1_c_tp_open1 = 0U;
   chartInstance->c1_c_tp_ring = 0U;
   chartInstance->c1_c_tp_start = 0U;
@@ -494,8 +494,8 @@ static void initialize_c1_subwaycontrolsystem
   chartInstance->c1_is_active_UrgentController = 0U;
   chartInstance->c1_is_UrgentController = c1_IN_NO_ACTIVE_CHILD;
   chartInstance->c1_tp_UrgentController = 0U;
-  chartInstance->c1_tp_D1 = 0U;
   chartInstance->c1_tp_Delay = 0U;
+  chartInstance->c1_tp_idle = 0U;
   chartInstance->c1_tp_tmp = 0U;
   chartInstance->c1_is_active_c1_subwaycontrolsystem = 0U;
   for (c1_i0 = 0; c1_i0 < 4; c1_i0++) {
@@ -678,15 +678,15 @@ static void c1_update_debugger_state_c1_subwaycontrolsystem
   }
 
   if (chartInstance->c1_is_UrgentController == c1_IN_Delay) {
-    _SFD_CS_CALL(STATE_ACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
-  } else {
-    _SFD_CS_CALL(STATE_INACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
-  }
-
-  if (chartInstance->c1_is_UrgentController == c1_IN_D1) {
     _SFD_CS_CALL(STATE_ACTIVE_TAG, 150U, chartInstance->c1_sfEvent);
   } else {
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 150U, chartInstance->c1_sfEvent);
+  }
+
+  if (chartInstance->c1_is_UrgentController == c1_IN_idle) {
+    _SFD_CS_CALL(STATE_ACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
+  } else {
+    _SFD_CS_CALL(STATE_INACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
   }
 
   if (chartInstance->c1_is_active_Controller1 == 1U) {
@@ -713,7 +713,7 @@ static void c1_update_debugger_state_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 13U, chartInstance->c1_sfEvent);
   }
 
-  if (chartInstance->c1_is_Controller1 == c1_IN_idle) {
+  if (chartInstance->c1_is_Controller1 == c1_b_IN_idle) {
     _SFD_CS_CALL(STATE_ACTIVE_TAG, 14U, chartInstance->c1_sfEvent);
   } else {
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 14U, chartInstance->c1_sfEvent);
@@ -845,7 +845,7 @@ static void c1_update_debugger_state_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 4U, chartInstance->c1_sfEvent);
   }
 
-  if (chartInstance->c1_is_Controller0 == c1_IN_idle) {
+  if (chartInstance->c1_is_Controller0 == c1_b_IN_idle) {
     _SFD_CS_CALL(STATE_ACTIVE_TAG, 5U, chartInstance->c1_sfEvent);
   } else {
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 5U, chartInstance->c1_sfEvent);
@@ -1037,7 +1037,7 @@ static void c1_update_debugger_state_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 31U, chartInstance->c1_sfEvent);
   }
 
-  if (chartInstance->c1_is_Controller3 == c1_IN_idle) {
+  if (chartInstance->c1_is_Controller3 == c1_b_IN_idle) {
     _SFD_CS_CALL(STATE_ACTIVE_TAG, 32U, chartInstance->c1_sfEvent);
   } else {
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 32U, chartInstance->c1_sfEvent);
@@ -1091,7 +1091,7 @@ static void c1_update_debugger_state_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 22U, chartInstance->c1_sfEvent);
   }
 
-  if (chartInstance->c1_is_Controller2 == c1_IN_idle) {
+  if (chartInstance->c1_is_Controller2 == c1_b_IN_idle) {
     _SFD_CS_CALL(STATE_ACTIVE_TAG, 23U, chartInstance->c1_sfEvent);
   } else {
     _SFD_CS_CALL(STATE_INACTIVE_TAG, 23U, chartInstance->c1_sfEvent);
@@ -1693,10 +1693,10 @@ static void c1_set_sim_state_side_effects_c1_subwaycontrolsystem
       chartInstance->c1_b_tp_about_to_open2 = 0U;
     }
 
-    if (chartInstance->c1_is_Controller0 == c1_IN_idle) {
-      chartInstance->c1_b_tp_idle = 1U;
+    if (chartInstance->c1_is_Controller0 == c1_b_IN_idle) {
+      chartInstance->c1_c_tp_idle = 1U;
     } else {
-      chartInstance->c1_b_tp_idle = 0U;
+      chartInstance->c1_c_tp_idle = 0U;
     }
 
     if (chartInstance->c1_is_Controller0 == c1_IN_open1) {
@@ -2023,16 +2023,16 @@ static void c1_set_sim_state_side_effects_c1_subwaycontrolsystem
       chartInstance->c1_tp_UrgentController = 0U;
     }
 
-    if (chartInstance->c1_is_UrgentController == c1_IN_D1) {
-      chartInstance->c1_tp_D1 = 1U;
-    } else {
-      chartInstance->c1_tp_D1 = 0U;
-    }
-
     if (chartInstance->c1_is_UrgentController == c1_IN_Delay) {
       chartInstance->c1_tp_Delay = 1U;
     } else {
       chartInstance->c1_tp_Delay = 0U;
+    }
+
+    if (chartInstance->c1_is_UrgentController == c1_IN_idle) {
+      chartInstance->c1_tp_idle = 1U;
+    } else {
+      chartInstance->c1_tp_idle = 0U;
     }
 
     if (chartInstance->c1_is_UrgentController == c1_IN_tmp) {
@@ -2149,10 +2149,10 @@ static void c1_set_sim_state_side_effects_c1_subwaycontrolsystem
       chartInstance->c1_tp_about_to_open2 = 0U;
     }
 
-    if (chartInstance->c1_is_Controller1 == c1_IN_idle) {
-      chartInstance->c1_tp_idle = 1U;
+    if (chartInstance->c1_is_Controller1 == c1_b_IN_idle) {
+      chartInstance->c1_b_tp_idle = 1U;
     } else {
-      chartInstance->c1_tp_idle = 0U;
+      chartInstance->c1_b_tp_idle = 0U;
     }
 
     if (chartInstance->c1_is_Controller1 == c1_IN_open1) {
@@ -2203,10 +2203,10 @@ static void c1_set_sim_state_side_effects_c1_subwaycontrolsystem
       chartInstance->c1_d_tp_about_to_open2 = 0U;
     }
 
-    if (chartInstance->c1_is_Controller2 == c1_IN_idle) {
-      chartInstance->c1_d_tp_idle = 1U;
+    if (chartInstance->c1_is_Controller2 == c1_b_IN_idle) {
+      chartInstance->c1_e_tp_idle = 1U;
     } else {
-      chartInstance->c1_d_tp_idle = 0U;
+      chartInstance->c1_e_tp_idle = 0U;
     }
 
     if (chartInstance->c1_is_Controller2 == c1_IN_open1) {
@@ -2257,10 +2257,10 @@ static void c1_set_sim_state_side_effects_c1_subwaycontrolsystem
       chartInstance->c1_c_tp_about_to_open2 = 0U;
     }
 
-    if (chartInstance->c1_is_Controller3 == c1_IN_idle) {
-      chartInstance->c1_c_tp_idle = 1U;
+    if (chartInstance->c1_is_Controller3 == c1_b_IN_idle) {
+      chartInstance->c1_d_tp_idle = 1U;
     } else {
-      chartInstance->c1_c_tp_idle = 0U;
+      chartInstance->c1_d_tp_idle = 0U;
     }
 
     if (chartInstance->c1_is_Controller3 == c1_IN_open1) {
@@ -2822,9 +2822,10 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   boolean_T c1_kd_out;
   int32_T c1_i158;
   int32_T c1_i159;
-  boolean_T c1_p_temp;
   boolean_T c1_ld_out;
+  boolean_T c1_p_temp;
   boolean_T c1_md_out;
+  boolean_T c1_nd_out;
   int32_T c1_hoistedGlobal;
   real_T c1_a;
   uint32_T c1_debug_family_var_map[5];
@@ -2847,9 +2848,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   int32_T c1_d_q1;
   int32_T c1_d_qY;
   boolean_T c1_q_temp;
-  boolean_T c1_nd_out;
-  int32_T c1_i161;
   boolean_T c1_od_out;
+  int32_T c1_i161;
   boolean_T c1_pd_out;
   uint32_T c1_b_debug_family_var_map[4];
   real_T c1_si;
@@ -3495,9 +3495,9 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_d_i, 40U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 20U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
-      chartInstance->c1_is_Controller0 = c1_IN_idle;
+      chartInstance->c1_is_Controller0 = c1_b_IN_idle;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 5U, chartInstance->c1_sfEvent);
-      chartInstance->c1_b_tp_idle = 1U;
+      chartInstance->c1_c_tp_idle = 1U;
       *c1_z = 0.0;
       _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
       chartInstance->c1_stateChanged = TRUE;
@@ -3828,7 +3828,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 82U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_UrgentController = c1_IN_Delay;
-      _SFD_CS_CALL(STATE_ACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
+      _SFD_CS_CALL(STATE_ACTIVE_TAG, 150U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Delay = 1U;
       *c1_t = 0.0;
       _SFD_DATA_RANGE_CHECK(*c1_t, 20U);
@@ -3915,9 +3915,9 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_b_i, 29U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 111U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
-      chartInstance->c1_is_Controller1 = c1_IN_idle;
+      chartInstance->c1_is_Controller1 = c1_b_IN_idle;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 14U, chartInstance->c1_sfEvent);
-      chartInstance->c1_tp_idle = 1U;
+      chartInstance->c1_b_tp_idle = 1U;
       *c1_b_z = 0.0;
       _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
       chartInstance->c1_stateChanged = TRUE;
@@ -3934,9 +3934,9 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_g_i, 57U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 122U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
-      chartInstance->c1_is_Controller2 = c1_IN_idle;
+      chartInstance->c1_is_Controller2 = c1_b_IN_idle;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 23U, chartInstance->c1_sfEvent);
-      chartInstance->c1_d_tp_idle = 1U;
+      chartInstance->c1_e_tp_idle = 1U;
       *c1_c_z = 0.0;
       _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
       chartInstance->c1_stateChanged = TRUE;
@@ -3953,9 +3953,9 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_f_i, 53U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 133U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
-      chartInstance->c1_is_Controller3 = c1_IN_idle;
+      chartInstance->c1_is_Controller3 = c1_b_IN_idle;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 32U, chartInstance->c1_sfEvent);
-      chartInstance->c1_c_tp_idle = 1U;
+      chartInstance->c1_d_tp_idle = 1U;
       *c1_d_z = 0.0;
       _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
       chartInstance->c1_stateChanged = TRUE;
@@ -4659,7 +4659,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
         }
         break;
 
-       case c1_IN_idle:
+       case c1_b_IN_idle:
         CV_STATE_EVAL(0, 0, 5);
         _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 5U,
                      chartInstance->c1_sfEvent);
@@ -4712,7 +4712,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           c1_d31 = chartInstance->c1_b_side;
           sf_mex_printf("%s =\\n", "side");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d31);
-          chartInstance->c1_b_tp_idle = 0U;
+          chartInstance->c1_c_tp_idle = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 5U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
           chartInstance->c1_is_Controller0 = c1_IN_about_to_open2;
@@ -4749,12 +4749,12 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
               chartInstance->c1_d_i, 0, 3, 1, 0)];
             sf_mex_printf("%s =\\n", "position[i]");
             sf_mex_call_debug("disp", 0U, 1U, 6, c1_d32);
-            chartInstance->c1_b_tp_idle = 0U;
+            chartInstance->c1_c_tp_idle = 0U;
             _SFD_CS_CALL(STATE_INACTIVE_TAG, 5U, chartInstance->c1_sfEvent);
             chartInstance->c1_stateChanged = TRUE;
-            chartInstance->c1_is_Controller0 = c1_IN_idle;
+            chartInstance->c1_is_Controller0 = c1_b_IN_idle;
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 5U, chartInstance->c1_sfEvent);
-            chartInstance->c1_b_tp_idle = 1U;
+            chartInstance->c1_c_tp_idle = 1U;
             *c1_z = 0.0;
             _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
           } else {
@@ -4852,9 +4852,9 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           chartInstance->c1_b_tp_start = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 8U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
-          chartInstance->c1_is_Controller0 = c1_IN_idle;
+          chartInstance->c1_is_Controller0 = c1_b_IN_idle;
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 5U, chartInstance->c1_sfEvent);
-          chartInstance->c1_b_tp_idle = 1U;
+          chartInstance->c1_c_tp_idle = 1U;
           *c1_z = 0.0;
           _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
         } else {
@@ -6608,9 +6608,34 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 148U,
                    chartInstance->c1_sfEvent);
       switch (chartInstance->c1_is_UrgentController) {
-       case c1_IN_D1:
+       case c1_IN_Delay:
         CV_STATE_EVAL(148, 0, 1);
         _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 150U,
+                     chartInstance->c1_sfEvent);
+        _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 83U,
+                     chartInstance->c1_sfEvent);
+        c1_ld_out = (CV_TRANSITION_EVAL(83U, (int32_T)_SFD_CCP_CALL(83U, 0,
+          *c1_t >= 150.0 != 0U, chartInstance->c1_sfEvent)) != 0);
+        if (c1_ld_out) {
+          _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 83U, chartInstance->c1_sfEvent);
+          chartInstance->c1_i = 0;
+          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i, 21U);
+          chartInstance->c1_tp_Delay = 0U;
+          _SFD_CS_CALL(STATE_INACTIVE_TAG, 150U, chartInstance->c1_sfEvent);
+          chartInstance->c1_stateChanged = TRUE;
+          chartInstance->c1_is_UrgentController = c1_IN_idle;
+          _SFD_CS_CALL(STATE_ACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
+          chartInstance->c1_tp_idle = 1U;
+          *c1_t = 0.0;
+          _SFD_DATA_RANGE_CHECK(*c1_t, 20U);
+        } else {
+          _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 150U, chartInstance->c1_sfEvent);
+        }
+        break;
+
+       case c1_IN_idle:
+        CV_STATE_EVAL(148, 0, 2);
+        _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 151U,
                      chartInstance->c1_sfEvent);
         _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 84U,
                      chartInstance->c1_sfEvent);
@@ -6621,16 +6646,16 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             chartInstance->c1_sfEvent) != 0);
         }
 
-        c1_ld_out = (CV_TRANSITION_EVAL(84U, (int32_T)c1_p_temp) != 0);
-        if (c1_ld_out) {
+        c1_md_out = (CV_TRANSITION_EVAL(84U, (int32_T)c1_p_temp) != 0);
+        if (c1_md_out) {
           if (sf_debug_transition_conflict_check_enabled()) {
             unsigned int transitionList[2];
             unsigned int numTransitions = 1;
             transitionList[0] = 84;
             sf_debug_transition_conflict_check_begin();
-            c1_md_out = ((chartInstance->c1_i == chartInstance->c1_N) && (*c1_t >=
+            c1_nd_out = ((chartInstance->c1_i == chartInstance->c1_N) && (*c1_t >=
               1.0));
-            if (c1_md_out) {
+            if (c1_nd_out) {
               transitionList[numTransitions] = 147;
               numTransitions++;
             }
@@ -6800,8 +6825,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_EML_CALL(152U, chartInstance->c1_sfEvent, -20);
           sf_debug_symbol_scope_pop();
           _SFD_UNSET_DATA_VALUE_PTR(25U);
-          chartInstance->c1_tp_D1 = 0U;
-          _SFD_CS_CALL(STATE_INACTIVE_TAG, 150U, chartInstance->c1_sfEvent);
+          chartInstance->c1_tp_idle = 0U;
+          _SFD_CS_CALL(STATE_INACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
           chartInstance->c1_is_UrgentController = c1_IN_tmp;
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 153U, chartInstance->c1_sfEvent);
@@ -6818,51 +6843,26 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
               chartInstance->c1_sfEvent) != 0);
           }
 
-          c1_nd_out = (CV_TRANSITION_EVAL(147U, (int32_T)c1_q_temp) != 0);
-          if (c1_nd_out) {
+          c1_od_out = (CV_TRANSITION_EVAL(147U, (int32_T)c1_q_temp) != 0);
+          if (c1_od_out) {
             _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 147U, chartInstance->c1_sfEvent);
             chartInstance->c1_i = 0;
             _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i, 21U);
             c1_i161 = chartInstance->c1_i;
             sf_mex_printf("%s =\\n", "i");
             sf_mex_call_debug("disp", 0U, 1U, 12, c1_i161);
-            chartInstance->c1_tp_D1 = 0U;
-            _SFD_CS_CALL(STATE_INACTIVE_TAG, 150U, chartInstance->c1_sfEvent);
+            chartInstance->c1_tp_idle = 0U;
+            _SFD_CS_CALL(STATE_INACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
             chartInstance->c1_stateChanged = TRUE;
-            chartInstance->c1_is_UrgentController = c1_IN_D1;
-            _SFD_CS_CALL(STATE_ACTIVE_TAG, 150U, chartInstance->c1_sfEvent);
-            chartInstance->c1_tp_D1 = 1U;
+            chartInstance->c1_is_UrgentController = c1_IN_idle;
+            _SFD_CS_CALL(STATE_ACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
+            chartInstance->c1_tp_idle = 1U;
             *c1_t = 0.0;
             _SFD_DATA_RANGE_CHECK(*c1_t, 20U);
           } else {
-            _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 150U,
+            _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 151U,
                          chartInstance->c1_sfEvent);
           }
-        }
-        break;
-
-       case c1_IN_Delay:
-        CV_STATE_EVAL(148, 0, 2);
-        _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 151U,
-                     chartInstance->c1_sfEvent);
-        _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 83U,
-                     chartInstance->c1_sfEvent);
-        c1_od_out = (CV_TRANSITION_EVAL(83U, (int32_T)_SFD_CCP_CALL(83U, 0,
-          *c1_t >= 150.0 != 0U, chartInstance->c1_sfEvent)) != 0);
-        if (c1_od_out) {
-          _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 83U, chartInstance->c1_sfEvent);
-          chartInstance->c1_i = 0;
-          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i, 21U);
-          chartInstance->c1_tp_Delay = 0U;
-          _SFD_CS_CALL(STATE_INACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
-          chartInstance->c1_stateChanged = TRUE;
-          chartInstance->c1_is_UrgentController = c1_IN_D1;
-          _SFD_CS_CALL(STATE_ACTIVE_TAG, 150U, chartInstance->c1_sfEvent);
-          chartInstance->c1_tp_D1 = 1U;
-          *c1_t = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_t, 20U);
-        } else {
-          _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 151U, chartInstance->c1_sfEvent);
         }
         break;
 
@@ -6971,9 +6971,9 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           chartInstance->c1_tp_tmp = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 153U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
-          chartInstance->c1_is_UrgentController = c1_IN_D1;
-          _SFD_CS_CALL(STATE_ACTIVE_TAG, 150U, chartInstance->c1_sfEvent);
-          chartInstance->c1_tp_D1 = 1U;
+          chartInstance->c1_is_UrgentController = c1_IN_idle;
+          _SFD_CS_CALL(STATE_ACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
+          chartInstance->c1_tp_idle = 1U;
           *c1_t = 0.0;
           _SFD_DATA_RANGE_CHECK(*c1_t, 20U);
         } else {
@@ -7945,7 +7945,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
         }
         break;
 
-       case c1_IN_idle:
+       case c1_b_IN_idle:
         CV_STATE_EVAL(9, 0, 5);
         _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 14U,
                      chartInstance->c1_sfEvent);
@@ -7998,7 +7998,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           c1_d57 = chartInstance->c1_side;
           sf_mex_printf("%s =\\n", "side");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d57);
-          chartInstance->c1_tp_idle = 0U;
+          chartInstance->c1_b_tp_idle = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 14U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
           chartInstance->c1_is_Controller1 = c1_IN_about_to_open2;
@@ -8035,12 +8035,12 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
               chartInstance->c1_b_i, 0, 3, 1, 0)];
             sf_mex_printf("%s =\\n", "position[i]");
             sf_mex_call_debug("disp", 0U, 1U, 6, c1_d58);
-            chartInstance->c1_tp_idle = 0U;
+            chartInstance->c1_b_tp_idle = 0U;
             _SFD_CS_CALL(STATE_INACTIVE_TAG, 14U, chartInstance->c1_sfEvent);
             chartInstance->c1_stateChanged = TRUE;
-            chartInstance->c1_is_Controller1 = c1_IN_idle;
+            chartInstance->c1_is_Controller1 = c1_b_IN_idle;
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 14U, chartInstance->c1_sfEvent);
-            chartInstance->c1_tp_idle = 1U;
+            chartInstance->c1_b_tp_idle = 1U;
             *c1_b_z = 0.0;
             _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
           } else {
@@ -8139,9 +8139,9 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           chartInstance->c1_tp_start = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 17U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
-          chartInstance->c1_is_Controller1 = c1_IN_idle;
+          chartInstance->c1_is_Controller1 = c1_b_IN_idle;
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 14U, chartInstance->c1_sfEvent);
-          chartInstance->c1_tp_idle = 1U;
+          chartInstance->c1_b_tp_idle = 1U;
           *c1_b_z = 0.0;
           _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
         } else {
@@ -8336,7 +8336,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
         }
         break;
 
-       case c1_IN_idle:
+       case c1_b_IN_idle:
         CV_STATE_EVAL(18, 0, 5);
         _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 23U,
                      chartInstance->c1_sfEvent);
@@ -8389,7 +8389,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           c1_d60 = chartInstance->c1_d_side;
           sf_mex_printf("%s =\\n", "side");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d60);
-          chartInstance->c1_d_tp_idle = 0U;
+          chartInstance->c1_e_tp_idle = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 23U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
           chartInstance->c1_is_Controller2 = c1_IN_about_to_open2;
@@ -8426,12 +8426,12 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
               chartInstance->c1_g_i, 0, 3, 1, 0)];
             sf_mex_printf("%s =\\n", "position[i]");
             sf_mex_call_debug("disp", 0U, 1U, 6, c1_d61);
-            chartInstance->c1_d_tp_idle = 0U;
+            chartInstance->c1_e_tp_idle = 0U;
             _SFD_CS_CALL(STATE_INACTIVE_TAG, 23U, chartInstance->c1_sfEvent);
             chartInstance->c1_stateChanged = TRUE;
-            chartInstance->c1_is_Controller2 = c1_IN_idle;
+            chartInstance->c1_is_Controller2 = c1_b_IN_idle;
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 23U, chartInstance->c1_sfEvent);
-            chartInstance->c1_d_tp_idle = 1U;
+            chartInstance->c1_e_tp_idle = 1U;
             *c1_c_z = 0.0;
             _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
           } else {
@@ -8530,9 +8530,9 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           chartInstance->c1_d_tp_start = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 26U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
-          chartInstance->c1_is_Controller2 = c1_IN_idle;
+          chartInstance->c1_is_Controller2 = c1_b_IN_idle;
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 23U, chartInstance->c1_sfEvent);
-          chartInstance->c1_d_tp_idle = 1U;
+          chartInstance->c1_e_tp_idle = 1U;
           *c1_c_z = 0.0;
           _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
         } else {
@@ -8727,7 +8727,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
         }
         break;
 
-       case c1_IN_idle:
+       case c1_b_IN_idle:
         CV_STATE_EVAL(27, 0, 5);
         _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 32U,
                      chartInstance->c1_sfEvent);
@@ -8780,7 +8780,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           c1_d63 = chartInstance->c1_c_side;
           sf_mex_printf("%s =\\n", "side");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d63);
-          chartInstance->c1_c_tp_idle = 0U;
+          chartInstance->c1_d_tp_idle = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 32U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
           chartInstance->c1_is_Controller3 = c1_IN_about_to_open2;
@@ -8817,12 +8817,12 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
               chartInstance->c1_f_i, 0, 3, 1, 0)];
             sf_mex_printf("%s =\\n", "position[i]");
             sf_mex_call_debug("disp", 0U, 1U, 6, c1_d64);
-            chartInstance->c1_c_tp_idle = 0U;
+            chartInstance->c1_d_tp_idle = 0U;
             _SFD_CS_CALL(STATE_INACTIVE_TAG, 32U, chartInstance->c1_sfEvent);
             chartInstance->c1_stateChanged = TRUE;
-            chartInstance->c1_is_Controller3 = c1_IN_idle;
+            chartInstance->c1_is_Controller3 = c1_b_IN_idle;
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 32U, chartInstance->c1_sfEvent);
-            chartInstance->c1_c_tp_idle = 1U;
+            chartInstance->c1_d_tp_idle = 1U;
             *c1_d_z = 0.0;
             _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
           } else {
@@ -8921,9 +8921,9 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           chartInstance->c1_c_tp_start = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 35U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
-          chartInstance->c1_is_Controller3 = c1_IN_idle;
+          chartInstance->c1_is_Controller3 = c1_b_IN_idle;
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 32U, chartInstance->c1_sfEvent);
-          chartInstance->c1_c_tp_idle = 1U;
+          chartInstance->c1_d_tp_idle = 1U;
           *c1_d_z = 0.0;
           _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
         } else {
@@ -11481,7 +11481,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 4U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_idle:
+   case c1_b_IN_idle:
     CV_STATE_EVAL(0, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 5U, chartInstance->c1_sfEvent);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 5U, chartInstance->c1_sfEvent);
@@ -11995,14 +11995,14 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 143U, chartInstance->c1_sfEvent);
   _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 148U, chartInstance->c1_sfEvent);
   switch (chartInstance->c1_is_UrgentController) {
-   case c1_IN_D1:
+   case c1_IN_Delay:
     CV_STATE_EVAL(148, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 150U,
                  chartInstance->c1_sfEvent);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 150U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_Delay:
+   case c1_IN_idle:
     CV_STATE_EVAL(148, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 151U,
                  chartInstance->c1_sfEvent);
@@ -12182,7 +12182,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 13U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_idle:
+   case c1_b_IN_idle:
     CV_STATE_EVAL(9, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 14U, chartInstance->c1_sfEvent);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 14U, chartInstance->c1_sfEvent);
@@ -12238,7 +12238,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 22U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_idle:
+   case c1_b_IN_idle:
     CV_STATE_EVAL(18, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 23U, chartInstance->c1_sfEvent);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 23U, chartInstance->c1_sfEvent);
@@ -12294,7 +12294,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 31U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_idle:
+   case c1_b_IN_idle:
     CV_STATE_EVAL(27, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 32U, chartInstance->c1_sfEvent);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 32U, chartInstance->c1_sfEvent);
@@ -12801,10 +12801,10 @@ static void zeroCrossings_c1_subwaycontrolsystem
   boolean_T c1_n_temp;
   boolean_T c1_tc_out;
   boolean_T c1_uc_out;
-  boolean_T c1_o_temp;
   boolean_T c1_vc_out;
-  boolean_T c1_p_temp;
+  boolean_T c1_o_temp;
   boolean_T c1_wc_out;
+  boolean_T c1_p_temp;
   boolean_T c1_xc_out;
   boolean_T c1_yc_out;
   boolean_T c1_ad_out;
@@ -13249,7 +13249,7 @@ static void zeroCrossings_c1_subwaycontrolsystem
           }
           break;
 
-         case c1_IN_idle:
+         case c1_b_IN_idle:
           CV_STATE_EVAL(0, 0, 5);
           c1_p_out = (CV_TRANSITION_EVAL(12U, (int32_T)_SFD_CCP_CALL(12U, 0,
             chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -14014,8 +14014,19 @@ static void zeroCrossings_c1_subwaycontrolsystem
 
       if (guard8 == TRUE) {
         switch (chartInstance->c1_is_UrgentController) {
-         case c1_IN_D1:
+         case c1_IN_Delay:
           CV_STATE_EVAL(148, 0, 1);
+          c1_vc_out = (CV_TRANSITION_EVAL(83U, (int32_T)_SFD_CCP_CALL(83U, 0,
+            *c1_t >= 150.0 != 0U, chartInstance->c1_sfEvent)) != 0);
+          if (c1_vc_out) {
+            chartInstance->c1_stateChanged = TRUE;
+          } else {
+            guard7 = TRUE;
+          }
+          break;
+
+         case c1_IN_idle:
+          CV_STATE_EVAL(148, 0, 2);
           c1_o_temp = (_SFD_CCP_CALL(84U, 0, chartInstance->c1_i !=
             chartInstance->c1_N != 0U, chartInstance->c1_sfEvent) != 0);
           if (c1_o_temp) {
@@ -14023,8 +14034,8 @@ static void zeroCrossings_c1_subwaycontrolsystem
               chartInstance->c1_sfEvent) != 0);
           }
 
-          c1_vc_out = (CV_TRANSITION_EVAL(84U, (int32_T)c1_o_temp) != 0);
-          if (c1_vc_out) {
+          c1_wc_out = (CV_TRANSITION_EVAL(84U, (int32_T)c1_o_temp) != 0);
+          if (c1_wc_out) {
             chartInstance->c1_stateChanged = TRUE;
           } else {
             c1_p_temp = (_SFD_CCP_CALL(147U, 0, chartInstance->c1_i ==
@@ -14034,23 +14045,12 @@ static void zeroCrossings_c1_subwaycontrolsystem
                 chartInstance->c1_sfEvent) != 0);
             }
 
-            c1_wc_out = (CV_TRANSITION_EVAL(147U, (int32_T)c1_p_temp) != 0);
-            if (c1_wc_out) {
+            c1_xc_out = (CV_TRANSITION_EVAL(147U, (int32_T)c1_p_temp) != 0);
+            if (c1_xc_out) {
               chartInstance->c1_stateChanged = TRUE;
             } else {
               guard7 = TRUE;
             }
-          }
-          break;
-
-         case c1_IN_Delay:
-          CV_STATE_EVAL(148, 0, 2);
-          c1_xc_out = (CV_TRANSITION_EVAL(83U, (int32_T)_SFD_CCP_CALL(83U, 0,
-            *c1_t >= 150.0 != 0U, chartInstance->c1_sfEvent)) != 0);
-          if (c1_xc_out) {
-            chartInstance->c1_stateChanged = TRUE;
-          } else {
-            guard7 = TRUE;
           }
           break;
 
@@ -14389,7 +14389,7 @@ static void zeroCrossings_c1_subwaycontrolsystem
           }
           break;
 
-         case c1_IN_idle:
+         case c1_b_IN_idle:
           CV_STATE_EVAL(9, 0, 5);
           c1_be_out = (CV_TRANSITION_EVAL(114U, (int32_T)_SFD_CCP_CALL(114U, 0,
             chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -14525,7 +14525,7 @@ static void zeroCrossings_c1_subwaycontrolsystem
           }
           break;
 
-         case c1_IN_idle:
+         case c1_b_IN_idle:
           CV_STATE_EVAL(18, 0, 5);
           c1_me_out = (CV_TRANSITION_EVAL(125U, (int32_T)_SFD_CCP_CALL(125U, 0,
             chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -14661,7 +14661,7 @@ static void zeroCrossings_c1_subwaycontrolsystem
           }
           break;
 
-         case c1_IN_idle:
+         case c1_b_IN_idle:
           CV_STATE_EVAL(27, 0, 5);
           c1_xe_out = (CV_TRANSITION_EVAL(136U, (int32_T)_SFD_CCP_CALL(136U, 0,
             chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -15857,7 +15857,7 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 4U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_idle:
+   case c1_b_IN_idle:
     CV_STATE_EVAL(0, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 5U, chartInstance->c1_sfEvent);
     *c1_b_z_dot = 1.0;
@@ -16429,20 +16429,20 @@ static void derivatives_c1_subwaycontrolsystem
   _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 143U, chartInstance->c1_sfEvent);
   _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 148U, chartInstance->c1_sfEvent);
   switch (chartInstance->c1_is_UrgentController) {
-   case c1_IN_D1:
+   case c1_IN_Delay:
     CV_STATE_EVAL(148, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 150U,
                  chartInstance->c1_sfEvent);
-    *c1_t_dot = 0.5;
+    *c1_t_dot = 1.0;
     _SFD_DATA_RANGE_CHECK(*c1_t_dot, 20U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 150U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_Delay:
+   case c1_IN_idle:
     CV_STATE_EVAL(148, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 151U,
                  chartInstance->c1_sfEvent);
-    *c1_t_dot = 1.0;
+    *c1_t_dot = 0.5;
     _SFD_DATA_RANGE_CHECK(*c1_t_dot, 20U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 151U, chartInstance->c1_sfEvent);
     break;
@@ -16654,7 +16654,7 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 13U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_idle:
+   case c1_b_IN_idle:
     CV_STATE_EVAL(9, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 14U, chartInstance->c1_sfEvent);
     *c1_z_dot = 1.0;
@@ -16726,7 +16726,7 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 22U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_idle:
+   case c1_b_IN_idle:
     CV_STATE_EVAL(18, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 23U, chartInstance->c1_sfEvent);
     *c1_d_z_dot = 1.0;
@@ -16798,7 +16798,7 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 31U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_idle:
+   case c1_b_IN_idle:
     CV_STATE_EVAL(27, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 32U, chartInstance->c1_sfEvent);
     *c1_c_z_dot = 1.0;
@@ -17521,7 +17521,7 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 4U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_idle:
+   case c1_b_IN_idle:
     CV_STATE_EVAL(0, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 5U, chartInstance->c1_sfEvent);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 5U, chartInstance->c1_sfEvent);
@@ -18035,14 +18035,14 @@ static void outputs_c1_subwaycontrolsystem
   _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 143U, chartInstance->c1_sfEvent);
   _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 148U, chartInstance->c1_sfEvent);
   switch (chartInstance->c1_is_UrgentController) {
-   case c1_IN_D1:
+   case c1_IN_Delay:
     CV_STATE_EVAL(148, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 150U,
                  chartInstance->c1_sfEvent);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 150U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_Delay:
+   case c1_IN_idle:
     CV_STATE_EVAL(148, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 151U,
                  chartInstance->c1_sfEvent);
@@ -18222,7 +18222,7 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 13U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_idle:
+   case c1_b_IN_idle:
     CV_STATE_EVAL(9, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 14U, chartInstance->c1_sfEvent);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 14U, chartInstance->c1_sfEvent);
@@ -18278,7 +18278,7 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 22U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_idle:
+   case c1_b_IN_idle:
     CV_STATE_EVAL(18, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 23U, chartInstance->c1_sfEvent);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 23U, chartInstance->c1_sfEvent);
@@ -18334,7 +18334,7 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 31U, chartInstance->c1_sfEvent);
     break;
 
-   case c1_IN_idle:
+   case c1_b_IN_idle:
     CV_STATE_EVAL(27, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 32U, chartInstance->c1_sfEvent);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 32U, chartInstance->c1_sfEvent);
@@ -18756,12 +18756,12 @@ static void initSimStructsc1_subwaycontrolsystem
 {
 }
 
-static void c1_eml_ini_fcn_to_be_inlined_24
+static void c1_eml_ini_fcn_to_be_inlined_502
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance)
 {
 }
 
-static void c1_eml_term_fcn_to_be_inlined_24
+static void c1_eml_term_fcn_to_be_inlined_502
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance)
 {
 }
@@ -20403,10 +20403,10 @@ static void init_dsm_address_info(SFc1_subwaycontrolsystemInstanceStruct
 /* SFunction Glue Code */
 void sf_c1_subwaycontrolsystem_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1552091191U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3576535715U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2541291026U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2238434098U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3906330600U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2025281144U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2739316458U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1488580045U);
 }
 
 mxArray *sf_c1_subwaycontrolsystem_get_autoinheritance_info(void)
@@ -22047,6 +22047,17 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         {
           static unsigned int sStartGuardMap[] = { 1 };
 
+          static unsigned int sEndGuardMap[] = { 9 };
+
+          static int sPostFixPredicateTree[] = { 0 };
+
+          _SFD_CV_INIT_TRANS(164,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
+                             &(sPostFixPredicateTree[0]));
+        }
+
+        {
+          static unsigned int sStartGuardMap[] = { 1 };
+
           static unsigned int sEndGuardMap[] = { 22 };
 
           static int sPostFixPredicateTree[] = { 0 };
@@ -22074,17 +22085,6 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           static int sPostFixPredicateTree[] = { 0 };
 
           _SFD_CV_INIT_TRANS(163,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
-                             &(sPostFixPredicateTree[0]));
-        }
-
-        {
-          static unsigned int sStartGuardMap[] = { 1 };
-
-          static unsigned int sEndGuardMap[] = { 9 };
-
-          static int sPostFixPredicateTree[] = { 0 };
-
-          _SFD_CV_INIT_TRANS(164,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
                              &(sPostFixPredicateTree[0]));
         }
 
@@ -22135,17 +22135,6 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         }
 
         {
-          static unsigned int sStartGuardMap[] = { 1, 9 };
-
-          static unsigned int sEndGuardMap[] = { 7, 18 };
-
-          static int sPostFixPredicateTree[] = { 0, 1, -3 };
-
-          _SFD_CV_INIT_TRANS(170,2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),3,
-                             &(sPostFixPredicateTree[0]));
-        }
-
-        {
           static unsigned int sStartGuardMap[] = { 1 };
 
           static unsigned int sEndGuardMap[] = { 24 };
@@ -22153,6 +22142,17 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           static int sPostFixPredicateTree[] = { 0 };
 
           _SFD_CV_INIT_TRANS(171,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
+                             &(sPostFixPredicateTree[0]));
+        }
+
+        {
+          static unsigned int sStartGuardMap[] = { 1, 9 };
+
+          static unsigned int sEndGuardMap[] = { 7, 18 };
+
+          static int sPostFixPredicateTree[] = { 0, 1, -3 };
+
+          _SFD_CV_INIT_TRANS(170,2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),3,
                              &(sPostFixPredicateTree[0]));
         }
 
@@ -24358,6 +24358,19 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL);
         }
 
+        _SFD_TRANS_COV_WTS(164,0,1,3,0);
+        if (chartAlreadyPresent==0) {
+          static unsigned int sStartGuardMap[] = { 1 };
+
+          static unsigned int sEndGuardMap[] = { 9 };
+
+          _SFD_TRANS_COV_MAPS(164,
+                              0,NULL,NULL,
+                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              3,NULL,NULL,
+                              0,NULL,NULL);
+        }
+
         _SFD_TRANS_COV_WTS(161,0,1,2,0);
         if (chartAlreadyPresent==0) {
           static unsigned int sStartGuardMap[] = { 1 };
@@ -24394,19 +24407,6 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL,
                               1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
                               2,NULL,NULL,
-                              0,NULL,NULL);
-        }
-
-        _SFD_TRANS_COV_WTS(164,0,1,3,0);
-        if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 1 };
-
-          static unsigned int sEndGuardMap[] = { 9 };
-
-          _SFD_TRANS_COV_MAPS(164,
-                              0,NULL,NULL,
-                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
-                              3,NULL,NULL,
                               0,NULL,NULL);
         }
 
@@ -24471,19 +24471,6 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL);
         }
 
-        _SFD_TRANS_COV_WTS(170,0,2,0,0);
-        if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 1, 9 };
-
-          static unsigned int sEndGuardMap[] = { 7, 18 };
-
-          _SFD_TRANS_COV_MAPS(170,
-                              0,NULL,NULL,
-                              2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
-                              0,NULL,NULL,
-                              0,NULL,NULL);
-        }
-
         _SFD_TRANS_COV_WTS(171,0,1,0,0);
         if (chartAlreadyPresent==0) {
           static unsigned int sStartGuardMap[] = { 1 };
@@ -24493,6 +24480,19 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           _SFD_TRANS_COV_MAPS(171,
                               0,NULL,NULL,
                               1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              0,NULL,NULL,
+                              0,NULL,NULL);
+        }
+
+        _SFD_TRANS_COV_WTS(170,0,2,0,0);
+        if (chartAlreadyPresent==0) {
+          static unsigned int sStartGuardMap[] = { 1, 9 };
+
+          static unsigned int sEndGuardMap[] = { 7, 18 };
+
+          _SFD_TRANS_COV_MAPS(170,
+                              0,NULL,NULL,
+                              2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
                               0,NULL,NULL,
                               0,NULL,NULL);
         }
@@ -27236,7 +27236,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization()
 {
-  return "ANSPwN0kP6tKPTgoG8K0MB";
+  return "ByndtCgrZnHzZI4NpOHVXF";
 }
 
 static void sf_opaque_initialize_c1_subwaycontrolsystem(void *chartInstanceVar)
@@ -27420,10 +27420,10 @@ static void mdlSetWorkWidths_c1_subwaycontrolsystem(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(2827932642U));
-  ssSetChecksum1(S,(1071811351U));
-  ssSetChecksum2(S,(1792862400U));
-  ssSetChecksum3(S,(1121225607U));
+  ssSetChecksum0(S,(3776112918U));
+  ssSetChecksum1(S,(922742967U));
+  ssSetChecksum2(S,(4119584549U));
+  ssSetChecksum3(S,(1772031803U));
   ssSetNumContStates(S,29);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);

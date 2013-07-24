@@ -35,12 +35,12 @@ typedef struct {
   uint8_T c1_tp_UrgentController;
   uint8_T c1_tp_tmp;
   uint8_T c1_tp_Delay;
-  uint8_T c1_tp_D1;
+  uint8_T c1_tp_idle;
   uint8_T c1_tp_Controller1;
   uint8_T c1_tp_about_to_close2;
   uint8_T c1_tp_start;
   uint8_T c1_tp_about_to_open2;
-  uint8_T c1_tp_idle;
+  uint8_T c1_b_tp_idle;
   uint8_T c1_tp_about_to_open1;
   uint8_T c1_tp_about_to_close1;
   uint8_T c1_tp_open1;
@@ -62,7 +62,7 @@ typedef struct {
   uint8_T c1_b_tp_about_to_close2;
   uint8_T c1_b_tp_start;
   uint8_T c1_b_tp_about_to_open2;
-  uint8_T c1_b_tp_idle;
+  uint8_T c1_c_tp_idle;
   uint8_T c1_b_tp_about_to_open1;
   uint8_T c1_b_tp_about_to_close1;
   uint8_T c1_b_tp_open1;
@@ -94,7 +94,7 @@ typedef struct {
   uint8_T c1_c_tp_about_to_close2;
   uint8_T c1_c_tp_start;
   uint8_T c1_c_tp_about_to_open2;
-  uint8_T c1_c_tp_idle;
+  uint8_T c1_d_tp_idle;
   uint8_T c1_c_tp_about_to_open1;
   uint8_T c1_c_tp_about_to_close1;
   uint8_T c1_c_tp_open1;
@@ -103,7 +103,7 @@ typedef struct {
   uint8_T c1_d_tp_about_to_close2;
   uint8_T c1_d_tp_start;
   uint8_T c1_d_tp_about_to_open2;
-  uint8_T c1_d_tp_idle;
+  uint8_T c1_e_tp_idle;
   uint8_T c1_d_tp_about_to_open1;
   uint8_T c1_d_tp_about_to_close1;
   uint8_T c1_d_tp_open1;

@@ -14,7 +14,7 @@ MACHINE_SRC	= subwaycontrolsystem_sfun.c
 MACHINE_REG = subwaycontrolsystem_sfun_registry.c
 MEX_WRAPPER =
 MAKEFILE    = subwaycontrolsystem_sfun.mak
-MATLAB_ROOT	= D:\Program Files\MATLAB\R2012b
+MATLAB_ROOT	= d:\Program Files\MATLAB\R2012b
 BUILDARGS   =
 
 #--------------------------- Tool Specifications ------------------------------
@@ -34,7 +34,7 @@ USER_INCLUDES   =
 AUX_INCLUDES   = 
 ML_INCLUDES     = /I "$(MATLAB_ROOT)\extern\include"
 SL_INCLUDES     = /I "$(MATLAB_ROOT)\simulink\include"
-SF_INCLUDES     = /I "D:\Program Files\MATLAB\R2012b\stateflow\c\mex\include" /I "D:\Program Files\MATLAB\R2012b\stateflow\c\debugger\include"
+SF_INCLUDES     = /I "d:\Program Files\MATLAB\R2012b\stateflow\c\mex\include" /I "d:\Program Files\MATLAB\R2012b\stateflow\c\debugger\include"
 
 DSP_INCLUDES    =
 
@@ -59,13 +59,13 @@ REQ_OBJS = $(REQ_SRCS:.cpp=.obj)
 REQ_OBJS2 = $(REQ_OBJS:.c=.obj)
 OBJS = $(REQ_OBJS2) $(USER_ABS_OBJS) $(AUX_ABS_OBJS)
 OBJLIST_FILE = subwaycontrolsystem_sfun.mol
-SFCLIB = "D:\Program Files\MATLAB\R2012b\stateflow\c\mex\lib\win64\sfc_mex.lib" "D:\Program Files\MATLAB\R2012b\stateflow\c\debugger\lib\win64\sfc_debug.lib"
+SFCLIB = "d:\Program Files\MATLAB\R2012b\stateflow\c\mex\lib\win64\sfc_mex.lib" "d:\Program Files\MATLAB\R2012b\stateflow\c\debugger\lib\win64\sfc_debug.lib"
 AUX_LNK_OBJS =
 USER_LIBS =
 LINK_MACHINE_LIBS =
 
 DSP_LIBS    =
-BLAS_LIBS   = "D:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libmwblascompat32.lib"
+BLAS_LIBS   = "d:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libmwblascompat32.lib"
 
 #--------------------------------- Rules --------------------------------------
 
@@ -74,7 +74,7 @@ MEX_FILE_NAME = $(MEX_FILE_NAME_WO_EXT).mexw64
 MEX_FILE_CSF =
 all : $(MEX_FILE_NAME) $(MEX_FILE_CSF)
 
-MEXLIB = "D:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libmx.lib" "D:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libmex.lib" "D:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libmat.lib" "D:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libfixedpoint.lib" "D:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libut.lib" "D:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libmwmathutil.lib" "D:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libemlrt.lib" "D:\Program Files\MATLAB\R2012b\lib\win64\libippmwipt.lib"
+MEXLIB = "d:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libmx.lib" "d:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libmex.lib" "d:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libmat.lib" "d:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libfixedpoint.lib" "d:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libut.lib" "d:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libmwmathutil.lib" "d:\Program Files\MATLAB\R2012b\extern\lib\win64\microsoft\libemlrt.lib" "d:\Program Files\MATLAB\R2012b\lib\win64\libippmwipt.lib"
 
 $(MEX_FILE_NAME) : $(MAKEFILE) $(OBJS) $(SFCLIB) $(AUX_LNK_OBJS) $(USER_LIBS)
 	@echo ### Linking ...
