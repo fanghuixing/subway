@@ -79,9 +79,9 @@ static void outputs_c1_subwaycontrolsystem
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance);
 static void initSimStructsc1_subwaycontrolsystem
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance);
-static void c1_eml_ini_fcn_to_be_inlined_502
+static void c1_eml_ini_fcn_to_be_inlined_503
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance);
-static void c1_eml_term_fcn_to_be_inlined_502
+static void c1_eml_term_fcn_to_be_inlined_503
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance);
 static void init_script_number_translation(uint32_T c1_machineNumber, uint32_T
   c1_chartNumber);
@@ -94,6 +94,8 @@ static real_T c1_b_emlrt_marshallIn(SFc1_subwaycontrolsystemInstanceStruct
   *chartInstance, const mxArray *c1_u, const emlrtMsgIdentifier *c1_parentId);
 static void c1_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c1_mxArrayInData, const char_T *c1_varName, void *c1_outData);
+static const mxArray *c1_b_emlrt_marshallOut
+  (SFc1_subwaycontrolsystemInstanceStruct *chartInstance, int32_T c1_u);
 static const mxArray *c1_b_sf_marshallOut(void *chartInstanceVoid, void
   *c1_inData);
 static int32_T c1_c_emlrt_marshallIn(SFc1_subwaycontrolsystemInstanceStruct
@@ -119,8 +121,6 @@ static void c1_common_checks(SFc1_subwaycontrolsystemInstanceStruct
   *chartInstance);
 static void c1_integer_only_checks(SFc1_subwaycontrolsystemInstanceStruct
   *chartInstance);
-static const mxArray *c1_b_emlrt_marshallOut
-  (SFc1_subwaycontrolsystemInstanceStruct *chartInstance, int32_T c1_u);
 static const mxArray *c1_c_emlrt_marshallOut
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance, char_T c1_u[34]);
 static const mxArray *c1_d_emlrt_marshallOut
@@ -264,6 +264,7 @@ static void initialize_c1_subwaycontrolsystem
   real_T *c1_f_y2;
   real_T *c1_g_y2;
   real_T *c1_h_y2;
+  real_T *c1_dir1_out;
   real_T (*c1_y2_out)[8];
   real_T (*c1_y1_out)[4];
   real_T (*c1_distance_out)[4];
@@ -296,6 +297,7 @@ static void initialize_c1_subwaycontrolsystem
   c1_v = (real_T *)(ssGetContStates(chartInstance->S) + 2);
   c1_z = (real_T *)(ssGetContStates(chartInstance->S) + 1);
   c1_t = (real_T *)(ssGetContStates(chartInstance->S) + 0);
+  c1_dir1_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 4);
   c1_y2_out = (real_T (*)[8])ssGetOutputPortSignal(chartInstance->S, 3);
   c1_y1_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 2);
   c1_distance_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 1);
@@ -635,6 +637,10 @@ static void initialize_c1_subwaycontrolsystem
     for (c1_i13 = 0; c1_i13 < 8; c1_i13++) {
       (*c1_y2_out)[c1_i13] = 0.0;
     }
+  }
+
+  if (!(cdrGetOutputPortReusable(chartInstance->S, 4) != 0)) {
+    *c1_dir1_out = 0.0;
   }
 }
 
@@ -2849,7 +2855,6 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   int32_T c1_d_qY;
   boolean_T c1_q_temp;
   boolean_T c1_od_out;
-  int32_T c1_i161;
   boolean_T c1_pd_out;
   uint32_T c1_b_debug_family_var_map[4];
   real_T c1_si;
@@ -2859,26 +2864,26 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   int32_T c1_c_index;
   real_T c1_d_index;
   boolean_T c1_qd_out;
+  int32_T c1_i161;
   int32_T c1_i162;
   int32_T c1_i163;
-  int32_T c1_i164;
   real_T c1_d47;
-  int32_T c1_i165;
+  int32_T c1_i164;
   boolean_T c1_rd_out;
-  int32_T c1_i166;
+  int32_T c1_i165;
   real_T c1_d48;
   boolean_T c1_sd_out;
   boolean_T c1_td_out;
-  int32_T c1_i167;
+  int32_T c1_i166;
   real_T c1_d49;
-  int32_T c1_i168;
+  int32_T c1_i167;
   boolean_T c1_ud_out;
   boolean_T c1_vd_out;
   boolean_T c1_wd_out;
-  int32_T c1_i169;
+  int32_T c1_i168;
   real_T c1_d50;
   real_T c1_d51;
-  int32_T c1_i170;
+  int32_T c1_i169;
   boolean_T c1_xd_out;
   boolean_T c1_yd_out;
   boolean_T c1_ae_out;
@@ -2889,13 +2894,13 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   boolean_T c1_ee_out;
   boolean_T c1_fe_out;
   boolean_T c1_ge_out;
-  int32_T c1_i171;
+  int32_T c1_i170;
   boolean_T c1_he_out;
   boolean_T c1_ie_out;
   real_T c1_d53;
   boolean_T c1_je_out;
   boolean_T c1_ke_out;
-  int32_T c1_i172;
+  int32_T c1_i171;
   real_T c1_d54;
   boolean_T c1_r_temp;
   boolean_T c1_le_out;
@@ -2916,120 +2921,120 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   boolean_T c1_db_temp;
   boolean_T c1_qe_out;
   boolean_T c1_re_out;
-  int32_T c1_i173;
+  int32_T c1_i172;
   boolean_T c1_se_out;
   boolean_T c1_te_out;
   boolean_T c1_ue_out;
   boolean_T c1_ve_out;
   real_T c1_d55;
   boolean_T c1_we_out;
-  int32_T c1_i174;
+  int32_T c1_i173;
   boolean_T c1_xe_out;
   boolean_T c1_ye_out;
   boolean_T c1_af_out;
-  int32_T c1_i175;
+  int32_T c1_i174;
   boolean_T c1_bf_out;
-  int32_T c1_i176;
+  int32_T c1_i175;
   boolean_T c1_cf_out;
-  int32_T c1_i177;
+  int32_T c1_i176;
   boolean_T c1_df_out;
   boolean_T c1_eb_temp;
   boolean_T c1_ef_out;
-  int32_T c1_i178;
+  int32_T c1_i177;
   real_T c1_d56;
-  int32_T c1_i179;
+  int32_T c1_i178;
   real_T c1_d57;
-  int32_T c1_i180;
+  int32_T c1_i179;
   boolean_T c1_fb_temp;
   boolean_T c1_ff_out;
-  int32_T c1_i181;
+  int32_T c1_i180;
   real_T c1_d58;
   boolean_T c1_gf_out;
   boolean_T c1_gb_temp;
   boolean_T c1_hf_out;
   boolean_T c1_if_out;
   boolean_T c1_jf_out;
-  int32_T c1_i182;
+  int32_T c1_i181;
   boolean_T c1_kf_out;
   boolean_T c1_lf_out;
-  int32_T c1_i183;
+  int32_T c1_i182;
   boolean_T c1_mf_out;
   boolean_T c1_nf_out;
   boolean_T c1_of_out;
-  int32_T c1_i184;
+  int32_T c1_i183;
   boolean_T c1_pf_out;
-  int32_T c1_i185;
+  int32_T c1_i184;
   boolean_T c1_qf_out;
-  int32_T c1_i186;
+  int32_T c1_i185;
   boolean_T c1_rf_out;
   boolean_T c1_hb_temp;
   boolean_T c1_sf_out;
-  int32_T c1_i187;
+  int32_T c1_i186;
   real_T c1_d59;
-  int32_T c1_i188;
+  int32_T c1_i187;
   real_T c1_d60;
-  int32_T c1_i189;
+  int32_T c1_i188;
   boolean_T c1_ib_temp;
   boolean_T c1_tf_out;
-  int32_T c1_i190;
+  int32_T c1_i189;
   real_T c1_d61;
   boolean_T c1_uf_out;
   boolean_T c1_jb_temp;
   boolean_T c1_vf_out;
   boolean_T c1_wf_out;
   boolean_T c1_xf_out;
-  int32_T c1_i191;
+  int32_T c1_i190;
   boolean_T c1_yf_out;
   boolean_T c1_ag_out;
-  int32_T c1_i192;
+  int32_T c1_i191;
   boolean_T c1_bg_out;
   boolean_T c1_cg_out;
   boolean_T c1_dg_out;
-  int32_T c1_i193;
+  int32_T c1_i192;
   boolean_T c1_eg_out;
-  int32_T c1_i194;
+  int32_T c1_i193;
   boolean_T c1_fg_out;
-  int32_T c1_i195;
+  int32_T c1_i194;
   boolean_T c1_gg_out;
   boolean_T c1_kb_temp;
   boolean_T c1_hg_out;
-  int32_T c1_i196;
+  int32_T c1_i195;
   real_T c1_d62;
-  int32_T c1_i197;
+  int32_T c1_i196;
   real_T c1_d63;
-  int32_T c1_i198;
+  int32_T c1_i197;
   boolean_T c1_lb_temp;
   boolean_T c1_ig_out;
-  int32_T c1_i199;
+  int32_T c1_i198;
   real_T c1_d64;
   boolean_T c1_jg_out;
   boolean_T c1_mb_temp;
   boolean_T c1_kg_out;
   boolean_T c1_lg_out;
   boolean_T c1_mg_out;
-  int32_T c1_i200;
+  int32_T c1_i199;
   boolean_T c1_ng_out;
   boolean_T c1_og_out;
+  int32_T c1_i200;
   int32_T c1_i201;
   int32_T c1_i202;
-  int32_T c1_i203;
   real_T c1_d65;
-  int32_T c1_i204;
+  int32_T c1_i203;
   boolean_T c1_pg_out;
-  int32_T c1_i205;
+  int32_T c1_i204;
   real_T c1_d66;
   boolean_T c1_qg_out;
   boolean_T c1_rg_out;
-  int32_T c1_i206;
+  int32_T c1_i205;
   real_T c1_d67;
-  int32_T c1_i207;
+  int32_T c1_i206;
   boolean_T c1_sg_out;
   boolean_T c1_tg_out;
   boolean_T c1_ug_out;
-  int32_T c1_i208;
+  int32_T c1_i207;
   real_T c1_d68;
   real_T c1_d69;
-  int32_T c1_i209;
+  int32_T c1_i208;
   boolean_T c1_vg_out;
   boolean_T c1_wg_out;
   boolean_T c1_xg_out;
@@ -3040,13 +3045,13 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   boolean_T c1_ch_out;
   boolean_T c1_dh_out;
   boolean_T c1_eh_out;
-  int32_T c1_i210;
+  int32_T c1_i209;
   boolean_T c1_fh_out;
   boolean_T c1_gh_out;
   real_T c1_d71;
   boolean_T c1_hh_out;
   boolean_T c1_ih_out;
-  int32_T c1_i211;
+  int32_T c1_i210;
   real_T c1_d72;
   boolean_T c1_nb_temp;
   boolean_T c1_jh_out;
@@ -3067,33 +3072,33 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   boolean_T c1_yb_temp;
   boolean_T c1_oh_out;
   boolean_T c1_ph_out;
-  int32_T c1_i212;
+  int32_T c1_i211;
   boolean_T c1_qh_out;
   boolean_T c1_rh_out;
   boolean_T c1_sh_out;
   boolean_T c1_th_out;
   real_T c1_d73;
   boolean_T c1_uh_out;
+  int32_T c1_i212;
   int32_T c1_i213;
   int32_T c1_i214;
-  int32_T c1_i215;
   real_T c1_d74;
-  int32_T c1_i216;
+  int32_T c1_i215;
   boolean_T c1_vh_out;
-  int32_T c1_i217;
+  int32_T c1_i216;
   real_T c1_d75;
   boolean_T c1_wh_out;
   boolean_T c1_xh_out;
-  int32_T c1_i218;
+  int32_T c1_i217;
   real_T c1_d76;
-  int32_T c1_i219;
+  int32_T c1_i218;
   boolean_T c1_yh_out;
   boolean_T c1_ai_out;
   boolean_T c1_bi_out;
-  int32_T c1_i220;
+  int32_T c1_i219;
   real_T c1_d77;
   real_T c1_d78;
-  int32_T c1_i221;
+  int32_T c1_i220;
   boolean_T c1_ci_out;
   boolean_T c1_di_out;
   boolean_T c1_ei_out;
@@ -3104,13 +3109,13 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   boolean_T c1_ii_out;
   boolean_T c1_ji_out;
   boolean_T c1_ki_out;
-  int32_T c1_i222;
+  int32_T c1_i221;
   boolean_T c1_li_out;
   boolean_T c1_mi_out;
   real_T c1_d80;
   boolean_T c1_ni_out;
   boolean_T c1_oi_out;
-  int32_T c1_i223;
+  int32_T c1_i222;
   real_T c1_d81;
   boolean_T c1_ac_temp;
   boolean_T c1_pi_out;
@@ -3131,33 +3136,33 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   boolean_T c1_lc_temp;
   boolean_T c1_ui_out;
   boolean_T c1_vi_out;
-  int32_T c1_i224;
+  int32_T c1_i223;
   boolean_T c1_wi_out;
   boolean_T c1_xi_out;
   boolean_T c1_yi_out;
   boolean_T c1_aj_out;
   real_T c1_d82;
   boolean_T c1_bj_out;
+  int32_T c1_i224;
   int32_T c1_i225;
   int32_T c1_i226;
-  int32_T c1_i227;
   real_T c1_d83;
-  int32_T c1_i228;
+  int32_T c1_i227;
   boolean_T c1_cj_out;
-  int32_T c1_i229;
+  int32_T c1_i228;
   real_T c1_d84;
   boolean_T c1_dj_out;
   boolean_T c1_ej_out;
-  int32_T c1_i230;
+  int32_T c1_i229;
   real_T c1_d85;
-  int32_T c1_i231;
+  int32_T c1_i230;
   boolean_T c1_fj_out;
   boolean_T c1_gj_out;
   boolean_T c1_hj_out;
-  int32_T c1_i232;
+  int32_T c1_i231;
   real_T c1_d86;
   real_T c1_d87;
-  int32_T c1_i233;
+  int32_T c1_i232;
   boolean_T c1_ij_out;
   boolean_T c1_jj_out;
   boolean_T c1_kj_out;
@@ -3168,13 +3173,13 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   boolean_T c1_oj_out;
   boolean_T c1_pj_out;
   boolean_T c1_qj_out;
-  int32_T c1_i234;
+  int32_T c1_i233;
   boolean_T c1_rj_out;
   boolean_T c1_sj_out;
   real_T c1_d89;
   boolean_T c1_tj_out;
   boolean_T c1_uj_out;
-  int32_T c1_i235;
+  int32_T c1_i234;
   real_T c1_d90;
   boolean_T c1_mc_temp;
   boolean_T c1_vj_out;
@@ -3195,12 +3200,13 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   boolean_T c1_xc_temp;
   boolean_T c1_bk_out;
   boolean_T c1_ck_out;
-  int32_T c1_i236;
+  int32_T c1_i235;
   boolean_T c1_dk_out;
   boolean_T c1_ek_out;
   boolean_T c1_fk_out;
   boolean_T c1_gk_out;
   real_T c1_d91;
+  int32_T c1_i236;
   int32_T c1_i237;
   int32_T c1_i238;
   int32_T c1_i239;
@@ -3264,7 +3270,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   int32_T c1_i297;
   int32_T c1_i298;
   int32_T c1_i299;
-  int32_T c1_i300;
+  real_T *c1_dir1_out;
   real_T *c1_y1;
   real_T *c1_y2;
   real_T *c1_z;
@@ -3332,6 +3338,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
   c1_b_v = (real_T *)(ssGetContStates(chartInstance->S) + 2);
   c1_b_z = (real_T *)(ssGetContStates(chartInstance->S) + 1);
   c1_t = (real_T *)(ssGetContStates(chartInstance->S) + 0);
+  c1_dir1_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 4);
   c1_y2_out = (real_T (*)[8])ssGetOutputPortSignal(chartInstance->S, 3);
   c1_y1_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 2);
   c1_distance_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 1);
@@ -3420,6 +3427,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_DATA_RANGE_CHECK(chartInstance->c1_PSDClosed[c1_i32], 19U);
     }
 
+    _SFD_DATA_RANGE_CHECK(*c1_dir1_out, 20U);
     chartInstance->c1_sfEvent = CALL_EVENT;
     _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 0U, chartInstance->c1_sfEvent);
     if (chartInstance->c1_is_active_c1_subwaycontrolsystem == 0U) {
@@ -3432,14 +3440,14 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 89U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Train0_door = 1U;
       *c1_y1 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_y1, 41U);
+      _SFD_DATA_RANGE_CHECK(*c1_y1, 42U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 5U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_Train0_door = c1_IN_closed;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 90U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_closed = 1U;
       *c1_y1 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_y1, 41U);
+      _SFD_DATA_RANGE_CHECK(*c1_y1, 42U);
       (*c1_y1_out)[0] = *c1_y1;
       for (c1_i33 = 0; c1_i33 < 4; c1_i33++) {
         _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i33], 14U);
@@ -3455,7 +3463,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 36U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Screen_door00 = 1U;
       *c1_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_y2, 77U);
+      _SFD_DATA_RANGE_CHECK(*c1_y2, 78U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 10U, chartInstance->c1_sfEvent);
       chartInstance->c1_PSDClosed[0] = 1.0;
       for (c1_i35 = 0; c1_i35 < 8; c1_i35++) {
@@ -3470,7 +3478,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 37U, chartInstance->c1_sfEvent);
       chartInstance->c1_h_tp_closed = 1U;
       *c1_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_y2, 77U);
+      _SFD_DATA_RANGE_CHECK(*c1_y2, 78U);
       (*c1_y2_out)[0] = *c1_y2;
       for (c1_i36 = 0; c1_i36 < 8; c1_i36++) {
         _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i36], 15U);
@@ -3486,26 +3494,26 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 0U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Controller0 = 1U;
       *c1_z = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
+      _SFD_DATA_RANGE_CHECK(*c1_z, 38U);
       chartInstance->c1_b_stationid = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_stationid, 38U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_stationid, 39U);
       chartInstance->c1_b_side = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_side, 39U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_side, 40U);
       chartInstance->c1_d_i = 0;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_d_i, 40U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_d_i, 41U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 20U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_Controller0 = c1_b_IN_idle;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 5U, chartInstance->c1_sfEvent);
       chartInstance->c1_c_tp_idle = 1U;
       *c1_z = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
+      _SFD_DATA_RANGE_CHECK(*c1_z, 38U);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_active_Screen_door01 = 1U;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 41U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Screen_door01 = 1U;
       *c1_b_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_b_y2, 76U);
+      _SFD_DATA_RANGE_CHECK(*c1_b_y2, 77U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 26U, chartInstance->c1_sfEvent);
       chartInstance->c1_PSDClosed[4] = 1.0;
       for (c1_i38 = 0; c1_i38 < 8; c1_i38++) {
@@ -3520,7 +3528,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 42U, chartInstance->c1_sfEvent);
       chartInstance->c1_g_tp_closed = 1U;
       *c1_b_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_b_y2, 76U);
+      _SFD_DATA_RANGE_CHECK(*c1_b_y2, 77U);
       (*c1_y2_out)[4] = *c1_b_y2;
       for (c1_i39 = 0; c1_i39 < 8; c1_i39++) {
         _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i39], 15U);
@@ -3536,7 +3544,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 46U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Screen_door10 = 1U;
       *c1_c_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_c_y2, 74U);
+      _SFD_DATA_RANGE_CHECK(*c1_c_y2, 75U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 32U, chartInstance->c1_sfEvent);
       chartInstance->c1_PSDClosed[1] = 1.0;
       for (c1_i41 = 0; c1_i41 < 8; c1_i41++) {
@@ -3551,7 +3559,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 47U, chartInstance->c1_sfEvent);
       chartInstance->c1_e_tp_closed = 1U;
       *c1_c_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_c_y2, 74U);
+      _SFD_DATA_RANGE_CHECK(*c1_c_y2, 75U);
       (*c1_y2_out)[1] = *c1_c_y2;
       for (c1_i42 = 0; c1_i42 < 8; c1_i42++) {
         _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i42], 15U);
@@ -3567,7 +3575,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 51U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Screen_door11 = 1U;
       *c1_d_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_d_y2, 75U);
+      _SFD_DATA_RANGE_CHECK(*c1_d_y2, 76U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 38U, chartInstance->c1_sfEvent);
       chartInstance->c1_PSDClosed[5] = 1.0;
       for (c1_i44 = 0; c1_i44 < 8; c1_i44++) {
@@ -3582,7 +3590,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 52U, chartInstance->c1_sfEvent);
       chartInstance->c1_f_tp_closed = 1U;
       *c1_d_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_d_y2, 75U);
+      _SFD_DATA_RANGE_CHECK(*c1_d_y2, 76U);
       (*c1_y2_out)[5] = *c1_d_y2;
       for (c1_i45 = 0; c1_i45 < 8; c1_i45++) {
         _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i45], 15U);
@@ -3598,7 +3606,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 56U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Screen_door20 = 1U;
       *c1_e_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_e_y2, 81U);
+      _SFD_DATA_RANGE_CHECK(*c1_e_y2, 82U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 44U, chartInstance->c1_sfEvent);
       chartInstance->c1_PSDClosed[2] = 1.0;
       for (c1_i47 = 0; c1_i47 < 8; c1_i47++) {
@@ -3613,7 +3621,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 57U, chartInstance->c1_sfEvent);
       chartInstance->c1_l_tp_closed = 1U;
       *c1_e_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_e_y2, 81U);
+      _SFD_DATA_RANGE_CHECK(*c1_e_y2, 82U);
       (*c1_y2_out)[2] = *c1_e_y2;
       for (c1_i48 = 0; c1_i48 < 8; c1_i48++) {
         _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i48], 15U);
@@ -3629,7 +3637,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 61U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Screen_door21 = 1U;
       *c1_f_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_f_y2, 80U);
+      _SFD_DATA_RANGE_CHECK(*c1_f_y2, 81U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 50U, chartInstance->c1_sfEvent);
       chartInstance->c1_PSDClosed[6] = 1.0;
       for (c1_i50 = 0; c1_i50 < 8; c1_i50++) {
@@ -3644,7 +3652,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 62U, chartInstance->c1_sfEvent);
       chartInstance->c1_k_tp_closed = 1U;
       *c1_f_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_f_y2, 80U);
+      _SFD_DATA_RANGE_CHECK(*c1_f_y2, 81U);
       (*c1_y2_out)[6] = *c1_f_y2;
       for (c1_i51 = 0; c1_i51 < 8; c1_i51++) {
         _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i51], 15U);
@@ -3660,7 +3668,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 66U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Screen_door30 = 1U;
       *c1_g_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_g_y2, 78U);
+      _SFD_DATA_RANGE_CHECK(*c1_g_y2, 79U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 56U, chartInstance->c1_sfEvent);
       chartInstance->c1_PSDClosed[3] = 1.0;
       for (c1_i53 = 0; c1_i53 < 8; c1_i53++) {
@@ -3675,7 +3683,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 67U, chartInstance->c1_sfEvent);
       chartInstance->c1_i_tp_closed = 1U;
       *c1_g_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_g_y2, 78U);
+      _SFD_DATA_RANGE_CHECK(*c1_g_y2, 79U);
       for (c1_i54 = 0; c1_i54 < 8; c1_i54++) {
         (*c1_y2_out)[c1_i54] = *c1_g_y2;
       }
@@ -3694,7 +3702,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 71U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Screen_door31 = 1U;
       *c1_h_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_h_y2, 79U);
+      _SFD_DATA_RANGE_CHECK(*c1_h_y2, 80U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 62U, chartInstance->c1_sfEvent);
       chartInstance->c1_PSDClosed[7] = 1.0;
       for (c1_i57 = 0; c1_i57 < 8; c1_i57++) {
@@ -3709,7 +3717,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 72U, chartInstance->c1_sfEvent);
       chartInstance->c1_j_tp_closed = 1U;
       *c1_h_y2 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_h_y2, 79U);
+      _SFD_DATA_RANGE_CHECK(*c1_h_y2, 80U);
       (*c1_y2_out)[7] = *c1_h_y2;
       for (c1_i58 = 0; c1_i58 < 8; c1_i58++) {
         _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i58], 15U);
@@ -3725,14 +3733,14 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 107U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Train1_door = 1U;
       *c1_b_y1 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_b_y1, 42U);
+      _SFD_DATA_RANGE_CHECK(*c1_b_y1, 43U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 68U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_Train1_door = c1_IN_closed;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 108U, chartInstance->c1_sfEvent);
       chartInstance->c1_b_tp_closed = 1U;
       *c1_b_y1 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_b_y1, 42U);
+      _SFD_DATA_RANGE_CHECK(*c1_b_y1, 43U);
       (*c1_y1_out)[1] = *c1_b_y1;
       for (c1_i60 = 0; c1_i60 < 4; c1_i60++) {
         _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i60], 14U);
@@ -3748,14 +3756,14 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 125U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Train2_door = 1U;
       *c1_c_y1 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_c_y1, 65U);
+      _SFD_DATA_RANGE_CHECK(*c1_c_y1, 66U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 74U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_Train2_door = c1_IN_closed;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 126U, chartInstance->c1_sfEvent);
       chartInstance->c1_c_tp_closed = 1U;
       *c1_c_y1 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_c_y1, 65U);
+      _SFD_DATA_RANGE_CHECK(*c1_c_y1, 66U);
       (*c1_y1_out)[2] = *c1_c_y1;
       for (c1_i62 = 0; c1_i62 < 4; c1_i62++) {
         _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i62], 14U);
@@ -3771,14 +3779,14 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 143U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Train3_door = 1U;
       *c1_d_y1 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_d_y1, 73U);
+      _SFD_DATA_RANGE_CHECK(*c1_d_y1, 74U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 80U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_Train3_door = c1_IN_closed;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 144U, chartInstance->c1_sfEvent);
       chartInstance->c1_d_tp_closed = 1U;
       *c1_d_y1 = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_d_y1, 73U);
+      _SFD_DATA_RANGE_CHECK(*c1_d_y1, 74U);
       (*c1_y1_out)[3] = *c1_d_y1;
       for (c1_i64 = 0; c1_i64 < 4; c1_i64++) {
         _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i64], 14U);
@@ -3794,65 +3802,65 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 148U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_UrgentController = 1U;
       *c1_t = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_t, 20U);
+      _SFD_DATA_RANGE_CHECK(*c1_t, 21U);
       chartInstance->c1_i = 0;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i, 21U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i, 22U);
       chartInstance->c1_RelevantIndex[0] = -1;
       for (c1_i66 = 0; c1_i66 < 4; c1_i66++) {
         _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_RelevantIndex[c1_i66],
-                              22U);
+                              23U);
       }
 
       chartInstance->c1_RelevantIndex[1] = -1;
       for (c1_i67 = 0; c1_i67 < 4; c1_i67++) {
         _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_RelevantIndex[c1_i67],
-                              22U);
+                              23U);
       }
 
       chartInstance->c1_RelevantIndex[2] = -1;
       for (c1_i68 = 0; c1_i68 < 4; c1_i68++) {
         _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_RelevantIndex[c1_i68],
-                              22U);
+                              23U);
       }
 
       chartInstance->c1_RelevantIndex[3] = -1;
       for (c1_i69 = 0; c1_i69 < 4; c1_i69++) {
         _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_RelevantIndex[c1_i69],
-                              22U);
+                              23U);
       }
 
       chartInstance->c1_tdis = 0;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_tdis, 23U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_tdis, 24U);
       chartInstance->c1_dis = 0;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_dis, 24U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_dis, 25U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 82U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_UrgentController = c1_IN_Delay;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 150U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Delay = 1U;
       *c1_t = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_t, 20U);
+      _SFD_DATA_RANGE_CHECK(*c1_t, 21U);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_active_Train3 = 1U;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 130U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Train3 = 1U;
       *c1_v = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_v, 66U);
+      _SFD_DATA_RANGE_CHECK(*c1_v, 67U);
       chartInstance->c1_d_j = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_j, 67U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_j, 68U);
       chartInstance->c1_d_maxv = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_maxv, 68U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_maxv, 69U);
       *c1_time = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_time, 69U);
+      _SFD_DATA_RANGE_CHECK(*c1_time, 70U);
       chartInstance->c1_i_i = 0;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i_i, 70U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i_i, 71U);
       *c1_b_distance = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_b_distance, 71U);
+      _SFD_DATA_RANGE_CHECK(*c1_b_distance, 72U);
       chartInstance->c1_d_acc = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_acc, 72U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_acc, 73U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 87U, chartInstance->c1_sfEvent);
       chartInstance->c1_i_i = 3;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i_i, 70U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i_i, 71U);
       c1_i70 = chartInstance->c1_i_i;
       sf_mex_printf("%s =\\n", "i");
       sf_mex_call_debug("disp", 0U, 1U, 12, c1_i70);
@@ -3877,17 +3885,17 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       sf_mex_printf("%s =\\n", "stop[i]");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d9);
       *c1_time = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_time, 69U);
+      _SFD_DATA_RANGE_CHECK(*c1_time, 70U);
       c1_d10 = *c1_time;
       sf_mex_printf("%s =\\n", "time");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d10);
       *c1_b_distance = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_b_distance, 71U);
+      _SFD_DATA_RANGE_CHECK(*c1_b_distance, 72U);
       c1_d11 = *c1_b_distance;
       sf_mex_printf("%s =\\n", "distance");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d11);
       *c1_v = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_v, 66U);
+      _SFD_DATA_RANGE_CHECK(*c1_v, 67U);
       c1_d12 = *c1_v;
       sf_mex_printf("%s =\\n", "v");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d12);
@@ -3906,79 +3914,79 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 9U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Controller1 = 1U;
       *c1_b_z = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
+      _SFD_DATA_RANGE_CHECK(*c1_b_z, 27U);
       chartInstance->c1_stationid = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_stationid, 27U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_stationid, 28U);
       chartInstance->c1_side = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_side, 28U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_side, 29U);
       chartInstance->c1_b_i = 1;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_b_i, 29U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_b_i, 30U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 111U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_Controller1 = c1_b_IN_idle;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 14U, chartInstance->c1_sfEvent);
       chartInstance->c1_b_tp_idle = 1U;
       *c1_b_z = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
+      _SFD_DATA_RANGE_CHECK(*c1_b_z, 27U);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_active_Controller2 = 1U;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 18U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Controller2 = 1U;
       *c1_c_z = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
+      _SFD_DATA_RANGE_CHECK(*c1_c_z, 55U);
       chartInstance->c1_d_stationid = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_stationid, 55U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_stationid, 56U);
       chartInstance->c1_d_side = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_side, 56U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_side, 57U);
       chartInstance->c1_g_i = 2;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_g_i, 57U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_g_i, 58U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 122U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_Controller2 = c1_b_IN_idle;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 23U, chartInstance->c1_sfEvent);
       chartInstance->c1_e_tp_idle = 1U;
       *c1_c_z = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
+      _SFD_DATA_RANGE_CHECK(*c1_c_z, 55U);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_active_Controller3 = 1U;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 27U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Controller3 = 1U;
       *c1_d_z = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
+      _SFD_DATA_RANGE_CHECK(*c1_d_z, 51U);
       chartInstance->c1_c_stationid = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_stationid, 51U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_stationid, 52U);
       chartInstance->c1_c_side = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_side, 52U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_side, 53U);
       chartInstance->c1_f_i = 3;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_f_i, 53U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_f_i, 54U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 133U, chartInstance->c1_sfEvent);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_Controller3 = c1_b_IN_idle;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 32U, chartInstance->c1_sfEvent);
       chartInstance->c1_d_tp_idle = 1U;
       *c1_d_z = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
+      _SFD_DATA_RANGE_CHECK(*c1_d_z, 51U);
       chartInstance->c1_stateChanged = TRUE;
       chartInstance->c1_is_active_Train0 = 1U;
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 76U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Train0 = 1U;
       *c1_b_v = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_b_v, 30U);
+      _SFD_DATA_RANGE_CHECK(*c1_b_v, 31U);
       chartInstance->c1_j = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_j, 31U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_j, 32U);
       chartInstance->c1_maxv = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_maxv, 32U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_maxv, 33U);
       *c1_b_time = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_b_time, 33U);
+      _SFD_DATA_RANGE_CHECK(*c1_b_time, 34U);
       chartInstance->c1_c_i = 0;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_c_i, 34U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_c_i, 35U);
       *c1_distance = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_distance, 35U);
+      _SFD_DATA_RANGE_CHECK(*c1_distance, 36U);
       chartInstance->c1_acc = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_acc, 36U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_acc, 37U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 150U, chartInstance->c1_sfEvent);
       chartInstance->c1_c_i = 0;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_c_i, 34U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_c_i, 35U);
       c1_i74 = chartInstance->c1_c_i;
       sf_mex_printf("%s =\\n", "i");
       sf_mex_call_debug("disp", 0U, 1U, 12, c1_i74);
@@ -4003,17 +4011,17 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       sf_mex_printf("%s =\\n", "stop[i]");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d14);
       *c1_b_time = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_b_time, 33U);
+      _SFD_DATA_RANGE_CHECK(*c1_b_time, 34U);
       c1_d15 = *c1_b_time;
       sf_mex_printf("%s =\\n", "time");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d15);
       *c1_distance = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_distance, 35U);
+      _SFD_DATA_RANGE_CHECK(*c1_distance, 36U);
       c1_d16 = *c1_distance;
       sf_mex_printf("%s =\\n", "distance");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d16);
       *c1_b_v = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_b_v, 30U);
+      _SFD_DATA_RANGE_CHECK(*c1_b_v, 31U);
       c1_d17 = *c1_b_v;
       sf_mex_printf("%s =\\n", "v");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d17);
@@ -4032,22 +4040,22 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 94U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Train1 = 1U;
       *c1_c_v = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_c_v, 43U);
+      _SFD_DATA_RANGE_CHECK(*c1_c_v, 44U);
       chartInstance->c1_b_j = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_j, 44U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_j, 45U);
       chartInstance->c1_b_maxv = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_maxv, 45U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_maxv, 46U);
       *c1_c_time = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_c_time, 46U);
+      _SFD_DATA_RANGE_CHECK(*c1_c_time, 47U);
       chartInstance->c1_e_i = 0;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_e_i, 47U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_e_i, 48U);
       *c1_c_distance = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_c_distance, 48U);
+      _SFD_DATA_RANGE_CHECK(*c1_c_distance, 49U);
       chartInstance->c1_b_acc = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_acc, 49U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_acc, 50U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 174U, chartInstance->c1_sfEvent);
       chartInstance->c1_e_i = 1;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_e_i, 47U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_e_i, 48U);
       c1_i78 = chartInstance->c1_e_i;
       sf_mex_printf("%s =\\n", "i");
       sf_mex_call_debug("disp", 0U, 1U, 12, c1_i78);
@@ -4072,17 +4080,17 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       sf_mex_printf("%s =\\n", "stop[i]");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d19);
       *c1_c_time = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_c_time, 46U);
+      _SFD_DATA_RANGE_CHECK(*c1_c_time, 47U);
       c1_d20 = *c1_c_time;
       sf_mex_printf("%s =\\n", "time");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d20);
       *c1_c_distance = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_c_distance, 48U);
+      _SFD_DATA_RANGE_CHECK(*c1_c_distance, 49U);
       c1_d21 = *c1_c_distance;
       sf_mex_printf("%s =\\n", "distance");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d21);
       *c1_c_v = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_c_v, 43U);
+      _SFD_DATA_RANGE_CHECK(*c1_c_v, 44U);
       c1_d22 = *c1_c_v;
       sf_mex_printf("%s =\\n", "v");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d22);
@@ -4101,22 +4109,22 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       _SFD_CS_CALL(STATE_ACTIVE_TAG, 112U, chartInstance->c1_sfEvent);
       chartInstance->c1_tp_Train2 = 1U;
       *c1_d_v = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_d_v, 58U);
+      _SFD_DATA_RANGE_CHECK(*c1_d_v, 59U);
       chartInstance->c1_c_j = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_j, 59U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_j, 60U);
       chartInstance->c1_c_maxv = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_maxv, 60U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_maxv, 61U);
       *c1_d_time = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_d_time, 61U);
+      _SFD_DATA_RANGE_CHECK(*c1_d_time, 62U);
       chartInstance->c1_h_i = 0;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_h_i, 62U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_h_i, 63U);
       *c1_d_distance = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_d_distance, 63U);
+      _SFD_DATA_RANGE_CHECK(*c1_d_distance, 64U);
       chartInstance->c1_c_acc = 0.0;
-      _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_acc, 64U);
+      _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_acc, 65U);
       _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 198U, chartInstance->c1_sfEvent);
       chartInstance->c1_h_i = 2;
-      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_h_i, 62U);
+      _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_h_i, 63U);
       c1_i82 = chartInstance->c1_h_i;
       sf_mex_printf("%s =\\n", "i");
       sf_mex_call_debug("disp", 0U, 1U, 12, c1_i82);
@@ -4141,17 +4149,17 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
       sf_mex_printf("%s =\\n", "stop[i]");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d24);
       *c1_d_time = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_d_time, 61U);
+      _SFD_DATA_RANGE_CHECK(*c1_d_time, 62U);
       c1_d25 = *c1_d_time;
       sf_mex_printf("%s =\\n", "time");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d25);
       *c1_d_distance = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_d_distance, 63U);
+      _SFD_DATA_RANGE_CHECK(*c1_d_distance, 64U);
       c1_d26 = *c1_d_distance;
       sf_mex_printf("%s =\\n", "distance");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d26);
       *c1_d_v = 0.0;
-      _SFD_DATA_RANGE_CHECK(*c1_d_v, 58U);
+      _SFD_DATA_RANGE_CHECK(*c1_d_v, 59U);
       c1_d27 = *c1_d_v;
       sf_mex_printf("%s =\\n", "v");
       sf_mex_call_debug("disp", 0U, 1U, 6, c1_d27);
@@ -4238,7 +4246,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 91U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_open = 1U;
           *c1_y1 = 2.0;
-          _SFD_DATA_RANGE_CHECK(*c1_y1, 41U);
+          _SFD_DATA_RANGE_CHECK(*c1_y1, 42U);
           (*c1_y1_out)[0] = *c1_y1;
           for (c1_i87 = 0; c1_i87 < 4; c1_i87++) {
             _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i87], 14U);
@@ -4301,7 +4309,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 90U, chartInstance->c1_sfEvent);
             chartInstance->c1_tp_closed = 1U;
             *c1_y1 = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_y1, 41U);
+            _SFD_DATA_RANGE_CHECK(*c1_y1, 42U);
             (*c1_y1_out)[0] = *c1_y1;
             for (c1_i88 = 0; c1_i88 < 4; c1_i88++) {
               _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i88], 14U);
@@ -4406,7 +4414,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 38U, chartInstance->c1_sfEvent);
           chartInstance->c1_h_tp_open = 1U;
           *c1_y2 = 2.0;
-          _SFD_DATA_RANGE_CHECK(*c1_y2, 77U);
+          _SFD_DATA_RANGE_CHECK(*c1_y2, 78U);
           (*c1_y2_out)[0] = *c1_y2;
           for (c1_i92 = 0; c1_i92 < 8; c1_i92++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i92], 15U);
@@ -4458,7 +4466,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 37U, chartInstance->c1_sfEvent);
           chartInstance->c1_h_tp_closed = 1U;
           *c1_y2 = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_y2, 77U);
+          _SFD_DATA_RANGE_CHECK(*c1_y2, 78U);
           (*c1_y2_out)[0] = *c1_y2;
           for (c1_i94 = 0; c1_i94 < 8; c1_i94++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i94], 15U);
@@ -4528,7 +4536,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 2U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_tp_about_to_close2 = 1U;
           *c1_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
+          _SFD_DATA_RANGE_CHECK(*c1_z, 38U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 1U, chartInstance->c1_sfEvent);
         }
@@ -4569,7 +4577,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 2U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_tp_about_to_close2 = 1U;
           *c1_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
+          _SFD_DATA_RANGE_CHECK(*c1_z, 38U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 18U,
                        chartInstance->c1_sfEvent);
@@ -4592,7 +4600,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 8U, chartInstance->c1_sfEvent);
             chartInstance->c1_b_tp_start = 1U;
             *c1_z = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
+            _SFD_DATA_RANGE_CHECK(*c1_z, 38U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 2U, chartInstance->c1_sfEvent);
           }
@@ -4622,7 +4630,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 6U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_tp_open1 = 1U;
           *c1_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
+          _SFD_DATA_RANGE_CHECK(*c1_z, 38U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 3U, chartInstance->c1_sfEvent);
         }
@@ -4653,7 +4661,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 3U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_tp_about_to_open1 = 1U;
           *c1_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
+          _SFD_DATA_RANGE_CHECK(*c1_z, 38U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 4U, chartInstance->c1_sfEvent);
         }
@@ -4695,12 +4703,12 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
 
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 12U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_i = 0;
-          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_d_i, 40U);
+          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_d_i, 41U);
           c1_i100 = chartInstance->c1_d_i;
           sf_mex_printf("%s =\\n", "i");
           sf_mex_call_debug("disp", 0U, 1U, 12, c1_i100);
           chartInstance->c1_b_stationid = chartInstance->c1_j;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_stationid, 38U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_stationid, 39U);
           c1_d30 = chartInstance->c1_b_stationid;
           sf_mex_printf("%s =\\n", "stationid");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d30);
@@ -4708,7 +4716,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U, chartInstance->c1_d_i, 0, 3, 1,
             0)], 1);
           chartInstance->c1_b_side = (real_T)((c1_i101 + (c1_i101 < 0)) >> 1);
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_side, 39U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_side, 40U);
           c1_d31 = chartInstance->c1_b_side;
           sf_mex_printf("%s =\\n", "side");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d31);
@@ -4719,7 +4727,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 4U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_tp_about_to_open2 = 1U;
           *c1_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
+          _SFD_DATA_RANGE_CHECK(*c1_z, 38U);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_d_i, 0, 3, 2, 0)] = 0.0;
           for (c1_i102 = 0; c1_i102 < 4; c1_i102++) {
@@ -4756,7 +4764,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 5U, chartInstance->c1_sfEvent);
             chartInstance->c1_c_tp_idle = 1U;
             *c1_z = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
+            _SFD_DATA_RANGE_CHECK(*c1_z, 38U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 5U, chartInstance->c1_sfEvent);
           }
@@ -4807,7 +4815,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 1U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_tp_about_to_close1 = 1U;
           *c1_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
+          _SFD_DATA_RANGE_CHECK(*c1_z, 38U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 7U, chartInstance->c1_sfEvent);
         }
@@ -4856,7 +4864,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 5U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_tp_idle = 1U;
           *c1_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
+          _SFD_DATA_RANGE_CHECK(*c1_z, 38U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 143U,
                        chartInstance->c1_sfEvent);
@@ -4875,7 +4883,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 8U, chartInstance->c1_sfEvent);
             chartInstance->c1_b_tp_start = 1U;
             *c1_z = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_z, 37U);
+            _SFD_DATA_RANGE_CHECK(*c1_z, 38U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 8U, chartInstance->c1_sfEvent);
           }
@@ -4970,7 +4978,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 43U, chartInstance->c1_sfEvent);
           chartInstance->c1_g_tp_open = 1U;
           *c1_b_y2 = 2.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_y2, 76U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_y2, 77U);
           (*c1_y2_out)[4] = *c1_b_y2;
           for (c1_i107 = 0; c1_i107 < 8; c1_i107++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i107], 15U);
@@ -5022,7 +5030,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 42U, chartInstance->c1_sfEvent);
           chartInstance->c1_g_tp_closed = 1U;
           *c1_b_y2 = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_y2, 76U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_y2, 77U);
           (*c1_y2_out)[4] = *c1_b_y2;
           for (c1_i109 = 0; c1_i109 < 8; c1_i109++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i109], 15U);
@@ -5146,7 +5154,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 48U, chartInstance->c1_sfEvent);
           chartInstance->c1_e_tp_open = 1U;
           *c1_c_y2 = 2.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_y2, 74U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_y2, 75U);
           (*c1_y2_out)[1] = *c1_c_y2;
           for (c1_i113 = 0; c1_i113 < 8; c1_i113++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i113], 15U);
@@ -5198,7 +5206,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 47U, chartInstance->c1_sfEvent);
           chartInstance->c1_e_tp_closed = 1U;
           *c1_c_y2 = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_y2, 74U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_y2, 75U);
           (*c1_y2_out)[1] = *c1_c_y2;
           for (c1_i115 = 0; c1_i115 < 8; c1_i115++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i115], 15U);
@@ -5322,7 +5330,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 53U, chartInstance->c1_sfEvent);
           chartInstance->c1_f_tp_open = 1U;
           *c1_d_y2 = 2.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_y2, 75U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_y2, 76U);
           (*c1_y2_out)[5] = *c1_d_y2;
           for (c1_i119 = 0; c1_i119 < 8; c1_i119++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i119], 15U);
@@ -5374,7 +5382,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 52U, chartInstance->c1_sfEvent);
           chartInstance->c1_f_tp_closed = 1U;
           *c1_d_y2 = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_y2, 75U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_y2, 76U);
           (*c1_y2_out)[5] = *c1_d_y2;
           for (c1_i121 = 0; c1_i121 < 8; c1_i121++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i121], 15U);
@@ -5498,7 +5506,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 58U, chartInstance->c1_sfEvent);
           chartInstance->c1_l_tp_open = 1U;
           *c1_e_y2 = 2.0;
-          _SFD_DATA_RANGE_CHECK(*c1_e_y2, 81U);
+          _SFD_DATA_RANGE_CHECK(*c1_e_y2, 82U);
           (*c1_y2_out)[2] = *c1_e_y2;
           for (c1_i125 = 0; c1_i125 < 8; c1_i125++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i125], 15U);
@@ -5550,7 +5558,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 57U, chartInstance->c1_sfEvent);
           chartInstance->c1_l_tp_closed = 1U;
           *c1_e_y2 = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_e_y2, 81U);
+          _SFD_DATA_RANGE_CHECK(*c1_e_y2, 82U);
           (*c1_y2_out)[2] = *c1_e_y2;
           for (c1_i127 = 0; c1_i127 < 8; c1_i127++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i127], 15U);
@@ -5674,7 +5682,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 63U, chartInstance->c1_sfEvent);
           chartInstance->c1_k_tp_open = 1U;
           *c1_f_y2 = 2.0;
-          _SFD_DATA_RANGE_CHECK(*c1_f_y2, 80U);
+          _SFD_DATA_RANGE_CHECK(*c1_f_y2, 81U);
           (*c1_y2_out)[6] = *c1_f_y2;
           for (c1_i131 = 0; c1_i131 < 8; c1_i131++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i131], 15U);
@@ -5726,7 +5734,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 62U, chartInstance->c1_sfEvent);
           chartInstance->c1_k_tp_closed = 1U;
           *c1_f_y2 = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_f_y2, 80U);
+          _SFD_DATA_RANGE_CHECK(*c1_f_y2, 81U);
           (*c1_y2_out)[6] = *c1_f_y2;
           for (c1_i133 = 0; c1_i133 < 8; c1_i133++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i133], 15U);
@@ -5850,7 +5858,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 68U, chartInstance->c1_sfEvent);
           chartInstance->c1_i_tp_open = 1U;
           *c1_g_y2 = 2.0;
-          _SFD_DATA_RANGE_CHECK(*c1_g_y2, 78U);
+          _SFD_DATA_RANGE_CHECK(*c1_g_y2, 79U);
           (*c1_y2_out)[3] = *c1_g_y2;
           for (c1_i137 = 0; c1_i137 < 8; c1_i137++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i137], 15U);
@@ -5902,7 +5910,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 67U, chartInstance->c1_sfEvent);
           chartInstance->c1_i_tp_closed = 1U;
           *c1_g_y2 = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_g_y2, 78U);
+          _SFD_DATA_RANGE_CHECK(*c1_g_y2, 79U);
           for (c1_i139 = 0; c1_i139 < 8; c1_i139++) {
             (*c1_y2_out)[c1_i139] = *c1_g_y2;
           }
@@ -6029,7 +6037,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 73U, chartInstance->c1_sfEvent);
           chartInstance->c1_j_tp_open = 1U;
           *c1_h_y2 = 2.0;
-          _SFD_DATA_RANGE_CHECK(*c1_h_y2, 79U);
+          _SFD_DATA_RANGE_CHECK(*c1_h_y2, 80U);
           (*c1_y2_out)[7] = *c1_h_y2;
           for (c1_i144 = 0; c1_i144 < 8; c1_i144++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i144], 15U);
@@ -6081,7 +6089,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 72U, chartInstance->c1_sfEvent);
           chartInstance->c1_j_tp_closed = 1U;
           *c1_h_y2 = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_h_y2, 79U);
+          _SFD_DATA_RANGE_CHECK(*c1_h_y2, 80U);
           (*c1_y2_out)[7] = *c1_h_y2;
           for (c1_i146 = 0; c1_i146 < 8; c1_i146++) {
             _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i146], 15U);
@@ -6197,7 +6205,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 109U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_tp_open = 1U;
           *c1_b_y1 = 2.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_y1, 42U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_y1, 43U);
           (*c1_y1_out)[1] = *c1_b_y1;
           for (c1_i149 = 0; c1_i149 < 4; c1_i149++) {
             _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i149], 14U);
@@ -6260,7 +6268,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 108U, chartInstance->c1_sfEvent);
             chartInstance->c1_b_tp_closed = 1U;
             *c1_b_y1 = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_b_y1, 42U);
+            _SFD_DATA_RANGE_CHECK(*c1_b_y1, 43U);
             (*c1_y1_out)[1] = *c1_b_y1;
             for (c1_i150 = 0; c1_i150 < 4; c1_i150++) {
               _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i150], 14U);
@@ -6357,7 +6365,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 127U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_tp_open = 1U;
           *c1_c_y1 = 2.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_y1, 65U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_y1, 66U);
           (*c1_y1_out)[2] = *c1_c_y1;
           for (c1_i153 = 0; c1_i153 < 4; c1_i153++) {
             _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i153], 14U);
@@ -6420,7 +6428,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 126U, chartInstance->c1_sfEvent);
             chartInstance->c1_c_tp_closed = 1U;
             *c1_c_y1 = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_c_y1, 65U);
+            _SFD_DATA_RANGE_CHECK(*c1_c_y1, 66U);
             (*c1_y1_out)[2] = *c1_c_y1;
             for (c1_i154 = 0; c1_i154 < 4; c1_i154++) {
               _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i154], 14U);
@@ -6517,7 +6525,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 145U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_tp_open = 1U;
           *c1_d_y1 = 2.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_y1, 73U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_y1, 74U);
           (*c1_y1_out)[3] = *c1_d_y1;
           for (c1_i157 = 0; c1_i157 < 4; c1_i157++) {
             _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i157], 14U);
@@ -6580,7 +6588,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 144U, chartInstance->c1_sfEvent);
             chartInstance->c1_d_tp_closed = 1U;
             *c1_d_y1 = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_d_y1, 73U);
+            _SFD_DATA_RANGE_CHECK(*c1_d_y1, 74U);
             (*c1_y1_out)[3] = *c1_d_y1;
             for (c1_i158 = 0; c1_i158 < 4; c1_i158++) {
               _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i158], 14U);
@@ -6619,7 +6627,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
         if (c1_ld_out) {
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 83U, chartInstance->c1_sfEvent);
           chartInstance->c1_i = 0;
-          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i, 21U);
+          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i, 22U);
           chartInstance->c1_tp_Delay = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 150U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
@@ -6627,7 +6635,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_idle = 1U;
           *c1_t = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_t, 20U);
+          _SFD_DATA_RANGE_CHECK(*c1_t, 21U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 150U, chartInstance->c1_sfEvent);
         }
@@ -6670,7 +6678,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 85U, chartInstance->c1_sfEvent);
           c1_hoistedGlobal = chartInstance->c1_i;
           c1_a = (real_T)c1_hoistedGlobal;
-          _SFD_SET_DATA_VALUE_PTR(25U, &c1_a);
+          _SFD_SET_DATA_VALUE_PTR(26U, &c1_a);
           sf_debug_symbol_scope_push_eml(0U, 5U, 5U, c1_b_debug_family_names,
             c1_debug_family_var_map);
           sf_debug_symbol_scope_add_eml_importable(&c1_needstop, 0U,
@@ -6762,10 +6770,6 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                                   chartInstance->c1_dis)) {
                       _SFD_EML_CALL(152U, chartInstance->c1_sfEvent, 11);
                       chartInstance->c1_dis = chartInstance->c1_tdis;
-                      sf_mex_printf("%s =\\n", "dis");
-                      sf_mex_call_debug("disp", 0U, 1U, 14,
-                                        c1_b_emlrt_marshallOut(chartInstance,
-                        chartInstance->c1_dis));
                       _SFD_EML_CALL(152U, chartInstance->c1_sfEvent, 12);
                       c1_d_q0 = c1_index;
                       c1_d_q1 = 1;
@@ -6824,7 +6828,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
 
           _SFD_EML_CALL(152U, chartInstance->c1_sfEvent, -20);
           sf_debug_symbol_scope_pop();
-          _SFD_UNSET_DATA_VALUE_PTR(25U);
+          _SFD_UNSET_DATA_VALUE_PTR(26U);
           chartInstance->c1_tp_idle = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
@@ -6832,7 +6836,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 153U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_tmp = 1U;
           *c1_t = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_t, 20U);
+          _SFD_DATA_RANGE_CHECK(*c1_t, 21U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 147U,
                        chartInstance->c1_sfEvent);
@@ -6847,10 +6851,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           if (c1_od_out) {
             _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 147U, chartInstance->c1_sfEvent);
             chartInstance->c1_i = 0;
-            _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i, 21U);
-            c1_i161 = chartInstance->c1_i;
-            sf_mex_printf("%s =\\n", "i");
-            sf_mex_call_debug("disp", 0U, 1U, 12, c1_i161);
+            _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i, 22U);
             chartInstance->c1_tp_idle = 0U;
             _SFD_CS_CALL(STATE_INACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
             chartInstance->c1_stateChanged = TRUE;
@@ -6858,7 +6859,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
             chartInstance->c1_tp_idle = 1U;
             *c1_t = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_t, 20U);
+            _SFD_DATA_RANGE_CHECK(*c1_t, 21U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 151U,
                          chartInstance->c1_sfEvent);
@@ -6967,7 +6968,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_debug_symbol_scope_pop();
           chartInstance->c1_i = c1__s32_add__(chartInstance, chartInstance->c1_i,
             1);
-          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i, 21U);
+          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_i, 22U);
           chartInstance->c1_tp_tmp = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 153U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
@@ -6975,7 +6976,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 151U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_idle = 1U;
           *c1_t = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_t, 20U);
+          _SFD_DATA_RANGE_CHECK(*c1_t, 21U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 153U, chartInstance->c1_sfEvent);
         }
@@ -7006,18 +7007,18 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             chartInstance->c1_i_i, 0, 3, 1, 0)] = c1__s32_uminus__(chartInstance,
             chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
             chartInstance->c1_i_i, 0, 3, 1, 0)]);
-          for (c1_i162 = 0; c1_i162 < 4; c1_i162++) {
-            _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_dir[c1_i162], 17U);
+          for (c1_i161 = 0; c1_i161 < 4; c1_i161++) {
+            _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_dir[c1_i161], 17U);
           }
 
-          c1_i163 = chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
+          c1_i162 = chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
             chartInstance->c1_i_i, 0, 3, 1, 0)];
           sf_mex_printf("%s =\\n", "dir[i]");
-          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i163);
+          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i162);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_i_i, 0, 3, 2, 0)] = 1.0;
-          for (c1_i164 = 0; c1_i164 < 4; c1_i164++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i164], 3U);
+          for (c1_i163 = 0; c1_i163 < 4; c1_i163++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i163], 3U);
           }
 
           c1_d47 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -7026,8 +7027,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d47);
           chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
             chartInstance->c1_i_i, 0, 3, 1, 0)] = 0.0;
-          for (c1_i165 = 0; c1_i165 < 4; c1_i165++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i165], 2U);
+          for (c1_i164 = 0; c1_i164 < 4; c1_i164++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i164], 2U);
           }
 
           chartInstance->c1_d_tp_ChangeDirection = 0U;
@@ -7037,7 +7038,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 138U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_tp_stop = 1U;
           *c1_v = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_v, 66U);
+          _SFD_DATA_RANGE_CHECK(*c1_v, 67U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 131U, chartInstance->c1_sfEvent);
         }
@@ -7057,8 +7058,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 95U, chartInstance->c1_sfEvent);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_i_i, 0, 3, 2, 0)] = 1.0;
-          for (c1_i166 = 0; c1_i166 < 4; c1_i166++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i166], 3U);
+          for (c1_i165 = 0; c1_i165 < 4; c1_i165++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i165], 3U);
           }
 
           c1_d48 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -7066,7 +7067,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_printf("%s =\\n", "stop[i]");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d48);
           chartInstance->c1_d_j = 0.0;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_j, 67U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_j, 68U);
           chartInstance->c1_d_tp_init = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 132U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
@@ -7074,7 +7075,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 138U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_tp_stop = 1U;
           *c1_v = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_v, 66U);
+          _SFD_DATA_RANGE_CHECK(*c1_v, 67U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 132U, chartInstance->c1_sfEvent);
         }
@@ -7113,8 +7114,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 96U, chartInstance->c1_sfEvent);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_i_i, 0, 3, 2, 0)] = 1.0;
-          for (c1_i167 = 0; c1_i167 < 4; c1_i167++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i167], 3U);
+          for (c1_i166 = 0; c1_i166 < 4; c1_i166++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i166], 3U);
           }
 
           c1_d49 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -7123,8 +7124,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d49);
           chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
             chartInstance->c1_i_i, 0, 3, 1, 0)] = 0.0;
-          for (c1_i168 = 0; c1_i168 < 4; c1_i168++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i168], 2U);
+          for (c1_i167 = 0; c1_i167 < 4; c1_i167++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i167], 2U);
           }
 
           chartInstance->c1_d_tp_near = 0U;
@@ -7134,7 +7135,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 138U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_tp_stop = 1U;
           *c1_v = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_v, 66U);
+          _SFD_DATA_RANGE_CHECK(*c1_v, 67U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 97U,
                        chartInstance->c1_sfEvent);
@@ -7188,8 +7189,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 91U, chartInstance->c1_sfEvent);
             chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
               chartInstance->c1_i_i, 0, 3, 2, 0)] = 1.0;
-            for (c1_i169 = 0; c1_i169 < 4; c1_i169++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i169], 3U);
+            for (c1_i168 = 0; c1_i168 < 4; c1_i168++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i168], 3U);
             }
 
             c1_d50 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -7197,14 +7198,14 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             sf_mex_printf("%s =\\n", "stop[i]");
             sf_mex_call_debug("disp", 0U, 1U, 6, c1_d50);
             *c1_v = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_v, 66U);
+            _SFD_DATA_RANGE_CHECK(*c1_v, 67U);
             c1_d51 = *c1_v;
             sf_mex_printf("%s =\\n", "v");
             sf_mex_call_debug("disp", 0U, 1U, 6, c1_d51);
             chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
               chartInstance->c1_i_i, 0, 3, 1, 0)] = 0.0;
-            for (c1_i170 = 0; c1_i170 < 4; c1_i170++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i170], 2U);
+            for (c1_i169 = 0; c1_i169 < 4; c1_i169++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i169], 2U);
             }
 
             chartInstance->c1_d_tp_recover = 0U;
@@ -7214,7 +7215,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 138U, chartInstance->c1_sfEvent);
             chartInstance->c1_d_tp_stop = 1U;
             *c1_v = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_v, 66U);
+            _SFD_DATA_RANGE_CHECK(*c1_v, 67U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 134U,
                          chartInstance->c1_sfEvent);
@@ -7261,7 +7262,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 107U, chartInstance->c1_sfEvent);
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 102U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_acc = -muDoubleScalarPower(*c1_v, 2.0) * 0.001;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_acc, 72U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_acc, 73U);
           c1_d52 = chartInstance->c1_d_acc;
           sf_mex_printf("%s =\\n", "acc");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d52);
@@ -7376,8 +7377,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             chartInstance->c1_d_tp_urgent_inc = 1U;
             chartInstance->c1_urstart[_SFD_ARRAY_BOUNDS_CHECK(11U,
               chartInstance->c1_i_i, 0, 3, 1, 0)] = 0.0;
-            for (c1_i171 = 0; c1_i171 < 4; c1_i171++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstart[c1_i171], 11U);
+            for (c1_i170 = 0; c1_i170 < 4; c1_i170++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstart[c1_i170], 11U);
             }
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 136U,
@@ -7419,7 +7420,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 106U, chartInstance->c1_sfEvent);
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 102U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_acc = -muDoubleScalarPower(*c1_v, 2.0) * 0.001;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_acc, 72U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_acc, 73U);
           c1_d53 = chartInstance->c1_d_acc;
           sf_mex_printf("%s =\\n", "acc");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d53);
@@ -7465,8 +7466,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 98U, chartInstance->c1_sfEvent);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_i_i, 0, 3, 2, 0)] = 0.0;
-          for (c1_i172 = 0; c1_i172 < 4; c1_i172++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i172], 3U);
+          for (c1_i171 = 0; c1_i171 < 4; c1_i171++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i171], 3U);
           }
 
           c1_d54 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -7474,7 +7475,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_printf("%s =\\n", "stop[i]");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d54);
           *c1_time = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_time, 69U);
+          _SFD_DATA_RANGE_CHECK(*c1_time, 70U);
           chartInstance->c1_d_tp_stop = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 138U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
@@ -7645,7 +7646,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
               chartInstance->c1_d_j += (real_T)chartInstance->
                 c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U, chartInstance->c1_i_i, 0, 3,
                 1, 0)];
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_j, 67U);
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_j, 68U);
               chartInstance->c1_e_tp_tmp = 0U;
               _SFD_CS_CALL(STATE_INACTIVE_TAG, 139U, chartInstance->c1_sfEvent);
               chartInstance->c1_stateChanged = TRUE;
@@ -7672,8 +7673,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 93U, chartInstance->c1_sfEvent);
           chartInstance->c1_urstopped[_SFD_ARRAY_BOUNDS_CHECK(16U,
             chartInstance->c1_i_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i173 = 0; c1_i173 < 4; c1_i173++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstopped[c1_i173], 16U);
+          for (c1_i172 = 0; c1_i172 < 4; c1_i172++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstopped[c1_i172], 16U);
           }
 
           chartInstance->c1_d_tp_urgent_dec = 0U;
@@ -7764,7 +7765,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             (chartInstance->c1_S[_SFD_ARRAY_BOUNDS_CHECK(10U, c1__s32_d_
             (chartInstance, chartInstance->c1_d_j), 0, 3, 2, 0)] -
              *c1_b_distance));
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_maxv, 68U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_maxv, 69U);
           c1_d55 = chartInstance->c1_d_maxv;
           sf_mex_printf("%s =\\n", "maxv");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d55);
@@ -7802,8 +7803,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 112U, chartInstance->c1_sfEvent);
           chartInstance->c1_closeTD[_SFD_ARRAY_BOUNDS_CHECK(9U,
             chartInstance->c1_b_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i174 = 0; c1_i174 < 4; c1_i174++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_closeTD[c1_i174], 9U);
+          for (c1_i173 = 0; c1_i173 < 4; c1_i173++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_closeTD[c1_i173], 9U);
           }
 
           chartInstance->c1_tp_about_to_close1 = 0U;
@@ -7813,7 +7814,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 11U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_about_to_close2 = 1U;
           *c1_b_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_z, 27U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 10U, chartInstance->c1_sfEvent);
         }
@@ -7854,7 +7855,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 11U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_about_to_close2 = 1U;
           *c1_b_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_z, 27U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 113U,
                        chartInstance->c1_sfEvent);
@@ -7866,8 +7867,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
               (chartInstance, chartInstance->c1_stationid), 0, 3, 1, 0) +
               (_SFD_ARRAY_BOUNDS_CHECK(5U, c1__s32_d_(chartInstance,
                  chartInstance->c1_side), 0, 1, 2, 0) << 2)] = 1.0;
-            for (c1_i175 = 0; c1_i175 < 8; c1_i175++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_closePSD[c1_i175], 5U);
+            for (c1_i174 = 0; c1_i174 < 8; c1_i174++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_closePSD[c1_i174], 5U);
             }
 
             chartInstance->c1_tp_about_to_close2 = 0U;
@@ -7877,7 +7878,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 17U, chartInstance->c1_sfEvent);
             chartInstance->c1_tp_start = 1U;
             *c1_b_z = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
+            _SFD_DATA_RANGE_CHECK(*c1_b_z, 27U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 11U,
                          chartInstance->c1_sfEvent);
@@ -7897,8 +7898,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 119U, chartInstance->c1_sfEvent);
           chartInstance->c1_openTD[_SFD_ARRAY_BOUNDS_CHECK(8U,
             chartInstance->c1_b_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i176 = 0; c1_i176 < 4; c1_i176++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_openTD[c1_i176], 8U);
+          for (c1_i175 = 0; c1_i175 < 4; c1_i175++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_openTD[c1_i175], 8U);
           }
 
           chartInstance->c1_tp_about_to_open1 = 0U;
@@ -7908,7 +7909,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 15U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_open1 = 1U;
           *c1_b_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_z, 27U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 12U, chartInstance->c1_sfEvent);
         }
@@ -7928,8 +7929,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             (chartInstance, chartInstance->c1_stationid), 0, 3, 1, 0) +
             (_SFD_ARRAY_BOUNDS_CHECK(4U, c1__s32_d_(chartInstance,
                chartInstance->c1_side), 0, 1, 2, 0) << 2)] = 1.0;
-          for (c1_i177 = 0; c1_i177 < 8; c1_i177++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_openPSD[c1_i177], 4U);
+          for (c1_i176 = 0; c1_i176 < 8; c1_i176++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_openPSD[c1_i176], 4U);
           }
 
           chartInstance->c1_tp_about_to_open2 = 0U;
@@ -7939,7 +7940,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 12U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_about_to_open1 = 1U;
           *c1_b_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_z, 27U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 13U, chartInstance->c1_sfEvent);
         }
@@ -7981,20 +7982,20 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
 
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 114U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_i = 1;
-          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_b_i, 29U);
-          c1_i178 = chartInstance->c1_b_i;
+          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_b_i, 30U);
+          c1_i177 = chartInstance->c1_b_i;
           sf_mex_printf("%s =\\n", "i");
-          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i178);
+          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i177);
           chartInstance->c1_stationid = chartInstance->c1_b_j;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_stationid, 27U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_stationid, 28U);
           c1_d56 = chartInstance->c1_stationid;
           sf_mex_printf("%s =\\n", "stationid");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d56);
-          c1_i179 = c1__s32_add__(chartInstance, chartInstance->
+          c1_i178 = c1__s32_add__(chartInstance, chartInstance->
             c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U, chartInstance->c1_b_i, 0, 3, 1,
             0)], 1);
-          chartInstance->c1_side = (real_T)((c1_i179 + (c1_i179 < 0)) >> 1);
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_side, 28U);
+          chartInstance->c1_side = (real_T)((c1_i178 + (c1_i178 < 0)) >> 1);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_side, 29U);
           c1_d57 = chartInstance->c1_side;
           sf_mex_printf("%s =\\n", "side");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d57);
@@ -8005,11 +8006,11 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 13U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_about_to_open2 = 1U;
           *c1_b_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_z, 27U);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_b_i, 0, 3, 2, 0)] = 0.0;
-          for (c1_i180 = 0; c1_i180 < 4; c1_i180++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i180], 3U);
+          for (c1_i179 = 0; c1_i179 < 4; c1_i179++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i179], 3U);
           }
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 116U,
@@ -8027,8 +8028,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 116U, chartInstance->c1_sfEvent);
             chartInstance->c1_position[_SFD_ARRAY_BOUNDS_CHECK(18U,
               chartInstance->c1_b_i, 0, 3, 1, 0)] = *c1_c_distance;
-            for (c1_i181 = 0; c1_i181 < 4; c1_i181++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_position[c1_i181], 18U);
+            for (c1_i180 = 0; c1_i180 < 4; c1_i180++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_position[c1_i180], 18U);
             }
 
             c1_d58 = chartInstance->c1_position[_SFD_ARRAY_BOUNDS_CHECK(18U,
@@ -8042,7 +8043,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 14U, chartInstance->c1_sfEvent);
             chartInstance->c1_b_tp_idle = 1U;
             *c1_b_z = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
+            _SFD_DATA_RANGE_CHECK(*c1_b_z, 27U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 14U,
                          chartInstance->c1_sfEvent);
@@ -8094,7 +8095,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 10U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_about_to_close1 = 1U;
           *c1_b_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_z, 27U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 16U, chartInstance->c1_sfEvent);
         }
@@ -8132,8 +8133,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 115U, chartInstance->c1_sfEvent);
           chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
             chartInstance->c1_b_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i182 = 0; c1_i182 < 4; c1_i182++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i182], 2U);
+          for (c1_i181 = 0; c1_i181 < 4; c1_i181++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i181], 2U);
           }
 
           chartInstance->c1_tp_start = 0U;
@@ -8143,7 +8144,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 14U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_tp_idle = 1U;
           *c1_b_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_z, 27U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 144U,
                        chartInstance->c1_sfEvent);
@@ -8162,7 +8163,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 17U, chartInstance->c1_sfEvent);
             chartInstance->c1_tp_start = 1U;
             *c1_b_z = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_b_z, 26U);
+            _SFD_DATA_RANGE_CHECK(*c1_b_z, 27U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 17U,
                          chartInstance->c1_sfEvent);
@@ -8193,8 +8194,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 123U, chartInstance->c1_sfEvent);
           chartInstance->c1_closeTD[_SFD_ARRAY_BOUNDS_CHECK(9U,
             chartInstance->c1_g_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i183 = 0; c1_i183 < 4; c1_i183++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_closeTD[c1_i183], 9U);
+          for (c1_i182 = 0; c1_i182 < 4; c1_i182++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_closeTD[c1_i182], 9U);
           }
 
           chartInstance->c1_d_tp_about_to_close1 = 0U;
@@ -8204,7 +8205,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 20U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_tp_about_to_close2 = 1U;
           *c1_c_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_z, 55U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 19U, chartInstance->c1_sfEvent);
         }
@@ -8245,7 +8246,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 20U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_tp_about_to_close2 = 1U;
           *c1_c_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_z, 55U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 124U,
                        chartInstance->c1_sfEvent);
@@ -8257,8 +8258,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
               (chartInstance, chartInstance->c1_d_stationid), 0, 3, 1, 0) +
               (_SFD_ARRAY_BOUNDS_CHECK(5U, c1__s32_d_(chartInstance,
                  chartInstance->c1_d_side), 0, 1, 2, 0) << 2)] = 1.0;
-            for (c1_i184 = 0; c1_i184 < 8; c1_i184++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_closePSD[c1_i184], 5U);
+            for (c1_i183 = 0; c1_i183 < 8; c1_i183++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_closePSD[c1_i183], 5U);
             }
 
             chartInstance->c1_d_tp_about_to_close2 = 0U;
@@ -8268,7 +8269,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 26U, chartInstance->c1_sfEvent);
             chartInstance->c1_d_tp_start = 1U;
             *c1_c_z = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
+            _SFD_DATA_RANGE_CHECK(*c1_c_z, 55U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 20U,
                          chartInstance->c1_sfEvent);
@@ -8288,8 +8289,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 130U, chartInstance->c1_sfEvent);
           chartInstance->c1_openTD[_SFD_ARRAY_BOUNDS_CHECK(8U,
             chartInstance->c1_g_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i185 = 0; c1_i185 < 4; c1_i185++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_openTD[c1_i185], 8U);
+          for (c1_i184 = 0; c1_i184 < 4; c1_i184++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_openTD[c1_i184], 8U);
           }
 
           chartInstance->c1_d_tp_about_to_open1 = 0U;
@@ -8299,7 +8300,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 24U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_tp_open1 = 1U;
           *c1_c_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_z, 55U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 21U, chartInstance->c1_sfEvent);
         }
@@ -8319,8 +8320,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             (chartInstance, chartInstance->c1_d_stationid), 0, 3, 1, 0) +
             (_SFD_ARRAY_BOUNDS_CHECK(4U, c1__s32_d_(chartInstance,
                chartInstance->c1_d_side), 0, 1, 2, 0) << 2)] = 1.0;
-          for (c1_i186 = 0; c1_i186 < 8; c1_i186++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_openPSD[c1_i186], 4U);
+          for (c1_i185 = 0; c1_i185 < 8; c1_i185++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_openPSD[c1_i185], 4U);
           }
 
           chartInstance->c1_d_tp_about_to_open2 = 0U;
@@ -8330,7 +8331,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 21U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_tp_about_to_open1 = 1U;
           *c1_c_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_z, 55U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 22U, chartInstance->c1_sfEvent);
         }
@@ -8372,20 +8373,20 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
 
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 125U, chartInstance->c1_sfEvent);
           chartInstance->c1_g_i = 2;
-          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_g_i, 57U);
-          c1_i187 = chartInstance->c1_g_i;
+          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_g_i, 58U);
+          c1_i186 = chartInstance->c1_g_i;
           sf_mex_printf("%s =\\n", "i");
-          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i187);
+          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i186);
           chartInstance->c1_d_stationid = chartInstance->c1_c_j;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_stationid, 55U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_stationid, 56U);
           c1_d59 = chartInstance->c1_d_stationid;
           sf_mex_printf("%s =\\n", "stationid");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d59);
-          c1_i188 = c1__s32_add__(chartInstance, chartInstance->
+          c1_i187 = c1__s32_add__(chartInstance, chartInstance->
             c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U, chartInstance->c1_g_i, 0, 3, 1,
             0)], 1);
-          chartInstance->c1_d_side = (real_T)((c1_i188 + (c1_i188 < 0)) >> 1);
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_side, 56U);
+          chartInstance->c1_d_side = (real_T)((c1_i187 + (c1_i187 < 0)) >> 1);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_d_side, 57U);
           c1_d60 = chartInstance->c1_d_side;
           sf_mex_printf("%s =\\n", "side");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d60);
@@ -8396,11 +8397,11 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 22U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_tp_about_to_open2 = 1U;
           *c1_c_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_z, 55U);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_g_i, 0, 3, 2, 0)] = 0.0;
-          for (c1_i189 = 0; c1_i189 < 4; c1_i189++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i189], 3U);
+          for (c1_i188 = 0; c1_i188 < 4; c1_i188++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i188], 3U);
           }
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 127U,
@@ -8418,8 +8419,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 127U, chartInstance->c1_sfEvent);
             chartInstance->c1_position[_SFD_ARRAY_BOUNDS_CHECK(18U,
               chartInstance->c1_g_i, 0, 3, 1, 0)] = *c1_d_distance;
-            for (c1_i190 = 0; c1_i190 < 4; c1_i190++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_position[c1_i190], 18U);
+            for (c1_i189 = 0; c1_i189 < 4; c1_i189++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_position[c1_i189], 18U);
             }
 
             c1_d61 = chartInstance->c1_position[_SFD_ARRAY_BOUNDS_CHECK(18U,
@@ -8433,7 +8434,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 23U, chartInstance->c1_sfEvent);
             chartInstance->c1_e_tp_idle = 1U;
             *c1_c_z = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
+            _SFD_DATA_RANGE_CHECK(*c1_c_z, 55U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 23U,
                          chartInstance->c1_sfEvent);
@@ -8485,7 +8486,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 19U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_tp_about_to_close1 = 1U;
           *c1_c_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_z, 55U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 25U, chartInstance->c1_sfEvent);
         }
@@ -8523,8 +8524,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 126U, chartInstance->c1_sfEvent);
           chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
             chartInstance->c1_g_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i191 = 0; c1_i191 < 4; c1_i191++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i191], 2U);
+          for (c1_i190 = 0; c1_i190 < 4; c1_i190++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i190], 2U);
           }
 
           chartInstance->c1_d_tp_start = 0U;
@@ -8534,7 +8535,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 23U, chartInstance->c1_sfEvent);
           chartInstance->c1_e_tp_idle = 1U;
           *c1_c_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_z, 55U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 145U,
                        chartInstance->c1_sfEvent);
@@ -8553,7 +8554,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 26U, chartInstance->c1_sfEvent);
             chartInstance->c1_d_tp_start = 1U;
             *c1_c_z = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_c_z, 54U);
+            _SFD_DATA_RANGE_CHECK(*c1_c_z, 55U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 26U,
                          chartInstance->c1_sfEvent);
@@ -8584,8 +8585,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 134U, chartInstance->c1_sfEvent);
           chartInstance->c1_closeTD[_SFD_ARRAY_BOUNDS_CHECK(9U,
             chartInstance->c1_f_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i192 = 0; c1_i192 < 4; c1_i192++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_closeTD[c1_i192], 9U);
+          for (c1_i191 = 0; c1_i191 < 4; c1_i191++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_closeTD[c1_i191], 9U);
           }
 
           chartInstance->c1_c_tp_about_to_close1 = 0U;
@@ -8595,7 +8596,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 29U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_tp_about_to_close2 = 1U;
           *c1_d_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_z, 51U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 28U, chartInstance->c1_sfEvent);
         }
@@ -8636,7 +8637,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 29U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_tp_about_to_close2 = 1U;
           *c1_d_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_z, 51U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 135U,
                        chartInstance->c1_sfEvent);
@@ -8648,8 +8649,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
               (chartInstance, chartInstance->c1_c_stationid), 0, 3, 1, 0) +
               (_SFD_ARRAY_BOUNDS_CHECK(5U, c1__s32_d_(chartInstance,
                  chartInstance->c1_c_side), 0, 1, 2, 0) << 2)] = 1.0;
-            for (c1_i193 = 0; c1_i193 < 8; c1_i193++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_closePSD[c1_i193], 5U);
+            for (c1_i192 = 0; c1_i192 < 8; c1_i192++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_closePSD[c1_i192], 5U);
             }
 
             chartInstance->c1_c_tp_about_to_close2 = 0U;
@@ -8659,7 +8660,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 35U, chartInstance->c1_sfEvent);
             chartInstance->c1_c_tp_start = 1U;
             *c1_d_z = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
+            _SFD_DATA_RANGE_CHECK(*c1_d_z, 51U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 29U,
                          chartInstance->c1_sfEvent);
@@ -8679,8 +8680,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 141U, chartInstance->c1_sfEvent);
           chartInstance->c1_openTD[_SFD_ARRAY_BOUNDS_CHECK(8U,
             chartInstance->c1_f_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i194 = 0; c1_i194 < 4; c1_i194++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_openTD[c1_i194], 8U);
+          for (c1_i193 = 0; c1_i193 < 4; c1_i193++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_openTD[c1_i193], 8U);
           }
 
           chartInstance->c1_c_tp_about_to_open1 = 0U;
@@ -8690,7 +8691,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 33U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_tp_open1 = 1U;
           *c1_d_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_z, 51U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 30U, chartInstance->c1_sfEvent);
         }
@@ -8710,8 +8711,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             (chartInstance, chartInstance->c1_c_stationid), 0, 3, 1, 0) +
             (_SFD_ARRAY_BOUNDS_CHECK(4U, c1__s32_d_(chartInstance,
                chartInstance->c1_c_side), 0, 1, 2, 0) << 2)] = 1.0;
-          for (c1_i195 = 0; c1_i195 < 8; c1_i195++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_openPSD[c1_i195], 4U);
+          for (c1_i194 = 0; c1_i194 < 8; c1_i194++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_openPSD[c1_i194], 4U);
           }
 
           chartInstance->c1_c_tp_about_to_open2 = 0U;
@@ -8721,7 +8722,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 30U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_tp_about_to_open1 = 1U;
           *c1_d_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_z, 51U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 31U, chartInstance->c1_sfEvent);
         }
@@ -8763,20 +8764,20 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
 
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 136U, chartInstance->c1_sfEvent);
           chartInstance->c1_f_i = 3;
-          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_f_i, 53U);
-          c1_i196 = chartInstance->c1_f_i;
+          _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_f_i, 54U);
+          c1_i195 = chartInstance->c1_f_i;
           sf_mex_printf("%s =\\n", "i");
-          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i196);
+          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i195);
           chartInstance->c1_c_stationid = chartInstance->c1_d_j;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_stationid, 51U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_stationid, 52U);
           c1_d62 = chartInstance->c1_c_stationid;
           sf_mex_printf("%s =\\n", "stationid");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d62);
-          c1_i197 = c1__s32_add__(chartInstance, chartInstance->
+          c1_i196 = c1__s32_add__(chartInstance, chartInstance->
             c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U, chartInstance->c1_f_i, 0, 3, 1,
             0)], 1);
-          chartInstance->c1_c_side = (real_T)((c1_i197 + (c1_i197 < 0)) >> 1);
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_side, 52U);
+          chartInstance->c1_c_side = (real_T)((c1_i196 + (c1_i196 < 0)) >> 1);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_side, 53U);
           c1_d63 = chartInstance->c1_c_side;
           sf_mex_printf("%s =\\n", "side");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d63);
@@ -8787,11 +8788,11 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 31U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_tp_about_to_open2 = 1U;
           *c1_d_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_z, 51U);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_f_i, 0, 3, 2, 0)] = 0.0;
-          for (c1_i198 = 0; c1_i198 < 4; c1_i198++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i198], 3U);
+          for (c1_i197 = 0; c1_i197 < 4; c1_i197++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i197], 3U);
           }
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 138U,
@@ -8809,8 +8810,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 138U, chartInstance->c1_sfEvent);
             chartInstance->c1_position[_SFD_ARRAY_BOUNDS_CHECK(18U,
               chartInstance->c1_f_i, 0, 3, 1, 0)] = *c1_b_distance;
-            for (c1_i199 = 0; c1_i199 < 4; c1_i199++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_position[c1_i199], 18U);
+            for (c1_i198 = 0; c1_i198 < 4; c1_i198++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_position[c1_i198], 18U);
             }
 
             c1_d64 = chartInstance->c1_position[_SFD_ARRAY_BOUNDS_CHECK(18U,
@@ -8824,7 +8825,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 32U, chartInstance->c1_sfEvent);
             chartInstance->c1_d_tp_idle = 1U;
             *c1_d_z = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
+            _SFD_DATA_RANGE_CHECK(*c1_d_z, 51U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 32U,
                          chartInstance->c1_sfEvent);
@@ -8876,7 +8877,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 28U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_tp_about_to_close1 = 1U;
           *c1_d_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_z, 51U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 34U, chartInstance->c1_sfEvent);
         }
@@ -8914,8 +8915,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 137U, chartInstance->c1_sfEvent);
           chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
             chartInstance->c1_f_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i200 = 0; c1_i200 < 4; c1_i200++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i200], 2U);
+          for (c1_i199 = 0; c1_i199 < 4; c1_i199++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i199], 2U);
           }
 
           chartInstance->c1_c_tp_start = 0U;
@@ -8925,7 +8926,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 32U, chartInstance->c1_sfEvent);
           chartInstance->c1_d_tp_idle = 1U;
           *c1_d_z = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_z, 51U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 146U,
                        chartInstance->c1_sfEvent);
@@ -8944,7 +8945,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 35U, chartInstance->c1_sfEvent);
             chartInstance->c1_c_tp_start = 1U;
             *c1_d_z = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_d_z, 50U);
+            _SFD_DATA_RANGE_CHECK(*c1_d_z, 51U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 35U,
                          chartInstance->c1_sfEvent);
@@ -8977,18 +8978,18 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             chartInstance->c1_c_i, 0, 3, 1, 0)] = c1__s32_uminus__(chartInstance,
             chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
             chartInstance->c1_c_i, 0, 3, 1, 0)]);
-          for (c1_i201 = 0; c1_i201 < 4; c1_i201++) {
-            _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_dir[c1_i201], 17U);
+          for (c1_i200 = 0; c1_i200 < 4; c1_i200++) {
+            _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_dir[c1_i200], 17U);
           }
 
-          c1_i202 = chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
+          c1_i201 = chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
             chartInstance->c1_c_i, 0, 3, 1, 0)];
           sf_mex_printf("%s =\\n", "dir[i]");
-          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i202);
+          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i201);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_c_i, 0, 3, 2, 0)] = 1.0;
-          for (c1_i203 = 0; c1_i203 < 4; c1_i203++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i203], 3U);
+          for (c1_i202 = 0; c1_i202 < 4; c1_i202++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i202], 3U);
           }
 
           c1_d65 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -8997,8 +8998,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d65);
           chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
             chartInstance->c1_c_i, 0, 3, 1, 0)] = 0.0;
-          for (c1_i204 = 0; c1_i204 < 4; c1_i204++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i204], 2U);
+          for (c1_i203 = 0; c1_i203 < 4; c1_i203++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i203], 2U);
           }
 
           chartInstance->c1_tp_ChangeDirection = 0U;
@@ -9008,7 +9009,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 84U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_stop = 1U;
           *c1_b_v = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_v, 30U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_v, 31U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 77U, chartInstance->c1_sfEvent);
         }
@@ -9028,8 +9029,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 160U, chartInstance->c1_sfEvent);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_c_i, 0, 3, 2, 0)] = 1.0;
-          for (c1_i205 = 0; c1_i205 < 4; c1_i205++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i205], 3U);
+          for (c1_i204 = 0; c1_i204 < 4; c1_i204++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i204], 3U);
           }
 
           c1_d66 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -9037,7 +9038,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_printf("%s =\\n", "stop[i]");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d66);
           chartInstance->c1_j = 0.0;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_j, 31U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_j, 32U);
           chartInstance->c1_tp_init = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 78U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
@@ -9045,7 +9046,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 84U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_stop = 1U;
           *c1_b_v = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_v, 30U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_v, 31U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 78U, chartInstance->c1_sfEvent);
         }
@@ -9084,8 +9085,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 161U, chartInstance->c1_sfEvent);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_c_i, 0, 3, 2, 0)] = 1.0;
-          for (c1_i206 = 0; c1_i206 < 4; c1_i206++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i206], 3U);
+          for (c1_i205 = 0; c1_i205 < 4; c1_i205++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i205], 3U);
           }
 
           c1_d67 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -9094,8 +9095,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d67);
           chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
             chartInstance->c1_c_i, 0, 3, 1, 0)] = 0.0;
-          for (c1_i207 = 0; c1_i207 < 4; c1_i207++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i207], 2U);
+          for (c1_i206 = 0; c1_i206 < 4; c1_i206++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i206], 2U);
           }
 
           chartInstance->c1_tp_near = 0U;
@@ -9105,7 +9106,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 84U, chartInstance->c1_sfEvent);
           chartInstance->c1_tp_stop = 1U;
           *c1_b_v = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_v, 30U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_v, 31U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 162U,
                        chartInstance->c1_sfEvent);
@@ -9159,8 +9160,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 156U, chartInstance->c1_sfEvent);
             chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
               chartInstance->c1_c_i, 0, 3, 2, 0)] = 1.0;
-            for (c1_i208 = 0; c1_i208 < 4; c1_i208++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i208], 3U);
+            for (c1_i207 = 0; c1_i207 < 4; c1_i207++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i207], 3U);
             }
 
             c1_d68 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -9168,14 +9169,14 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             sf_mex_printf("%s =\\n", "stop[i]");
             sf_mex_call_debug("disp", 0U, 1U, 6, c1_d68);
             *c1_b_v = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_b_v, 30U);
+            _SFD_DATA_RANGE_CHECK(*c1_b_v, 31U);
             c1_d69 = *c1_b_v;
             sf_mex_printf("%s =\\n", "v");
             sf_mex_call_debug("disp", 0U, 1U, 6, c1_d69);
             chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
               chartInstance->c1_c_i, 0, 3, 1, 0)] = 0.0;
-            for (c1_i209 = 0; c1_i209 < 4; c1_i209++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i209], 2U);
+            for (c1_i208 = 0; c1_i208 < 4; c1_i208++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i208], 2U);
             }
 
             chartInstance->c1_tp_recover = 0U;
@@ -9185,7 +9186,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 84U, chartInstance->c1_sfEvent);
             chartInstance->c1_tp_stop = 1U;
             *c1_b_v = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_b_v, 30U);
+            _SFD_DATA_RANGE_CHECK(*c1_b_v, 31U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 80U,
                          chartInstance->c1_sfEvent);
@@ -9232,7 +9233,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 172U, chartInstance->c1_sfEvent);
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 165U, chartInstance->c1_sfEvent);
           chartInstance->c1_acc = -muDoubleScalarPower(*c1_b_v, 2.0) * 0.001;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_acc, 36U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_acc, 37U);
           c1_d70 = chartInstance->c1_acc;
           sf_mex_printf("%s =\\n", "acc");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d70);
@@ -9346,8 +9347,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             chartInstance->c1_tp_urgent_inc = 1U;
             chartInstance->c1_urstart[_SFD_ARRAY_BOUNDS_CHECK(11U,
               chartInstance->c1_c_i, 0, 3, 1, 0)] = 0.0;
-            for (c1_i210 = 0; c1_i210 < 4; c1_i210++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstart[c1_i210], 11U);
+            for (c1_i209 = 0; c1_i209 < 4; c1_i209++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstart[c1_i209], 11U);
             }
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 82U,
@@ -9389,7 +9390,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 171U, chartInstance->c1_sfEvent);
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 165U, chartInstance->c1_sfEvent);
           chartInstance->c1_acc = -muDoubleScalarPower(*c1_b_v, 2.0) * 0.001;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_acc, 36U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_acc, 37U);
           c1_d71 = chartInstance->c1_acc;
           sf_mex_printf("%s =\\n", "acc");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d71);
@@ -9435,8 +9436,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 163U, chartInstance->c1_sfEvent);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_c_i, 0, 3, 2, 0)] = 0.0;
-          for (c1_i211 = 0; c1_i211 < 4; c1_i211++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i211], 3U);
+          for (c1_i210 = 0; c1_i210 < 4; c1_i210++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i210], 3U);
           }
 
           c1_d72 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -9444,7 +9445,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_printf("%s =\\n", "stop[i]");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d72);
           *c1_b_time = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_b_time, 33U);
+          _SFD_DATA_RANGE_CHECK(*c1_b_time, 34U);
           chartInstance->c1_tp_stop = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 84U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
@@ -9615,7 +9616,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
               chartInstance->c1_j += (real_T)chartInstance->
                 c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U, chartInstance->c1_c_i, 0, 3,
                 1, 0)];
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_j, 31U);
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_j, 32U);
               chartInstance->c1_b_tp_tmp = 0U;
               _SFD_CS_CALL(STATE_INACTIVE_TAG, 85U, chartInstance->c1_sfEvent);
               chartInstance->c1_stateChanged = TRUE;
@@ -9642,8 +9643,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 159U, chartInstance->c1_sfEvent);
           chartInstance->c1_urstopped[_SFD_ARRAY_BOUNDS_CHECK(16U,
             chartInstance->c1_c_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i212 = 0; c1_i212 < 4; c1_i212++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstopped[c1_i212], 16U);
+          for (c1_i211 = 0; c1_i211 < 4; c1_i211++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstopped[c1_i211], 16U);
           }
 
           chartInstance->c1_tp_urgent_dec = 0U;
@@ -9733,7 +9734,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           chartInstance->c1_maxv = muDoubleScalarSqrt(0.5 * muDoubleScalarAbs
             (chartInstance->c1_S[_SFD_ARRAY_BOUNDS_CHECK(10U, c1__s32_d_
             (chartInstance, chartInstance->c1_j), 0, 3, 2, 0)] - *c1_distance));
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_maxv, 32U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_maxv, 33U);
           c1_d73 = chartInstance->c1_maxv;
           sf_mex_printf("%s =\\n", "maxv");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d73);
@@ -9773,18 +9774,18 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             chartInstance->c1_e_i, 0, 3, 1, 0)] = c1__s32_uminus__(chartInstance,
             chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
             chartInstance->c1_e_i, 0, 3, 1, 0)]);
-          for (c1_i213 = 0; c1_i213 < 4; c1_i213++) {
-            _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_dir[c1_i213], 17U);
+          for (c1_i212 = 0; c1_i212 < 4; c1_i212++) {
+            _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_dir[c1_i212], 17U);
           }
 
-          c1_i214 = chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
+          c1_i213 = chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
             chartInstance->c1_e_i, 0, 3, 1, 0)];
           sf_mex_printf("%s =\\n", "dir[i]");
-          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i214);
+          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i213);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_e_i, 0, 3, 2, 0)] = 1.0;
-          for (c1_i215 = 0; c1_i215 < 4; c1_i215++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i215], 3U);
+          for (c1_i214 = 0; c1_i214 < 4; c1_i214++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i214], 3U);
           }
 
           c1_d74 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -9793,8 +9794,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d74);
           chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
             chartInstance->c1_e_i, 0, 3, 1, 0)] = 0.0;
-          for (c1_i216 = 0; c1_i216 < 4; c1_i216++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i216], 2U);
+          for (c1_i215 = 0; c1_i215 < 4; c1_i215++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i215], 2U);
           }
 
           chartInstance->c1_b_tp_ChangeDirection = 0U;
@@ -9804,7 +9805,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 102U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_tp_stop = 1U;
           *c1_c_v = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_v, 43U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_v, 44U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 95U, chartInstance->c1_sfEvent);
         }
@@ -9824,8 +9825,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 184U, chartInstance->c1_sfEvent);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_e_i, 0, 3, 2, 0)] = 1.0;
-          for (c1_i217 = 0; c1_i217 < 4; c1_i217++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i217], 3U);
+          for (c1_i216 = 0; c1_i216 < 4; c1_i216++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i216], 3U);
           }
 
           c1_d75 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -9833,7 +9834,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_printf("%s =\\n", "stop[i]");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d75);
           chartInstance->c1_b_j = 0.0;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_j, 44U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_j, 45U);
           chartInstance->c1_b_tp_init = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 96U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
@@ -9841,7 +9842,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 102U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_tp_stop = 1U;
           *c1_c_v = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_v, 43U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_v, 44U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 96U, chartInstance->c1_sfEvent);
         }
@@ -9880,8 +9881,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 185U, chartInstance->c1_sfEvent);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_e_i, 0, 3, 2, 0)] = 1.0;
-          for (c1_i218 = 0; c1_i218 < 4; c1_i218++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i218], 3U);
+          for (c1_i217 = 0; c1_i217 < 4; c1_i217++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i217], 3U);
           }
 
           c1_d76 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -9890,8 +9891,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d76);
           chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
             chartInstance->c1_e_i, 0, 3, 1, 0)] = 0.0;
-          for (c1_i219 = 0; c1_i219 < 4; c1_i219++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i219], 2U);
+          for (c1_i218 = 0; c1_i218 < 4; c1_i218++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i218], 2U);
           }
 
           chartInstance->c1_b_tp_near = 0U;
@@ -9901,7 +9902,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 102U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_tp_stop = 1U;
           *c1_c_v = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_v, 43U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_v, 44U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 186U,
                        chartInstance->c1_sfEvent);
@@ -9955,8 +9956,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 180U, chartInstance->c1_sfEvent);
             chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
               chartInstance->c1_e_i, 0, 3, 2, 0)] = 1.0;
-            for (c1_i220 = 0; c1_i220 < 4; c1_i220++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i220], 3U);
+            for (c1_i219 = 0; c1_i219 < 4; c1_i219++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i219], 3U);
             }
 
             c1_d77 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -9964,14 +9965,14 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             sf_mex_printf("%s =\\n", "stop[i]");
             sf_mex_call_debug("disp", 0U, 1U, 6, c1_d77);
             *c1_c_v = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_c_v, 43U);
+            _SFD_DATA_RANGE_CHECK(*c1_c_v, 44U);
             c1_d78 = *c1_c_v;
             sf_mex_printf("%s =\\n", "v");
             sf_mex_call_debug("disp", 0U, 1U, 6, c1_d78);
             chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
               chartInstance->c1_e_i, 0, 3, 1, 0)] = 0.0;
-            for (c1_i221 = 0; c1_i221 < 4; c1_i221++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i221], 2U);
+            for (c1_i220 = 0; c1_i220 < 4; c1_i220++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i220], 2U);
             }
 
             chartInstance->c1_b_tp_recover = 0U;
@@ -9981,7 +9982,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 102U, chartInstance->c1_sfEvent);
             chartInstance->c1_b_tp_stop = 1U;
             *c1_c_v = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_c_v, 43U);
+            _SFD_DATA_RANGE_CHECK(*c1_c_v, 44U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 98U,
                          chartInstance->c1_sfEvent);
@@ -10028,7 +10029,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 196U, chartInstance->c1_sfEvent);
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 189U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_acc = -muDoubleScalarPower(*c1_c_v, 2.0) * 0.001;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_acc, 49U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_acc, 50U);
           c1_d79 = chartInstance->c1_b_acc;
           sf_mex_printf("%s =\\n", "acc");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d79);
@@ -10143,8 +10144,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             chartInstance->c1_b_tp_urgent_inc = 1U;
             chartInstance->c1_urstart[_SFD_ARRAY_BOUNDS_CHECK(11U,
               chartInstance->c1_e_i, 0, 3, 1, 0)] = 0.0;
-            for (c1_i222 = 0; c1_i222 < 4; c1_i222++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstart[c1_i222], 11U);
+            for (c1_i221 = 0; c1_i221 < 4; c1_i221++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstart[c1_i221], 11U);
             }
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 100U,
@@ -10186,7 +10187,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 195U, chartInstance->c1_sfEvent);
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 189U, chartInstance->c1_sfEvent);
           chartInstance->c1_b_acc = -muDoubleScalarPower(*c1_c_v, 2.0) * 0.001;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_acc, 49U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_acc, 50U);
           c1_d80 = chartInstance->c1_b_acc;
           sf_mex_printf("%s =\\n", "acc");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d80);
@@ -10232,8 +10233,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 187U, chartInstance->c1_sfEvent);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_e_i, 0, 3, 2, 0)] = 0.0;
-          for (c1_i223 = 0; c1_i223 < 4; c1_i223++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i223], 3U);
+          for (c1_i222 = 0; c1_i222 < 4; c1_i222++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i222], 3U);
           }
 
           c1_d81 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -10241,7 +10242,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_printf("%s =\\n", "stop[i]");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d81);
           *c1_c_time = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_c_time, 46U);
+          _SFD_DATA_RANGE_CHECK(*c1_c_time, 47U);
           chartInstance->c1_b_tp_stop = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 102U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
@@ -10412,7 +10413,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
               chartInstance->c1_b_j += (real_T)chartInstance->
                 c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U, chartInstance->c1_e_i, 0, 3,
                 1, 0)];
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_j, 44U);
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_j, 45U);
               chartInstance->c1_c_tp_tmp = 0U;
               _SFD_CS_CALL(STATE_INACTIVE_TAG, 103U, chartInstance->c1_sfEvent);
               chartInstance->c1_stateChanged = TRUE;
@@ -10439,8 +10440,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 183U, chartInstance->c1_sfEvent);
           chartInstance->c1_urstopped[_SFD_ARRAY_BOUNDS_CHECK(16U,
             chartInstance->c1_e_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i224 = 0; c1_i224 < 4; c1_i224++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstopped[c1_i224], 16U);
+          for (c1_i223 = 0; c1_i223 < 4; c1_i223++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstopped[c1_i223], 16U);
           }
 
           chartInstance->c1_b_tp_urgent_dec = 0U;
@@ -10531,7 +10532,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             (chartInstance->c1_S[_SFD_ARRAY_BOUNDS_CHECK(10U, c1__s32_d_
             (chartInstance, chartInstance->c1_b_j), 0, 3, 2, 0)] -
              *c1_c_distance));
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_maxv, 45U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_b_maxv, 46U);
           c1_d82 = chartInstance->c1_b_maxv;
           sf_mex_printf("%s =\\n", "maxv");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d82);
@@ -10571,18 +10572,18 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             chartInstance->c1_h_i, 0, 3, 1, 0)] = c1__s32_uminus__(chartInstance,
             chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
             chartInstance->c1_h_i, 0, 3, 1, 0)]);
-          for (c1_i225 = 0; c1_i225 < 4; c1_i225++) {
-            _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_dir[c1_i225], 17U);
+          for (c1_i224 = 0; c1_i224 < 4; c1_i224++) {
+            _SFD_DATA_RANGE_CHECK((real_T)chartInstance->c1_dir[c1_i224], 17U);
           }
 
-          c1_i226 = chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
+          c1_i225 = chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
             chartInstance->c1_h_i, 0, 3, 1, 0)];
           sf_mex_printf("%s =\\n", "dir[i]");
-          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i226);
+          sf_mex_call_debug("disp", 0U, 1U, 12, c1_i225);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_h_i, 0, 3, 2, 0)] = 1.0;
-          for (c1_i227 = 0; c1_i227 < 4; c1_i227++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i227], 3U);
+          for (c1_i226 = 0; c1_i226 < 4; c1_i226++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i226], 3U);
           }
 
           c1_d83 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -10591,8 +10592,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d83);
           chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
             chartInstance->c1_h_i, 0, 3, 1, 0)] = 0.0;
-          for (c1_i228 = 0; c1_i228 < 4; c1_i228++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i228], 2U);
+          for (c1_i227 = 0; c1_i227 < 4; c1_i227++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i227], 2U);
           }
 
           chartInstance->c1_c_tp_ChangeDirection = 0U;
@@ -10602,7 +10603,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 120U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_tp_stop = 1U;
           *c1_d_v = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_v, 58U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_v, 59U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 113U, chartInstance->c1_sfEvent);
         }
@@ -10622,8 +10623,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 208U, chartInstance->c1_sfEvent);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_h_i, 0, 3, 2, 0)] = 1.0;
-          for (c1_i229 = 0; c1_i229 < 4; c1_i229++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i229], 3U);
+          for (c1_i228 = 0; c1_i228 < 4; c1_i228++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i228], 3U);
           }
 
           c1_d84 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -10631,7 +10632,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_printf("%s =\\n", "stop[i]");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d84);
           chartInstance->c1_c_j = 0.0;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_j, 59U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_j, 60U);
           chartInstance->c1_c_tp_init = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 114U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
@@ -10639,7 +10640,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 120U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_tp_stop = 1U;
           *c1_d_v = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_v, 58U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_v, 59U);
         } else {
           _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 114U, chartInstance->c1_sfEvent);
         }
@@ -10678,8 +10679,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 209U, chartInstance->c1_sfEvent);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_h_i, 0, 3, 2, 0)] = 1.0;
-          for (c1_i230 = 0; c1_i230 < 4; c1_i230++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i230], 3U);
+          for (c1_i229 = 0; c1_i229 < 4; c1_i229++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i229], 3U);
           }
 
           c1_d85 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -10688,8 +10689,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d85);
           chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
             chartInstance->c1_h_i, 0, 3, 1, 0)] = 0.0;
-          for (c1_i231 = 0; c1_i231 < 4; c1_i231++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i231], 2U);
+          for (c1_i230 = 0; c1_i230 < 4; c1_i230++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i230], 2U);
           }
 
           chartInstance->c1_c_tp_near = 0U;
@@ -10699,7 +10700,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CS_CALL(STATE_ACTIVE_TAG, 120U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_tp_stop = 1U;
           *c1_d_v = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_v, 58U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_v, 59U);
         } else {
           _SFD_CT_CALL(TRANSITION_BEFORE_PROCESSING_TAG, 210U,
                        chartInstance->c1_sfEvent);
@@ -10753,8 +10754,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 204U, chartInstance->c1_sfEvent);
             chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
               chartInstance->c1_h_i, 0, 3, 2, 0)] = 1.0;
-            for (c1_i232 = 0; c1_i232 < 4; c1_i232++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i232], 3U);
+            for (c1_i231 = 0; c1_i231 < 4; c1_i231++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i231], 3U);
             }
 
             c1_d86 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -10762,14 +10763,14 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             sf_mex_printf("%s =\\n", "stop[i]");
             sf_mex_call_debug("disp", 0U, 1U, 6, c1_d86);
             *c1_d_v = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_d_v, 58U);
+            _SFD_DATA_RANGE_CHECK(*c1_d_v, 59U);
             c1_d87 = *c1_d_v;
             sf_mex_printf("%s =\\n", "v");
             sf_mex_call_debug("disp", 0U, 1U, 6, c1_d87);
             chartInstance->c1_start[_SFD_ARRAY_BOUNDS_CHECK(2U,
               chartInstance->c1_h_i, 0, 3, 1, 0)] = 0.0;
-            for (c1_i233 = 0; c1_i233 < 4; c1_i233++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i233], 2U);
+            for (c1_i232 = 0; c1_i232 < 4; c1_i232++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_start[c1_i232], 2U);
             }
 
             chartInstance->c1_c_tp_recover = 0U;
@@ -10779,7 +10780,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             _SFD_CS_CALL(STATE_ACTIVE_TAG, 120U, chartInstance->c1_sfEvent);
             chartInstance->c1_c_tp_stop = 1U;
             *c1_d_v = 0.0;
-            _SFD_DATA_RANGE_CHECK(*c1_d_v, 58U);
+            _SFD_DATA_RANGE_CHECK(*c1_d_v, 59U);
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 116U,
                          chartInstance->c1_sfEvent);
@@ -10826,7 +10827,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 220U, chartInstance->c1_sfEvent);
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 213U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_acc = -muDoubleScalarPower(*c1_d_v, 2.0) * 0.001;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_acc, 64U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_acc, 65U);
           c1_d88 = chartInstance->c1_c_acc;
           sf_mex_printf("%s =\\n", "acc");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d88);
@@ -10941,8 +10942,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             chartInstance->c1_c_tp_urgent_inc = 1U;
             chartInstance->c1_urstart[_SFD_ARRAY_BOUNDS_CHECK(11U,
               chartInstance->c1_h_i, 0, 3, 1, 0)] = 0.0;
-            for (c1_i234 = 0; c1_i234 < 4; c1_i234++) {
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstart[c1_i234], 11U);
+            for (c1_i233 = 0; c1_i233 < 4; c1_i233++) {
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstart[c1_i233], 11U);
             }
           } else {
             _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 118U,
@@ -10984,7 +10985,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 219U, chartInstance->c1_sfEvent);
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 213U, chartInstance->c1_sfEvent);
           chartInstance->c1_c_acc = -muDoubleScalarPower(*c1_d_v, 2.0) * 0.001;
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_acc, 64U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_acc, 65U);
           c1_d89 = chartInstance->c1_c_acc;
           sf_mex_printf("%s =\\n", "acc");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d89);
@@ -11030,8 +11031,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 211U, chartInstance->c1_sfEvent);
           chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
             chartInstance->c1_h_i, 0, 3, 2, 0)] = 0.0;
-          for (c1_i235 = 0; c1_i235 < 4; c1_i235++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i235], 3U);
+          for (c1_i234 = 0; c1_i234 < 4; c1_i234++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_stop[c1_i234], 3U);
           }
 
           c1_d90 = chartInstance->c1_stop[_SFD_ARRAY_BOUNDS_CHECK(3U,
@@ -11039,7 +11040,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           sf_mex_printf("%s =\\n", "stop[i]");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d90);
           *c1_d_time = 0.0;
-          _SFD_DATA_RANGE_CHECK(*c1_d_time, 61U);
+          _SFD_DATA_RANGE_CHECK(*c1_d_time, 62U);
           chartInstance->c1_c_tp_stop = 0U;
           _SFD_CS_CALL(STATE_INACTIVE_TAG, 120U, chartInstance->c1_sfEvent);
           chartInstance->c1_stateChanged = TRUE;
@@ -11210,7 +11211,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
               chartInstance->c1_c_j += (real_T)chartInstance->
                 c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U, chartInstance->c1_h_i, 0, 3,
                 1, 0)];
-              _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_j, 59U);
+              _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_j, 60U);
               chartInstance->c1_d_tp_tmp = 0U;
               _SFD_CS_CALL(STATE_INACTIVE_TAG, 121U, chartInstance->c1_sfEvent);
               chartInstance->c1_stateChanged = TRUE;
@@ -11237,8 +11238,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
           _SFD_CT_CALL(TRANSITION_ACTIVE_TAG, 207U, chartInstance->c1_sfEvent);
           chartInstance->c1_urstopped[_SFD_ARRAY_BOUNDS_CHECK(16U,
             chartInstance->c1_h_i, 0, 3, 1, 0)] = 1.0;
-          for (c1_i236 = 0; c1_i236 < 4; c1_i236++) {
-            _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstopped[c1_i236], 16U);
+          for (c1_i235 = 0; c1_i235 < 4; c1_i235++) {
+            _SFD_DATA_RANGE_CHECK(chartInstance->c1_urstopped[c1_i235], 16U);
           }
 
           chartInstance->c1_c_tp_urgent_dec = 0U;
@@ -11329,7 +11330,7 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
             (chartInstance->c1_S[_SFD_ARRAY_BOUNDS_CHECK(10U, c1__s32_d_
             (chartInstance, chartInstance->c1_c_j), 0, 3, 2, 0)] -
              *c1_d_distance));
-          _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_maxv, 60U);
+          _SFD_DATA_RANGE_CHECK(chartInstance->c1_c_maxv, 61U);
           c1_d91 = chartInstance->c1_c_maxv;
           sf_mex_printf("%s =\\n", "maxv");
           sf_mex_call_debug("disp", 0U, 1U, 6, c1_d91);
@@ -11373,8 +11374,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(89, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 91U, chartInstance->c1_sfEvent);
     (*c1_y1_out)[0] = *c1_y1;
-    for (c1_i237 = 0; c1_i237 < 4; c1_i237++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i237], 14U);
+    for (c1_i236 = 0; c1_i236 < 4; c1_i236++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i236], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 91U, chartInstance->c1_sfEvent);
@@ -11384,8 +11385,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(89, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 92U, chartInstance->c1_sfEvent);
     (*c1_y1_out)[0] = *c1_y1;
-    for (c1_i238 = 0; c1_i238 < 4; c1_i238++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i238], 14U);
+    for (c1_i237 = 0; c1_i237 < 4; c1_i237++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i237], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 92U, chartInstance->c1_sfEvent);
@@ -11395,8 +11396,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(89, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 93U, chartInstance->c1_sfEvent);
     (*c1_y1_out)[0] = *c1_y1;
-    for (c1_i239 = 0; c1_i239 < 4; c1_i239++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i239], 14U);
+    for (c1_i238 = 0; c1_i238 < 4; c1_i238++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i238], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 93U, chartInstance->c1_sfEvent);
@@ -11420,8 +11421,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(36, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 38U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[0] = *c1_y2;
-    for (c1_i240 = 0; c1_i240 < 8; c1_i240++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i240], 15U);
+    for (c1_i239 = 0; c1_i239 < 8; c1_i239++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i239], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 38U, chartInstance->c1_sfEvent);
@@ -11431,8 +11432,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(36, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 39U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[0] = *c1_y2;
-    for (c1_i241 = 0; c1_i241 < 8; c1_i241++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i241], 15U);
+    for (c1_i240 = 0; c1_i240 < 8; c1_i240++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i240], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 39U, chartInstance->c1_sfEvent);
@@ -11442,8 +11443,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(36, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 40U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[0] = *c1_y2;
-    for (c1_i242 = 0; c1_i242 < 8; c1_i242++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i242], 15U);
+    for (c1_i241 = 0; c1_i241 < 8; c1_i241++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i241], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 40U, chartInstance->c1_sfEvent);
@@ -11523,8 +11524,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(41, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 43U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[4] = *c1_b_y2;
-    for (c1_i243 = 0; c1_i243 < 8; c1_i243++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i243], 15U);
+    for (c1_i242 = 0; c1_i242 < 8; c1_i242++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i242], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 43U, chartInstance->c1_sfEvent);
@@ -11534,8 +11535,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(41, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 44U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[4] = *c1_b_y2;
-    for (c1_i244 = 0; c1_i244 < 8; c1_i244++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i244], 15U);
+    for (c1_i243 = 0; c1_i243 < 8; c1_i243++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i243], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 44U, chartInstance->c1_sfEvent);
@@ -11545,8 +11546,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(41, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 45U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[4] = *c1_b_y2;
-    for (c1_i245 = 0; c1_i245 < 8; c1_i245++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i245], 15U);
+    for (c1_i244 = 0; c1_i244 < 8; c1_i244++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i244], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 45U, chartInstance->c1_sfEvent);
@@ -11570,8 +11571,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(46, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 48U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[1] = *c1_c_y2;
-    for (c1_i246 = 0; c1_i246 < 8; c1_i246++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i246], 15U);
+    for (c1_i245 = 0; c1_i245 < 8; c1_i245++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i245], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 48U, chartInstance->c1_sfEvent);
@@ -11581,8 +11582,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(46, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 49U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[1] = *c1_c_y2;
-    for (c1_i247 = 0; c1_i247 < 8; c1_i247++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i247], 15U);
+    for (c1_i246 = 0; c1_i246 < 8; c1_i246++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i246], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 49U, chartInstance->c1_sfEvent);
@@ -11592,8 +11593,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(46, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 50U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[1] = *c1_c_y2;
-    for (c1_i248 = 0; c1_i248 < 8; c1_i248++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i248], 15U);
+    for (c1_i247 = 0; c1_i247 < 8; c1_i247++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i247], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 50U, chartInstance->c1_sfEvent);
@@ -11617,8 +11618,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(51, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 53U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[5] = *c1_d_y2;
-    for (c1_i249 = 0; c1_i249 < 8; c1_i249++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i249], 15U);
+    for (c1_i248 = 0; c1_i248 < 8; c1_i248++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i248], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 53U, chartInstance->c1_sfEvent);
@@ -11628,8 +11629,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(51, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 54U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[5] = *c1_d_y2;
-    for (c1_i250 = 0; c1_i250 < 8; c1_i250++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i250], 15U);
+    for (c1_i249 = 0; c1_i249 < 8; c1_i249++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i249], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 54U, chartInstance->c1_sfEvent);
@@ -11639,8 +11640,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(51, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 55U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[5] = *c1_d_y2;
-    for (c1_i251 = 0; c1_i251 < 8; c1_i251++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i251], 15U);
+    for (c1_i250 = 0; c1_i250 < 8; c1_i250++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i250], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 55U, chartInstance->c1_sfEvent);
@@ -11664,8 +11665,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(56, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 58U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[2] = *c1_e_y2;
-    for (c1_i252 = 0; c1_i252 < 8; c1_i252++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i252], 15U);
+    for (c1_i251 = 0; c1_i251 < 8; c1_i251++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i251], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 58U, chartInstance->c1_sfEvent);
@@ -11675,8 +11676,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(56, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 59U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[2] = *c1_e_y2;
-    for (c1_i253 = 0; c1_i253 < 8; c1_i253++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i253], 15U);
+    for (c1_i252 = 0; c1_i252 < 8; c1_i252++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i252], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 59U, chartInstance->c1_sfEvent);
@@ -11686,8 +11687,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(56, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 60U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[2] = *c1_e_y2;
-    for (c1_i254 = 0; c1_i254 < 8; c1_i254++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i254], 15U);
+    for (c1_i253 = 0; c1_i253 < 8; c1_i253++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i253], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 60U, chartInstance->c1_sfEvent);
@@ -11711,8 +11712,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(61, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 63U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[6] = *c1_f_y2;
-    for (c1_i255 = 0; c1_i255 < 8; c1_i255++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i255], 15U);
+    for (c1_i254 = 0; c1_i254 < 8; c1_i254++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i254], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 63U, chartInstance->c1_sfEvent);
@@ -11722,8 +11723,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(61, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 64U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[6] = *c1_f_y2;
-    for (c1_i256 = 0; c1_i256 < 8; c1_i256++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i256], 15U);
+    for (c1_i255 = 0; c1_i255 < 8; c1_i255++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i255], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 64U, chartInstance->c1_sfEvent);
@@ -11733,8 +11734,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(61, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 65U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[6] = *c1_f_y2;
-    for (c1_i257 = 0; c1_i257 < 8; c1_i257++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i257], 15U);
+    for (c1_i256 = 0; c1_i256 < 8; c1_i256++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i256], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 65U, chartInstance->c1_sfEvent);
@@ -11758,8 +11759,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(66, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 68U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[3] = *c1_g_y2;
-    for (c1_i258 = 0; c1_i258 < 8; c1_i258++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i258], 15U);
+    for (c1_i257 = 0; c1_i257 < 8; c1_i257++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i257], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 68U, chartInstance->c1_sfEvent);
@@ -11769,8 +11770,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(66, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 69U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[3] = *c1_g_y2;
-    for (c1_i259 = 0; c1_i259 < 8; c1_i259++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i259], 15U);
+    for (c1_i258 = 0; c1_i258 < 8; c1_i258++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i258], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 69U, chartInstance->c1_sfEvent);
@@ -11780,8 +11781,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(66, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 70U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[3] = *c1_g_y2;
-    for (c1_i260 = 0; c1_i260 < 8; c1_i260++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i260], 15U);
+    for (c1_i259 = 0; c1_i259 < 8; c1_i259++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i259], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 70U, chartInstance->c1_sfEvent);
@@ -11805,8 +11806,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(71, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 73U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[7] = *c1_h_y2;
-    for (c1_i261 = 0; c1_i261 < 8; c1_i261++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i261], 15U);
+    for (c1_i260 = 0; c1_i260 < 8; c1_i260++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i260], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 73U, chartInstance->c1_sfEvent);
@@ -11816,8 +11817,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(71, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 74U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[7] = *c1_h_y2;
-    for (c1_i262 = 0; c1_i262 < 8; c1_i262++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i262], 15U);
+    for (c1_i261 = 0; c1_i261 < 8; c1_i261++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i261], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 74U, chartInstance->c1_sfEvent);
@@ -11827,8 +11828,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(71, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 75U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[7] = *c1_h_y2;
-    for (c1_i263 = 0; c1_i263 < 8; c1_i263++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i263], 15U);
+    for (c1_i262 = 0; c1_i262 < 8; c1_i262++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i262], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 75U, chartInstance->c1_sfEvent);
@@ -11854,8 +11855,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 109U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[1] = *c1_b_y1;
-    for (c1_i264 = 0; c1_i264 < 4; c1_i264++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i264], 14U);
+    for (c1_i263 = 0; c1_i263 < 4; c1_i263++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i263], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 109U, chartInstance->c1_sfEvent);
@@ -11866,8 +11867,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 110U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[1] = *c1_b_y1;
-    for (c1_i265 = 0; c1_i265 < 4; c1_i265++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i265], 14U);
+    for (c1_i264 = 0; c1_i264 < 4; c1_i264++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i264], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 110U, chartInstance->c1_sfEvent);
@@ -11878,8 +11879,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 111U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[1] = *c1_b_y1;
-    for (c1_i266 = 0; c1_i266 < 4; c1_i266++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i266], 14U);
+    for (c1_i265 = 0; c1_i265 < 4; c1_i265++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i265], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 111U, chartInstance->c1_sfEvent);
@@ -11905,8 +11906,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 127U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[2] = *c1_c_y1;
-    for (c1_i267 = 0; c1_i267 < 4; c1_i267++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i267], 14U);
+    for (c1_i266 = 0; c1_i266 < 4; c1_i266++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i266], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 127U, chartInstance->c1_sfEvent);
@@ -11917,8 +11918,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 128U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[2] = *c1_c_y1;
-    for (c1_i268 = 0; c1_i268 < 4; c1_i268++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i268], 14U);
+    for (c1_i267 = 0; c1_i267 < 4; c1_i267++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i267], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 128U, chartInstance->c1_sfEvent);
@@ -11929,8 +11930,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 129U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[2] = *c1_c_y1;
-    for (c1_i269 = 0; c1_i269 < 4; c1_i269++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i269], 14U);
+    for (c1_i268 = 0; c1_i268 < 4; c1_i268++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i268], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 129U, chartInstance->c1_sfEvent);
@@ -11956,8 +11957,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 145U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[3] = *c1_d_y1;
-    for (c1_i270 = 0; c1_i270 < 4; c1_i270++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i270], 14U);
+    for (c1_i269 = 0; c1_i269 < 4; c1_i269++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i269], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 145U, chartInstance->c1_sfEvent);
@@ -11968,8 +11969,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 146U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[3] = *c1_d_y1;
-    for (c1_i271 = 0; c1_i271 < 4; c1_i271++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i271], 14U);
+    for (c1_i270 = 0; c1_i270 < 4; c1_i270++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i270], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 146U, chartInstance->c1_sfEvent);
@@ -11980,8 +11981,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 147U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[3] = *c1_d_y1;
-    for (c1_i272 = 0; c1_i272 < 4; c1_i272++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i272], 14U);
+    for (c1_i271 = 0; c1_i271 < 4; c1_i271++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i271], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 147U, chartInstance->c1_sfEvent);
@@ -11999,6 +12000,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(148, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 150U,
                  chartInstance->c1_sfEvent);
+    *c1_dir1_out = (real_T)chartInstance->c1_dir[0];
+    _SFD_DATA_RANGE_CHECK(*c1_dir1_out, 20U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 150U, chartInstance->c1_sfEvent);
     break;
 
@@ -12006,6 +12009,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(148, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 151U,
                  chartInstance->c1_sfEvent);
+    *c1_dir1_out = (real_T)chartInstance->c1_dir[0];
+    _SFD_DATA_RANGE_CHECK(*c1_dir1_out, 20U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 151U, chartInstance->c1_sfEvent);
     break;
 
@@ -12013,6 +12018,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     CV_STATE_EVAL(148, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 153U,
                  chartInstance->c1_sfEvent);
+    *c1_dir1_out = (real_T)chartInstance->c1_dir[0];
+    _SFD_DATA_RANGE_CHECK(*c1_dir1_out, 20U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 153U, chartInstance->c1_sfEvent);
     break;
 
@@ -12044,8 +12051,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i273 = 0; c1_i273 < 4; c1_i273++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i273], 6U);
+    for (c1_i272 = 0; c1_i272 < 4; c1_i272++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i272], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 133U, chartInstance->c1_sfEvent);
@@ -12057,8 +12064,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i274 = 0; c1_i274 < 4; c1_i274++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i274], 6U);
+    for (c1_i273 = 0; c1_i273 < 4; c1_i273++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i273], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 134U, chartInstance->c1_sfEvent);
@@ -12070,8 +12077,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i275 = 0; c1_i275 < 4; c1_i275++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i275], 6U);
+    for (c1_i274 = 0; c1_i274 < 4; c1_i274++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i274], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 135U, chartInstance->c1_sfEvent);
@@ -12090,8 +12097,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i276 = 0; c1_i276 < 4; c1_i276++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i276], 6U);
+    for (c1_i275 = 0; c1_i275 < 4; c1_i275++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i275], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 137U, chartInstance->c1_sfEvent);
@@ -12117,8 +12124,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i277 = 0; c1_i277 < 4; c1_i277++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i277], 6U);
+    for (c1_i276 = 0; c1_i276 < 4; c1_i276++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i276], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 140U, chartInstance->c1_sfEvent);
@@ -12130,8 +12137,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i278 = 0; c1_i278 < 4; c1_i278++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i278], 6U);
+    for (c1_i277 = 0; c1_i277 < 4; c1_i277++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i277], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 141U, chartInstance->c1_sfEvent);
@@ -12143,8 +12150,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i279 = 0; c1_i279 < 4; c1_i279++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i279], 6U);
+    for (c1_i278 = 0; c1_i278 < 4; c1_i278++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i278], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 142U, chartInstance->c1_sfEvent);
@@ -12343,8 +12350,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 79U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i280 = 0; c1_i280 < 4; c1_i280++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i280], 6U);
+    for (c1_i279 = 0; c1_i279 < 4; c1_i279++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i279], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 79U, chartInstance->c1_sfEvent);
@@ -12355,8 +12362,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 80U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i281 = 0; c1_i281 < 4; c1_i281++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i281], 6U);
+    for (c1_i280 = 0; c1_i280 < 4; c1_i280++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i280], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 80U, chartInstance->c1_sfEvent);
@@ -12367,8 +12374,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 81U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i282 = 0; c1_i282 < 4; c1_i282++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i282], 6U);
+    for (c1_i281 = 0; c1_i281 < 4; c1_i281++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i281], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 81U, chartInstance->c1_sfEvent);
@@ -12385,8 +12392,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 83U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i283 = 0; c1_i283 < 4; c1_i283++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i283], 6U);
+    for (c1_i282 = 0; c1_i282 < 4; c1_i282++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i282], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 83U, chartInstance->c1_sfEvent);
@@ -12409,8 +12416,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 86U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i284 = 0; c1_i284 < 4; c1_i284++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i284], 6U);
+    for (c1_i283 = 0; c1_i283 < 4; c1_i283++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i283], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 86U, chartInstance->c1_sfEvent);
@@ -12421,8 +12428,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 87U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i285 = 0; c1_i285 < 4; c1_i285++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i285], 6U);
+    for (c1_i284 = 0; c1_i284 < 4; c1_i284++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i284], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 87U, chartInstance->c1_sfEvent);
@@ -12433,8 +12440,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 88U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i286 = 0; c1_i286 < 4; c1_i286++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i286], 6U);
+    for (c1_i285 = 0; c1_i285 < 4; c1_i285++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i285], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 88U, chartInstance->c1_sfEvent);
@@ -12465,8 +12472,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 97U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i287 = 0; c1_i287 < 4; c1_i287++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i287], 6U);
+    for (c1_i286 = 0; c1_i286 < 4; c1_i286++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i286], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 97U, chartInstance->c1_sfEvent);
@@ -12477,8 +12484,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 98U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i288 = 0; c1_i288 < 4; c1_i288++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i288], 6U);
+    for (c1_i287 = 0; c1_i287 < 4; c1_i287++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i287], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 98U, chartInstance->c1_sfEvent);
@@ -12489,8 +12496,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 99U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i289 = 0; c1_i289 < 4; c1_i289++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i289], 6U);
+    for (c1_i288 = 0; c1_i288 < 4; c1_i288++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i288], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 99U, chartInstance->c1_sfEvent);
@@ -12509,8 +12516,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i290 = 0; c1_i290 < 4; c1_i290++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i290], 6U);
+    for (c1_i289 = 0; c1_i289 < 4; c1_i289++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i289], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 101U, chartInstance->c1_sfEvent);
@@ -12536,8 +12543,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i291 = 0; c1_i291 < 4; c1_i291++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i291], 6U);
+    for (c1_i290 = 0; c1_i290 < 4; c1_i290++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i290], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 104U, chartInstance->c1_sfEvent);
@@ -12549,8 +12556,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i292 = 0; c1_i292 < 4; c1_i292++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i292], 6U);
+    for (c1_i291 = 0; c1_i291 < 4; c1_i291++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i291], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 105U, chartInstance->c1_sfEvent);
@@ -12562,8 +12569,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i293 = 0; c1_i293 < 4; c1_i293++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i293], 6U);
+    for (c1_i292 = 0; c1_i292 < 4; c1_i292++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i292], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 106U, chartInstance->c1_sfEvent);
@@ -12597,8 +12604,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i294 = 0; c1_i294 < 4; c1_i294++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i294], 6U);
+    for (c1_i293 = 0; c1_i293 < 4; c1_i293++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i293], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 115U, chartInstance->c1_sfEvent);
@@ -12610,8 +12617,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i295 = 0; c1_i295 < 4; c1_i295++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i295], 6U);
+    for (c1_i294 = 0; c1_i294 < 4; c1_i294++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i294], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 116U, chartInstance->c1_sfEvent);
@@ -12623,8 +12630,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i296 = 0; c1_i296 < 4; c1_i296++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i296], 6U);
+    for (c1_i295 = 0; c1_i295 < 4; c1_i295++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i295], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 117U, chartInstance->c1_sfEvent);
@@ -12643,8 +12650,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i297 = 0; c1_i297 < 4; c1_i297++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i297], 6U);
+    for (c1_i296 = 0; c1_i296 < 4; c1_i296++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i296], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 119U, chartInstance->c1_sfEvent);
@@ -12670,8 +12677,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i298 = 0; c1_i298 < 4; c1_i298++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i298], 6U);
+    for (c1_i297 = 0; c1_i297 < 4; c1_i297++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i297], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 122U, chartInstance->c1_sfEvent);
@@ -12683,8 +12690,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i299 = 0; c1_i299 < 4; c1_i299++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i299], 6U);
+    for (c1_i298 = 0; c1_i298 < 4; c1_i298++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i298], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 123U, chartInstance->c1_sfEvent);
@@ -12696,8 +12703,8 @@ static void sf_c1_subwaycontrolsystem(SFc1_subwaycontrolsystemInstanceStruct
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i300 = 0; c1_i300 < 4; c1_i300++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i300], 6U);
+    for (c1_i299 = 0; c1_i299 < 4; c1_i299++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i299], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 124U, chartInstance->c1_sfEvent);
@@ -15520,6 +15527,7 @@ static void zeroCrossings_c1_subwaycontrolsystem
 static void derivatives_c1_subwaycontrolsystem
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance)
 {
+  int32_T c1_i300;
   int32_T c1_i301;
   int32_T c1_i302;
   int32_T c1_i303;
@@ -15583,7 +15591,6 @@ static void derivatives_c1_subwaycontrolsystem
   int32_T c1_i361;
   int32_T c1_i362;
   int32_T c1_i363;
-  int32_T c1_i364;
   real_T *c1_t_dot;
   real_T *c1_z_dot;
   real_T *c1_v_dot;
@@ -15613,6 +15620,7 @@ static void derivatives_c1_subwaycontrolsystem
   real_T *c1_f_y2_dot;
   real_T *c1_g_y2_dot;
   real_T *c1_h_y2_dot;
+  real_T *c1_dir1_out;
   real_T *c1_v;
   real_T *c1_b_v;
   real_T *c1_c_v;
@@ -15655,69 +15663,70 @@ static void derivatives_c1_subwaycontrolsystem
   c1_b_v = (real_T *)(ssGetContStates(chartInstance->S) + 2);
   c1_z_dot = (real_T *)(ssGetdX(chartInstance->S) + 1);
   c1_t_dot = (real_T *)(ssGetdX(chartInstance->S) + 0);
+  c1_dir1_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 4);
   c1_y2_out = (real_T (*)[8])ssGetOutputPortSignal(chartInstance->S, 3);
   c1_y1_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 2);
   c1_distance_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 1);
   c1_v_shutPSD = (real_T (*)[8])ssGetInputPortSignal(chartInstance->S, 1);
   c1_v_shutTD = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
   *c1_t_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_t_dot, 20U);
+  _SFD_DATA_RANGE_CHECK(*c1_t_dot, 21U);
   *c1_z_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_z_dot, 26U);
+  _SFD_DATA_RANGE_CHECK(*c1_z_dot, 27U);
   *c1_v_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_v_dot, 30U);
+  _SFD_DATA_RANGE_CHECK(*c1_v_dot, 31U);
   *c1_time_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_time_dot, 33U);
+  _SFD_DATA_RANGE_CHECK(*c1_time_dot, 34U);
   *c1_distance_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 35U);
+  _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 36U);
   *c1_b_z_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 37U);
+  _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 38U);
   *c1_y1_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_y1_dot, 41U);
+  _SFD_DATA_RANGE_CHECK(*c1_y1_dot, 42U);
   *c1_b_y1_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_b_y1_dot, 42U);
+  _SFD_DATA_RANGE_CHECK(*c1_b_y1_dot, 43U);
   *c1_b_v_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 43U);
+  _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 44U);
   *c1_b_time_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_b_time_dot, 46U);
+  _SFD_DATA_RANGE_CHECK(*c1_b_time_dot, 47U);
   *c1_b_distance_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 48U);
+  _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 49U);
   *c1_c_z_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 50U);
+  _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 51U);
   *c1_d_z_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 54U);
+  _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 55U);
   *c1_c_v_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 58U);
+  _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 59U);
   *c1_c_time_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_c_time_dot, 61U);
+  _SFD_DATA_RANGE_CHECK(*c1_c_time_dot, 62U);
   *c1_c_distance_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 63U);
+  _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 64U);
   *c1_c_y1_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_c_y1_dot, 65U);
+  _SFD_DATA_RANGE_CHECK(*c1_c_y1_dot, 66U);
   *c1_d_v_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 66U);
+  _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 67U);
   *c1_d_time_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_d_time_dot, 69U);
+  _SFD_DATA_RANGE_CHECK(*c1_d_time_dot, 70U);
   *c1_d_distance_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 71U);
+  _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 72U);
   *c1_d_y1_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_d_y1_dot, 73U);
+  _SFD_DATA_RANGE_CHECK(*c1_d_y1_dot, 74U);
   *c1_y2_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_y2_dot, 74U);
+  _SFD_DATA_RANGE_CHECK(*c1_y2_dot, 75U);
   *c1_b_y2_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_b_y2_dot, 75U);
+  _SFD_DATA_RANGE_CHECK(*c1_b_y2_dot, 76U);
   *c1_c_y2_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_c_y2_dot, 76U);
+  _SFD_DATA_RANGE_CHECK(*c1_c_y2_dot, 77U);
   *c1_d_y2_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_d_y2_dot, 77U);
+  _SFD_DATA_RANGE_CHECK(*c1_d_y2_dot, 78U);
   *c1_e_y2_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_e_y2_dot, 78U);
+  _SFD_DATA_RANGE_CHECK(*c1_e_y2_dot, 79U);
   *c1_f_y2_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_f_y2_dot, 79U);
+  _SFD_DATA_RANGE_CHECK(*c1_f_y2_dot, 80U);
   *c1_g_y2_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_g_y2_dot, 80U);
+  _SFD_DATA_RANGE_CHECK(*c1_g_y2_dot, 81U);
   *c1_h_y2_dot = 0.0;
-  _SFD_DATA_RANGE_CHECK(*c1_h_y2_dot, 81U);
+  _SFD_DATA_RANGE_CHECK(*c1_h_y2_dot, 82U);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
   _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 89U, chartInstance->c1_sfEvent);
   switch (chartInstance->c1_is_Train0_door) {
@@ -15725,7 +15734,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(89, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 90U, chartInstance->c1_sfEvent);
     *c1_y1_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_y1_dot, 41U);
+    _SFD_DATA_RANGE_CHECK(*c1_y1_dot, 42U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 90U, chartInstance->c1_sfEvent);
     break;
 
@@ -15733,9 +15742,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(89, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 91U, chartInstance->c1_sfEvent);
     *c1_y1_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_y1_dot, 41U);
-    for (c1_i301 = 0; c1_i301 < 4; c1_i301++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i301], 14U);
+    _SFD_DATA_RANGE_CHECK(*c1_y1_dot, 42U);
+    for (c1_i300 = 0; c1_i300 < 4; c1_i300++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i300], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 91U, chartInstance->c1_sfEvent);
@@ -15745,9 +15754,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(89, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 92U, chartInstance->c1_sfEvent);
     *c1_y1_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_y1_dot, 41U);
-    for (c1_i302 = 0; c1_i302 < 4; c1_i302++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i302], 14U);
+    _SFD_DATA_RANGE_CHECK(*c1_y1_dot, 42U);
+    for (c1_i301 = 0; c1_i301 < 4; c1_i301++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i301], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 92U, chartInstance->c1_sfEvent);
@@ -15757,9 +15766,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(89, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 93U, chartInstance->c1_sfEvent);
     *c1_y1_dot = (*c1_v_shutTD)[0];
-    _SFD_DATA_RANGE_CHECK(*c1_y1_dot, 41U);
-    for (c1_i303 = 0; c1_i303 < 4; c1_i303++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i303], 14U);
+    _SFD_DATA_RANGE_CHECK(*c1_y1_dot, 42U);
+    for (c1_i302 = 0; c1_i302 < 4; c1_i302++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i302], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 93U, chartInstance->c1_sfEvent);
@@ -15777,7 +15786,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(36, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 37U, chartInstance->c1_sfEvent);
     *c1_d_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_y2_dot, 77U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_y2_dot, 78U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 37U, chartInstance->c1_sfEvent);
     break;
 
@@ -15785,9 +15794,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(36, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 38U, chartInstance->c1_sfEvent);
     *c1_d_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_y2_dot, 77U);
-    for (c1_i304 = 0; c1_i304 < 8; c1_i304++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i304], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_y2_dot, 78U);
+    for (c1_i303 = 0; c1_i303 < 8; c1_i303++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i303], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 38U, chartInstance->c1_sfEvent);
@@ -15797,9 +15806,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(36, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 39U, chartInstance->c1_sfEvent);
     *c1_d_y2_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_y2_dot, 77U);
-    for (c1_i305 = 0; c1_i305 < 8; c1_i305++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i305], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_y2_dot, 78U);
+    for (c1_i304 = 0; c1_i304 < 8; c1_i304++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i304], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 39U, chartInstance->c1_sfEvent);
@@ -15809,9 +15818,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(36, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 40U, chartInstance->c1_sfEvent);
     *c1_d_y2_dot = (*c1_v_shutPSD)[0];
-    _SFD_DATA_RANGE_CHECK(*c1_d_y2_dot, 77U);
-    for (c1_i306 = 0; c1_i306 < 8; c1_i306++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i306], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_y2_dot, 78U);
+    for (c1_i305 = 0; c1_i305 < 8; c1_i305++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i305], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 40U, chartInstance->c1_sfEvent);
@@ -15829,7 +15838,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(0, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 1U, chartInstance->c1_sfEvent);
     *c1_b_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 37U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 38U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 1U, chartInstance->c1_sfEvent);
     break;
 
@@ -15837,7 +15846,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(0, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 2U, chartInstance->c1_sfEvent);
     *c1_b_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 37U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 38U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 2U, chartInstance->c1_sfEvent);
     break;
 
@@ -15845,7 +15854,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(0, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 3U, chartInstance->c1_sfEvent);
     *c1_b_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 37U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 38U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 3U, chartInstance->c1_sfEvent);
     break;
 
@@ -15853,7 +15862,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(0, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 4U, chartInstance->c1_sfEvent);
     *c1_b_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 37U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 38U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 4U, chartInstance->c1_sfEvent);
     break;
 
@@ -15861,7 +15870,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(0, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 5U, chartInstance->c1_sfEvent);
     *c1_b_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 37U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 38U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 5U, chartInstance->c1_sfEvent);
     break;
 
@@ -15869,7 +15878,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(0, 0, 6);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 6U, chartInstance->c1_sfEvent);
     *c1_b_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 37U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 38U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 6U, chartInstance->c1_sfEvent);
     break;
 
@@ -15877,7 +15886,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(0, 0, 7);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 7U, chartInstance->c1_sfEvent);
     *c1_b_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 37U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 38U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 7U, chartInstance->c1_sfEvent);
     break;
 
@@ -15885,7 +15894,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(0, 0, 8);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 8U, chartInstance->c1_sfEvent);
     *c1_b_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 37U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_z_dot, 38U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 8U, chartInstance->c1_sfEvent);
     break;
 
@@ -15901,7 +15910,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(41, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 42U, chartInstance->c1_sfEvent);
     *c1_c_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_y2_dot, 76U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_y2_dot, 77U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 42U, chartInstance->c1_sfEvent);
     break;
 
@@ -15909,9 +15918,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(41, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 43U, chartInstance->c1_sfEvent);
     *c1_c_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_y2_dot, 76U);
-    for (c1_i307 = 0; c1_i307 < 8; c1_i307++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i307], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_y2_dot, 77U);
+    for (c1_i306 = 0; c1_i306 < 8; c1_i306++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i306], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 43U, chartInstance->c1_sfEvent);
@@ -15921,9 +15930,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(41, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 44U, chartInstance->c1_sfEvent);
     *c1_c_y2_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_y2_dot, 76U);
-    for (c1_i308 = 0; c1_i308 < 8; c1_i308++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i308], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_y2_dot, 77U);
+    for (c1_i307 = 0; c1_i307 < 8; c1_i307++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i307], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 44U, chartInstance->c1_sfEvent);
@@ -15933,9 +15942,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(41, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 45U, chartInstance->c1_sfEvent);
     *c1_c_y2_dot = (*c1_v_shutPSD)[4];
-    _SFD_DATA_RANGE_CHECK(*c1_c_y2_dot, 76U);
-    for (c1_i309 = 0; c1_i309 < 8; c1_i309++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i309], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_y2_dot, 77U);
+    for (c1_i308 = 0; c1_i308 < 8; c1_i308++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i308], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 45U, chartInstance->c1_sfEvent);
@@ -15953,7 +15962,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(46, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 47U, chartInstance->c1_sfEvent);
     *c1_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_y2_dot, 74U);
+    _SFD_DATA_RANGE_CHECK(*c1_y2_dot, 75U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 47U, chartInstance->c1_sfEvent);
     break;
 
@@ -15961,9 +15970,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(46, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 48U, chartInstance->c1_sfEvent);
     *c1_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_y2_dot, 74U);
-    for (c1_i310 = 0; c1_i310 < 8; c1_i310++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i310], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_y2_dot, 75U);
+    for (c1_i309 = 0; c1_i309 < 8; c1_i309++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i309], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 48U, chartInstance->c1_sfEvent);
@@ -15973,9 +15982,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(46, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 49U, chartInstance->c1_sfEvent);
     *c1_y2_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_y2_dot, 74U);
-    for (c1_i311 = 0; c1_i311 < 8; c1_i311++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i311], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_y2_dot, 75U);
+    for (c1_i310 = 0; c1_i310 < 8; c1_i310++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i310], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 49U, chartInstance->c1_sfEvent);
@@ -15985,9 +15994,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(46, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 50U, chartInstance->c1_sfEvent);
     *c1_y2_dot = (*c1_v_shutPSD)[1];
-    _SFD_DATA_RANGE_CHECK(*c1_y2_dot, 74U);
-    for (c1_i312 = 0; c1_i312 < 8; c1_i312++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i312], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_y2_dot, 75U);
+    for (c1_i311 = 0; c1_i311 < 8; c1_i311++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i311], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 50U, chartInstance->c1_sfEvent);
@@ -16005,7 +16014,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(51, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 52U, chartInstance->c1_sfEvent);
     *c1_b_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_y2_dot, 75U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_y2_dot, 76U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 52U, chartInstance->c1_sfEvent);
     break;
 
@@ -16013,9 +16022,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(51, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 53U, chartInstance->c1_sfEvent);
     *c1_b_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_y2_dot, 75U);
-    for (c1_i313 = 0; c1_i313 < 8; c1_i313++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i313], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_y2_dot, 76U);
+    for (c1_i312 = 0; c1_i312 < 8; c1_i312++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i312], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 53U, chartInstance->c1_sfEvent);
@@ -16025,9 +16034,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(51, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 54U, chartInstance->c1_sfEvent);
     *c1_b_y2_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_y2_dot, 75U);
-    for (c1_i314 = 0; c1_i314 < 8; c1_i314++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i314], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_y2_dot, 76U);
+    for (c1_i313 = 0; c1_i313 < 8; c1_i313++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i313], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 54U, chartInstance->c1_sfEvent);
@@ -16037,9 +16046,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(51, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 55U, chartInstance->c1_sfEvent);
     *c1_b_y2_dot = (*c1_v_shutPSD)[5];
-    _SFD_DATA_RANGE_CHECK(*c1_b_y2_dot, 75U);
-    for (c1_i315 = 0; c1_i315 < 8; c1_i315++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i315], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_y2_dot, 76U);
+    for (c1_i314 = 0; c1_i314 < 8; c1_i314++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i314], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 55U, chartInstance->c1_sfEvent);
@@ -16057,7 +16066,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(56, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 57U, chartInstance->c1_sfEvent);
     *c1_h_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_h_y2_dot, 81U);
+    _SFD_DATA_RANGE_CHECK(*c1_h_y2_dot, 82U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 57U, chartInstance->c1_sfEvent);
     break;
 
@@ -16065,9 +16074,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(56, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 58U, chartInstance->c1_sfEvent);
     *c1_h_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_h_y2_dot, 81U);
-    for (c1_i316 = 0; c1_i316 < 8; c1_i316++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i316], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_h_y2_dot, 82U);
+    for (c1_i315 = 0; c1_i315 < 8; c1_i315++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i315], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 58U, chartInstance->c1_sfEvent);
@@ -16077,9 +16086,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(56, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 59U, chartInstance->c1_sfEvent);
     *c1_h_y2_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_h_y2_dot, 81U);
-    for (c1_i317 = 0; c1_i317 < 8; c1_i317++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i317], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_h_y2_dot, 82U);
+    for (c1_i316 = 0; c1_i316 < 8; c1_i316++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i316], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 59U, chartInstance->c1_sfEvent);
@@ -16089,9 +16098,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(56, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 60U, chartInstance->c1_sfEvent);
     *c1_h_y2_dot = (*c1_v_shutPSD)[2];
-    _SFD_DATA_RANGE_CHECK(*c1_h_y2_dot, 81U);
-    for (c1_i318 = 0; c1_i318 < 8; c1_i318++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i318], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_h_y2_dot, 82U);
+    for (c1_i317 = 0; c1_i317 < 8; c1_i317++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i317], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 60U, chartInstance->c1_sfEvent);
@@ -16109,7 +16118,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(61, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 62U, chartInstance->c1_sfEvent);
     *c1_g_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_g_y2_dot, 80U);
+    _SFD_DATA_RANGE_CHECK(*c1_g_y2_dot, 81U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 62U, chartInstance->c1_sfEvent);
     break;
 
@@ -16117,9 +16126,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(61, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 63U, chartInstance->c1_sfEvent);
     *c1_g_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_g_y2_dot, 80U);
-    for (c1_i319 = 0; c1_i319 < 8; c1_i319++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i319], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_g_y2_dot, 81U);
+    for (c1_i318 = 0; c1_i318 < 8; c1_i318++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i318], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 63U, chartInstance->c1_sfEvent);
@@ -16129,9 +16138,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(61, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 64U, chartInstance->c1_sfEvent);
     *c1_g_y2_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_g_y2_dot, 80U);
-    for (c1_i320 = 0; c1_i320 < 8; c1_i320++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i320], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_g_y2_dot, 81U);
+    for (c1_i319 = 0; c1_i319 < 8; c1_i319++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i319], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 64U, chartInstance->c1_sfEvent);
@@ -16141,9 +16150,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(61, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 65U, chartInstance->c1_sfEvent);
     *c1_g_y2_dot = (*c1_v_shutPSD)[6];
-    _SFD_DATA_RANGE_CHECK(*c1_g_y2_dot, 80U);
-    for (c1_i321 = 0; c1_i321 < 8; c1_i321++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i321], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_g_y2_dot, 81U);
+    for (c1_i320 = 0; c1_i320 < 8; c1_i320++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i320], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 65U, chartInstance->c1_sfEvent);
@@ -16161,7 +16170,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(66, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 67U, chartInstance->c1_sfEvent);
     *c1_e_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_e_y2_dot, 78U);
+    _SFD_DATA_RANGE_CHECK(*c1_e_y2_dot, 79U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 67U, chartInstance->c1_sfEvent);
     break;
 
@@ -16169,9 +16178,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(66, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 68U, chartInstance->c1_sfEvent);
     *c1_e_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_e_y2_dot, 78U);
-    for (c1_i322 = 0; c1_i322 < 8; c1_i322++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i322], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_e_y2_dot, 79U);
+    for (c1_i321 = 0; c1_i321 < 8; c1_i321++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i321], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 68U, chartInstance->c1_sfEvent);
@@ -16181,9 +16190,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(66, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 69U, chartInstance->c1_sfEvent);
     *c1_e_y2_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_e_y2_dot, 78U);
-    for (c1_i323 = 0; c1_i323 < 8; c1_i323++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i323], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_e_y2_dot, 79U);
+    for (c1_i322 = 0; c1_i322 < 8; c1_i322++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i322], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 69U, chartInstance->c1_sfEvent);
@@ -16193,9 +16202,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(66, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 70U, chartInstance->c1_sfEvent);
     *c1_e_y2_dot = (*c1_v_shutPSD)[3];
-    _SFD_DATA_RANGE_CHECK(*c1_e_y2_dot, 78U);
-    for (c1_i324 = 0; c1_i324 < 8; c1_i324++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i324], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_e_y2_dot, 79U);
+    for (c1_i323 = 0; c1_i323 < 8; c1_i323++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i323], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 70U, chartInstance->c1_sfEvent);
@@ -16213,7 +16222,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(71, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 72U, chartInstance->c1_sfEvent);
     *c1_f_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_f_y2_dot, 79U);
+    _SFD_DATA_RANGE_CHECK(*c1_f_y2_dot, 80U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 72U, chartInstance->c1_sfEvent);
     break;
 
@@ -16221,9 +16230,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(71, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 73U, chartInstance->c1_sfEvent);
     *c1_f_y2_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_f_y2_dot, 79U);
-    for (c1_i325 = 0; c1_i325 < 8; c1_i325++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i325], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_f_y2_dot, 80U);
+    for (c1_i324 = 0; c1_i324 < 8; c1_i324++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i324], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 73U, chartInstance->c1_sfEvent);
@@ -16233,9 +16242,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(71, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 74U, chartInstance->c1_sfEvent);
     *c1_f_y2_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_f_y2_dot, 79U);
-    for (c1_i326 = 0; c1_i326 < 8; c1_i326++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i326], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_f_y2_dot, 80U);
+    for (c1_i325 = 0; c1_i325 < 8; c1_i325++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i325], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 74U, chartInstance->c1_sfEvent);
@@ -16245,9 +16254,9 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(71, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 75U, chartInstance->c1_sfEvent);
     *c1_f_y2_dot = (*c1_v_shutPSD)[7];
-    _SFD_DATA_RANGE_CHECK(*c1_f_y2_dot, 79U);
-    for (c1_i327 = 0; c1_i327 < 8; c1_i327++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i327], 15U);
+    _SFD_DATA_RANGE_CHECK(*c1_f_y2_dot, 80U);
+    for (c1_i326 = 0; c1_i326 < 8; c1_i326++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i326], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 75U, chartInstance->c1_sfEvent);
@@ -16266,7 +16275,7 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 108U,
                  chartInstance->c1_sfEvent);
     *c1_b_y1_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_y1_dot, 42U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_y1_dot, 43U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 108U, chartInstance->c1_sfEvent);
     break;
 
@@ -16275,9 +16284,9 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 109U,
                  chartInstance->c1_sfEvent);
     *c1_b_y1_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_y1_dot, 42U);
-    for (c1_i328 = 0; c1_i328 < 4; c1_i328++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i328], 14U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_y1_dot, 43U);
+    for (c1_i327 = 0; c1_i327 < 4; c1_i327++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i327], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 109U, chartInstance->c1_sfEvent);
@@ -16288,9 +16297,9 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 110U,
                  chartInstance->c1_sfEvent);
     *c1_b_y1_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_y1_dot, 42U);
-    for (c1_i329 = 0; c1_i329 < 4; c1_i329++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i329], 14U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_y1_dot, 43U);
+    for (c1_i328 = 0; c1_i328 < 4; c1_i328++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i328], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 110U, chartInstance->c1_sfEvent);
@@ -16301,9 +16310,9 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 111U,
                  chartInstance->c1_sfEvent);
     *c1_b_y1_dot = (*c1_v_shutTD)[1];
-    _SFD_DATA_RANGE_CHECK(*c1_b_y1_dot, 42U);
-    for (c1_i330 = 0; c1_i330 < 4; c1_i330++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i330], 14U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_y1_dot, 43U);
+    for (c1_i329 = 0; c1_i329 < 4; c1_i329++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i329], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 111U, chartInstance->c1_sfEvent);
@@ -16322,7 +16331,7 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 126U,
                  chartInstance->c1_sfEvent);
     *c1_c_y1_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_y1_dot, 65U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_y1_dot, 66U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 126U, chartInstance->c1_sfEvent);
     break;
 
@@ -16331,9 +16340,9 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 127U,
                  chartInstance->c1_sfEvent);
     *c1_c_y1_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_y1_dot, 65U);
-    for (c1_i331 = 0; c1_i331 < 4; c1_i331++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i331], 14U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_y1_dot, 66U);
+    for (c1_i330 = 0; c1_i330 < 4; c1_i330++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i330], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 127U, chartInstance->c1_sfEvent);
@@ -16344,9 +16353,9 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 128U,
                  chartInstance->c1_sfEvent);
     *c1_c_y1_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_y1_dot, 65U);
-    for (c1_i332 = 0; c1_i332 < 4; c1_i332++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i332], 14U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_y1_dot, 66U);
+    for (c1_i331 = 0; c1_i331 < 4; c1_i331++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i331], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 128U, chartInstance->c1_sfEvent);
@@ -16357,9 +16366,9 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 129U,
                  chartInstance->c1_sfEvent);
     *c1_c_y1_dot = (*c1_v_shutTD)[2];
-    _SFD_DATA_RANGE_CHECK(*c1_c_y1_dot, 65U);
-    for (c1_i333 = 0; c1_i333 < 4; c1_i333++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i333], 14U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_y1_dot, 66U);
+    for (c1_i332 = 0; c1_i332 < 4; c1_i332++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i332], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 129U, chartInstance->c1_sfEvent);
@@ -16378,7 +16387,7 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 144U,
                  chartInstance->c1_sfEvent);
     *c1_d_y1_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_y1_dot, 73U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_y1_dot, 74U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 144U, chartInstance->c1_sfEvent);
     break;
 
@@ -16387,9 +16396,9 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 145U,
                  chartInstance->c1_sfEvent);
     *c1_d_y1_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_y1_dot, 73U);
-    for (c1_i334 = 0; c1_i334 < 4; c1_i334++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i334], 14U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_y1_dot, 74U);
+    for (c1_i333 = 0; c1_i333 < 4; c1_i333++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i333], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 145U, chartInstance->c1_sfEvent);
@@ -16400,9 +16409,9 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 146U,
                  chartInstance->c1_sfEvent);
     *c1_d_y1_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_y1_dot, 73U);
-    for (c1_i335 = 0; c1_i335 < 4; c1_i335++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i335], 14U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_y1_dot, 74U);
+    for (c1_i334 = 0; c1_i334 < 4; c1_i334++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i334], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 146U, chartInstance->c1_sfEvent);
@@ -16413,9 +16422,9 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 147U,
                  chartInstance->c1_sfEvent);
     *c1_d_y1_dot = (*c1_v_shutTD)[3];
-    _SFD_DATA_RANGE_CHECK(*c1_d_y1_dot, 73U);
-    for (c1_i336 = 0; c1_i336 < 4; c1_i336++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i336], 14U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_y1_dot, 74U);
+    for (c1_i335 = 0; c1_i335 < 4; c1_i335++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i335], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 147U, chartInstance->c1_sfEvent);
@@ -16434,7 +16443,8 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 150U,
                  chartInstance->c1_sfEvent);
     *c1_t_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_t_dot, 20U);
+    _SFD_DATA_RANGE_CHECK(*c1_t_dot, 21U);
+    _SFD_DATA_RANGE_CHECK(*c1_dir1_out, 20U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 150U, chartInstance->c1_sfEvent);
     break;
 
@@ -16443,7 +16453,8 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 151U,
                  chartInstance->c1_sfEvent);
     *c1_t_dot = 0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_t_dot, 20U);
+    _SFD_DATA_RANGE_CHECK(*c1_t_dot, 21U);
+    _SFD_DATA_RANGE_CHECK(*c1_dir1_out, 20U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 151U, chartInstance->c1_sfEvent);
     break;
 
@@ -16452,7 +16463,8 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 153U,
                  chartInstance->c1_sfEvent);
     *c1_t_dot = 0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_t_dot, 20U);
+    _SFD_DATA_RANGE_CHECK(*c1_t_dot, 21U);
+    _SFD_DATA_RANGE_CHECK(*c1_dir1_out, 20U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 153U, chartInstance->c1_sfEvent);
     break;
 
@@ -16469,7 +16481,7 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 131U,
                  chartInstance->c1_sfEvent);
     *c1_d_time_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_time_dot, 69U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_time_dot, 70U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 131U, chartInstance->c1_sfEvent);
     break;
 
@@ -16478,7 +16490,7 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 132U,
                  chartInstance->c1_sfEvent);
     *c1_d_time_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_time_dot, 69U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_time_dot, 70U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 132U, chartInstance->c1_sfEvent);
     break;
 
@@ -16488,11 +16500,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_d_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_i_i, 0, 3, 1, 0)] * *c1_v;
-    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 71U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 72U);
     *c1_d_v_dot = chartInstance->c1_d_acc;
-    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 66U);
-    for (c1_i337 = 0; c1_i337 < 4; c1_i337++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i337], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 67U);
+    for (c1_i336 = 0; c1_i336 < 4; c1_i336++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i336], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 133U, chartInstance->c1_sfEvent);
@@ -16504,11 +16516,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_d_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_i_i, 0, 3, 1, 0)] * *c1_v;
-    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 71U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 72U);
     *c1_d_v_dot = -0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 66U);
-    for (c1_i338 = 0; c1_i338 < 4; c1_i338++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i338], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 67U);
+    for (c1_i337 = 0; c1_i337 < 4; c1_i337++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i337], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 134U, chartInstance->c1_sfEvent);
@@ -16520,11 +16532,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_d_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_i_i, 0, 3, 1, 0)] * *c1_v;
-    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 71U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 72U);
     *c1_d_v_dot = 0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 66U);
-    for (c1_i339 = 0; c1_i339 < 4; c1_i339++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i339], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 67U);
+    for (c1_i338 = 0; c1_i338 < 4; c1_i338++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i338], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 135U, chartInstance->c1_sfEvent);
@@ -16543,11 +16555,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_d_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_i_i, 0, 3, 1, 0)] * *c1_v;
-    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 71U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 72U);
     *c1_d_v_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 66U);
-    for (c1_i340 = 0; c1_i340 < 4; c1_i340++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i340], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 67U);
+    for (c1_i339 = 0; c1_i339 < 4; c1_i339++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i339], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 137U, chartInstance->c1_sfEvent);
@@ -16573,11 +16585,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_d_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_i_i, 0, 3, 1, 0)] * *c1_v;
-    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 71U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 72U);
     *c1_d_v_dot = -1.5;
-    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 66U);
-    for (c1_i341 = 0; c1_i341 < 4; c1_i341++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i341], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 67U);
+    for (c1_i340 = 0; c1_i340 < 4; c1_i340++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i340], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 140U, chartInstance->c1_sfEvent);
@@ -16589,11 +16601,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_d_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_i_i, 0, 3, 1, 0)] * *c1_v;
-    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 71U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 72U);
     *c1_d_v_dot = 0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 66U);
-    for (c1_i342 = 0; c1_i342 < 4; c1_i342++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i342], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 67U);
+    for (c1_i341 = 0; c1_i341 < 4; c1_i341++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i341], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 141U, chartInstance->c1_sfEvent);
@@ -16604,11 +16616,11 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 142U,
                  chartInstance->c1_sfEvent);
     *c1_d_distance_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 71U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_distance_dot, 72U);
     *c1_d_v_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 66U);
-    for (c1_i343 = 0; c1_i343 < 4; c1_i343++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i343], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_v_dot, 67U);
+    for (c1_i342 = 0; c1_i342 < 4; c1_i342++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i342], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 142U, chartInstance->c1_sfEvent);
@@ -16626,7 +16638,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(9, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 10U, chartInstance->c1_sfEvent);
     *c1_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 26U);
+    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 27U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 10U, chartInstance->c1_sfEvent);
     break;
 
@@ -16634,7 +16646,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(9, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 11U, chartInstance->c1_sfEvent);
     *c1_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 26U);
+    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 27U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 11U, chartInstance->c1_sfEvent);
     break;
 
@@ -16642,7 +16654,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(9, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 12U, chartInstance->c1_sfEvent);
     *c1_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 26U);
+    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 27U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 12U, chartInstance->c1_sfEvent);
     break;
 
@@ -16650,7 +16662,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(9, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 13U, chartInstance->c1_sfEvent);
     *c1_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 26U);
+    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 27U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 13U, chartInstance->c1_sfEvent);
     break;
 
@@ -16658,7 +16670,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(9, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 14U, chartInstance->c1_sfEvent);
     *c1_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 26U);
+    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 27U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 14U, chartInstance->c1_sfEvent);
     break;
 
@@ -16666,7 +16678,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(9, 0, 6);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 15U, chartInstance->c1_sfEvent);
     *c1_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 26U);
+    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 27U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 15U, chartInstance->c1_sfEvent);
     break;
 
@@ -16674,7 +16686,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(9, 0, 7);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 16U, chartInstance->c1_sfEvent);
     *c1_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 26U);
+    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 27U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 16U, chartInstance->c1_sfEvent);
     break;
 
@@ -16682,7 +16694,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(9, 0, 8);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 17U, chartInstance->c1_sfEvent);
     *c1_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 26U);
+    _SFD_DATA_RANGE_CHECK(*c1_z_dot, 27U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 17U, chartInstance->c1_sfEvent);
     break;
 
@@ -16698,7 +16710,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(18, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 19U, chartInstance->c1_sfEvent);
     *c1_d_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 54U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 55U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 19U, chartInstance->c1_sfEvent);
     break;
 
@@ -16706,7 +16718,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(18, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 20U, chartInstance->c1_sfEvent);
     *c1_d_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 54U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 55U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 20U, chartInstance->c1_sfEvent);
     break;
 
@@ -16714,7 +16726,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(18, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 21U, chartInstance->c1_sfEvent);
     *c1_d_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 54U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 55U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 21U, chartInstance->c1_sfEvent);
     break;
 
@@ -16722,7 +16734,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(18, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 22U, chartInstance->c1_sfEvent);
     *c1_d_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 54U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 55U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 22U, chartInstance->c1_sfEvent);
     break;
 
@@ -16730,7 +16742,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(18, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 23U, chartInstance->c1_sfEvent);
     *c1_d_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 54U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 55U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 23U, chartInstance->c1_sfEvent);
     break;
 
@@ -16738,7 +16750,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(18, 0, 6);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 24U, chartInstance->c1_sfEvent);
     *c1_d_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 54U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 55U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 24U, chartInstance->c1_sfEvent);
     break;
 
@@ -16746,7 +16758,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(18, 0, 7);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 25U, chartInstance->c1_sfEvent);
     *c1_d_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 54U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 55U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 25U, chartInstance->c1_sfEvent);
     break;
 
@@ -16754,7 +16766,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(18, 0, 8);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 26U, chartInstance->c1_sfEvent);
     *c1_d_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 54U);
+    _SFD_DATA_RANGE_CHECK(*c1_d_z_dot, 55U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 26U, chartInstance->c1_sfEvent);
     break;
 
@@ -16770,7 +16782,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(27, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 28U, chartInstance->c1_sfEvent);
     *c1_c_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 50U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 51U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 28U, chartInstance->c1_sfEvent);
     break;
 
@@ -16778,7 +16790,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(27, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 29U, chartInstance->c1_sfEvent);
     *c1_c_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 50U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 51U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 29U, chartInstance->c1_sfEvent);
     break;
 
@@ -16786,7 +16798,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(27, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 30U, chartInstance->c1_sfEvent);
     *c1_c_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 50U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 51U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 30U, chartInstance->c1_sfEvent);
     break;
 
@@ -16794,7 +16806,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(27, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 31U, chartInstance->c1_sfEvent);
     *c1_c_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 50U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 51U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 31U, chartInstance->c1_sfEvent);
     break;
 
@@ -16802,7 +16814,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(27, 0, 5);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 32U, chartInstance->c1_sfEvent);
     *c1_c_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 50U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 51U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 32U, chartInstance->c1_sfEvent);
     break;
 
@@ -16810,7 +16822,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(27, 0, 6);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 33U, chartInstance->c1_sfEvent);
     *c1_c_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 50U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 51U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 33U, chartInstance->c1_sfEvent);
     break;
 
@@ -16818,7 +16830,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(27, 0, 7);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 34U, chartInstance->c1_sfEvent);
     *c1_c_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 50U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 51U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 34U, chartInstance->c1_sfEvent);
     break;
 
@@ -16826,7 +16838,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(27, 0, 8);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 35U, chartInstance->c1_sfEvent);
     *c1_c_z_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 50U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_z_dot, 51U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 35U, chartInstance->c1_sfEvent);
     break;
 
@@ -16842,7 +16854,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(76, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 77U, chartInstance->c1_sfEvent);
     *c1_time_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_time_dot, 33U);
+    _SFD_DATA_RANGE_CHECK(*c1_time_dot, 34U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 77U, chartInstance->c1_sfEvent);
     break;
 
@@ -16850,7 +16862,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(76, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 78U, chartInstance->c1_sfEvent);
     *c1_time_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_time_dot, 33U);
+    _SFD_DATA_RANGE_CHECK(*c1_time_dot, 34U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 78U, chartInstance->c1_sfEvent);
     break;
 
@@ -16859,11 +16871,11 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 79U, chartInstance->c1_sfEvent);
     *c1_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
       chartInstance->c1_c_i, 0, 3, 1, 0)] * *c1_b_v;
-    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 35U);
+    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 36U);
     *c1_v_dot = chartInstance->c1_acc;
-    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 30U);
-    for (c1_i344 = 0; c1_i344 < 4; c1_i344++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i344], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 31U);
+    for (c1_i343 = 0; c1_i343 < 4; c1_i343++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i343], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 79U, chartInstance->c1_sfEvent);
@@ -16874,11 +16886,11 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 80U, chartInstance->c1_sfEvent);
     *c1_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
       chartInstance->c1_c_i, 0, 3, 1, 0)] * *c1_b_v;
-    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 35U);
+    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 36U);
     *c1_v_dot = -0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 30U);
-    for (c1_i345 = 0; c1_i345 < 4; c1_i345++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i345], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 31U);
+    for (c1_i344 = 0; c1_i344 < 4; c1_i344++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i344], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 80U, chartInstance->c1_sfEvent);
@@ -16889,11 +16901,11 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 81U, chartInstance->c1_sfEvent);
     *c1_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
       chartInstance->c1_c_i, 0, 3, 1, 0)] * *c1_b_v;
-    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 35U);
+    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 36U);
     *c1_v_dot = 0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 30U);
-    for (c1_i346 = 0; c1_i346 < 4; c1_i346++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i346], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 31U);
+    for (c1_i345 = 0; c1_i345 < 4; c1_i345++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i345], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 81U, chartInstance->c1_sfEvent);
@@ -16910,11 +16922,11 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 83U, chartInstance->c1_sfEvent);
     *c1_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
       chartInstance->c1_c_i, 0, 3, 1, 0)] * *c1_b_v;
-    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 35U);
+    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 36U);
     *c1_v_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 30U);
-    for (c1_i347 = 0; c1_i347 < 4; c1_i347++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i347], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 31U);
+    for (c1_i346 = 0; c1_i346 < 4; c1_i346++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i346], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 83U, chartInstance->c1_sfEvent);
@@ -16937,11 +16949,11 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 86U, chartInstance->c1_sfEvent);
     *c1_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
       chartInstance->c1_c_i, 0, 3, 1, 0)] * *c1_b_v;
-    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 35U);
+    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 36U);
     *c1_v_dot = -1.5;
-    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 30U);
-    for (c1_i348 = 0; c1_i348 < 4; c1_i348++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i348], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 31U);
+    for (c1_i347 = 0; c1_i347 < 4; c1_i347++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i347], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 86U, chartInstance->c1_sfEvent);
@@ -16952,11 +16964,11 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 87U, chartInstance->c1_sfEvent);
     *c1_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK(17U,
       chartInstance->c1_c_i, 0, 3, 1, 0)] * *c1_b_v;
-    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 35U);
+    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 36U);
     *c1_v_dot = 0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 30U);
-    for (c1_i349 = 0; c1_i349 < 4; c1_i349++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i349], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 31U);
+    for (c1_i348 = 0; c1_i348 < 4; c1_i348++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i348], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 87U, chartInstance->c1_sfEvent);
@@ -16966,11 +16978,11 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(76, 0, 12);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 88U, chartInstance->c1_sfEvent);
     *c1_distance_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 35U);
+    _SFD_DATA_RANGE_CHECK(*c1_distance_dot, 36U);
     *c1_v_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 30U);
-    for (c1_i350 = 0; c1_i350 < 4; c1_i350++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i350], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_v_dot, 31U);
+    for (c1_i349 = 0; c1_i349 < 4; c1_i349++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i349], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 88U, chartInstance->c1_sfEvent);
@@ -16988,7 +17000,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(94, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 95U, chartInstance->c1_sfEvent);
     *c1_b_time_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_time_dot, 46U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_time_dot, 47U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 95U, chartInstance->c1_sfEvent);
     break;
 
@@ -16996,7 +17008,7 @@ static void derivatives_c1_subwaycontrolsystem
     CV_STATE_EVAL(94, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 96U, chartInstance->c1_sfEvent);
     *c1_b_time_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_time_dot, 46U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_time_dot, 47U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 96U, chartInstance->c1_sfEvent);
     break;
 
@@ -17005,11 +17017,11 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 97U, chartInstance->c1_sfEvent);
     *c1_b_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_e_i, 0, 3, 1, 0)] * *c1_c_v;
-    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 48U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 49U);
     *c1_b_v_dot = chartInstance->c1_b_acc;
-    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 43U);
-    for (c1_i351 = 0; c1_i351 < 4; c1_i351++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i351], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 44U);
+    for (c1_i350 = 0; c1_i350 < 4; c1_i350++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i350], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 97U, chartInstance->c1_sfEvent);
@@ -17020,11 +17032,11 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 98U, chartInstance->c1_sfEvent);
     *c1_b_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_e_i, 0, 3, 1, 0)] * *c1_c_v;
-    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 48U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 49U);
     *c1_b_v_dot = -0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 43U);
-    for (c1_i352 = 0; c1_i352 < 4; c1_i352++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i352], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 44U);
+    for (c1_i351 = 0; c1_i351 < 4; c1_i351++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i351], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 98U, chartInstance->c1_sfEvent);
@@ -17035,11 +17047,11 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 99U, chartInstance->c1_sfEvent);
     *c1_b_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_e_i, 0, 3, 1, 0)] * *c1_c_v;
-    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 48U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 49U);
     *c1_b_v_dot = 0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 43U);
-    for (c1_i353 = 0; c1_i353 < 4; c1_i353++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i353], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 44U);
+    for (c1_i352 = 0; c1_i352 < 4; c1_i352++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i352], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 99U, chartInstance->c1_sfEvent);
@@ -17058,11 +17070,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_b_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_e_i, 0, 3, 1, 0)] * *c1_c_v;
-    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 48U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 49U);
     *c1_b_v_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 43U);
-    for (c1_i354 = 0; c1_i354 < 4; c1_i354++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i354], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 44U);
+    for (c1_i353 = 0; c1_i353 < 4; c1_i353++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i353], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 101U, chartInstance->c1_sfEvent);
@@ -17088,11 +17100,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_b_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_e_i, 0, 3, 1, 0)] * *c1_c_v;
-    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 48U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 49U);
     *c1_b_v_dot = -1.5;
-    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 43U);
-    for (c1_i355 = 0; c1_i355 < 4; c1_i355++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i355], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 44U);
+    for (c1_i354 = 0; c1_i354 < 4; c1_i354++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i354], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 104U, chartInstance->c1_sfEvent);
@@ -17104,11 +17116,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_b_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_e_i, 0, 3, 1, 0)] * *c1_c_v;
-    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 48U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 49U);
     *c1_b_v_dot = 0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 43U);
-    for (c1_i356 = 0; c1_i356 < 4; c1_i356++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i356], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 44U);
+    for (c1_i355 = 0; c1_i355 < 4; c1_i355++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i355], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 105U, chartInstance->c1_sfEvent);
@@ -17119,11 +17131,11 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 106U,
                  chartInstance->c1_sfEvent);
     *c1_b_distance_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 48U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_distance_dot, 49U);
     *c1_b_v_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 43U);
-    for (c1_i357 = 0; c1_i357 < 4; c1_i357++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i357], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_b_v_dot, 44U);
+    for (c1_i356 = 0; c1_i356 < 4; c1_i356++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i356], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 106U, chartInstance->c1_sfEvent);
@@ -17142,7 +17154,7 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 113U,
                  chartInstance->c1_sfEvent);
     *c1_c_time_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_time_dot, 61U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_time_dot, 62U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 113U, chartInstance->c1_sfEvent);
     break;
 
@@ -17151,7 +17163,7 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 114U,
                  chartInstance->c1_sfEvent);
     *c1_c_time_dot = 1.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_time_dot, 61U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_time_dot, 62U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 114U, chartInstance->c1_sfEvent);
     break;
 
@@ -17161,11 +17173,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_c_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_h_i, 0, 3, 1, 0)] * *c1_d_v;
-    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 63U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 64U);
     *c1_c_v_dot = chartInstance->c1_c_acc;
-    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 58U);
-    for (c1_i358 = 0; c1_i358 < 4; c1_i358++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i358], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 59U);
+    for (c1_i357 = 0; c1_i357 < 4; c1_i357++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i357], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 115U, chartInstance->c1_sfEvent);
@@ -17177,11 +17189,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_c_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_h_i, 0, 3, 1, 0)] * *c1_d_v;
-    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 63U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 64U);
     *c1_c_v_dot = -0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 58U);
-    for (c1_i359 = 0; c1_i359 < 4; c1_i359++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i359], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 59U);
+    for (c1_i358 = 0; c1_i358 < 4; c1_i358++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i358], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 116U, chartInstance->c1_sfEvent);
@@ -17193,11 +17205,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_c_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_h_i, 0, 3, 1, 0)] * *c1_d_v;
-    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 63U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 64U);
     *c1_c_v_dot = 0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 58U);
-    for (c1_i360 = 0; c1_i360 < 4; c1_i360++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i360], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 59U);
+    for (c1_i359 = 0; c1_i359 < 4; c1_i359++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i359], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 117U, chartInstance->c1_sfEvent);
@@ -17216,11 +17228,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_c_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_h_i, 0, 3, 1, 0)] * *c1_d_v;
-    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 63U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 64U);
     *c1_c_v_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 58U);
-    for (c1_i361 = 0; c1_i361 < 4; c1_i361++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i361], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 59U);
+    for (c1_i360 = 0; c1_i360 < 4; c1_i360++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i360], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 119U, chartInstance->c1_sfEvent);
@@ -17246,11 +17258,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_c_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_h_i, 0, 3, 1, 0)] * *c1_d_v;
-    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 63U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 64U);
     *c1_c_v_dot = -1.5;
-    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 58U);
-    for (c1_i362 = 0; c1_i362 < 4; c1_i362++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i362], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 59U);
+    for (c1_i361 = 0; c1_i361 < 4; c1_i361++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i361], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 122U, chartInstance->c1_sfEvent);
@@ -17262,11 +17274,11 @@ static void derivatives_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     *c1_c_distance_dot = (real_T)chartInstance->c1_dir[_SFD_ARRAY_BOUNDS_CHECK
       (17U, chartInstance->c1_h_i, 0, 3, 1, 0)] * *c1_d_v;
-    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 63U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 64U);
     *c1_c_v_dot = 0.5;
-    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 58U);
-    for (c1_i363 = 0; c1_i363 < 4; c1_i363++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i363], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 59U);
+    for (c1_i362 = 0; c1_i362 < 4; c1_i362++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i362], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 123U, chartInstance->c1_sfEvent);
@@ -17277,11 +17289,11 @@ static void derivatives_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 124U,
                  chartInstance->c1_sfEvent);
     *c1_c_distance_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 63U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_distance_dot, 64U);
     *c1_c_v_dot = 0.0;
-    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 58U);
-    for (c1_i364 = 0; c1_i364 < 4; c1_i364++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i364], 6U);
+    _SFD_DATA_RANGE_CHECK(*c1_c_v_dot, 59U);
+    for (c1_i363 = 0; c1_i363 < 4; c1_i363++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i363], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 124U, chartInstance->c1_sfEvent);
@@ -17298,6 +17310,7 @@ static void derivatives_c1_subwaycontrolsystem
 static void outputs_c1_subwaycontrolsystem
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance)
 {
+  int32_T c1_i364;
   int32_T c1_i365;
   int32_T c1_i366;
   int32_T c1_i367;
@@ -17361,7 +17374,6 @@ static void outputs_c1_subwaycontrolsystem
   int32_T c1_i425;
   int32_T c1_i426;
   int32_T c1_i427;
-  int32_T c1_i428;
   real_T *c1_y1;
   real_T *c1_y2;
   real_T *c1_b_y2;
@@ -17374,6 +17386,7 @@ static void outputs_c1_subwaycontrolsystem
   real_T *c1_b_y1;
   real_T *c1_c_y1;
   real_T *c1_d_y1;
+  real_T *c1_dir1_out;
   real_T *c1_distance;
   real_T *c1_b_distance;
   real_T *c1_c_distance;
@@ -17397,6 +17410,7 @@ static void outputs_c1_subwaycontrolsystem
   c1_b_y1 = (real_T *)(ssGetContStates(chartInstance->S) + 7);
   c1_y1 = (real_T *)(ssGetContStates(chartInstance->S) + 6);
   c1_b_distance = (real_T *)(ssGetContStates(chartInstance->S) + 4);
+  c1_dir1_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 4);
   c1_y2_out = (real_T (*)[8])ssGetOutputPortSignal(chartInstance->S, 3);
   c1_y1_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 2);
   c1_distance_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 1);
@@ -17413,8 +17427,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(89, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 91U, chartInstance->c1_sfEvent);
     (*c1_y1_out)[0] = *c1_y1;
-    for (c1_i365 = 0; c1_i365 < 4; c1_i365++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i365], 14U);
+    for (c1_i364 = 0; c1_i364 < 4; c1_i364++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i364], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 91U, chartInstance->c1_sfEvent);
@@ -17424,8 +17438,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(89, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 92U, chartInstance->c1_sfEvent);
     (*c1_y1_out)[0] = *c1_y1;
-    for (c1_i366 = 0; c1_i366 < 4; c1_i366++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i366], 14U);
+    for (c1_i365 = 0; c1_i365 < 4; c1_i365++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i365], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 92U, chartInstance->c1_sfEvent);
@@ -17435,8 +17449,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(89, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 93U, chartInstance->c1_sfEvent);
     (*c1_y1_out)[0] = *c1_y1;
-    for (c1_i367 = 0; c1_i367 < 4; c1_i367++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i367], 14U);
+    for (c1_i366 = 0; c1_i366 < 4; c1_i366++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i366], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 93U, chartInstance->c1_sfEvent);
@@ -17460,8 +17474,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(36, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 38U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[0] = *c1_y2;
-    for (c1_i368 = 0; c1_i368 < 8; c1_i368++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i368], 15U);
+    for (c1_i367 = 0; c1_i367 < 8; c1_i367++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i367], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 38U, chartInstance->c1_sfEvent);
@@ -17471,8 +17485,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(36, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 39U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[0] = *c1_y2;
-    for (c1_i369 = 0; c1_i369 < 8; c1_i369++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i369], 15U);
+    for (c1_i368 = 0; c1_i368 < 8; c1_i368++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i368], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 39U, chartInstance->c1_sfEvent);
@@ -17482,8 +17496,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(36, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 40U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[0] = *c1_y2;
-    for (c1_i370 = 0; c1_i370 < 8; c1_i370++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i370], 15U);
+    for (c1_i369 = 0; c1_i369 < 8; c1_i369++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i369], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 40U, chartInstance->c1_sfEvent);
@@ -17563,8 +17577,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(41, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 43U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[4] = *c1_b_y2;
-    for (c1_i371 = 0; c1_i371 < 8; c1_i371++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i371], 15U);
+    for (c1_i370 = 0; c1_i370 < 8; c1_i370++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i370], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 43U, chartInstance->c1_sfEvent);
@@ -17574,8 +17588,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(41, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 44U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[4] = *c1_b_y2;
-    for (c1_i372 = 0; c1_i372 < 8; c1_i372++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i372], 15U);
+    for (c1_i371 = 0; c1_i371 < 8; c1_i371++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i371], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 44U, chartInstance->c1_sfEvent);
@@ -17585,8 +17599,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(41, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 45U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[4] = *c1_b_y2;
-    for (c1_i373 = 0; c1_i373 < 8; c1_i373++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i373], 15U);
+    for (c1_i372 = 0; c1_i372 < 8; c1_i372++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i372], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 45U, chartInstance->c1_sfEvent);
@@ -17610,8 +17624,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(46, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 48U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[1] = *c1_c_y2;
-    for (c1_i374 = 0; c1_i374 < 8; c1_i374++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i374], 15U);
+    for (c1_i373 = 0; c1_i373 < 8; c1_i373++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i373], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 48U, chartInstance->c1_sfEvent);
@@ -17621,8 +17635,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(46, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 49U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[1] = *c1_c_y2;
-    for (c1_i375 = 0; c1_i375 < 8; c1_i375++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i375], 15U);
+    for (c1_i374 = 0; c1_i374 < 8; c1_i374++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i374], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 49U, chartInstance->c1_sfEvent);
@@ -17632,8 +17646,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(46, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 50U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[1] = *c1_c_y2;
-    for (c1_i376 = 0; c1_i376 < 8; c1_i376++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i376], 15U);
+    for (c1_i375 = 0; c1_i375 < 8; c1_i375++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i375], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 50U, chartInstance->c1_sfEvent);
@@ -17657,8 +17671,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(51, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 53U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[5] = *c1_d_y2;
-    for (c1_i377 = 0; c1_i377 < 8; c1_i377++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i377], 15U);
+    for (c1_i376 = 0; c1_i376 < 8; c1_i376++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i376], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 53U, chartInstance->c1_sfEvent);
@@ -17668,8 +17682,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(51, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 54U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[5] = *c1_d_y2;
-    for (c1_i378 = 0; c1_i378 < 8; c1_i378++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i378], 15U);
+    for (c1_i377 = 0; c1_i377 < 8; c1_i377++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i377], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 54U, chartInstance->c1_sfEvent);
@@ -17679,8 +17693,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(51, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 55U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[5] = *c1_d_y2;
-    for (c1_i379 = 0; c1_i379 < 8; c1_i379++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i379], 15U);
+    for (c1_i378 = 0; c1_i378 < 8; c1_i378++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i378], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 55U, chartInstance->c1_sfEvent);
@@ -17704,8 +17718,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(56, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 58U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[2] = *c1_e_y2;
-    for (c1_i380 = 0; c1_i380 < 8; c1_i380++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i380], 15U);
+    for (c1_i379 = 0; c1_i379 < 8; c1_i379++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i379], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 58U, chartInstance->c1_sfEvent);
@@ -17715,8 +17729,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(56, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 59U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[2] = *c1_e_y2;
-    for (c1_i381 = 0; c1_i381 < 8; c1_i381++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i381], 15U);
+    for (c1_i380 = 0; c1_i380 < 8; c1_i380++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i380], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 59U, chartInstance->c1_sfEvent);
@@ -17726,8 +17740,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(56, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 60U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[2] = *c1_e_y2;
-    for (c1_i382 = 0; c1_i382 < 8; c1_i382++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i382], 15U);
+    for (c1_i381 = 0; c1_i381 < 8; c1_i381++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i381], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 60U, chartInstance->c1_sfEvent);
@@ -17751,8 +17765,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(61, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 63U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[6] = *c1_f_y2;
-    for (c1_i383 = 0; c1_i383 < 8; c1_i383++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i383], 15U);
+    for (c1_i382 = 0; c1_i382 < 8; c1_i382++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i382], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 63U, chartInstance->c1_sfEvent);
@@ -17762,8 +17776,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(61, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 64U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[6] = *c1_f_y2;
-    for (c1_i384 = 0; c1_i384 < 8; c1_i384++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i384], 15U);
+    for (c1_i383 = 0; c1_i383 < 8; c1_i383++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i383], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 64U, chartInstance->c1_sfEvent);
@@ -17773,8 +17787,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(61, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 65U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[6] = *c1_f_y2;
-    for (c1_i385 = 0; c1_i385 < 8; c1_i385++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i385], 15U);
+    for (c1_i384 = 0; c1_i384 < 8; c1_i384++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i384], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 65U, chartInstance->c1_sfEvent);
@@ -17798,8 +17812,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(66, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 68U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[3] = *c1_g_y2;
-    for (c1_i386 = 0; c1_i386 < 8; c1_i386++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i386], 15U);
+    for (c1_i385 = 0; c1_i385 < 8; c1_i385++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i385], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 68U, chartInstance->c1_sfEvent);
@@ -17809,8 +17823,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(66, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 69U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[3] = *c1_g_y2;
-    for (c1_i387 = 0; c1_i387 < 8; c1_i387++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i387], 15U);
+    for (c1_i386 = 0; c1_i386 < 8; c1_i386++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i386], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 69U, chartInstance->c1_sfEvent);
@@ -17820,8 +17834,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(66, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 70U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[3] = *c1_g_y2;
-    for (c1_i388 = 0; c1_i388 < 8; c1_i388++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i388], 15U);
+    for (c1_i387 = 0; c1_i387 < 8; c1_i387++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i387], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 70U, chartInstance->c1_sfEvent);
@@ -17845,8 +17859,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(71, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 73U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[7] = *c1_h_y2;
-    for (c1_i389 = 0; c1_i389 < 8; c1_i389++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i389], 15U);
+    for (c1_i388 = 0; c1_i388 < 8; c1_i388++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i388], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 73U, chartInstance->c1_sfEvent);
@@ -17856,8 +17870,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(71, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 74U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[7] = *c1_h_y2;
-    for (c1_i390 = 0; c1_i390 < 8; c1_i390++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i390], 15U);
+    for (c1_i389 = 0; c1_i389 < 8; c1_i389++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i389], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 74U, chartInstance->c1_sfEvent);
@@ -17867,8 +17881,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(71, 0, 4);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 75U, chartInstance->c1_sfEvent);
     (*c1_y2_out)[7] = *c1_h_y2;
-    for (c1_i391 = 0; c1_i391 < 8; c1_i391++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i391], 15U);
+    for (c1_i390 = 0; c1_i390 < 8; c1_i390++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y2_out)[c1_i390], 15U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 75U, chartInstance->c1_sfEvent);
@@ -17894,8 +17908,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 109U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[1] = *c1_b_y1;
-    for (c1_i392 = 0; c1_i392 < 4; c1_i392++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i392], 14U);
+    for (c1_i391 = 0; c1_i391 < 4; c1_i391++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i391], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 109U, chartInstance->c1_sfEvent);
@@ -17906,8 +17920,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 110U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[1] = *c1_b_y1;
-    for (c1_i393 = 0; c1_i393 < 4; c1_i393++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i393], 14U);
+    for (c1_i392 = 0; c1_i392 < 4; c1_i392++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i392], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 110U, chartInstance->c1_sfEvent);
@@ -17918,8 +17932,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 111U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[1] = *c1_b_y1;
-    for (c1_i394 = 0; c1_i394 < 4; c1_i394++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i394], 14U);
+    for (c1_i393 = 0; c1_i393 < 4; c1_i393++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i393], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 111U, chartInstance->c1_sfEvent);
@@ -17945,8 +17959,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 127U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[2] = *c1_c_y1;
-    for (c1_i395 = 0; c1_i395 < 4; c1_i395++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i395], 14U);
+    for (c1_i394 = 0; c1_i394 < 4; c1_i394++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i394], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 127U, chartInstance->c1_sfEvent);
@@ -17957,8 +17971,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 128U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[2] = *c1_c_y1;
-    for (c1_i396 = 0; c1_i396 < 4; c1_i396++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i396], 14U);
+    for (c1_i395 = 0; c1_i395 < 4; c1_i395++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i395], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 128U, chartInstance->c1_sfEvent);
@@ -17969,8 +17983,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 129U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[2] = *c1_c_y1;
-    for (c1_i397 = 0; c1_i397 < 4; c1_i397++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i397], 14U);
+    for (c1_i396 = 0; c1_i396 < 4; c1_i396++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i396], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 129U, chartInstance->c1_sfEvent);
@@ -17996,8 +18010,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 145U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[3] = *c1_d_y1;
-    for (c1_i398 = 0; c1_i398 < 4; c1_i398++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i398], 14U);
+    for (c1_i397 = 0; c1_i397 < 4; c1_i397++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i397], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 145U, chartInstance->c1_sfEvent);
@@ -18008,8 +18022,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 146U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[3] = *c1_d_y1;
-    for (c1_i399 = 0; c1_i399 < 4; c1_i399++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i399], 14U);
+    for (c1_i398 = 0; c1_i398 < 4; c1_i398++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i398], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 146U, chartInstance->c1_sfEvent);
@@ -18020,8 +18034,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 147U,
                  chartInstance->c1_sfEvent);
     (*c1_y1_out)[3] = *c1_d_y1;
-    for (c1_i400 = 0; c1_i400 < 4; c1_i400++) {
-      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i400], 14U);
+    for (c1_i399 = 0; c1_i399 < 4; c1_i399++) {
+      _SFD_DATA_RANGE_CHECK((*c1_y1_out)[c1_i399], 14U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 147U, chartInstance->c1_sfEvent);
@@ -18039,6 +18053,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(148, 0, 1);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 150U,
                  chartInstance->c1_sfEvent);
+    *c1_dir1_out = (real_T)chartInstance->c1_dir[0];
+    _SFD_DATA_RANGE_CHECK(*c1_dir1_out, 20U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 150U, chartInstance->c1_sfEvent);
     break;
 
@@ -18046,6 +18062,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(148, 0, 2);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 151U,
                  chartInstance->c1_sfEvent);
+    *c1_dir1_out = (real_T)chartInstance->c1_dir[0];
+    _SFD_DATA_RANGE_CHECK(*c1_dir1_out, 20U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 151U, chartInstance->c1_sfEvent);
     break;
 
@@ -18053,6 +18071,8 @@ static void outputs_c1_subwaycontrolsystem
     CV_STATE_EVAL(148, 0, 3);
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 153U,
                  chartInstance->c1_sfEvent);
+    *c1_dir1_out = (real_T)chartInstance->c1_dir[0];
+    _SFD_DATA_RANGE_CHECK(*c1_dir1_out, 20U);
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 153U, chartInstance->c1_sfEvent);
     break;
 
@@ -18084,8 +18104,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i401 = 0; c1_i401 < 4; c1_i401++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i401], 6U);
+    for (c1_i400 = 0; c1_i400 < 4; c1_i400++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i400], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 133U, chartInstance->c1_sfEvent);
@@ -18097,8 +18117,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i402 = 0; c1_i402 < 4; c1_i402++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i402], 6U);
+    for (c1_i401 = 0; c1_i401 < 4; c1_i401++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i401], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 134U, chartInstance->c1_sfEvent);
@@ -18110,8 +18130,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i403 = 0; c1_i403 < 4; c1_i403++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i403], 6U);
+    for (c1_i402 = 0; c1_i402 < 4; c1_i402++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i402], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 135U, chartInstance->c1_sfEvent);
@@ -18130,8 +18150,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i404 = 0; c1_i404 < 4; c1_i404++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i404], 6U);
+    for (c1_i403 = 0; c1_i403 < 4; c1_i403++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i403], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 137U, chartInstance->c1_sfEvent);
@@ -18157,8 +18177,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i405 = 0; c1_i405 < 4; c1_i405++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i405], 6U);
+    for (c1_i404 = 0; c1_i404 < 4; c1_i404++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i404], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 140U, chartInstance->c1_sfEvent);
@@ -18170,8 +18190,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i406 = 0; c1_i406 < 4; c1_i406++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i406], 6U);
+    for (c1_i405 = 0; c1_i405 < 4; c1_i405++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i405], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 141U, chartInstance->c1_sfEvent);
@@ -18183,8 +18203,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_i_i, 0, 3,
       1, 0)] = *c1_distance;
-    for (c1_i407 = 0; c1_i407 < 4; c1_i407++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i407], 6U);
+    for (c1_i406 = 0; c1_i406 < 4; c1_i406++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i406], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 142U, chartInstance->c1_sfEvent);
@@ -18383,8 +18403,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 79U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i408 = 0; c1_i408 < 4; c1_i408++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i408], 6U);
+    for (c1_i407 = 0; c1_i407 < 4; c1_i407++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i407], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 79U, chartInstance->c1_sfEvent);
@@ -18395,8 +18415,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 80U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i409 = 0; c1_i409 < 4; c1_i409++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i409], 6U);
+    for (c1_i408 = 0; c1_i408 < 4; c1_i408++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i408], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 80U, chartInstance->c1_sfEvent);
@@ -18407,8 +18427,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 81U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i410 = 0; c1_i410 < 4; c1_i410++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i410], 6U);
+    for (c1_i409 = 0; c1_i409 < 4; c1_i409++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i409], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 81U, chartInstance->c1_sfEvent);
@@ -18425,8 +18445,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 83U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i411 = 0; c1_i411 < 4; c1_i411++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i411], 6U);
+    for (c1_i410 = 0; c1_i410 < 4; c1_i410++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i410], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 83U, chartInstance->c1_sfEvent);
@@ -18449,8 +18469,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 86U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i412 = 0; c1_i412 < 4; c1_i412++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i412], 6U);
+    for (c1_i411 = 0; c1_i411 < 4; c1_i411++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i411], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 86U, chartInstance->c1_sfEvent);
@@ -18461,8 +18481,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 87U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i413 = 0; c1_i413 < 4; c1_i413++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i413], 6U);
+    for (c1_i412 = 0; c1_i412 < 4; c1_i412++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i412], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 87U, chartInstance->c1_sfEvent);
@@ -18473,8 +18493,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 88U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_c_i, 0, 3,
       1, 0)] = *c1_b_distance;
-    for (c1_i414 = 0; c1_i414 < 4; c1_i414++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i414], 6U);
+    for (c1_i413 = 0; c1_i413 < 4; c1_i413++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i413], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 88U, chartInstance->c1_sfEvent);
@@ -18505,8 +18525,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 97U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i415 = 0; c1_i415 < 4; c1_i415++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i415], 6U);
+    for (c1_i414 = 0; c1_i414 < 4; c1_i414++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i414], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 97U, chartInstance->c1_sfEvent);
@@ -18517,8 +18537,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 98U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i416 = 0; c1_i416 < 4; c1_i416++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i416], 6U);
+    for (c1_i415 = 0; c1_i415 < 4; c1_i415++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i415], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 98U, chartInstance->c1_sfEvent);
@@ -18529,8 +18549,8 @@ static void outputs_c1_subwaycontrolsystem
     _SFD_CS_CALL(STATE_ENTER_DURING_FUNCTION_TAG, 99U, chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i417 = 0; c1_i417 < 4; c1_i417++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i417], 6U);
+    for (c1_i416 = 0; c1_i416 < 4; c1_i416++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i416], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 99U, chartInstance->c1_sfEvent);
@@ -18549,8 +18569,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i418 = 0; c1_i418 < 4; c1_i418++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i418], 6U);
+    for (c1_i417 = 0; c1_i417 < 4; c1_i417++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i417], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 101U, chartInstance->c1_sfEvent);
@@ -18576,8 +18596,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i419 = 0; c1_i419 < 4; c1_i419++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i419], 6U);
+    for (c1_i418 = 0; c1_i418 < 4; c1_i418++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i418], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 104U, chartInstance->c1_sfEvent);
@@ -18589,8 +18609,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i420 = 0; c1_i420 < 4; c1_i420++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i420], 6U);
+    for (c1_i419 = 0; c1_i419 < 4; c1_i419++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i419], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 105U, chartInstance->c1_sfEvent);
@@ -18602,8 +18622,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_e_i, 0, 3,
       1, 0)] = *c1_c_distance;
-    for (c1_i421 = 0; c1_i421 < 4; c1_i421++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i421], 6U);
+    for (c1_i420 = 0; c1_i420 < 4; c1_i420++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i420], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 106U, chartInstance->c1_sfEvent);
@@ -18637,8 +18657,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i422 = 0; c1_i422 < 4; c1_i422++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i422], 6U);
+    for (c1_i421 = 0; c1_i421 < 4; c1_i421++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i421], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 115U, chartInstance->c1_sfEvent);
@@ -18650,8 +18670,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i423 = 0; c1_i423 < 4; c1_i423++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i423], 6U);
+    for (c1_i422 = 0; c1_i422 < 4; c1_i422++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i422], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 116U, chartInstance->c1_sfEvent);
@@ -18663,8 +18683,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i424 = 0; c1_i424 < 4; c1_i424++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i424], 6U);
+    for (c1_i423 = 0; c1_i423 < 4; c1_i423++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i423], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 117U, chartInstance->c1_sfEvent);
@@ -18683,8 +18703,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i425 = 0; c1_i425 < 4; c1_i425++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i425], 6U);
+    for (c1_i424 = 0; c1_i424 < 4; c1_i424++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i424], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 119U, chartInstance->c1_sfEvent);
@@ -18710,8 +18730,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i426 = 0; c1_i426 < 4; c1_i426++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i426], 6U);
+    for (c1_i425 = 0; c1_i425 < 4; c1_i425++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i425], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 122U, chartInstance->c1_sfEvent);
@@ -18723,8 +18743,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i427 = 0; c1_i427 < 4; c1_i427++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i427], 6U);
+    for (c1_i426 = 0; c1_i426 < 4; c1_i426++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i426], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 123U, chartInstance->c1_sfEvent);
@@ -18736,8 +18756,8 @@ static void outputs_c1_subwaycontrolsystem
                  chartInstance->c1_sfEvent);
     (*c1_distance_out)[_SFD_ARRAY_BOUNDS_CHECK(6U, chartInstance->c1_h_i, 0, 3,
       1, 0)] = *c1_d_distance;
-    for (c1_i428 = 0; c1_i428 < 4; c1_i428++) {
-      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i428], 6U);
+    for (c1_i427 = 0; c1_i427 < 4; c1_i427++) {
+      _SFD_DATA_RANGE_CHECK((*c1_distance_out)[c1_i427], 6U);
     }
 
     _SFD_CS_CALL(EXIT_OUT_OF_FUNCTION_TAG, 124U, chartInstance->c1_sfEvent);
@@ -18756,12 +18776,12 @@ static void initSimStructsc1_subwaycontrolsystem
 {
 }
 
-static void c1_eml_ini_fcn_to_be_inlined_502
+static void c1_eml_ini_fcn_to_be_inlined_503
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance)
 {
 }
 
-static void c1_eml_term_fcn_to_be_inlined_502
+static void c1_eml_term_fcn_to_be_inlined_503
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance)
 {
 }
@@ -18824,6 +18844,15 @@ static void c1_sf_marshallIn(void *chartInstanceVoid, const mxArray
   sf_mex_destroy(&c1_mxArrayInData);
 }
 
+static const mxArray *c1_b_emlrt_marshallOut
+  (SFc1_subwaycontrolsystemInstanceStruct *chartInstance, int32_T c1_u)
+{
+  const mxArray *c1_y = NULL;
+  c1_y = NULL;
+  sf_mex_assign(&c1_y, sf_mex_create("y", &c1_u, 6, 0U, 0U, 0U, 0), FALSE);
+  return c1_y;
+}
+
 static const mxArray *c1_b_sf_marshallOut(void *chartInstanceVoid, void
   *c1_inData)
 {
@@ -18852,9 +18881,9 @@ static int32_T c1_d_emlrt_marshallIn(SFc1_subwaycontrolsystemInstanceStruct
   *chartInstance, const mxArray *c1_u, const emlrtMsgIdentifier *c1_parentId)
 {
   int32_T c1_y;
-  int32_T c1_i429;
-  sf_mex_import(c1_parentId, sf_mex_dup(c1_u), &c1_i429, 1, 6, 0U, 0, 0U, 0);
-  c1_y = c1_i429;
+  int32_T c1_i428;
+  sf_mex_import(c1_parentId, sf_mex_dup(c1_u), &c1_i428, 1, 6, 0U, 0, 0U, 0);
+  c1_y = c1_i428;
   sf_mex_destroy(&c1_u);
   return c1_y;
 }
@@ -18875,7 +18904,7 @@ const mxArray *sf_c1_subwaycontrolsystem_get_eml_resolved_functions_info(void)
   c1_ResolvedFunctionInfo c1_info[5];
   c1_ResolvedFunctionInfo (*c1_b_info)[5];
   const mxArray *c1_m0 = NULL;
-  int32_T c1_i430;
+  int32_T c1_i429;
   c1_ResolvedFunctionInfo *c1_r0;
   c1_nameCaptureInfo = NULL;
   c1_nameCaptureInfo = NULL;
@@ -18928,27 +18957,27 @@ const mxArray *sf_c1_subwaycontrolsystem_get_eml_resolved_functions_info(void)
   (*c1_b_info)[4].mFileTimeLo = 0U;
   (*c1_b_info)[4].mFileTimeHi = 0U;
   sf_mex_assign(&c1_m0, sf_mex_createstruct("nameCaptureInfo", 1, 5), FALSE);
-  for (c1_i430 = 0; c1_i430 < 5; c1_i430++) {
-    c1_r0 = &c1_info[c1_i430];
+  for (c1_i429 = 0; c1_i429 < 5; c1_i429++) {
+    c1_r0 = &c1_info[c1_i429];
     sf_mex_addfield(c1_m0, sf_mex_create("nameCaptureInfo", c1_r0->context, 15,
       0U, 0U, 0U, 2, 1, strlen(c1_r0->context)), "context", "nameCaptureInfo",
-                    c1_i430);
+                    c1_i429);
     sf_mex_addfield(c1_m0, sf_mex_create("nameCaptureInfo", c1_r0->name, 15, 0U,
-      0U, 0U, 2, 1, strlen(c1_r0->name)), "name", "nameCaptureInfo", c1_i430);
+      0U, 0U, 2, 1, strlen(c1_r0->name)), "name", "nameCaptureInfo", c1_i429);
     sf_mex_addfield(c1_m0, sf_mex_create("nameCaptureInfo", c1_r0->dominantType,
       15, 0U, 0U, 0U, 2, 1, strlen(c1_r0->dominantType)), "dominantType",
-                    "nameCaptureInfo", c1_i430);
+                    "nameCaptureInfo", c1_i429);
     sf_mex_addfield(c1_m0, sf_mex_create("nameCaptureInfo", c1_r0->resolved, 15,
       0U, 0U, 0U, 2, 1, strlen(c1_r0->resolved)), "resolved", "nameCaptureInfo",
-                    c1_i430);
+                    c1_i429);
     sf_mex_addfield(c1_m0, sf_mex_create("nameCaptureInfo", &c1_r0->fileTimeLo,
-      7, 0U, 0U, 0U, 0), "fileTimeLo", "nameCaptureInfo", c1_i430);
+      7, 0U, 0U, 0U, 0), "fileTimeLo", "nameCaptureInfo", c1_i429);
     sf_mex_addfield(c1_m0, sf_mex_create("nameCaptureInfo", &c1_r0->fileTimeHi,
-      7, 0U, 0U, 0U, 0), "fileTimeHi", "nameCaptureInfo", c1_i430);
+      7, 0U, 0U, 0U, 0), "fileTimeHi", "nameCaptureInfo", c1_i429);
     sf_mex_addfield(c1_m0, sf_mex_create("nameCaptureInfo", &c1_r0->mFileTimeLo,
-      7, 0U, 0U, 0U, 0), "mFileTimeLo", "nameCaptureInfo", c1_i430);
+      7, 0U, 0U, 0U, 0), "mFileTimeLo", "nameCaptureInfo", c1_i429);
     sf_mex_addfield(c1_m0, sf_mex_create("nameCaptureInfo", &c1_r0->mFileTimeHi,
-      7, 0U, 0U, 0U, 0), "mFileTimeHi", "nameCaptureInfo", c1_i430);
+      7, 0U, 0U, 0U, 0), "mFileTimeHi", "nameCaptureInfo", c1_i429);
   }
 
   sf_mex_assign(&c1_nameCaptureInfo, c1_m0, FALSE);
@@ -19011,24 +19040,24 @@ static void c1_eml_int_forloop_overflow_check
 static void c1_check_forloop_overflow_error
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance, boolean_T c1_overflow)
 {
-  int32_T c1_i431;
+  int32_T c1_i430;
   static char_T c1_cv0[34] = { 'C', 'o', 'd', 'e', 'r', ':', 't', 'o', 'o', 'l',
     'b', 'o', 'x', ':', 'i', 'n', 't', '_', 'f', 'o', 'r', 'l', 'o', 'o', 'p',
     '_', 'o', 'v', 'e', 'r', 'f', 'l', 'o', 'w' };
 
   char_T c1_cv1[34];
-  int32_T c1_i432;
+  int32_T c1_i431;
   static char_T c1_cv2[5] = { 'i', 'n', 't', '3', '2' };
 
   char_T c1_cv3[5];
   if (!c1_overflow) {
   } else {
-    for (c1_i431 = 0; c1_i431 < 34; c1_i431++) {
-      c1_cv1[c1_i431] = c1_cv0[c1_i431];
+    for (c1_i430 = 0; c1_i430 < 34; c1_i430++) {
+      c1_cv1[c1_i430] = c1_cv0[c1_i430];
     }
 
-    for (c1_i432 = 0; c1_i432 < 5; c1_i432++) {
-      c1_cv3[c1_i432] = c1_cv2[c1_i432];
+    for (c1_i431 = 0; c1_i431 < 5; c1_i431++) {
+      c1_cv3[c1_i431] = c1_cv2[c1_i431];
     }
 
     sf_mex_call_debug("error", 0U, 1U, 14, sf_mex_call_debug("message", 1U, 2U,
@@ -19041,21 +19070,21 @@ static int32_T c1_mtimes(SFc1_subwaycontrolsystemInstanceStruct *chartInstance,
   int32_T c1_a, real_T c1_b)
 {
   real_T c1_d93;
-  int32_T c1_i433;
+  int32_T c1_i432;
   c1_d93 = muDoubleScalarRound((real_T)c1_a * c1_b);
   if (c1_d93 < 2.147483648E+9) {
     if (c1_d93 >= -2.147483648E+9) {
-      c1_i433 = (int32_T)c1_d93;
+      c1_i432 = (int32_T)c1_d93;
     } else {
-      c1_i433 = MIN_int32_T;
+      c1_i432 = MIN_int32_T;
     }
   } else if (c1_d93 >= 2.147483648E+9) {
-    c1_i433 = MAX_int32_T;
+    c1_i432 = MAX_int32_T;
   } else {
-    c1_i433 = 0;
+    c1_i432 = 0;
   }
 
-  return c1_i433;
+  return c1_i432;
 }
 
 static void c1_common_checks(SFc1_subwaycontrolsystemInstanceStruct
@@ -19066,15 +19095,6 @@ static void c1_common_checks(SFc1_subwaycontrolsystemInstanceStruct
 static void c1_integer_only_checks(SFc1_subwaycontrolsystemInstanceStruct
   *chartInstance)
 {
-}
-
-static const mxArray *c1_b_emlrt_marshallOut
-  (SFc1_subwaycontrolsystemInstanceStruct *chartInstance, int32_T c1_u)
-{
-  const mxArray *c1_y = NULL;
-  c1_y = NULL;
-  sf_mex_assign(&c1_y, sf_mex_create("y", &c1_u, 6, 0U, 0U, 0U, 0), FALSE);
-  return c1_y;
 }
 
 static const mxArray *c1_c_emlrt_marshallOut
@@ -19164,13 +19184,13 @@ static const mxArray *c1_d_sf_marshallOut(void *chartInstanceVoid, void
   *c1_inData)
 {
   const mxArray *c1_mxArrayOutData = NULL;
-  int32_T c1_i434;
+  int32_T c1_i433;
   real_T c1_b_inData[4];
   SFc1_subwaycontrolsystemInstanceStruct *chartInstance;
   chartInstance = (SFc1_subwaycontrolsystemInstanceStruct *)chartInstanceVoid;
   c1_mxArrayOutData = NULL;
-  for (c1_i434 = 0; c1_i434 < 4; c1_i434++) {
-    c1_b_inData[c1_i434] = (*(real_T (*)[4])c1_inData)[c1_i434];
+  for (c1_i433 = 0; c1_i433 < 4; c1_i433++) {
+    c1_b_inData[c1_i433] = (*(real_T (*)[4])c1_inData)[c1_i433];
   }
 
   sf_mex_assign(&c1_mxArrayOutData, c1_f_emlrt_marshallOut(chartInstance,
@@ -19191,21 +19211,21 @@ static const mxArray *c1_e_sf_marshallOut(void *chartInstanceVoid, void
   *c1_inData)
 {
   const mxArray *c1_mxArrayOutData = NULL;
+  int32_T c1_i434;
   int32_T c1_i435;
   int32_T c1_i436;
-  int32_T c1_i437;
   real_T c1_b_inData[8];
   SFc1_subwaycontrolsystemInstanceStruct *chartInstance;
   chartInstance = (SFc1_subwaycontrolsystemInstanceStruct *)chartInstanceVoid;
   c1_mxArrayOutData = NULL;
-  c1_i435 = 0;
-  for (c1_i436 = 0; c1_i436 < 2; c1_i436++) {
-    for (c1_i437 = 0; c1_i437 < 4; c1_i437++) {
-      c1_b_inData[c1_i437 + c1_i435] = (*(real_T (*)[8])c1_inData)[c1_i437 +
-        c1_i435];
+  c1_i434 = 0;
+  for (c1_i435 = 0; c1_i435 < 2; c1_i435++) {
+    for (c1_i436 = 0; c1_i436 < 4; c1_i436++) {
+      c1_b_inData[c1_i436 + c1_i434] = (*(real_T (*)[8])c1_inData)[c1_i436 +
+        c1_i434];
     }
 
-    c1_i435 += 4;
+    c1_i434 += 4;
   }
 
   sf_mex_assign(&c1_mxArrayOutData, c1_g_emlrt_marshallOut(chartInstance,
@@ -19229,10 +19249,10 @@ static void c1_h_emlrt_marshallIn(SFc1_subwaycontrolsystemInstanceStruct
   real_T c1_y[4])
 {
   real_T c1_dv0[4];
-  int32_T c1_i438;
+  int32_T c1_i437;
   sf_mex_import(c1_parentId, sf_mex_dup(c1_u), c1_dv0, 1, 0, 0U, 1, 0U, 2, 4, 1);
-  for (c1_i438 = 0; c1_i438 < 4; c1_i438++) {
-    c1_y[c1_i438] = c1_dv0[c1_i438];
+  for (c1_i437 = 0; c1_i437 < 4; c1_i437++) {
+    c1_y[c1_i437] = c1_dv0[c1_i437];
   }
 
   sf_mex_destroy(&c1_u);
@@ -19242,13 +19262,13 @@ static void c1_d_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c1_mxArrayInData, const char_T *c1_varName, void *c1_outData)
 {
   real_T c1_dv1[4];
-  int32_T c1_i439;
+  int32_T c1_i438;
   SFc1_subwaycontrolsystemInstanceStruct *chartInstance;
   chartInstance = (SFc1_subwaycontrolsystemInstanceStruct *)chartInstanceVoid;
   c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(c1_mxArrayInData), c1_varName,
                         c1_dv1);
-  for (c1_i439 = 0; c1_i439 < 4; c1_i439++) {
-    (*(real_T (*)[4])c1_outData)[c1_i439] = c1_dv1[c1_i439];
+  for (c1_i438 = 0; c1_i438 < 4; c1_i438++) {
+    (*(real_T (*)[4])c1_outData)[c1_i438] = c1_dv1[c1_i438];
   }
 
   sf_mex_destroy(&c1_mxArrayInData);
@@ -19267,13 +19287,13 @@ static const mxArray *c1_f_sf_marshallOut(void *chartInstanceVoid, void
   *c1_inData)
 {
   const mxArray *c1_mxArrayOutData = NULL;
-  int32_T c1_i440;
+  int32_T c1_i439;
   real_T c1_b_inData[4];
   SFc1_subwaycontrolsystemInstanceStruct *chartInstance;
   chartInstance = (SFc1_subwaycontrolsystemInstanceStruct *)chartInstanceVoid;
   c1_mxArrayOutData = NULL;
-  for (c1_i440 = 0; c1_i440 < 4; c1_i440++) {
-    c1_b_inData[c1_i440] = (*(real_T (*)[4])c1_inData)[c1_i440];
+  for (c1_i439 = 0; c1_i439 < 4; c1_i439++) {
+    c1_b_inData[c1_i439] = (*(real_T (*)[4])c1_inData)[c1_i439];
   }
 
   sf_mex_assign(&c1_mxArrayOutData, c1_h_emlrt_marshallOut(chartInstance,
@@ -19297,10 +19317,10 @@ static void c1_j_emlrt_marshallIn(SFc1_subwaycontrolsystemInstanceStruct
   real_T c1_y[4])
 {
   real_T c1_dv2[4];
-  int32_T c1_i441;
+  int32_T c1_i440;
   sf_mex_import(c1_parentId, sf_mex_dup(c1_u), c1_dv2, 1, 0, 0U, 1, 0U, 2, 1, 4);
-  for (c1_i441 = 0; c1_i441 < 4; c1_i441++) {
-    c1_y[c1_i441] = c1_dv2[c1_i441];
+  for (c1_i440 = 0; c1_i440 < 4; c1_i440++) {
+    c1_y[c1_i440] = c1_dv2[c1_i440];
   }
 
   sf_mex_destroy(&c1_u);
@@ -19310,13 +19330,13 @@ static void c1_e_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c1_mxArrayInData, const char_T *c1_varName, void *c1_outData)
 {
   real_T c1_dv3[4];
-  int32_T c1_i442;
+  int32_T c1_i441;
   SFc1_subwaycontrolsystemInstanceStruct *chartInstance;
   chartInstance = (SFc1_subwaycontrolsystemInstanceStruct *)chartInstanceVoid;
   c1_i_emlrt_marshallIn(chartInstance, sf_mex_dup(c1_mxArrayInData), c1_varName,
                         c1_dv3);
-  for (c1_i442 = 0; c1_i442 < 4; c1_i442++) {
-    (*(real_T (*)[4])c1_outData)[c1_i442] = c1_dv3[c1_i442];
+  for (c1_i441 = 0; c1_i441 < 4; c1_i441++) {
+    (*(real_T (*)[4])c1_outData)[c1_i441] = c1_dv3[c1_i441];
   }
 
   sf_mex_destroy(&c1_mxArrayInData);
@@ -19339,10 +19359,10 @@ static void c1_l_emlrt_marshallIn(SFc1_subwaycontrolsystemInstanceStruct
   real_T c1_y[8])
 {
   real_T c1_dv4[8];
-  int32_T c1_i443;
+  int32_T c1_i442;
   sf_mex_import(c1_parentId, sf_mex_dup(c1_u), c1_dv4, 1, 0, 0U, 1, 0U, 2, 4, 2);
-  for (c1_i443 = 0; c1_i443 < 8; c1_i443++) {
-    c1_y[c1_i443] = c1_dv4[c1_i443];
+  for (c1_i442 = 0; c1_i442 < 8; c1_i442++) {
+    c1_y[c1_i442] = c1_dv4[c1_i442];
   }
 
   sf_mex_destroy(&c1_u);
@@ -19352,20 +19372,20 @@ static void c1_f_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c1_mxArrayInData, const char_T *c1_varName, void *c1_outData)
 {
   real_T c1_dv5[8];
+  int32_T c1_i443;
   int32_T c1_i444;
   int32_T c1_i445;
-  int32_T c1_i446;
   SFc1_subwaycontrolsystemInstanceStruct *chartInstance;
   chartInstance = (SFc1_subwaycontrolsystemInstanceStruct *)chartInstanceVoid;
   c1_k_emlrt_marshallIn(chartInstance, sf_mex_dup(c1_mxArrayInData), c1_varName,
                         c1_dv5);
-  c1_i444 = 0;
-  for (c1_i445 = 0; c1_i445 < 2; c1_i445++) {
-    for (c1_i446 = 0; c1_i446 < 4; c1_i446++) {
-      (*(real_T (*)[8])c1_outData)[c1_i446 + c1_i444] = c1_dv5[c1_i446 + c1_i444];
+  c1_i443 = 0;
+  for (c1_i444 = 0; c1_i444 < 2; c1_i444++) {
+    for (c1_i445 = 0; c1_i445 < 4; c1_i445++) {
+      (*(real_T (*)[8])c1_outData)[c1_i445 + c1_i443] = c1_dv5[c1_i445 + c1_i443];
     }
 
-    c1_i444 += 4;
+    c1_i443 += 4;
   }
 
   sf_mex_destroy(&c1_mxArrayInData);
@@ -19384,13 +19404,13 @@ static const mxArray *c1_g_sf_marshallOut(void *chartInstanceVoid, void
   *c1_inData)
 {
   const mxArray *c1_mxArrayOutData = NULL;
-  int32_T c1_i447;
+  int32_T c1_i446;
   int32_T c1_b_inData[4];
   SFc1_subwaycontrolsystemInstanceStruct *chartInstance;
   chartInstance = (SFc1_subwaycontrolsystemInstanceStruct *)chartInstanceVoid;
   c1_mxArrayOutData = NULL;
-  for (c1_i447 = 0; c1_i447 < 4; c1_i447++) {
-    c1_b_inData[c1_i447] = (*(int32_T (*)[4])c1_inData)[c1_i447];
+  for (c1_i446 = 0; c1_i446 < 4; c1_i446++) {
+    c1_b_inData[c1_i446] = (*(int32_T (*)[4])c1_inData)[c1_i446];
   }
 
   sf_mex_assign(&c1_mxArrayOutData, c1_i_emlrt_marshallOut(chartInstance,
@@ -19414,10 +19434,10 @@ static void c1_n_emlrt_marshallIn(SFc1_subwaycontrolsystemInstanceStruct
   int32_T c1_y[4])
 {
   int32_T c1_iv0[4];
-  int32_T c1_i448;
+  int32_T c1_i447;
   sf_mex_import(c1_parentId, sf_mex_dup(c1_u), c1_iv0, 1, 6, 0U, 1, 0U, 2, 4, 1);
-  for (c1_i448 = 0; c1_i448 < 4; c1_i448++) {
-    c1_y[c1_i448] = c1_iv0[c1_i448];
+  for (c1_i447 = 0; c1_i447 < 4; c1_i447++) {
+    c1_y[c1_i447] = c1_iv0[c1_i447];
   }
 
   sf_mex_destroy(&c1_u);
@@ -19427,13 +19447,13 @@ static void c1_g_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c1_mxArrayInData, const char_T *c1_varName, void *c1_outData)
 {
   int32_T c1_iv1[4];
-  int32_T c1_i449;
+  int32_T c1_i448;
   SFc1_subwaycontrolsystemInstanceStruct *chartInstance;
   chartInstance = (SFc1_subwaycontrolsystemInstanceStruct *)chartInstanceVoid;
   c1_m_emlrt_marshallIn(chartInstance, sf_mex_dup(c1_mxArrayInData), c1_varName,
                         c1_iv1);
-  for (c1_i449 = 0; c1_i449 < 4; c1_i449++) {
-    (*(int32_T (*)[4])c1_outData)[c1_i449] = c1_iv1[c1_i449];
+  for (c1_i448 = 0; c1_i448 < 4; c1_i448++) {
+    (*(int32_T (*)[4])c1_outData)[c1_i448] = c1_iv1[c1_i448];
   }
 
   sf_mex_destroy(&c1_mxArrayInData);
@@ -19452,13 +19472,13 @@ static const mxArray *c1_h_sf_marshallOut(void *chartInstanceVoid, void
   *c1_inData)
 {
   const mxArray *c1_mxArrayOutData = NULL;
-  int32_T c1_i450;
+  int32_T c1_i449;
   int32_T c1_b_inData[4];
   SFc1_subwaycontrolsystemInstanceStruct *chartInstance;
   chartInstance = (SFc1_subwaycontrolsystemInstanceStruct *)chartInstanceVoid;
   c1_mxArrayOutData = NULL;
-  for (c1_i450 = 0; c1_i450 < 4; c1_i450++) {
-    c1_b_inData[c1_i450] = (*(int32_T (*)[4])c1_inData)[c1_i450];
+  for (c1_i449 = 0; c1_i449 < 4; c1_i449++) {
+    c1_b_inData[c1_i449] = (*(int32_T (*)[4])c1_inData)[c1_i449];
   }
 
   sf_mex_assign(&c1_mxArrayOutData, c1_j_emlrt_marshallOut(chartInstance,
@@ -19483,10 +19503,10 @@ static void c1_p_emlrt_marshallIn(SFc1_subwaycontrolsystemInstanceStruct
   int32_T c1_y[4])
 {
   int32_T c1_iv2[4];
-  int32_T c1_i451;
+  int32_T c1_i450;
   sf_mex_import(c1_parentId, sf_mex_dup(c1_u), c1_iv2, 1, 6, 0U, 1, 0U, 2, 1, 4);
-  for (c1_i451 = 0; c1_i451 < 4; c1_i451++) {
-    c1_y[c1_i451] = c1_iv2[c1_i451];
+  for (c1_i450 = 0; c1_i450 < 4; c1_i450++) {
+    c1_y[c1_i450] = c1_iv2[c1_i450];
   }
 
   sf_mex_destroy(&c1_u);
@@ -19496,13 +19516,13 @@ static void c1_h_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c1_mxArrayInData, const char_T *c1_varName, void *c1_outData)
 {
   int32_T c1_iv3[4];
-  int32_T c1_i452;
+  int32_T c1_i451;
   SFc1_subwaycontrolsystemInstanceStruct *chartInstance;
   chartInstance = (SFc1_subwaycontrolsystemInstanceStruct *)chartInstanceVoid;
   c1_o_emlrt_marshallIn(chartInstance, sf_mex_dup(c1_mxArrayInData), c1_varName,
                         c1_iv3);
-  for (c1_i452 = 0; c1_i452 < 4; c1_i452++) {
-    (*(int32_T (*)[4])c1_outData)[c1_i452] = c1_iv3[c1_i452];
+  for (c1_i451 = 0; c1_i451 < 4; c1_i451++) {
+    (*(int32_T (*)[4])c1_outData)[c1_i451] = c1_iv3[c1_i451];
   }
 
   sf_mex_destroy(&c1_mxArrayInData);
@@ -19512,42 +19532,43 @@ static const mxArray *c1_k_emlrt_marshallOut
   (SFc1_subwaycontrolsystemInstanceStruct *chartInstance)
 {
   const mxArray *c1_y;
-  int32_T c1_i453;
+  int32_T c1_i452;
   real_T c1_dv6[4];
-  int32_T c1_i454;
+  int32_T c1_i453;
   real_T c1_dv7[4];
-  int32_T c1_i455;
+  int32_T c1_i454;
   real_T c1_dv8[8];
-  int32_T c1_i456;
+  int32_T c1_i455;
   real_T c1_dv9[4];
-  int32_T c1_i457;
+  int32_T c1_i456;
   real_T c1_dv10[8];
-  int32_T c1_i458;
+  int32_T c1_i457;
   int32_T c1_iv4[4];
-  int32_T c1_i459;
+  int32_T c1_i458;
   real_T c1_dv11[4];
-  int32_T c1_i460;
+  int32_T c1_i459;
   real_T c1_dv12[8];
-  int32_T c1_i461;
+  int32_T c1_i460;
   real_T c1_dv13[4];
-  int32_T c1_i462;
+  int32_T c1_i461;
   int32_T c1_iv5[4];
-  int32_T c1_i463;
+  int32_T c1_i462;
   real_T c1_dv14[8];
-  int32_T c1_i464;
+  int32_T c1_i463;
   real_T c1_dv15[4];
-  int32_T c1_i465;
+  int32_T c1_i464;
   real_T c1_dv16[4];
-  int32_T c1_i466;
+  int32_T c1_i465;
   real_T c1_dv17[4];
-  int32_T c1_i467;
+  int32_T c1_i466;
   real_T c1_dv18[4];
-  int32_T c1_i468;
+  int32_T c1_i467;
   real_T c1_dv19[4];
-  int32_T c1_i469;
+  int32_T c1_i468;
   real_T c1_dv20[4];
-  int32_T c1_i470;
+  int32_T c1_i469;
   real_T c1_dv21[4];
+  real_T *c1_dir1_out;
   real_T *c1_distance;
   real_T *c1_b_distance;
   real_T *c1_c_distance;
@@ -19609,280 +19630,282 @@ static const mxArray *c1_k_emlrt_marshallOut
   c1_b_v = (real_T *)(ssGetContStates(chartInstance->S) + 2);
   c1_b_z = (real_T *)(ssGetContStates(chartInstance->S) + 1);
   c1_t = (real_T *)(ssGetContStates(chartInstance->S) + 0);
+  c1_dir1_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 4);
   c1_y2_out = (real_T (*)[8])ssGetOutputPortSignal(chartInstance->S, 3);
   c1_y1_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 2);
   c1_distance_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 1);
   c1_y = NULL;
   c1_y = NULL;
-  sf_mex_assign(&c1_y, sf_mex_createcellarray(122), FALSE);
+  sf_mex_assign(&c1_y, sf_mex_createcellarray(123), FALSE);
+  sf_mex_setcell(c1_y, 0, c1_emlrt_marshallOut(chartInstance, *c1_dir1_out));
+  for (c1_i452 = 0; c1_i452 < 4; c1_i452++) {
+    c1_dv6[c1_i452] = (*c1_distance_out)[c1_i452];
+  }
+
+  sf_mex_setcell(c1_y, 1, c1_f_emlrt_marshallOut(chartInstance, c1_dv6));
   for (c1_i453 = 0; c1_i453 < 4; c1_i453++) {
-    c1_dv6[c1_i453] = (*c1_distance_out)[c1_i453];
+    c1_dv7[c1_i453] = (*c1_y1_out)[c1_i453];
   }
 
-  sf_mex_setcell(c1_y, 0, c1_f_emlrt_marshallOut(chartInstance, c1_dv6));
-  for (c1_i454 = 0; c1_i454 < 4; c1_i454++) {
-    c1_dv7[c1_i454] = (*c1_y1_out)[c1_i454];
+  sf_mex_setcell(c1_y, 2, c1_f_emlrt_marshallOut(chartInstance, c1_dv7));
+  for (c1_i454 = 0; c1_i454 < 8; c1_i454++) {
+    c1_dv8[c1_i454] = (*c1_y2_out)[c1_i454];
   }
 
-  sf_mex_setcell(c1_y, 1, c1_f_emlrt_marshallOut(chartInstance, c1_dv7));
-  for (c1_i455 = 0; c1_i455 < 8; c1_i455++) {
-    c1_dv8[c1_i455] = (*c1_y2_out)[c1_i455];
+  sf_mex_setcell(c1_y, 3, c1_g_emlrt_marshallOut(chartInstance, c1_dv8));
+  for (c1_i455 = 0; c1_i455 < 4; c1_i455++) {
+    c1_dv9[c1_i455] = chartInstance->c1_Delay[c1_i455];
   }
 
-  sf_mex_setcell(c1_y, 2, c1_g_emlrt_marshallOut(chartInstance, c1_dv8));
-  for (c1_i456 = 0; c1_i456 < 4; c1_i456++) {
-    c1_dv9[c1_i456] = chartInstance->c1_Delay[c1_i456];
-  }
-
-  sf_mex_setcell(c1_y, 3, c1_h_emlrt_marshallOut(chartInstance, c1_dv9));
-  sf_mex_setcell(c1_y, 4, c1_b_emlrt_marshallOut(chartInstance,
+  sf_mex_setcell(c1_y, 4, c1_h_emlrt_marshallOut(chartInstance, c1_dv9));
+  sf_mex_setcell(c1_y, 5, c1_b_emlrt_marshallOut(chartInstance,
     chartInstance->c1_N));
-  for (c1_i457 = 0; c1_i457 < 8; c1_i457++) {
-    c1_dv10[c1_i457] = chartInstance->c1_PSDClosed[c1_i457];
+  for (c1_i456 = 0; c1_i456 < 8; c1_i456++) {
+    c1_dv10[c1_i456] = chartInstance->c1_PSDClosed[c1_i456];
   }
 
-  sf_mex_setcell(c1_y, 5, c1_g_emlrt_marshallOut(chartInstance, c1_dv10));
+  sf_mex_setcell(c1_y, 6, c1_g_emlrt_marshallOut(chartInstance, c1_dv10));
+  for (c1_i457 = 0; c1_i457 < 4; c1_i457++) {
+    c1_iv4[c1_i457] = chartInstance->c1_RelevantIndex[c1_i457];
+  }
+
+  sf_mex_setcell(c1_y, 7, c1_j_emlrt_marshallOut(chartInstance, c1_iv4));
   for (c1_i458 = 0; c1_i458 < 4; c1_i458++) {
-    c1_iv4[c1_i458] = chartInstance->c1_RelevantIndex[c1_i458];
+    c1_dv11[c1_i458] = chartInstance->c1_S[c1_i458];
   }
 
-  sf_mex_setcell(c1_y, 6, c1_j_emlrt_marshallOut(chartInstance, c1_iv4));
-  for (c1_i459 = 0; c1_i459 < 4; c1_i459++) {
-    c1_dv11[c1_i459] = chartInstance->c1_S[c1_i459];
-  }
-
-  sf_mex_setcell(c1_y, 7, c1_h_emlrt_marshallOut(chartInstance, c1_dv11));
-  sf_mex_setcell(c1_y, 8, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_d_acc));
+  sf_mex_setcell(c1_y, 8, c1_h_emlrt_marshallOut(chartInstance, c1_dv11));
   sf_mex_setcell(c1_y, 9, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_acc));
+    chartInstance->c1_d_acc));
   sf_mex_setcell(c1_y, 10, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_b_acc));
+    chartInstance->c1_acc));
   sf_mex_setcell(c1_y, 11, c1_emlrt_marshallOut(chartInstance,
+    chartInstance->c1_b_acc));
+  sf_mex_setcell(c1_y, 12, c1_emlrt_marshallOut(chartInstance,
     chartInstance->c1_c_acc));
-  for (c1_i460 = 0; c1_i460 < 8; c1_i460++) {
-    c1_dv12[c1_i460] = chartInstance->c1_closePSD[c1_i460];
+  for (c1_i459 = 0; c1_i459 < 8; c1_i459++) {
+    c1_dv12[c1_i459] = chartInstance->c1_closePSD[c1_i459];
   }
 
-  sf_mex_setcell(c1_y, 12, c1_g_emlrt_marshallOut(chartInstance, c1_dv12));
+  sf_mex_setcell(c1_y, 13, c1_g_emlrt_marshallOut(chartInstance, c1_dv12));
+  for (c1_i460 = 0; c1_i460 < 4; c1_i460++) {
+    c1_dv13[c1_i460] = chartInstance->c1_closeTD[c1_i460];
+  }
+
+  sf_mex_setcell(c1_y, 14, c1_f_emlrt_marshallOut(chartInstance, c1_dv13));
   for (c1_i461 = 0; c1_i461 < 4; c1_i461++) {
-    c1_dv13[c1_i461] = chartInstance->c1_closeTD[c1_i461];
+    c1_iv5[c1_i461] = chartInstance->c1_dir[c1_i461];
   }
 
-  sf_mex_setcell(c1_y, 13, c1_f_emlrt_marshallOut(chartInstance, c1_dv13));
-  for (c1_i462 = 0; c1_i462 < 4; c1_i462++) {
-    c1_iv5[c1_i462] = chartInstance->c1_dir[c1_i462];
-  }
-
-  sf_mex_setcell(c1_y, 14, c1_i_emlrt_marshallOut(chartInstance, c1_iv5));
-  sf_mex_setcell(c1_y, 15, c1_b_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_dis));
+  sf_mex_setcell(c1_y, 15, c1_i_emlrt_marshallOut(chartInstance, c1_iv5));
   sf_mex_setcell(c1_y, 16, c1_b_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_i));
+    chartInstance->c1_dis));
   sf_mex_setcell(c1_y, 17, c1_b_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_i_i));
+    chartInstance->c1_i));
   sf_mex_setcell(c1_y, 18, c1_b_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_d_i));
+    chartInstance->c1_i_i));
   sf_mex_setcell(c1_y, 19, c1_b_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_b_i));
+    chartInstance->c1_d_i));
   sf_mex_setcell(c1_y, 20, c1_b_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_g_i));
+    chartInstance->c1_b_i));
   sf_mex_setcell(c1_y, 21, c1_b_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_f_i));
+    chartInstance->c1_g_i));
   sf_mex_setcell(c1_y, 22, c1_b_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_c_i));
+    chartInstance->c1_f_i));
   sf_mex_setcell(c1_y, 23, c1_b_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_e_i));
+    chartInstance->c1_c_i));
   sf_mex_setcell(c1_y, 24, c1_b_emlrt_marshallOut(chartInstance,
+    chartInstance->c1_e_i));
+  sf_mex_setcell(c1_y, 25, c1_b_emlrt_marshallOut(chartInstance,
     chartInstance->c1_h_i));
-  sf_mex_setcell(c1_y, 25, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_d_j));
   sf_mex_setcell(c1_y, 26, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_j));
+    chartInstance->c1_d_j));
   sf_mex_setcell(c1_y, 27, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_b_j));
+    chartInstance->c1_j));
   sf_mex_setcell(c1_y, 28, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_c_j));
+    chartInstance->c1_b_j));
   sf_mex_setcell(c1_y, 29, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_d_maxv));
+    chartInstance->c1_c_j));
   sf_mex_setcell(c1_y, 30, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_maxv));
+    chartInstance->c1_d_maxv));
   sf_mex_setcell(c1_y, 31, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_b_maxv));
+    chartInstance->c1_maxv));
   sf_mex_setcell(c1_y, 32, c1_emlrt_marshallOut(chartInstance,
+    chartInstance->c1_b_maxv));
+  sf_mex_setcell(c1_y, 33, c1_emlrt_marshallOut(chartInstance,
     chartInstance->c1_c_maxv));
-  for (c1_i463 = 0; c1_i463 < 8; c1_i463++) {
-    c1_dv14[c1_i463] = chartInstance->c1_openPSD[c1_i463];
+  for (c1_i462 = 0; c1_i462 < 8; c1_i462++) {
+    c1_dv14[c1_i462] = chartInstance->c1_openPSD[c1_i462];
   }
 
-  sf_mex_setcell(c1_y, 33, c1_g_emlrt_marshallOut(chartInstance, c1_dv14));
+  sf_mex_setcell(c1_y, 34, c1_g_emlrt_marshallOut(chartInstance, c1_dv14));
+  for (c1_i463 = 0; c1_i463 < 4; c1_i463++) {
+    c1_dv15[c1_i463] = chartInstance->c1_openTD[c1_i463];
+  }
+
+  sf_mex_setcell(c1_y, 35, c1_f_emlrt_marshallOut(chartInstance, c1_dv15));
   for (c1_i464 = 0; c1_i464 < 4; c1_i464++) {
-    c1_dv15[c1_i464] = chartInstance->c1_openTD[c1_i464];
+    c1_dv16[c1_i464] = chartInstance->c1_position[c1_i464];
   }
 
-  sf_mex_setcell(c1_y, 34, c1_f_emlrt_marshallOut(chartInstance, c1_dv15));
-  for (c1_i465 = 0; c1_i465 < 4; c1_i465++) {
-    c1_dv16[c1_i465] = chartInstance->c1_position[c1_i465];
-  }
-
-  sf_mex_setcell(c1_y, 35, c1_f_emlrt_marshallOut(chartInstance, c1_dv16));
-  sf_mex_setcell(c1_y, 36, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_b_side));
+  sf_mex_setcell(c1_y, 36, c1_f_emlrt_marshallOut(chartInstance, c1_dv16));
   sf_mex_setcell(c1_y, 37, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_side));
+    chartInstance->c1_b_side));
   sf_mex_setcell(c1_y, 38, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_d_side));
+    chartInstance->c1_side));
   sf_mex_setcell(c1_y, 39, c1_emlrt_marshallOut(chartInstance,
+    chartInstance->c1_d_side));
+  sf_mex_setcell(c1_y, 40, c1_emlrt_marshallOut(chartInstance,
     chartInstance->c1_c_side));
-  for (c1_i466 = 0; c1_i466 < 4; c1_i466++) {
-    c1_dv17[c1_i466] = chartInstance->c1_start[c1_i466];
+  for (c1_i465 = 0; c1_i465 < 4; c1_i465++) {
+    c1_dv17[c1_i465] = chartInstance->c1_start[c1_i465];
   }
 
-  sf_mex_setcell(c1_y, 40, c1_f_emlrt_marshallOut(chartInstance, c1_dv17));
-  sf_mex_setcell(c1_y, 41, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_b_stationid));
+  sf_mex_setcell(c1_y, 41, c1_f_emlrt_marshallOut(chartInstance, c1_dv17));
   sf_mex_setcell(c1_y, 42, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_stationid));
+    chartInstance->c1_b_stationid));
   sf_mex_setcell(c1_y, 43, c1_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_d_stationid));
+    chartInstance->c1_stationid));
   sf_mex_setcell(c1_y, 44, c1_emlrt_marshallOut(chartInstance,
+    chartInstance->c1_d_stationid));
+  sf_mex_setcell(c1_y, 45, c1_emlrt_marshallOut(chartInstance,
     chartInstance->c1_c_stationid));
-  for (c1_i467 = 0; c1_i467 < 4; c1_i467++) {
-    c1_dv18[c1_i467] = chartInstance->c1_stop[c1_i467];
+  for (c1_i466 = 0; c1_i466 < 4; c1_i466++) {
+    c1_dv18[c1_i466] = chartInstance->c1_stop[c1_i466];
   }
 
-  sf_mex_setcell(c1_y, 45, c1_h_emlrt_marshallOut(chartInstance, c1_dv18));
-  sf_mex_setcell(c1_y, 46, c1_b_emlrt_marshallOut(chartInstance,
+  sf_mex_setcell(c1_y, 46, c1_h_emlrt_marshallOut(chartInstance, c1_dv18));
+  sf_mex_setcell(c1_y, 47, c1_b_emlrt_marshallOut(chartInstance,
     chartInstance->c1_tdis));
+  for (c1_i467 = 0; c1_i467 < 4; c1_i467++) {
+    c1_dv19[c1_i467] = chartInstance->c1_urstart[c1_i467];
+  }
+
+  sf_mex_setcell(c1_y, 48, c1_f_emlrt_marshallOut(chartInstance, c1_dv19));
   for (c1_i468 = 0; c1_i468 < 4; c1_i468++) {
-    c1_dv19[c1_i468] = chartInstance->c1_urstart[c1_i468];
+    c1_dv20[c1_i468] = chartInstance->c1_urstop[c1_i468];
   }
 
-  sf_mex_setcell(c1_y, 47, c1_f_emlrt_marshallOut(chartInstance, c1_dv19));
+  sf_mex_setcell(c1_y, 49, c1_f_emlrt_marshallOut(chartInstance, c1_dv20));
   for (c1_i469 = 0; c1_i469 < 4; c1_i469++) {
-    c1_dv20[c1_i469] = chartInstance->c1_urstop[c1_i469];
+    c1_dv21[c1_i469] = chartInstance->c1_urstopped[c1_i469];
   }
 
-  sf_mex_setcell(c1_y, 48, c1_f_emlrt_marshallOut(chartInstance, c1_dv20));
-  for (c1_i470 = 0; c1_i470 < 4; c1_i470++) {
-    c1_dv21[c1_i470] = chartInstance->c1_urstopped[c1_i470];
-  }
-
-  sf_mex_setcell(c1_y, 49, c1_f_emlrt_marshallOut(chartInstance, c1_dv21));
-  sf_mex_setcell(c1_y, 50, c1_emlrt_marshallOut(chartInstance, *c1_distance));
-  sf_mex_setcell(c1_y, 51, c1_emlrt_marshallOut(chartInstance, *c1_b_distance));
-  sf_mex_setcell(c1_y, 52, c1_emlrt_marshallOut(chartInstance, *c1_c_distance));
-  sf_mex_setcell(c1_y, 53, c1_emlrt_marshallOut(chartInstance, *c1_d_distance));
-  sf_mex_setcell(c1_y, 54, c1_emlrt_marshallOut(chartInstance, *c1_t));
-  sf_mex_setcell(c1_y, 55, c1_emlrt_marshallOut(chartInstance, *c1_time));
-  sf_mex_setcell(c1_y, 56, c1_emlrt_marshallOut(chartInstance, *c1_b_time));
-  sf_mex_setcell(c1_y, 57, c1_emlrt_marshallOut(chartInstance, *c1_c_time));
-  sf_mex_setcell(c1_y, 58, c1_emlrt_marshallOut(chartInstance, *c1_d_time));
-  sf_mex_setcell(c1_y, 59, c1_emlrt_marshallOut(chartInstance, *c1_v));
-  sf_mex_setcell(c1_y, 60, c1_emlrt_marshallOut(chartInstance, *c1_b_v));
-  sf_mex_setcell(c1_y, 61, c1_emlrt_marshallOut(chartInstance, *c1_c_v));
-  sf_mex_setcell(c1_y, 62, c1_emlrt_marshallOut(chartInstance, *c1_d_v));
-  sf_mex_setcell(c1_y, 63, c1_emlrt_marshallOut(chartInstance, *c1_y1));
-  sf_mex_setcell(c1_y, 64, c1_emlrt_marshallOut(chartInstance, *c1_b_y1));
-  sf_mex_setcell(c1_y, 65, c1_emlrt_marshallOut(chartInstance, *c1_c_y1));
-  sf_mex_setcell(c1_y, 66, c1_emlrt_marshallOut(chartInstance, *c1_d_y1));
-  sf_mex_setcell(c1_y, 67, c1_emlrt_marshallOut(chartInstance, *c1_y2));
-  sf_mex_setcell(c1_y, 68, c1_emlrt_marshallOut(chartInstance, *c1_b_y2));
-  sf_mex_setcell(c1_y, 69, c1_emlrt_marshallOut(chartInstance, *c1_c_y2));
-  sf_mex_setcell(c1_y, 70, c1_emlrt_marshallOut(chartInstance, *c1_d_y2));
-  sf_mex_setcell(c1_y, 71, c1_emlrt_marshallOut(chartInstance, *c1_e_y2));
-  sf_mex_setcell(c1_y, 72, c1_emlrt_marshallOut(chartInstance, *c1_f_y2));
-  sf_mex_setcell(c1_y, 73, c1_emlrt_marshallOut(chartInstance, *c1_g_y2));
-  sf_mex_setcell(c1_y, 74, c1_emlrt_marshallOut(chartInstance, *c1_h_y2));
-  sf_mex_setcell(c1_y, 75, c1_emlrt_marshallOut(chartInstance, *c1_z));
-  sf_mex_setcell(c1_y, 76, c1_emlrt_marshallOut(chartInstance, *c1_b_z));
-  sf_mex_setcell(c1_y, 77, c1_emlrt_marshallOut(chartInstance, *c1_c_z));
-  sf_mex_setcell(c1_y, 78, c1_emlrt_marshallOut(chartInstance, *c1_d_z));
-  sf_mex_setcell(c1_y, 79, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_c1_subwaycontrolsystem));
+  sf_mex_setcell(c1_y, 50, c1_f_emlrt_marshallOut(chartInstance, c1_dv21));
+  sf_mex_setcell(c1_y, 51, c1_emlrt_marshallOut(chartInstance, *c1_distance));
+  sf_mex_setcell(c1_y, 52, c1_emlrt_marshallOut(chartInstance, *c1_b_distance));
+  sf_mex_setcell(c1_y, 53, c1_emlrt_marshallOut(chartInstance, *c1_c_distance));
+  sf_mex_setcell(c1_y, 54, c1_emlrt_marshallOut(chartInstance, *c1_d_distance));
+  sf_mex_setcell(c1_y, 55, c1_emlrt_marshallOut(chartInstance, *c1_t));
+  sf_mex_setcell(c1_y, 56, c1_emlrt_marshallOut(chartInstance, *c1_time));
+  sf_mex_setcell(c1_y, 57, c1_emlrt_marshallOut(chartInstance, *c1_b_time));
+  sf_mex_setcell(c1_y, 58, c1_emlrt_marshallOut(chartInstance, *c1_c_time));
+  sf_mex_setcell(c1_y, 59, c1_emlrt_marshallOut(chartInstance, *c1_d_time));
+  sf_mex_setcell(c1_y, 60, c1_emlrt_marshallOut(chartInstance, *c1_v));
+  sf_mex_setcell(c1_y, 61, c1_emlrt_marshallOut(chartInstance, *c1_b_v));
+  sf_mex_setcell(c1_y, 62, c1_emlrt_marshallOut(chartInstance, *c1_c_v));
+  sf_mex_setcell(c1_y, 63, c1_emlrt_marshallOut(chartInstance, *c1_d_v));
+  sf_mex_setcell(c1_y, 64, c1_emlrt_marshallOut(chartInstance, *c1_y1));
+  sf_mex_setcell(c1_y, 65, c1_emlrt_marshallOut(chartInstance, *c1_b_y1));
+  sf_mex_setcell(c1_y, 66, c1_emlrt_marshallOut(chartInstance, *c1_c_y1));
+  sf_mex_setcell(c1_y, 67, c1_emlrt_marshallOut(chartInstance, *c1_d_y1));
+  sf_mex_setcell(c1_y, 68, c1_emlrt_marshallOut(chartInstance, *c1_y2));
+  sf_mex_setcell(c1_y, 69, c1_emlrt_marshallOut(chartInstance, *c1_b_y2));
+  sf_mex_setcell(c1_y, 70, c1_emlrt_marshallOut(chartInstance, *c1_c_y2));
+  sf_mex_setcell(c1_y, 71, c1_emlrt_marshallOut(chartInstance, *c1_d_y2));
+  sf_mex_setcell(c1_y, 72, c1_emlrt_marshallOut(chartInstance, *c1_e_y2));
+  sf_mex_setcell(c1_y, 73, c1_emlrt_marshallOut(chartInstance, *c1_f_y2));
+  sf_mex_setcell(c1_y, 74, c1_emlrt_marshallOut(chartInstance, *c1_g_y2));
+  sf_mex_setcell(c1_y, 75, c1_emlrt_marshallOut(chartInstance, *c1_h_y2));
+  sf_mex_setcell(c1_y, 76, c1_emlrt_marshallOut(chartInstance, *c1_z));
+  sf_mex_setcell(c1_y, 77, c1_emlrt_marshallOut(chartInstance, *c1_b_z));
+  sf_mex_setcell(c1_y, 78, c1_emlrt_marshallOut(chartInstance, *c1_c_z));
+  sf_mex_setcell(c1_y, 79, c1_emlrt_marshallOut(chartInstance, *c1_d_z));
   sf_mex_setcell(c1_y, 80, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Train0_door));
+    chartInstance->c1_is_active_c1_subwaycontrolsystem));
   sf_mex_setcell(c1_y, 81, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Screen_door00));
+    chartInstance->c1_is_active_Train0_door));
   sf_mex_setcell(c1_y, 82, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Controller0));
+    chartInstance->c1_is_active_Screen_door00));
   sf_mex_setcell(c1_y, 83, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Screen_door01));
+    chartInstance->c1_is_active_Controller0));
   sf_mex_setcell(c1_y, 84, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Screen_door10));
+    chartInstance->c1_is_active_Screen_door01));
   sf_mex_setcell(c1_y, 85, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Screen_door11));
+    chartInstance->c1_is_active_Screen_door10));
   sf_mex_setcell(c1_y, 86, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Screen_door20));
+    chartInstance->c1_is_active_Screen_door11));
   sf_mex_setcell(c1_y, 87, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Screen_door21));
+    chartInstance->c1_is_active_Screen_door20));
   sf_mex_setcell(c1_y, 88, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Screen_door30));
+    chartInstance->c1_is_active_Screen_door21));
   sf_mex_setcell(c1_y, 89, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Screen_door31));
+    chartInstance->c1_is_active_Screen_door30));
   sf_mex_setcell(c1_y, 90, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Train1_door));
+    chartInstance->c1_is_active_Screen_door31));
   sf_mex_setcell(c1_y, 91, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Train2_door));
+    chartInstance->c1_is_active_Train1_door));
   sf_mex_setcell(c1_y, 92, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Train3_door));
+    chartInstance->c1_is_active_Train2_door));
   sf_mex_setcell(c1_y, 93, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_UrgentController));
+    chartInstance->c1_is_active_Train3_door));
   sf_mex_setcell(c1_y, 94, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Train3));
+    chartInstance->c1_is_active_UrgentController));
   sf_mex_setcell(c1_y, 95, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Controller1));
+    chartInstance->c1_is_active_Train3));
   sf_mex_setcell(c1_y, 96, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Controller2));
+    chartInstance->c1_is_active_Controller1));
   sf_mex_setcell(c1_y, 97, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Controller3));
+    chartInstance->c1_is_active_Controller2));
   sf_mex_setcell(c1_y, 98, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Train0));
+    chartInstance->c1_is_active_Controller3));
   sf_mex_setcell(c1_y, 99, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Train1));
+    chartInstance->c1_is_active_Train0));
   sf_mex_setcell(c1_y, 100, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_active_Train2));
+    chartInstance->c1_is_active_Train1));
   sf_mex_setcell(c1_y, 101, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Train0_door));
+    chartInstance->c1_is_active_Train2));
   sf_mex_setcell(c1_y, 102, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Screen_door00));
+    chartInstance->c1_is_Train0_door));
   sf_mex_setcell(c1_y, 103, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Controller0));
+    chartInstance->c1_is_Screen_door00));
   sf_mex_setcell(c1_y, 104, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Screen_door01));
+    chartInstance->c1_is_Controller0));
   sf_mex_setcell(c1_y, 105, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Screen_door10));
+    chartInstance->c1_is_Screen_door01));
   sf_mex_setcell(c1_y, 106, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Screen_door11));
+    chartInstance->c1_is_Screen_door10));
   sf_mex_setcell(c1_y, 107, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Screen_door20));
+    chartInstance->c1_is_Screen_door11));
   sf_mex_setcell(c1_y, 108, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Screen_door21));
+    chartInstance->c1_is_Screen_door20));
   sf_mex_setcell(c1_y, 109, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Screen_door30));
+    chartInstance->c1_is_Screen_door21));
   sf_mex_setcell(c1_y, 110, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Screen_door31));
+    chartInstance->c1_is_Screen_door30));
   sf_mex_setcell(c1_y, 111, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Train1_door));
+    chartInstance->c1_is_Screen_door31));
   sf_mex_setcell(c1_y, 112, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Train2_door));
+    chartInstance->c1_is_Train1_door));
   sf_mex_setcell(c1_y, 113, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Train3_door));
+    chartInstance->c1_is_Train2_door));
   sf_mex_setcell(c1_y, 114, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_UrgentController));
+    chartInstance->c1_is_Train3_door));
   sf_mex_setcell(c1_y, 115, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Train3));
+    chartInstance->c1_is_UrgentController));
   sf_mex_setcell(c1_y, 116, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Controller1));
+    chartInstance->c1_is_Train3));
   sf_mex_setcell(c1_y, 117, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Controller2));
+    chartInstance->c1_is_Controller1));
   sf_mex_setcell(c1_y, 118, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Controller3));
+    chartInstance->c1_is_Controller2));
   sf_mex_setcell(c1_y, 119, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Train0));
+    chartInstance->c1_is_Controller3));
   sf_mex_setcell(c1_y, 120, c1_e_emlrt_marshallOut(chartInstance,
-    chartInstance->c1_is_Train1));
+    chartInstance->c1_is_Train0));
   sf_mex_setcell(c1_y, 121, c1_e_emlrt_marshallOut(chartInstance,
+    chartInstance->c1_is_Train1));
+  sf_mex_setcell(c1_y, 122, c1_e_emlrt_marshallOut(chartInstance,
     chartInstance->c1_is_Train2));
   return c1_y;
 }
@@ -19891,41 +19914,42 @@ static void c1_q_emlrt_marshallIn(SFc1_subwaycontrolsystemInstanceStruct
   *chartInstance, const mxArray *c1_u)
 {
   real_T c1_dv22[4];
-  int32_T c1_i471;
+  int32_T c1_i470;
   real_T c1_dv23[4];
-  int32_T c1_i472;
+  int32_T c1_i471;
   real_T c1_dv24[8];
-  int32_T c1_i473;
+  int32_T c1_i472;
   real_T c1_dv25[4];
-  int32_T c1_i474;
+  int32_T c1_i473;
   real_T c1_dv26[8];
-  int32_T c1_i475;
+  int32_T c1_i474;
   int32_T c1_iv6[4];
-  int32_T c1_i476;
+  int32_T c1_i475;
   real_T c1_dv27[4];
-  int32_T c1_i477;
+  int32_T c1_i476;
   real_T c1_dv28[8];
-  int32_T c1_i478;
+  int32_T c1_i477;
   real_T c1_dv29[4];
-  int32_T c1_i479;
+  int32_T c1_i478;
   int32_T c1_iv7[4];
-  int32_T c1_i480;
+  int32_T c1_i479;
   real_T c1_dv30[8];
-  int32_T c1_i481;
+  int32_T c1_i480;
   real_T c1_dv31[4];
-  int32_T c1_i482;
+  int32_T c1_i481;
   real_T c1_dv32[4];
-  int32_T c1_i483;
+  int32_T c1_i482;
   real_T c1_dv33[4];
-  int32_T c1_i484;
+  int32_T c1_i483;
   real_T c1_dv34[4];
-  int32_T c1_i485;
+  int32_T c1_i484;
   real_T c1_dv35[4];
-  int32_T c1_i486;
+  int32_T c1_i485;
   real_T c1_dv36[4];
-  int32_T c1_i487;
+  int32_T c1_i486;
   real_T c1_dv37[4];
-  int32_T c1_i488;
+  int32_T c1_i487;
+  real_T *c1_dir1_out;
   real_T *c1_distance;
   real_T *c1_b_distance;
   real_T *c1_c_distance;
@@ -19987,338 +20011,341 @@ static void c1_q_emlrt_marshallIn(SFc1_subwaycontrolsystemInstanceStruct
   c1_b_v = (real_T *)(ssGetContStates(chartInstance->S) + 2);
   c1_b_z = (real_T *)(ssGetContStates(chartInstance->S) + 1);
   c1_t = (real_T *)(ssGetContStates(chartInstance->S) + 0);
+  c1_dir1_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 4);
   c1_y2_out = (real_T (*)[8])ssGetOutputPortSignal(chartInstance->S, 3);
   c1_y1_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 2);
   c1_distance_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 1);
-  c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 0)),
-                        "distance_out", c1_dv22);
-  for (c1_i471 = 0; c1_i471 < 4; c1_i471++) {
-    (*c1_distance_out)[c1_i471] = c1_dv22[c1_i471];
-  }
-
+  *c1_dir1_out = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell
+    (c1_u, 0)), "dir1_out");
   c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 1)),
+                        "distance_out", c1_dv22);
+  for (c1_i470 = 0; c1_i470 < 4; c1_i470++) {
+    (*c1_distance_out)[c1_i470] = c1_dv22[c1_i470];
+  }
+
+  c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 2)),
                         "y1_out", c1_dv23);
-  for (c1_i472 = 0; c1_i472 < 4; c1_i472++) {
-    (*c1_y1_out)[c1_i472] = c1_dv23[c1_i472];
+  for (c1_i471 = 0; c1_i471 < 4; c1_i471++) {
+    (*c1_y1_out)[c1_i471] = c1_dv23[c1_i471];
   }
 
-  c1_k_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 2)),
+  c1_k_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 3)),
                         "y2_out", c1_dv24);
-  for (c1_i473 = 0; c1_i473 < 8; c1_i473++) {
-    (*c1_y2_out)[c1_i473] = c1_dv24[c1_i473];
+  for (c1_i472 = 0; c1_i472 < 8; c1_i472++) {
+    (*c1_y2_out)[c1_i472] = c1_dv24[c1_i472];
   }
 
-  c1_i_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 3)),
+  c1_i_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 4)),
                         "Delay", c1_dv25);
-  for (c1_i474 = 0; c1_i474 < 4; c1_i474++) {
-    chartInstance->c1_Delay[c1_i474] = c1_dv25[c1_i474];
+  for (c1_i473 = 0; c1_i473 < 4; c1_i473++) {
+    chartInstance->c1_Delay[c1_i473] = c1_dv25[c1_i473];
   }
 
   chartInstance->c1_N = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 4)), "N");
-  c1_k_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 5)),
+    (sf_mex_getcell(c1_u, 5)), "N");
+  c1_k_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 6)),
                         "PSDClosed", c1_dv26);
-  for (c1_i475 = 0; c1_i475 < 8; c1_i475++) {
-    chartInstance->c1_PSDClosed[c1_i475] = c1_dv26[c1_i475];
+  for (c1_i474 = 0; c1_i474 < 8; c1_i474++) {
+    chartInstance->c1_PSDClosed[c1_i474] = c1_dv26[c1_i474];
   }
 
-  c1_o_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 6)),
+  c1_o_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 7)),
                         "RelevantIndex", c1_iv6);
-  for (c1_i476 = 0; c1_i476 < 4; c1_i476++) {
-    chartInstance->c1_RelevantIndex[c1_i476] = c1_iv6[c1_i476];
+  for (c1_i475 = 0; c1_i475 < 4; c1_i475++) {
+    chartInstance->c1_RelevantIndex[c1_i475] = c1_iv6[c1_i475];
   }
 
-  c1_i_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 7)), "S",
+  c1_i_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 8)), "S",
                         c1_dv27);
-  for (c1_i477 = 0; c1_i477 < 4; c1_i477++) {
-    chartInstance->c1_S[c1_i477] = c1_dv27[c1_i477];
+  for (c1_i476 = 0; c1_i476 < 4; c1_i476++) {
+    chartInstance->c1_S[c1_i476] = c1_dv27[c1_i476];
   }
 
   chartInstance->c1_d_acc = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 8)), "acc");
-  chartInstance->c1_acc = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 9)), "acc");
-  chartInstance->c1_b_acc = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_acc = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 10)), "acc");
-  chartInstance->c1_c_acc = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_b_acc = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 11)), "acc");
-  c1_k_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 12)),
+  chartInstance->c1_c_acc = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+    (sf_mex_getcell(c1_u, 12)), "acc");
+  c1_k_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 13)),
                         "closePSD", c1_dv28);
-  for (c1_i478 = 0; c1_i478 < 8; c1_i478++) {
-    chartInstance->c1_closePSD[c1_i478] = c1_dv28[c1_i478];
+  for (c1_i477 = 0; c1_i477 < 8; c1_i477++) {
+    chartInstance->c1_closePSD[c1_i477] = c1_dv28[c1_i477];
   }
 
-  c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 13)),
+  c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 14)),
                         "closeTD", c1_dv29);
-  for (c1_i479 = 0; c1_i479 < 4; c1_i479++) {
-    chartInstance->c1_closeTD[c1_i479] = c1_dv29[c1_i479];
+  for (c1_i478 = 0; c1_i478 < 4; c1_i478++) {
+    chartInstance->c1_closeTD[c1_i478] = c1_dv29[c1_i478];
   }
 
-  c1_m_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 14)),
+  c1_m_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 15)),
                         "dir", c1_iv7);
-  for (c1_i480 = 0; c1_i480 < 4; c1_i480++) {
-    chartInstance->c1_dir[c1_i480] = c1_iv7[c1_i480];
+  for (c1_i479 = 0; c1_i479 < 4; c1_i479++) {
+    chartInstance->c1_dir[c1_i479] = c1_iv7[c1_i479];
   }
 
   chartInstance->c1_dis = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 15)), "dis");
+    (sf_mex_getcell(c1_u, 16)), "dis");
   chartInstance->c1_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 16)), "i");
-  chartInstance->c1_i_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 17)), "i");
-  chartInstance->c1_d_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_i_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 18)), "i");
-  chartInstance->c1_b_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_d_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 19)), "i");
-  chartInstance->c1_g_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_b_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 20)), "i");
-  chartInstance->c1_f_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_g_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 21)), "i");
-  chartInstance->c1_c_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_f_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 22)), "i");
-  chartInstance->c1_e_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_c_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 23)), "i");
-  chartInstance->c1_h_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_e_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 24)), "i");
+  chartInstance->c1_h_i = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
+    (sf_mex_getcell(c1_u, 25)), "i");
   chartInstance->c1_d_j = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 25)), "j");
-  chartInstance->c1_j = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 26)), "j");
-  chartInstance->c1_b_j = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_j = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 27)), "j");
-  chartInstance->c1_c_j = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_b_j = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 28)), "j");
+  chartInstance->c1_c_j = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+    (sf_mex_getcell(c1_u, 29)), "j");
   chartInstance->c1_d_maxv = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 29)), "maxv");
-  chartInstance->c1_maxv = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 30)), "maxv");
-  chartInstance->c1_b_maxv = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_maxv = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 31)), "maxv");
-  chartInstance->c1_c_maxv = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_b_maxv = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 32)), "maxv");
-  c1_k_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 33)),
+  chartInstance->c1_c_maxv = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+    (sf_mex_getcell(c1_u, 33)), "maxv");
+  c1_k_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 34)),
                         "openPSD", c1_dv30);
-  for (c1_i481 = 0; c1_i481 < 8; c1_i481++) {
-    chartInstance->c1_openPSD[c1_i481] = c1_dv30[c1_i481];
-  }
-
-  c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 34)),
-                        "openTD", c1_dv31);
-  for (c1_i482 = 0; c1_i482 < 4; c1_i482++) {
-    chartInstance->c1_openTD[c1_i482] = c1_dv31[c1_i482];
+  for (c1_i480 = 0; c1_i480 < 8; c1_i480++) {
+    chartInstance->c1_openPSD[c1_i480] = c1_dv30[c1_i480];
   }
 
   c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 35)),
+                        "openTD", c1_dv31);
+  for (c1_i481 = 0; c1_i481 < 4; c1_i481++) {
+    chartInstance->c1_openTD[c1_i481] = c1_dv31[c1_i481];
+  }
+
+  c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 36)),
                         "position", c1_dv32);
-  for (c1_i483 = 0; c1_i483 < 4; c1_i483++) {
-    chartInstance->c1_position[c1_i483] = c1_dv32[c1_i483];
+  for (c1_i482 = 0; c1_i482 < 4; c1_i482++) {
+    chartInstance->c1_position[c1_i482] = c1_dv32[c1_i482];
   }
 
   chartInstance->c1_b_side = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 36)), "side");
-  chartInstance->c1_side = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 37)), "side");
-  chartInstance->c1_d_side = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_side = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 38)), "side");
-  chartInstance->c1_c_side = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_d_side = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 39)), "side");
-  c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 40)),
+  chartInstance->c1_c_side = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+    (sf_mex_getcell(c1_u, 40)), "side");
+  c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 41)),
                         "start", c1_dv33);
-  for (c1_i484 = 0; c1_i484 < 4; c1_i484++) {
-    chartInstance->c1_start[c1_i484] = c1_dv33[c1_i484];
+  for (c1_i483 = 0; c1_i483 < 4; c1_i483++) {
+    chartInstance->c1_start[c1_i483] = c1_dv33[c1_i483];
   }
 
   chartInstance->c1_b_stationid = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 41)), "stationid");
-  chartInstance->c1_stationid = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 42)), "stationid");
-  chartInstance->c1_d_stationid = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_stationid = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 43)), "stationid");
-  chartInstance->c1_c_stationid = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+  chartInstance->c1_d_stationid = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
     (sf_mex_getcell(c1_u, 44)), "stationid");
-  c1_i_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 45)),
+  chartInstance->c1_c_stationid = c1_emlrt_marshallIn(chartInstance, sf_mex_dup
+    (sf_mex_getcell(c1_u, 45)), "stationid");
+  c1_i_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 46)),
                         "stop", c1_dv34);
-  for (c1_i485 = 0; c1_i485 < 4; c1_i485++) {
-    chartInstance->c1_stop[c1_i485] = c1_dv34[c1_i485];
+  for (c1_i484 = 0; c1_i484 < 4; c1_i484++) {
+    chartInstance->c1_stop[c1_i484] = c1_dv34[c1_i484];
   }
 
   chartInstance->c1_tdis = c1_c_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 46)), "tdis");
-  c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 47)),
-                        "urstart", c1_dv35);
-  for (c1_i486 = 0; c1_i486 < 4; c1_i486++) {
-    chartInstance->c1_urstart[c1_i486] = c1_dv35[c1_i486];
-  }
-
+    (sf_mex_getcell(c1_u, 47)), "tdis");
   c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 48)),
-                        "urstop", c1_dv36);
-  for (c1_i487 = 0; c1_i487 < 4; c1_i487++) {
-    chartInstance->c1_urstop[c1_i487] = c1_dv36[c1_i487];
+                        "urstart", c1_dv35);
+  for (c1_i485 = 0; c1_i485 < 4; c1_i485++) {
+    chartInstance->c1_urstart[c1_i485] = c1_dv35[c1_i485];
   }
 
   c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 49)),
+                        "urstop", c1_dv36);
+  for (c1_i486 = 0; c1_i486 < 4; c1_i486++) {
+    chartInstance->c1_urstop[c1_i486] = c1_dv36[c1_i486];
+  }
+
+  c1_g_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 50)),
                         "urstopped", c1_dv37);
-  for (c1_i488 = 0; c1_i488 < 4; c1_i488++) {
-    chartInstance->c1_urstopped[c1_i488] = c1_dv37[c1_i488];
+  for (c1_i487 = 0; c1_i487 < 4; c1_i487++) {
+    chartInstance->c1_urstopped[c1_i487] = c1_dv37[c1_i487];
   }
 
   *c1_distance = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell
-    (c1_u, 50)), "distance");
-  *c1_b_distance = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell
     (c1_u, 51)), "distance");
-  *c1_c_distance = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell
+  *c1_b_distance = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell
     (c1_u, 52)), "distance");
-  *c1_d_distance = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell
+  *c1_c_distance = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell
     (c1_u, 53)), "distance");
-  *c1_t = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 54)),
+  *c1_d_distance = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell
+    (c1_u, 54)), "distance");
+  *c1_t = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 55)),
     "t");
   *c1_time = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
-    55)), "time");
-  *c1_b_time = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     56)), "time");
-  *c1_c_time = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+  *c1_b_time = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     57)), "time");
-  *c1_d_time = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+  *c1_c_time = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     58)), "time");
-  *c1_v = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 59)),
+  *c1_d_time = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+    59)), "time");
+  *c1_v = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 60)),
     "v");
   *c1_b_v = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
-    60)), "v");
-  *c1_c_v = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     61)), "v");
-  *c1_d_v = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+  *c1_c_v = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     62)), "v");
-  *c1_y1 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 63)),
+  *c1_d_v = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+    63)), "v");
+  *c1_y1 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 64)),
     "y1");
   *c1_b_y1 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
-    64)), "y1");
-  *c1_c_y1 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     65)), "y1");
-  *c1_d_y1 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+  *c1_c_y1 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     66)), "y1");
-  *c1_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 67)),
+  *c1_d_y1 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+    67)), "y1");
+  *c1_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 68)),
     "y2");
   *c1_b_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
-    68)), "y2");
-  *c1_c_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     69)), "y2");
-  *c1_d_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+  *c1_c_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     70)), "y2");
-  *c1_e_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+  *c1_d_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     71)), "y2");
-  *c1_f_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+  *c1_e_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     72)), "y2");
-  *c1_g_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+  *c1_f_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     73)), "y2");
-  *c1_h_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+  *c1_g_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     74)), "y2");
-  *c1_z = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 75)),
+  *c1_h_y2 = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+    75)), "y2");
+  *c1_z = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 76)),
     "z");
   *c1_b_z = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
-    76)), "z");
-  *c1_c_z = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     77)), "z");
-  *c1_d_z = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+  *c1_c_z = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
     78)), "z");
+  *c1_d_z = c1_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c1_u,
+    79)), "z");
   chartInstance->c1_is_active_c1_subwaycontrolsystem = c1_e_emlrt_marshallIn
-    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 79)),
+    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 80)),
      "is_active_c1_subwaycontrolsystem");
   chartInstance->c1_is_active_Train0_door = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 80)), "is_active_Train0_door");
+    sf_mex_dup(sf_mex_getcell(c1_u, 81)), "is_active_Train0_door");
   chartInstance->c1_is_active_Screen_door00 = c1_e_emlrt_marshallIn
-    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 81)),
+    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 82)),
      "is_active_Screen_door00");
   chartInstance->c1_is_active_Controller0 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 82)), "is_active_Controller0");
+    sf_mex_dup(sf_mex_getcell(c1_u, 83)), "is_active_Controller0");
   chartInstance->c1_is_active_Screen_door01 = c1_e_emlrt_marshallIn
-    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 83)),
+    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 84)),
      "is_active_Screen_door01");
   chartInstance->c1_is_active_Screen_door10 = c1_e_emlrt_marshallIn
-    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 84)),
+    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 85)),
      "is_active_Screen_door10");
   chartInstance->c1_is_active_Screen_door11 = c1_e_emlrt_marshallIn
-    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 85)),
+    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 86)),
      "is_active_Screen_door11");
   chartInstance->c1_is_active_Screen_door20 = c1_e_emlrt_marshallIn
-    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 86)),
+    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 87)),
      "is_active_Screen_door20");
   chartInstance->c1_is_active_Screen_door21 = c1_e_emlrt_marshallIn
-    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 87)),
+    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 88)),
      "is_active_Screen_door21");
   chartInstance->c1_is_active_Screen_door30 = c1_e_emlrt_marshallIn
-    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 88)),
+    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 89)),
      "is_active_Screen_door30");
   chartInstance->c1_is_active_Screen_door31 = c1_e_emlrt_marshallIn
-    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 89)),
+    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 90)),
      "is_active_Screen_door31");
   chartInstance->c1_is_active_Train1_door = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 90)), "is_active_Train1_door");
+    sf_mex_dup(sf_mex_getcell(c1_u, 91)), "is_active_Train1_door");
   chartInstance->c1_is_active_Train2_door = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 91)), "is_active_Train2_door");
+    sf_mex_dup(sf_mex_getcell(c1_u, 92)), "is_active_Train2_door");
   chartInstance->c1_is_active_Train3_door = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 92)), "is_active_Train3_door");
+    sf_mex_dup(sf_mex_getcell(c1_u, 93)), "is_active_Train3_door");
   chartInstance->c1_is_active_UrgentController = c1_e_emlrt_marshallIn
-    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 93)),
+    (chartInstance, sf_mex_dup(sf_mex_getcell(c1_u, 94)),
      "is_active_UrgentController");
   chartInstance->c1_is_active_Train3 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 94)), "is_active_Train3");
+    sf_mex_dup(sf_mex_getcell(c1_u, 95)), "is_active_Train3");
   chartInstance->c1_is_active_Controller1 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 95)), "is_active_Controller1");
+    sf_mex_dup(sf_mex_getcell(c1_u, 96)), "is_active_Controller1");
   chartInstance->c1_is_active_Controller2 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 96)), "is_active_Controller2");
+    sf_mex_dup(sf_mex_getcell(c1_u, 97)), "is_active_Controller2");
   chartInstance->c1_is_active_Controller3 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 97)), "is_active_Controller3");
+    sf_mex_dup(sf_mex_getcell(c1_u, 98)), "is_active_Controller3");
   chartInstance->c1_is_active_Train0 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 98)), "is_active_Train0");
+    sf_mex_dup(sf_mex_getcell(c1_u, 99)), "is_active_Train0");
   chartInstance->c1_is_active_Train1 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 99)), "is_active_Train1");
+    sf_mex_dup(sf_mex_getcell(c1_u, 100)), "is_active_Train1");
   chartInstance->c1_is_active_Train2 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 100)), "is_active_Train2");
+    sf_mex_dup(sf_mex_getcell(c1_u, 101)), "is_active_Train2");
   chartInstance->c1_is_Train0_door = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 101)), "is_Train0_door");
+    sf_mex_dup(sf_mex_getcell(c1_u, 102)), "is_Train0_door");
   chartInstance->c1_is_Screen_door00 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 102)), "is_Screen_door00");
+    sf_mex_dup(sf_mex_getcell(c1_u, 103)), "is_Screen_door00");
   chartInstance->c1_is_Controller0 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 103)), "is_Controller0");
+    sf_mex_dup(sf_mex_getcell(c1_u, 104)), "is_Controller0");
   chartInstance->c1_is_Screen_door01 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 104)), "is_Screen_door01");
+    sf_mex_dup(sf_mex_getcell(c1_u, 105)), "is_Screen_door01");
   chartInstance->c1_is_Screen_door10 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 105)), "is_Screen_door10");
+    sf_mex_dup(sf_mex_getcell(c1_u, 106)), "is_Screen_door10");
   chartInstance->c1_is_Screen_door11 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 106)), "is_Screen_door11");
+    sf_mex_dup(sf_mex_getcell(c1_u, 107)), "is_Screen_door11");
   chartInstance->c1_is_Screen_door20 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 107)), "is_Screen_door20");
+    sf_mex_dup(sf_mex_getcell(c1_u, 108)), "is_Screen_door20");
   chartInstance->c1_is_Screen_door21 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 108)), "is_Screen_door21");
+    sf_mex_dup(sf_mex_getcell(c1_u, 109)), "is_Screen_door21");
   chartInstance->c1_is_Screen_door30 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 109)), "is_Screen_door30");
+    sf_mex_dup(sf_mex_getcell(c1_u, 110)), "is_Screen_door30");
   chartInstance->c1_is_Screen_door31 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 110)), "is_Screen_door31");
+    sf_mex_dup(sf_mex_getcell(c1_u, 111)), "is_Screen_door31");
   chartInstance->c1_is_Train1_door = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 111)), "is_Train1_door");
+    sf_mex_dup(sf_mex_getcell(c1_u, 112)), "is_Train1_door");
   chartInstance->c1_is_Train2_door = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 112)), "is_Train2_door");
+    sf_mex_dup(sf_mex_getcell(c1_u, 113)), "is_Train2_door");
   chartInstance->c1_is_Train3_door = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 113)), "is_Train3_door");
+    sf_mex_dup(sf_mex_getcell(c1_u, 114)), "is_Train3_door");
   chartInstance->c1_is_UrgentController = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 114)), "is_UrgentController");
+    sf_mex_dup(sf_mex_getcell(c1_u, 115)), "is_UrgentController");
   chartInstance->c1_is_Train3 = c1_e_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 115)), "is_Train3");
+    (sf_mex_getcell(c1_u, 116)), "is_Train3");
   chartInstance->c1_is_Controller1 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 116)), "is_Controller1");
+    sf_mex_dup(sf_mex_getcell(c1_u, 117)), "is_Controller1");
   chartInstance->c1_is_Controller2 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 117)), "is_Controller2");
+    sf_mex_dup(sf_mex_getcell(c1_u, 118)), "is_Controller2");
   chartInstance->c1_is_Controller3 = c1_e_emlrt_marshallIn(chartInstance,
-    sf_mex_dup(sf_mex_getcell(c1_u, 118)), "is_Controller3");
+    sf_mex_dup(sf_mex_getcell(c1_u, 119)), "is_Controller3");
   chartInstance->c1_is_Train0 = c1_e_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 119)), "is_Train0");
+    (sf_mex_getcell(c1_u, 120)), "is_Train0");
   chartInstance->c1_is_Train1 = c1_e_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 120)), "is_Train1");
+    (sf_mex_getcell(c1_u, 121)), "is_Train1");
   chartInstance->c1_is_Train2 = c1_e_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c1_u, 121)), "is_Train2");
+    (sf_mex_getcell(c1_u, 122)), "is_Train2");
   sf_mex_assign(&chartInstance->c1_setSimStateSideEffectsInfo,
                 c1_r_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell
-    (c1_u, 122)), "setSimStateSideEffectsInfo"), TRUE);
+    (c1_u, 123)), "setSimStateSideEffectsInfo"), TRUE);
   sf_mex_destroy(&c1_u);
 }
 
@@ -20403,10 +20430,10 @@ static void init_dsm_address_info(SFc1_subwaycontrolsystemInstanceStruct
 /* SFunction Glue Code */
 void sf_c1_subwaycontrolsystem_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3906330600U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2025281144U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2739316458U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1488580045U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2942169139U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3307743602U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1591108889U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1806061668U);
 }
 
 mxArray *sf_c1_subwaycontrolsystem_get_autoinheritance_info(void)
@@ -20418,7 +20445,7 @@ mxArray *sf_c1_subwaycontrolsystem_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("7FYHC0j7iIbpg6VTNez76B");
+    mxArray *mxChecksum = mxCreateString("gnkp7zUtegH0v9R8kbJpDE");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -20475,7 +20502,7 @@ mxArray *sf_c1_subwaycontrolsystem_get_autoinheritance_info(void)
   {
     const char *dataFields[] = { "size", "type", "complexity" };
 
-    mxArray *mxData = mxCreateStructMatrix(1,3,3,dataFields);
+    mxArray *mxData = mxCreateStructMatrix(1,4,3,dataFields);
 
     {
       mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
@@ -20533,6 +20560,25 @@ mxArray *sf_c1_subwaycontrolsystem_get_autoinheritance_info(void)
     }
 
     mxSetField(mxData,2,"complexity",mxCreateDoubleScalar(0));
+
+    {
+      mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
+      double *pr = mxGetPr(mxSize);
+      pr[0] = (double)(1);
+      pr[1] = (double)(1);
+      mxSetField(mxData,3,"size",mxSize);
+    }
+
+    {
+      const char *typeFields[] = { "base", "fixpt" };
+
+      mxArray *mxType = mxCreateStructMatrix(1,1,2,typeFields);
+      mxSetField(mxType,0,"base",mxCreateDoubleScalar(10));
+      mxSetField(mxType,0,"fixpt",mxCreateDoubleMatrix(0,0,mxREAL));
+      mxSetField(mxData,3,"type",mxType);
+    }
+
+    mxSetField(mxData,3,"complexity",mxCreateDoubleScalar(0));
     mxSetField(mxAutoinheritanceInfo,0,"outputs",mxData);
   }
 
@@ -20549,22 +20595,22 @@ static const mxArray *sf_get_sim_state_info_c1_subwaycontrolsystem(void)
 
   mxArray *mxInfo = mxCreateStructMatrix(1, 1, 2, infoFields);
   const char *infoEncStr[] = {
-    "100 S1x10'type','srcId','name','auxInfo'{{M[1],M[88],T\"distance_out\",},{M[1],M[1082],T\"y1_out\",},{M[1],M[1083],T\"y2_out\",},{M[3],M[127],T\"Delay\",},{M[3],M[1068],T\"N\",},{M[3],M[1617],T\"PSDClosed\",},{M[3],M[1612],T\"RelevantIndex\",},{M[3],M[800],T\"S\",},{M[3],M[1420],T\"acc\",},{M[3],M[1638],T\"acc\",}}",
-    "100 S1x10'type','srcId','name','auxInfo'{{M[3],M[1684],T\"acc\",},{M[3],M[1730],T\"acc\",},{M[3],M[83],T\"closePSD\",},{M[3],M[799],T\"closeTD\",},{M[3],M[1327],T\"dir\",},{M[3],M[1624],T\"dis\",},{M[3],M[1325],T\"i\",},{M[3],M[1418],T\"i\",},{M[3],M[1457],T\"i\",},{M[3],M[1536],T\"i\",}}",
-    "100 S1x10'type','srcId','name','auxInfo'{{M[3],M[1560],T\"i\",},{M[3],M[1584],T\"i\",},{M[3],M[1636],T\"i\",},{M[3],M[1682],T\"i\",},{M[3],M[1728],T\"i\",},{M[3],M[1415],T\"j\",},{M[3],M[1633],T\"j\",},{M[3],M[1679],T\"j\",},{M[3],M[1725],T\"j\",},{M[3],M[1416],T\"maxv\",}}",
-    "100 S1x10'type','srcId','name','auxInfo'{{M[3],M[1634],T\"maxv\",},{M[3],M[1680],T\"maxv\",},{M[3],M[1726],T\"maxv\",},{M[3],M[82],T\"openPSD\",},{M[3],M[798],T\"openTD\",},{M[3],M[1531],T\"position\",},{M[3],M[166],T\"side\",},{M[3],M[1535],T\"side\",},{M[3],M[1559],T\"side\",},{M[3],M[1583],T\"side\",}}",
-    "100 S1x10'type','srcId','name','auxInfo'{{M[3],M[80],T\"start\",},{M[3],M[165],T\"stationid\",},{M[3],M[1534],T\"stationid\",},{M[3],M[1558],T\"stationid\",},{M[3],M[1582],T\"stationid\",},{M[3],M[81],T\"stop\",},{M[3],M[1623],T\"tdis\",},{M[3],M[920],T\"urstart\",},{M[3],M[921],T\"urstop\",},{M[3],M[1314],T\"urstopped\",}}",
-    "100 S1x10'type','srcId','name','auxInfo'{{M[5],M[1419],T\"distance\",},{M[5],M[1637],T\"distance\",},{M[5],M[1683],T\"distance\",},{M[5],M[1729],T\"distance\",},{M[5],M[1264],T\"t\",},{M[5],M[1417],T\"time\",},{M[5],M[1635],T\"time\",},{M[5],M[1681],T\"time\",},{M[5],M[1727],T\"time\",},{M[5],M[1414],T\"v\",}}",
-    "100 S1x10'type','srcId','name','auxInfo'{{M[5],M[1632],T\"v\",},{M[5],M[1678],T\"v\",},{M[5],M[1724],T\"v\",},{M[5],M[1050],T\"y1\",},{M[5],M[1051],T\"y1\",},{M[5],M[1052],T\"y1\",},{M[5],M[1053],T\"y1\",},{M[5],M[167],T\"y2\",},{M[5],M[168],T\"y2\",},{M[5],M[180],T\"y2\",}}",
-    "100 S1x10'type','srcId','name','auxInfo'{{M[5],M[192],T\"y2\",},{M[5],M[204],T\"y2\",},{M[5],M[216],T\"y2\",},{M[5],M[228],T\"y2\",},{M[5],M[240],T\"y2\",},{M[5],M[76],T\"z\",},{M[5],M[1533],T\"z\",},{M[5],M[1557],T\"z\",},{M[5],M[1581],T\"z\",},{M[8],M[0],T\"is_active_c1_subwaycontrolsystem\",}}",
-    "100 S1x10'type','srcId','name','auxInfo'{{M[8],M[11],T\"is_active_Train0_door\",},{M[8],M[31],T\"is_active_Screen_door00\",},{M[8],M[64],T\"is_active_Controller0\",},{M[8],M[169],T\"is_active_Screen_door01\",},{M[8],M[181],T\"is_active_Screen_door10\",},{M[8],M[193],T\"is_active_Screen_door11\",},{M[8],M[205],T\"is_active_Screen_door20\",},{M[8],M[217],T\"is_active_Screen_door21\",},{M[8],M[229],T\"is_active_Screen_door30\",},{M[8],M[241],T\"is_active_Screen_door31\",}}",
-    "100 S1x10'type','srcId','name','auxInfo'{{M[8],M[290],T\"is_active_Train1_door\",},{M[8],M[578],T\"is_active_Train2_door\",},{M[8],M[650],T\"is_active_Train3_door\",},{M[8],M[1267],T\"is_active_UrgentController\",},{M[8],M[1421],T\"is_active_Train3\",},{M[8],M[1537],T\"is_active_Controller1\",},{M[8],M[1561],T\"is_active_Controller2\",},{M[8],M[1585],T\"is_active_Controller3\",},{M[8],M[1639],T\"is_active_Train0\",},{M[8],M[1685],T\"is_active_Train1\",}}",
-    "100 S1x10'type','srcId','name','auxInfo'{{M[8],M[1731],T\"is_active_Train2\",},{M[9],M[11],T\"is_Train0_door\",},{M[9],M[31],T\"is_Screen_door00\",},{M[9],M[64],T\"is_Controller0\",},{M[9],M[169],T\"is_Screen_door01\",},{M[9],M[181],T\"is_Screen_door10\",},{M[9],M[193],T\"is_Screen_door11\",},{M[9],M[205],T\"is_Screen_door20\",},{M[9],M[217],T\"is_Screen_door21\",},{M[9],M[229],T\"is_Screen_door30\",}}",
-    "100 S1x10'type','srcId','name','auxInfo'{{M[9],M[241],T\"is_Screen_door31\",},{M[9],M[290],T\"is_Train1_door\",},{M[9],M[578],T\"is_Train2_door\",},{M[9],M[650],T\"is_Train3_door\",},{M[9],M[1267],T\"is_UrgentController\",},{M[9],M[1421],T\"is_Train3\",},{M[9],M[1537],T\"is_Controller1\",},{M[9],M[1561],T\"is_Controller2\",},{M[9],M[1585],T\"is_Controller3\",},{M[9],M[1639],T\"is_Train0\",}}",
-    "100 S1x2'type','srcId','name','auxInfo'{{M[9],M[1685],T\"is_Train1\",},{M[9],M[1731],T\"is_Train2\",}}"
+    "100 S1x10'type','srcId','name','auxInfo'{{M[1],M[1825],T\"dir1_out\",},{M[1],M[88],T\"distance_out\",},{M[1],M[1082],T\"y1_out\",},{M[1],M[1083],T\"y2_out\",},{M[3],M[127],T\"Delay\",},{M[3],M[1068],T\"N\",},{M[3],M[1617],T\"PSDClosed\",},{M[3],M[1612],T\"RelevantIndex\",},{M[3],M[800],T\"S\",},{M[3],M[1420],T\"acc\",}}",
+    "100 S1x10'type','srcId','name','auxInfo'{{M[3],M[1638],T\"acc\",},{M[3],M[1684],T\"acc\",},{M[3],M[1730],T\"acc\",},{M[3],M[83],T\"closePSD\",},{M[3],M[799],T\"closeTD\",},{M[3],M[1327],T\"dir\",},{M[3],M[1624],T\"dis\",},{M[3],M[1325],T\"i\",},{M[3],M[1418],T\"i\",},{M[3],M[1457],T\"i\",}}",
+    "100 S1x10'type','srcId','name','auxInfo'{{M[3],M[1536],T\"i\",},{M[3],M[1560],T\"i\",},{M[3],M[1584],T\"i\",},{M[3],M[1636],T\"i\",},{M[3],M[1682],T\"i\",},{M[3],M[1728],T\"i\",},{M[3],M[1415],T\"j\",},{M[3],M[1633],T\"j\",},{M[3],M[1679],T\"j\",},{M[3],M[1725],T\"j\",}}",
+    "100 S1x10'type','srcId','name','auxInfo'{{M[3],M[1416],T\"maxv\",},{M[3],M[1634],T\"maxv\",},{M[3],M[1680],T\"maxv\",},{M[3],M[1726],T\"maxv\",},{M[3],M[82],T\"openPSD\",},{M[3],M[798],T\"openTD\",},{M[3],M[1531],T\"position\",},{M[3],M[166],T\"side\",},{M[3],M[1535],T\"side\",},{M[3],M[1559],T\"side\",}}",
+    "100 S1x10'type','srcId','name','auxInfo'{{M[3],M[1583],T\"side\",},{M[3],M[80],T\"start\",},{M[3],M[165],T\"stationid\",},{M[3],M[1534],T\"stationid\",},{M[3],M[1558],T\"stationid\",},{M[3],M[1582],T\"stationid\",},{M[3],M[81],T\"stop\",},{M[3],M[1623],T\"tdis\",},{M[3],M[920],T\"urstart\",},{M[3],M[921],T\"urstop\",}}",
+    "100 S1x10'type','srcId','name','auxInfo'{{M[3],M[1314],T\"urstopped\",},{M[5],M[1419],T\"distance\",},{M[5],M[1637],T\"distance\",},{M[5],M[1683],T\"distance\",},{M[5],M[1729],T\"distance\",},{M[5],M[1264],T\"t\",},{M[5],M[1417],T\"time\",},{M[5],M[1635],T\"time\",},{M[5],M[1681],T\"time\",},{M[5],M[1727],T\"time\",}}",
+    "100 S1x10'type','srcId','name','auxInfo'{{M[5],M[1414],T\"v\",},{M[5],M[1632],T\"v\",},{M[5],M[1678],T\"v\",},{M[5],M[1724],T\"v\",},{M[5],M[1050],T\"y1\",},{M[5],M[1051],T\"y1\",},{M[5],M[1052],T\"y1\",},{M[5],M[1053],T\"y1\",},{M[5],M[167],T\"y2\",},{M[5],M[168],T\"y2\",}}",
+    "100 S1x10'type','srcId','name','auxInfo'{{M[5],M[180],T\"y2\",},{M[5],M[192],T\"y2\",},{M[5],M[204],T\"y2\",},{M[5],M[216],T\"y2\",},{M[5],M[228],T\"y2\",},{M[5],M[240],T\"y2\",},{M[5],M[76],T\"z\",},{M[5],M[1533],T\"z\",},{M[5],M[1557],T\"z\",},{M[5],M[1581],T\"z\",}}",
+    "100 S1x10'type','srcId','name','auxInfo'{{M[8],M[0],T\"is_active_c1_subwaycontrolsystem\",},{M[8],M[11],T\"is_active_Train0_door\",},{M[8],M[31],T\"is_active_Screen_door00\",},{M[8],M[64],T\"is_active_Controller0\",},{M[8],M[169],T\"is_active_Screen_door01\",},{M[8],M[181],T\"is_active_Screen_door10\",},{M[8],M[193],T\"is_active_Screen_door11\",},{M[8],M[205],T\"is_active_Screen_door20\",},{M[8],M[217],T\"is_active_Screen_door21\",},{M[8],M[229],T\"is_active_Screen_door30\",}}",
+    "100 S1x10'type','srcId','name','auxInfo'{{M[8],M[241],T\"is_active_Screen_door31\",},{M[8],M[290],T\"is_active_Train1_door\",},{M[8],M[578],T\"is_active_Train2_door\",},{M[8],M[650],T\"is_active_Train3_door\",},{M[8],M[1267],T\"is_active_UrgentController\",},{M[8],M[1421],T\"is_active_Train3\",},{M[8],M[1537],T\"is_active_Controller1\",},{M[8],M[1561],T\"is_active_Controller2\",},{M[8],M[1585],T\"is_active_Controller3\",},{M[8],M[1639],T\"is_active_Train0\",}}",
+    "100 S1x10'type','srcId','name','auxInfo'{{M[8],M[1685],T\"is_active_Train1\",},{M[8],M[1731],T\"is_active_Train2\",},{M[9],M[11],T\"is_Train0_door\",},{M[9],M[31],T\"is_Screen_door00\",},{M[9],M[64],T\"is_Controller0\",},{M[9],M[169],T\"is_Screen_door01\",},{M[9],M[181],T\"is_Screen_door10\",},{M[9],M[193],T\"is_Screen_door11\",},{M[9],M[205],T\"is_Screen_door20\",},{M[9],M[217],T\"is_Screen_door21\",}}",
+    "100 S1x10'type','srcId','name','auxInfo'{{M[9],M[229],T\"is_Screen_door30\",},{M[9],M[241],T\"is_Screen_door31\",},{M[9],M[290],T\"is_Train1_door\",},{M[9],M[578],T\"is_Train2_door\",},{M[9],M[650],T\"is_Train3_door\",},{M[9],M[1267],T\"is_UrgentController\",},{M[9],M[1421],T\"is_Train3\",},{M[9],M[1537],T\"is_Controller1\",},{M[9],M[1561],T\"is_Controller2\",},{M[9],M[1585],T\"is_Controller3\",}}",
+    "100 S1x3'type','srcId','name','auxInfo'{{M[9],M[1639],T\"is_Train0\",},{M[9],M[1685],T\"is_Train1\",},{M[9],M[1731],T\"is_Train2\",}}"
   };
 
-  mxArray *mxVarInfo = sf_mex_decode_encoded_mx_struct_array(infoEncStr, 122, 10);
+  mxArray *mxVarInfo = sf_mex_decode_encoded_mx_struct_array(infoEncStr, 123, 10);
   mxArray *mxChecksum = mxCreateDoubleMatrix(1, 4, mxREAL);
   sf_c1_subwaycontrolsystem_get_check_sum(&mxChecksum);
   mxSetField(mxInfo, 0, infoFields[0], mxChecksum);
@@ -20588,7 +20634,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
            1,
            154,
            222,
-           82,
+           83,
            0,
            0,
            0,
@@ -20629,61 +20675,61 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           _SFD_SET_DATA_PROPS(17,0,0,0,"dir");
           _SFD_SET_DATA_PROPS(18,0,0,0,"position");
           _SFD_SET_DATA_PROPS(19,0,0,0,"PSDClosed");
-          _SFD_SET_DATA_PROPS(20,0,0,0,"t");
-          _SFD_SET_DATA_PROPS(21,0,0,0,"i");
-          _SFD_SET_DATA_PROPS(22,0,0,0,"RelevantIndex");
-          _SFD_SET_DATA_PROPS(23,0,0,0,"tdis");
-          _SFD_SET_DATA_PROPS(24,0,0,0,"dis");
-          _SFD_SET_DATA_PROPS(25,8,0,0,"");
-          _SFD_SET_DATA_PROPS(26,0,0,0,"z");
-          _SFD_SET_DATA_PROPS(27,0,0,0,"stationid");
-          _SFD_SET_DATA_PROPS(28,0,0,0,"side");
-          _SFD_SET_DATA_PROPS(29,0,0,0,"i");
-          _SFD_SET_DATA_PROPS(30,0,0,0,"v");
-          _SFD_SET_DATA_PROPS(31,0,0,0,"j");
-          _SFD_SET_DATA_PROPS(32,0,0,0,"maxv");
-          _SFD_SET_DATA_PROPS(33,0,0,0,"time");
-          _SFD_SET_DATA_PROPS(34,0,0,0,"i");
-          _SFD_SET_DATA_PROPS(35,0,0,0,"distance");
-          _SFD_SET_DATA_PROPS(36,0,0,0,"acc");
-          _SFD_SET_DATA_PROPS(37,0,0,0,"z");
-          _SFD_SET_DATA_PROPS(38,0,0,0,"stationid");
-          _SFD_SET_DATA_PROPS(39,0,0,0,"side");
-          _SFD_SET_DATA_PROPS(40,0,0,0,"i");
-          _SFD_SET_DATA_PROPS(41,0,0,0,"y1");
+          _SFD_SET_DATA_PROPS(20,2,0,1,"dir1_out");
+          _SFD_SET_DATA_PROPS(21,0,0,0,"t");
+          _SFD_SET_DATA_PROPS(22,0,0,0,"i");
+          _SFD_SET_DATA_PROPS(23,0,0,0,"RelevantIndex");
+          _SFD_SET_DATA_PROPS(24,0,0,0,"tdis");
+          _SFD_SET_DATA_PROPS(25,0,0,0,"dis");
+          _SFD_SET_DATA_PROPS(26,8,0,0,"");
+          _SFD_SET_DATA_PROPS(27,0,0,0,"z");
+          _SFD_SET_DATA_PROPS(28,0,0,0,"stationid");
+          _SFD_SET_DATA_PROPS(29,0,0,0,"side");
+          _SFD_SET_DATA_PROPS(30,0,0,0,"i");
+          _SFD_SET_DATA_PROPS(31,0,0,0,"v");
+          _SFD_SET_DATA_PROPS(32,0,0,0,"j");
+          _SFD_SET_DATA_PROPS(33,0,0,0,"maxv");
+          _SFD_SET_DATA_PROPS(34,0,0,0,"time");
+          _SFD_SET_DATA_PROPS(35,0,0,0,"i");
+          _SFD_SET_DATA_PROPS(36,0,0,0,"distance");
+          _SFD_SET_DATA_PROPS(37,0,0,0,"acc");
+          _SFD_SET_DATA_PROPS(38,0,0,0,"z");
+          _SFD_SET_DATA_PROPS(39,0,0,0,"stationid");
+          _SFD_SET_DATA_PROPS(40,0,0,0,"side");
+          _SFD_SET_DATA_PROPS(41,0,0,0,"i");
           _SFD_SET_DATA_PROPS(42,0,0,0,"y1");
-          _SFD_SET_DATA_PROPS(43,0,0,0,"v");
-          _SFD_SET_DATA_PROPS(44,0,0,0,"j");
-          _SFD_SET_DATA_PROPS(45,0,0,0,"maxv");
-          _SFD_SET_DATA_PROPS(46,0,0,0,"time");
-          _SFD_SET_DATA_PROPS(47,0,0,0,"i");
-          _SFD_SET_DATA_PROPS(48,0,0,0,"distance");
-          _SFD_SET_DATA_PROPS(49,0,0,0,"acc");
-          _SFD_SET_DATA_PROPS(50,0,0,0,"z");
-          _SFD_SET_DATA_PROPS(51,0,0,0,"stationid");
-          _SFD_SET_DATA_PROPS(52,0,0,0,"side");
-          _SFD_SET_DATA_PROPS(53,0,0,0,"i");
-          _SFD_SET_DATA_PROPS(54,0,0,0,"z");
-          _SFD_SET_DATA_PROPS(55,0,0,0,"stationid");
-          _SFD_SET_DATA_PROPS(56,0,0,0,"side");
-          _SFD_SET_DATA_PROPS(57,0,0,0,"i");
-          _SFD_SET_DATA_PROPS(58,0,0,0,"v");
-          _SFD_SET_DATA_PROPS(59,0,0,0,"j");
-          _SFD_SET_DATA_PROPS(60,0,0,0,"maxv");
-          _SFD_SET_DATA_PROPS(61,0,0,0,"time");
-          _SFD_SET_DATA_PROPS(62,0,0,0,"i");
-          _SFD_SET_DATA_PROPS(63,0,0,0,"distance");
-          _SFD_SET_DATA_PROPS(64,0,0,0,"acc");
-          _SFD_SET_DATA_PROPS(65,0,0,0,"y1");
-          _SFD_SET_DATA_PROPS(66,0,0,0,"v");
-          _SFD_SET_DATA_PROPS(67,0,0,0,"j");
-          _SFD_SET_DATA_PROPS(68,0,0,0,"maxv");
-          _SFD_SET_DATA_PROPS(69,0,0,0,"time");
-          _SFD_SET_DATA_PROPS(70,0,0,0,"i");
-          _SFD_SET_DATA_PROPS(71,0,0,0,"distance");
-          _SFD_SET_DATA_PROPS(72,0,0,0,"acc");
-          _SFD_SET_DATA_PROPS(73,0,0,0,"y1");
-          _SFD_SET_DATA_PROPS(74,0,0,0,"y2");
+          _SFD_SET_DATA_PROPS(43,0,0,0,"y1");
+          _SFD_SET_DATA_PROPS(44,0,0,0,"v");
+          _SFD_SET_DATA_PROPS(45,0,0,0,"j");
+          _SFD_SET_DATA_PROPS(46,0,0,0,"maxv");
+          _SFD_SET_DATA_PROPS(47,0,0,0,"time");
+          _SFD_SET_DATA_PROPS(48,0,0,0,"i");
+          _SFD_SET_DATA_PROPS(49,0,0,0,"distance");
+          _SFD_SET_DATA_PROPS(50,0,0,0,"acc");
+          _SFD_SET_DATA_PROPS(51,0,0,0,"z");
+          _SFD_SET_DATA_PROPS(52,0,0,0,"stationid");
+          _SFD_SET_DATA_PROPS(53,0,0,0,"side");
+          _SFD_SET_DATA_PROPS(54,0,0,0,"i");
+          _SFD_SET_DATA_PROPS(55,0,0,0,"z");
+          _SFD_SET_DATA_PROPS(56,0,0,0,"stationid");
+          _SFD_SET_DATA_PROPS(57,0,0,0,"side");
+          _SFD_SET_DATA_PROPS(58,0,0,0,"i");
+          _SFD_SET_DATA_PROPS(59,0,0,0,"v");
+          _SFD_SET_DATA_PROPS(60,0,0,0,"j");
+          _SFD_SET_DATA_PROPS(61,0,0,0,"maxv");
+          _SFD_SET_DATA_PROPS(62,0,0,0,"time");
+          _SFD_SET_DATA_PROPS(63,0,0,0,"i");
+          _SFD_SET_DATA_PROPS(64,0,0,0,"distance");
+          _SFD_SET_DATA_PROPS(65,0,0,0,"acc");
+          _SFD_SET_DATA_PROPS(66,0,0,0,"y1");
+          _SFD_SET_DATA_PROPS(67,0,0,0,"v");
+          _SFD_SET_DATA_PROPS(68,0,0,0,"j");
+          _SFD_SET_DATA_PROPS(69,0,0,0,"maxv");
+          _SFD_SET_DATA_PROPS(70,0,0,0,"time");
+          _SFD_SET_DATA_PROPS(71,0,0,0,"i");
+          _SFD_SET_DATA_PROPS(72,0,0,0,"distance");
+          _SFD_SET_DATA_PROPS(73,0,0,0,"acc");
+          _SFD_SET_DATA_PROPS(74,0,0,0,"y1");
           _SFD_SET_DATA_PROPS(75,0,0,0,"y2");
           _SFD_SET_DATA_PROPS(76,0,0,0,"y2");
           _SFD_SET_DATA_PROPS(77,0,0,0,"y2");
@@ -20691,6 +20737,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           _SFD_SET_DATA_PROPS(79,0,0,0,"y2");
           _SFD_SET_DATA_PROPS(80,0,0,0,"y2");
           _SFD_SET_DATA_PROPS(81,0,0,0,"y2");
+          _SFD_SET_DATA_PROPS(82,0,0,0,"y2");
           _SFD_STATE_INFO(0,0,1);
           _SFD_STATE_INFO(1,0,0);
           _SFD_STATE_INFO(2,0,0);
@@ -21771,9 +21818,6 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           _SFD_CV_INIT_STATE(152,0,0,0,0,0,NULL,NULL);
         }
 
-        _SFD_CV_INIT_TRANS(82,0,NULL,NULL,0,NULL);
-        _SFD_CV_INIT_TRANS(85,0,NULL,NULL,0,NULL);
-
         {
           static unsigned int sStartGuardMap[] = { 1 };
 
@@ -21784,6 +21828,19 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           _SFD_CV_INIT_TRANS(86,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
                              &(sPostFixPredicateTree[0]));
         }
+
+        {
+          static unsigned int sStartGuardMap[] = { 1, 7 };
+
+          static unsigned int sEndGuardMap[] = { 5, 11 };
+
+          static int sPostFixPredicateTree[] = { 0, 1, -3 };
+
+          _SFD_CV_INIT_TRANS(147,2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),3,
+                             &(sPostFixPredicateTree[0]));
+        }
+
+        _SFD_CV_INIT_TRANS(82,0,NULL,NULL,0,NULL);
 
         {
           static unsigned int sStartGuardMap[] = { 1 };
@@ -21807,16 +21864,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                              &(sPostFixPredicateTree[0]));
         }
 
-        {
-          static unsigned int sStartGuardMap[] = { 1, 7 };
-
-          static unsigned int sEndGuardMap[] = { 5, 11 };
-
-          static int sPostFixPredicateTree[] = { 0, 1, -3 };
-
-          _SFD_CV_INIT_TRANS(147,2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),3,
-                             &(sPostFixPredicateTree[0]));
-        }
+        _SFD_CV_INIT_TRANS(85,0,NULL,NULL,0,NULL);
 
         {
           static unsigned int sStartGuardMap[] = { 1 };
@@ -21946,28 +21994,6 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         {
           static unsigned int sStartGuardMap[] = { 1 };
 
-          static unsigned int sEndGuardMap[] = { 8 };
-
-          static int sPostFixPredicateTree[] = { 0 };
-
-          _SFD_CV_INIT_TRANS(151,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
-                             &(sPostFixPredicateTree[0]));
-        }
-
-        {
-          static unsigned int sStartGuardMap[] = { 1 };
-
-          static unsigned int sEndGuardMap[] = { 8 };
-
-          static int sPostFixPredicateTree[] = { 0 };
-
-          _SFD_CV_INIT_TRANS(152,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
-                             &(sPostFixPredicateTree[0]));
-        }
-
-        {
-          static unsigned int sStartGuardMap[] = { 1 };
-
           static unsigned int sEndGuardMap[] = { 9 };
 
           static int sPostFixPredicateTree[] = { 0 };
@@ -21979,22 +22005,11 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         {
           static unsigned int sStartGuardMap[] = { 1 };
 
-          static unsigned int sEndGuardMap[] = { 14 };
+          static unsigned int sEndGuardMap[] = { 8 };
 
           static int sPostFixPredicateTree[] = { 0 };
 
-          _SFD_CV_INIT_TRANS(154,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
-                             &(sPostFixPredicateTree[0]));
-        }
-
-        {
-          static unsigned int sStartGuardMap[] = { 1 };
-
-          static unsigned int sEndGuardMap[] = { 13 };
-
-          static int sPostFixPredicateTree[] = { 0 };
-
-          _SFD_CV_INIT_TRANS(155,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
+          _SFD_CV_INIT_TRANS(151,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
                              &(sPostFixPredicateTree[0]));
         }
 
@@ -22006,30 +22021,6 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           static int sPostFixPredicateTree[] = { 0 };
 
           _SFD_CV_INIT_TRANS(156,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
-                             &(sPostFixPredicateTree[0]));
-        }
-
-        {
-          static unsigned int sStartGuardMap[] = { 1 };
-
-          static unsigned int sEndGuardMap[] = { 13 };
-
-          static int sPostFixPredicateTree[] = { 0 };
-
-          _SFD_CV_INIT_TRANS(157,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
-                             &(sPostFixPredicateTree[0]));
-        }
-
-        _SFD_CV_INIT_TRANS(158,0,NULL,NULL,0,NULL);
-
-        {
-          static unsigned int sStartGuardMap[] = { 1 };
-
-          static unsigned int sEndGuardMap[] = { 7 };
-
-          static int sPostFixPredicateTree[] = { 0 };
-
-          _SFD_CV_INIT_TRANS(159,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
                              &(sPostFixPredicateTree[0]));
         }
 
@@ -22058,11 +22049,68 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         {
           static unsigned int sStartGuardMap[] = { 1 };
 
+          static unsigned int sEndGuardMap[] = { 13 };
+
+          static int sPostFixPredicateTree[] = { 0 };
+
+          _SFD_CV_INIT_TRANS(157,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
+                             &(sPostFixPredicateTree[0]));
+        }
+
+        {
+          static unsigned int sStartGuardMap[] = { 1 };
+
           static unsigned int sEndGuardMap[] = { 22 };
 
           static int sPostFixPredicateTree[] = { 0 };
 
           _SFD_CV_INIT_TRANS(161,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
+                             &(sPostFixPredicateTree[0]));
+        }
+
+        {
+          static unsigned int sStartGuardMap[] = { 1 };
+
+          static unsigned int sEndGuardMap[] = { 12 };
+
+          static int sPostFixPredicateTree[] = { 0 };
+
+          _SFD_CV_INIT_TRANS(163,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
+                             &(sPostFixPredicateTree[0]));
+        }
+
+        {
+          static unsigned int sStartGuardMap[] = { 1 };
+
+          static unsigned int sEndGuardMap[] = { 13 };
+
+          static int sPostFixPredicateTree[] = { 0 };
+
+          _SFD_CV_INIT_TRANS(155,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
+                             &(sPostFixPredicateTree[0]));
+        }
+
+        _SFD_CV_INIT_TRANS(158,0,NULL,NULL,0,NULL);
+
+        {
+          static unsigned int sStartGuardMap[] = { 1 };
+
+          static unsigned int sEndGuardMap[] = { 8 };
+
+          static int sPostFixPredicateTree[] = { 0 };
+
+          _SFD_CV_INIT_TRANS(152,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
+                             &(sPostFixPredicateTree[0]));
+        }
+
+        {
+          static unsigned int sStartGuardMap[] = { 1 };
+
+          static unsigned int sEndGuardMap[] = { 14 };
+
+          static int sPostFixPredicateTree[] = { 0 };
+
+          _SFD_CV_INIT_TRANS(154,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
                              &(sPostFixPredicateTree[0]));
         }
 
@@ -22080,15 +22128,13 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         {
           static unsigned int sStartGuardMap[] = { 1 };
 
-          static unsigned int sEndGuardMap[] = { 12 };
+          static unsigned int sEndGuardMap[] = { 7 };
 
           static int sPostFixPredicateTree[] = { 0 };
 
-          _SFD_CV_INIT_TRANS(163,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
+          _SFD_CV_INIT_TRANS(159,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
                              &(sPostFixPredicateTree[0]));
         }
-
-        _SFD_CV_INIT_TRANS(165,0,NULL,NULL,0,NULL);
 
         {
           static unsigned int sStartGuardMap[] = { 1 };
@@ -22112,25 +22158,16 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                              &(sPostFixPredicateTree[0]));
         }
 
-        {
-          static unsigned int sStartGuardMap[] = { 2, 13, 22, 34 };
-
-          static unsigned int sEndGuardMap[] = { 11, 18, 32, 37 };
-
-          static int sPostFixPredicateTree[] = { 0, 1, -3, 2, 3, -3, -2 };
-
-          _SFD_CV_INIT_TRANS(168,4,&(sStartGuardMap[0]),&(sEndGuardMap[0]),7,
-                             &(sPostFixPredicateTree[0]));
-        }
+        _SFD_CV_INIT_TRANS(165,0,NULL,NULL,0,NULL);
 
         {
-          static unsigned int sStartGuardMap[] = { 1, 7 };
+          static unsigned int sStartGuardMap[] = { 1 };
 
-          static unsigned int sEndGuardMap[] = { 5, 17 };
+          static unsigned int sEndGuardMap[] = { 6 };
 
-          static int sPostFixPredicateTree[] = { 0, 1, -3 };
+          static int sPostFixPredicateTree[] = { 0 };
 
-          _SFD_CV_INIT_TRANS(169,2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),3,
+          _SFD_CV_INIT_TRANS(173,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
                              &(sPostFixPredicateTree[0]));
         }
 
@@ -22146,13 +22183,13 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         }
 
         {
-          static unsigned int sStartGuardMap[] = { 1, 9 };
+          static unsigned int sStartGuardMap[] = { 2, 13, 22, 34 };
 
-          static unsigned int sEndGuardMap[] = { 7, 18 };
+          static unsigned int sEndGuardMap[] = { 11, 18, 32, 37 };
 
-          static int sPostFixPredicateTree[] = { 0, 1, -3 };
+          static int sPostFixPredicateTree[] = { 0, 1, -3, 2, 3, -3, -2 };
 
-          _SFD_CV_INIT_TRANS(170,2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),3,
+          _SFD_CV_INIT_TRANS(168,4,&(sStartGuardMap[0]),&(sEndGuardMap[0]),7,
                              &(sPostFixPredicateTree[0]));
         }
 
@@ -22168,13 +22205,24 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         }
 
         {
-          static unsigned int sStartGuardMap[] = { 1 };
+          static unsigned int sStartGuardMap[] = { 1, 7 };
 
-          static unsigned int sEndGuardMap[] = { 6 };
+          static unsigned int sEndGuardMap[] = { 5, 17 };
 
-          static int sPostFixPredicateTree[] = { 0 };
+          static int sPostFixPredicateTree[] = { 0, 1, -3 };
 
-          _SFD_CV_INIT_TRANS(173,1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),1,
+          _SFD_CV_INIT_TRANS(169,2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),3,
+                             &(sPostFixPredicateTree[0]));
+        }
+
+        {
+          static unsigned int sStartGuardMap[] = { 1, 9 };
+
+          static unsigned int sEndGuardMap[] = { 7, 18 };
+
+          static int sPostFixPredicateTree[] = { 0, 1, -3 };
+
+          _SFD_CV_INIT_TRANS(170,2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),3,
                              &(sPostFixPredicateTree[0]));
         }
 
@@ -23972,12 +24020,12 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         }
 
         _SFD_CV_INIT_EML(152,1,1,4,0,0,0,1,0,4,2);
-        _SFD_CV_INIT_EML_FCN(152,0,"stopDecision",0,-1,482);
-        _SFD_CV_INIT_EML_IF(152,1,0,77,115,-1,435);
-        _SFD_CV_INIT_EML_IF(152,1,1,189,211,-1,416);
-        _SFD_CV_INIT_EML_IF(152,1,2,228,239,-1,400);
-        _SFD_CV_INIT_EML_IF(152,1,3,441,455,-1,480);
-        _SFD_CV_INIT_EML_FOR(152,1,0,57,73,439);
+        _SFD_CV_INIT_EML_FCN(152,0,"stopDecision",0,-1,483);
+        _SFD_CV_INIT_EML_IF(152,1,0,77,115,-1,436);
+        _SFD_CV_INIT_EML_IF(152,1,1,189,211,-1,417);
+        _SFD_CV_INIT_EML_IF(152,1,2,228,239,-1,401);
+        _SFD_CV_INIT_EML_IF(152,1,3,442,456,-1,481);
+        _SFD_CV_INIT_EML_FOR(152,1,0,57,73,440);
 
         {
           static int condStart[] = { 80, 93 };
@@ -24001,24 +24049,6 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                                 3,&(pfixExpr[0]));
         }
 
-        _SFD_TRANS_COV_WTS(82,0,0,0,0);
-        if (chartAlreadyPresent==0) {
-          _SFD_TRANS_COV_MAPS(82,
-                              0,NULL,NULL,
-                              0,NULL,NULL,
-                              0,NULL,NULL,
-                              0,NULL,NULL);
-        }
-
-        _SFD_TRANS_COV_WTS(85,0,0,1,0);
-        if (chartAlreadyPresent==0) {
-          _SFD_TRANS_COV_MAPS(85,
-                              0,NULL,NULL,
-                              0,NULL,NULL,
-                              1,NULL,NULL,
-                              0,NULL,NULL);
-        }
-
         _SFD_TRANS_COV_WTS(86,0,1,2,0);
         if (chartAlreadyPresent==0) {
           static unsigned int sStartGuardMap[] = { 1 };
@@ -24029,6 +24059,28 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL,
                               1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
                               2,NULL,NULL,
+                              0,NULL,NULL);
+        }
+
+        _SFD_TRANS_COV_WTS(147,0,2,1,0);
+        if (chartAlreadyPresent==0) {
+          static unsigned int sStartGuardMap[] = { 1, 7 };
+
+          static unsigned int sEndGuardMap[] = { 5, 11 };
+
+          _SFD_TRANS_COV_MAPS(147,
+                              0,NULL,NULL,
+                              2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              1,NULL,NULL,
+                              0,NULL,NULL);
+        }
+
+        _SFD_TRANS_COV_WTS(82,0,0,0,0);
+        if (chartAlreadyPresent==0) {
+          _SFD_TRANS_COV_MAPS(82,
+                              0,NULL,NULL,
+                              0,NULL,NULL,
+                              0,NULL,NULL,
                               0,NULL,NULL);
         }
 
@@ -24058,15 +24110,11 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL);
         }
 
-        _SFD_TRANS_COV_WTS(147,0,2,1,0);
+        _SFD_TRANS_COV_WTS(85,0,0,1,0);
         if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 1, 7 };
-
-          static unsigned int sEndGuardMap[] = { 5, 11 };
-
-          _SFD_TRANS_COV_MAPS(147,
+          _SFD_TRANS_COV_MAPS(85,
                               0,NULL,NULL,
-                              2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              0,NULL,NULL,
                               1,NULL,NULL,
                               0,NULL,NULL);
         }
@@ -24232,32 +24280,6 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL);
         }
 
-        _SFD_TRANS_COV_WTS(151,0,1,0,0);
-        if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 1 };
-
-          static unsigned int sEndGuardMap[] = { 8 };
-
-          _SFD_TRANS_COV_MAPS(151,
-                              0,NULL,NULL,
-                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
-                              0,NULL,NULL,
-                              0,NULL,NULL);
-        }
-
-        _SFD_TRANS_COV_WTS(152,0,1,0,0);
-        if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 1 };
-
-          static unsigned int sEndGuardMap[] = { 8 };
-
-          _SFD_TRANS_COV_MAPS(152,
-                              0,NULL,NULL,
-                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
-                              0,NULL,NULL,
-                              0,NULL,NULL);
-        }
-
         _SFD_TRANS_COV_WTS(153,0,1,0,0);
         if (chartAlreadyPresent==0) {
           static unsigned int sStartGuardMap[] = { 1 };
@@ -24271,26 +24293,13 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL);
         }
 
-        _SFD_TRANS_COV_WTS(154,0,1,0,0);
+        _SFD_TRANS_COV_WTS(151,0,1,0,0);
         if (chartAlreadyPresent==0) {
           static unsigned int sStartGuardMap[] = { 1 };
 
-          static unsigned int sEndGuardMap[] = { 14 };
+          static unsigned int sEndGuardMap[] = { 8 };
 
-          _SFD_TRANS_COV_MAPS(154,
-                              0,NULL,NULL,
-                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
-                              0,NULL,NULL,
-                              0,NULL,NULL);
-        }
-
-        _SFD_TRANS_COV_WTS(155,0,1,0,0);
-        if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 1 };
-
-          static unsigned int sEndGuardMap[] = { 13 };
-
-          _SFD_TRANS_COV_MAPS(155,
+          _SFD_TRANS_COV_MAPS(151,
                               0,NULL,NULL,
                               1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
                               0,NULL,NULL,
@@ -24307,41 +24316,6 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL,
                               1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
                               3,NULL,NULL,
-                              0,NULL,NULL);
-        }
-
-        _SFD_TRANS_COV_WTS(157,0,1,0,0);
-        if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 1 };
-
-          static unsigned int sEndGuardMap[] = { 13 };
-
-          _SFD_TRANS_COV_MAPS(157,
-                              0,NULL,NULL,
-                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
-                              0,NULL,NULL,
-                              0,NULL,NULL);
-        }
-
-        _SFD_TRANS_COV_WTS(158,0,0,0,0);
-        if (chartAlreadyPresent==0) {
-          _SFD_TRANS_COV_MAPS(158,
-                              0,NULL,NULL,
-                              0,NULL,NULL,
-                              0,NULL,NULL,
-                              0,NULL,NULL);
-        }
-
-        _SFD_TRANS_COV_WTS(159,0,1,1,0);
-        if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 1 };
-
-          static unsigned int sEndGuardMap[] = { 7 };
-
-          _SFD_TRANS_COV_MAPS(159,
-                              0,NULL,NULL,
-                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
-                              1,NULL,NULL,
                               0,NULL,NULL);
         }
 
@@ -24371,6 +24345,19 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL);
         }
 
+        _SFD_TRANS_COV_WTS(157,0,1,0,0);
+        if (chartAlreadyPresent==0) {
+          static unsigned int sStartGuardMap[] = { 1 };
+
+          static unsigned int sEndGuardMap[] = { 13 };
+
+          _SFD_TRANS_COV_MAPS(157,
+                              0,NULL,NULL,
+                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              0,NULL,NULL,
+                              0,NULL,NULL);
+        }
+
         _SFD_TRANS_COV_WTS(161,0,1,2,0);
         if (chartAlreadyPresent==0) {
           static unsigned int sStartGuardMap[] = { 1 };
@@ -24381,19 +24368,6 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL,
                               1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
                               2,NULL,NULL,
-                              0,NULL,NULL);
-        }
-
-        _SFD_TRANS_COV_WTS(162,0,1,0,0);
-        if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 1 };
-
-          static unsigned int sEndGuardMap[] = { 13 };
-
-          _SFD_TRANS_COV_MAPS(162,
-                              0,NULL,NULL,
-                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
-                              0,NULL,NULL,
                               0,NULL,NULL);
         }
 
@@ -24410,11 +24384,76 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL);
         }
 
-        _SFD_TRANS_COV_WTS(165,0,0,1,0);
+        _SFD_TRANS_COV_WTS(155,0,1,0,0);
         if (chartAlreadyPresent==0) {
-          _SFD_TRANS_COV_MAPS(165,
+          static unsigned int sStartGuardMap[] = { 1 };
+
+          static unsigned int sEndGuardMap[] = { 13 };
+
+          _SFD_TRANS_COV_MAPS(155,
+                              0,NULL,NULL,
+                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              0,NULL,NULL,
+                              0,NULL,NULL);
+        }
+
+        _SFD_TRANS_COV_WTS(158,0,0,0,0);
+        if (chartAlreadyPresent==0) {
+          _SFD_TRANS_COV_MAPS(158,
                               0,NULL,NULL,
                               0,NULL,NULL,
+                              0,NULL,NULL,
+                              0,NULL,NULL);
+        }
+
+        _SFD_TRANS_COV_WTS(152,0,1,0,0);
+        if (chartAlreadyPresent==0) {
+          static unsigned int sStartGuardMap[] = { 1 };
+
+          static unsigned int sEndGuardMap[] = { 8 };
+
+          _SFD_TRANS_COV_MAPS(152,
+                              0,NULL,NULL,
+                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              0,NULL,NULL,
+                              0,NULL,NULL);
+        }
+
+        _SFD_TRANS_COV_WTS(154,0,1,0,0);
+        if (chartAlreadyPresent==0) {
+          static unsigned int sStartGuardMap[] = { 1 };
+
+          static unsigned int sEndGuardMap[] = { 14 };
+
+          _SFD_TRANS_COV_MAPS(154,
+                              0,NULL,NULL,
+                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              0,NULL,NULL,
+                              0,NULL,NULL);
+        }
+
+        _SFD_TRANS_COV_WTS(162,0,1,0,0);
+        if (chartAlreadyPresent==0) {
+          static unsigned int sStartGuardMap[] = { 1 };
+
+          static unsigned int sEndGuardMap[] = { 13 };
+
+          _SFD_TRANS_COV_MAPS(162,
+                              0,NULL,NULL,
+                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              0,NULL,NULL,
+                              0,NULL,NULL);
+        }
+
+        _SFD_TRANS_COV_WTS(159,0,1,1,0);
+        if (chartAlreadyPresent==0) {
+          static unsigned int sStartGuardMap[] = { 1 };
+
+          static unsigned int sEndGuardMap[] = { 7 };
+
+          _SFD_TRANS_COV_MAPS(159,
+                              0,NULL,NULL,
+                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
                               1,NULL,NULL,
                               0,NULL,NULL);
         }
@@ -24445,28 +24484,24 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL);
         }
 
-        _SFD_TRANS_COV_WTS(168,0,4,1,0);
+        _SFD_TRANS_COV_WTS(165,0,0,1,0);
         if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 2, 13, 22, 34 };
-
-          static unsigned int sEndGuardMap[] = { 11, 18, 32, 37 };
-
-          _SFD_TRANS_COV_MAPS(168,
+          _SFD_TRANS_COV_MAPS(165,
                               0,NULL,NULL,
-                              4,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              0,NULL,NULL,
                               1,NULL,NULL,
                               0,NULL,NULL);
         }
 
-        _SFD_TRANS_COV_WTS(169,0,2,0,0);
+        _SFD_TRANS_COV_WTS(173,0,1,0,0);
         if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 1, 7 };
+          static unsigned int sStartGuardMap[] = { 1 };
 
-          static unsigned int sEndGuardMap[] = { 5, 17 };
+          static unsigned int sEndGuardMap[] = { 6 };
 
-          _SFD_TRANS_COV_MAPS(169,
+          _SFD_TRANS_COV_MAPS(173,
                               0,NULL,NULL,
-                              2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
                               0,NULL,NULL,
                               0,NULL,NULL);
         }
@@ -24484,16 +24519,16 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL);
         }
 
-        _SFD_TRANS_COV_WTS(170,0,2,0,0);
+        _SFD_TRANS_COV_WTS(168,0,4,1,0);
         if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 1, 9 };
+          static unsigned int sStartGuardMap[] = { 2, 13, 22, 34 };
 
-          static unsigned int sEndGuardMap[] = { 7, 18 };
+          static unsigned int sEndGuardMap[] = { 11, 18, 32, 37 };
 
-          _SFD_TRANS_COV_MAPS(170,
+          _SFD_TRANS_COV_MAPS(168,
                               0,NULL,NULL,
-                              2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
-                              0,NULL,NULL,
+                              4,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              1,NULL,NULL,
                               0,NULL,NULL);
         }
 
@@ -24510,15 +24545,28 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
                               0,NULL,NULL);
         }
 
-        _SFD_TRANS_COV_WTS(173,0,1,0,0);
+        _SFD_TRANS_COV_WTS(169,0,2,0,0);
         if (chartAlreadyPresent==0) {
-          static unsigned int sStartGuardMap[] = { 1 };
+          static unsigned int sStartGuardMap[] = { 1, 7 };
 
-          static unsigned int sEndGuardMap[] = { 6 };
+          static unsigned int sEndGuardMap[] = { 5, 17 };
 
-          _SFD_TRANS_COV_MAPS(173,
+          _SFD_TRANS_COV_MAPS(169,
                               0,NULL,NULL,
-                              1,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
+                              0,NULL,NULL,
+                              0,NULL,NULL);
+        }
+
+        _SFD_TRANS_COV_WTS(170,0,2,0,0);
+        if (chartAlreadyPresent==0) {
+          static unsigned int sStartGuardMap[] = { 1, 9 };
+
+          static unsigned int sEndGuardMap[] = { 7, 18 };
+
+          _SFD_TRANS_COV_MAPS(170,
+                              0,NULL,NULL,
+                              2,&(sStartGuardMap[0]),&(sEndGuardMap[0]),
                               0,NULL,NULL,
                               0,NULL,NULL);
         }
@@ -26941,44 +26989,44 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         _SFD_SET_DATA_COMPILED_PROPS(20,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(21,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(21,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
+        _SFD_SET_DATA_COMPILED_PROPS(22,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
 
         {
           unsigned int dimVector[2];
           dimVector[0]= 1;
           dimVector[1]= 4;
-          _SFD_SET_DATA_COMPILED_PROPS(22,SF_INT32,2,&(dimVector[0]),0,0,0,0.0,
+          _SFD_SET_DATA_COMPILED_PROPS(23,SF_INT32,2,&(dimVector[0]),0,0,0,0.0,
             1.0,0,0,(MexFcnForType)c1_h_sf_marshallOut,(MexInFcnForType)
             c1_h_sf_marshallIn);
         }
 
-        _SFD_SET_DATA_COMPILED_PROPS(23,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
-          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(24,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(25,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
-          (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
+        _SFD_SET_DATA_COMPILED_PROPS(25,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(26,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(27,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(28,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(29,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
-          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(30,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(29,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
+        _SFD_SET_DATA_COMPILED_PROPS(30,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(31,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(32,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(33,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(34,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
-          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(35,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(34,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
+        _SFD_SET_DATA_COMPILED_PROPS(35,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(36,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(37,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
@@ -26987,10 +27035,10 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(39,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(40,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
-          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(41,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(40,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
+        _SFD_SET_DATA_COMPILED_PROPS(41,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(42,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(43,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
@@ -27001,10 +27049,10 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(46,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(47,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
-          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(48,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(47,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
+        _SFD_SET_DATA_COMPILED_PROPS(48,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(49,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(50,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
@@ -27013,28 +27061,28 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(52,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(53,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
-          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(54,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(53,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
+        _SFD_SET_DATA_COMPILED_PROPS(54,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(55,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(56,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(57,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
-          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(58,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(57,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
+        _SFD_SET_DATA_COMPILED_PROPS(58,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(59,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(60,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(61,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(62,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
-          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(63,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(62,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
+        _SFD_SET_DATA_COMPILED_PROPS(63,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(64,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(65,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
@@ -27047,10 +27095,10 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(69,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(70,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
-          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
-        _SFD_SET_DATA_COMPILED_PROPS(71,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+        _SFD_SET_DATA_COMPILED_PROPS(70,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
+        _SFD_SET_DATA_COMPILED_PROPS(71,SF_INT32,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c1_b_sf_marshallOut,(MexInFcnForType)c1_b_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(72,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(73,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
@@ -27071,9 +27119,12 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(81,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
-        _SFD_SET_DATA_VALUE_PTR(25,(void *)(NULL));
+        _SFD_SET_DATA_COMPILED_PROPS(82,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c1_sf_marshallOut,(MexInFcnForType)c1_sf_marshallIn);
+        _SFD_SET_DATA_VALUE_PTR(26,(void *)(NULL));
 
         {
+          real_T *c1_dir1_out;
           real_T *c1_t;
           real_T *c1_z;
           real_T *c1_v;
@@ -27137,6 +27188,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           c1_v = (real_T *)(ssGetContStates(chartInstance->S) + 2);
           c1_z = (real_T *)(ssGetContStates(chartInstance->S) + 1);
           c1_t = (real_T *)(ssGetContStates(chartInstance->S) + 0);
+          c1_dir1_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 4);
           c1_y2_out = (real_T (*)[8])ssGetOutputPortSignal(chartInstance->S, 3);
           c1_y1_out = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 2);
           c1_distance_out = (real_T (*)[4])ssGetOutputPortSignal
@@ -27163,67 +27215,68 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           _SFD_SET_DATA_VALUE_PTR(17U, chartInstance->c1_dir);
           _SFD_SET_DATA_VALUE_PTR(18U, chartInstance->c1_position);
           _SFD_SET_DATA_VALUE_PTR(19U, chartInstance->c1_PSDClosed);
-          _SFD_SET_DATA_VALUE_PTR(20U, c1_t);
-          _SFD_SET_DATA_VALUE_PTR(21U, &chartInstance->c1_i);
-          _SFD_SET_DATA_VALUE_PTR(22U, chartInstance->c1_RelevantIndex);
-          _SFD_SET_DATA_VALUE_PTR(23U, &chartInstance->c1_tdis);
-          _SFD_SET_DATA_VALUE_PTR(24U, &chartInstance->c1_dis);
-          _SFD_SET_DATA_VALUE_PTR(26U, c1_z);
-          _SFD_SET_DATA_VALUE_PTR(27U, &chartInstance->c1_stationid);
-          _SFD_SET_DATA_VALUE_PTR(28U, &chartInstance->c1_side);
-          _SFD_SET_DATA_VALUE_PTR(29U, &chartInstance->c1_b_i);
-          _SFD_SET_DATA_VALUE_PTR(30U, c1_v);
-          _SFD_SET_DATA_VALUE_PTR(31U, &chartInstance->c1_j);
-          _SFD_SET_DATA_VALUE_PTR(32U, &chartInstance->c1_maxv);
-          _SFD_SET_DATA_VALUE_PTR(33U, c1_time);
-          _SFD_SET_DATA_VALUE_PTR(34U, &chartInstance->c1_c_i);
-          _SFD_SET_DATA_VALUE_PTR(35U, c1_distance);
-          _SFD_SET_DATA_VALUE_PTR(36U, &chartInstance->c1_acc);
-          _SFD_SET_DATA_VALUE_PTR(37U, c1_b_z);
-          _SFD_SET_DATA_VALUE_PTR(38U, &chartInstance->c1_b_stationid);
-          _SFD_SET_DATA_VALUE_PTR(39U, &chartInstance->c1_b_side);
-          _SFD_SET_DATA_VALUE_PTR(40U, &chartInstance->c1_d_i);
-          _SFD_SET_DATA_VALUE_PTR(41U, c1_y1);
-          _SFD_SET_DATA_VALUE_PTR(42U, c1_b_y1);
-          _SFD_SET_DATA_VALUE_PTR(43U, c1_b_v);
-          _SFD_SET_DATA_VALUE_PTR(44U, &chartInstance->c1_b_j);
-          _SFD_SET_DATA_VALUE_PTR(45U, &chartInstance->c1_b_maxv);
-          _SFD_SET_DATA_VALUE_PTR(46U, c1_b_time);
-          _SFD_SET_DATA_VALUE_PTR(47U, &chartInstance->c1_e_i);
-          _SFD_SET_DATA_VALUE_PTR(48U, c1_b_distance);
-          _SFD_SET_DATA_VALUE_PTR(49U, &chartInstance->c1_b_acc);
-          _SFD_SET_DATA_VALUE_PTR(50U, c1_c_z);
-          _SFD_SET_DATA_VALUE_PTR(51U, &chartInstance->c1_c_stationid);
-          _SFD_SET_DATA_VALUE_PTR(52U, &chartInstance->c1_c_side);
-          _SFD_SET_DATA_VALUE_PTR(53U, &chartInstance->c1_f_i);
-          _SFD_SET_DATA_VALUE_PTR(54U, c1_d_z);
-          _SFD_SET_DATA_VALUE_PTR(55U, &chartInstance->c1_d_stationid);
-          _SFD_SET_DATA_VALUE_PTR(56U, &chartInstance->c1_d_side);
-          _SFD_SET_DATA_VALUE_PTR(57U, &chartInstance->c1_g_i);
-          _SFD_SET_DATA_VALUE_PTR(58U, c1_c_v);
-          _SFD_SET_DATA_VALUE_PTR(59U, &chartInstance->c1_c_j);
-          _SFD_SET_DATA_VALUE_PTR(60U, &chartInstance->c1_c_maxv);
-          _SFD_SET_DATA_VALUE_PTR(61U, c1_c_time);
-          _SFD_SET_DATA_VALUE_PTR(62U, &chartInstance->c1_h_i);
-          _SFD_SET_DATA_VALUE_PTR(63U, c1_c_distance);
-          _SFD_SET_DATA_VALUE_PTR(64U, &chartInstance->c1_c_acc);
-          _SFD_SET_DATA_VALUE_PTR(65U, c1_c_y1);
-          _SFD_SET_DATA_VALUE_PTR(66U, c1_d_v);
-          _SFD_SET_DATA_VALUE_PTR(67U, &chartInstance->c1_d_j);
-          _SFD_SET_DATA_VALUE_PTR(68U, &chartInstance->c1_d_maxv);
-          _SFD_SET_DATA_VALUE_PTR(69U, c1_d_time);
-          _SFD_SET_DATA_VALUE_PTR(70U, &chartInstance->c1_i_i);
-          _SFD_SET_DATA_VALUE_PTR(71U, c1_d_distance);
-          _SFD_SET_DATA_VALUE_PTR(72U, &chartInstance->c1_d_acc);
-          _SFD_SET_DATA_VALUE_PTR(73U, c1_d_y1);
-          _SFD_SET_DATA_VALUE_PTR(74U, c1_y2);
-          _SFD_SET_DATA_VALUE_PTR(75U, c1_b_y2);
-          _SFD_SET_DATA_VALUE_PTR(76U, c1_c_y2);
-          _SFD_SET_DATA_VALUE_PTR(77U, c1_d_y2);
-          _SFD_SET_DATA_VALUE_PTR(78U, c1_e_y2);
-          _SFD_SET_DATA_VALUE_PTR(79U, c1_f_y2);
-          _SFD_SET_DATA_VALUE_PTR(80U, c1_g_y2);
-          _SFD_SET_DATA_VALUE_PTR(81U, c1_h_y2);
+          _SFD_SET_DATA_VALUE_PTR(20U, c1_dir1_out);
+          _SFD_SET_DATA_VALUE_PTR(21U, c1_t);
+          _SFD_SET_DATA_VALUE_PTR(22U, &chartInstance->c1_i);
+          _SFD_SET_DATA_VALUE_PTR(23U, chartInstance->c1_RelevantIndex);
+          _SFD_SET_DATA_VALUE_PTR(24U, &chartInstance->c1_tdis);
+          _SFD_SET_DATA_VALUE_PTR(25U, &chartInstance->c1_dis);
+          _SFD_SET_DATA_VALUE_PTR(27U, c1_z);
+          _SFD_SET_DATA_VALUE_PTR(28U, &chartInstance->c1_stationid);
+          _SFD_SET_DATA_VALUE_PTR(29U, &chartInstance->c1_side);
+          _SFD_SET_DATA_VALUE_PTR(30U, &chartInstance->c1_b_i);
+          _SFD_SET_DATA_VALUE_PTR(31U, c1_v);
+          _SFD_SET_DATA_VALUE_PTR(32U, &chartInstance->c1_j);
+          _SFD_SET_DATA_VALUE_PTR(33U, &chartInstance->c1_maxv);
+          _SFD_SET_DATA_VALUE_PTR(34U, c1_time);
+          _SFD_SET_DATA_VALUE_PTR(35U, &chartInstance->c1_c_i);
+          _SFD_SET_DATA_VALUE_PTR(36U, c1_distance);
+          _SFD_SET_DATA_VALUE_PTR(37U, &chartInstance->c1_acc);
+          _SFD_SET_DATA_VALUE_PTR(38U, c1_b_z);
+          _SFD_SET_DATA_VALUE_PTR(39U, &chartInstance->c1_b_stationid);
+          _SFD_SET_DATA_VALUE_PTR(40U, &chartInstance->c1_b_side);
+          _SFD_SET_DATA_VALUE_PTR(41U, &chartInstance->c1_d_i);
+          _SFD_SET_DATA_VALUE_PTR(42U, c1_y1);
+          _SFD_SET_DATA_VALUE_PTR(43U, c1_b_y1);
+          _SFD_SET_DATA_VALUE_PTR(44U, c1_b_v);
+          _SFD_SET_DATA_VALUE_PTR(45U, &chartInstance->c1_b_j);
+          _SFD_SET_DATA_VALUE_PTR(46U, &chartInstance->c1_b_maxv);
+          _SFD_SET_DATA_VALUE_PTR(47U, c1_b_time);
+          _SFD_SET_DATA_VALUE_PTR(48U, &chartInstance->c1_e_i);
+          _SFD_SET_DATA_VALUE_PTR(49U, c1_b_distance);
+          _SFD_SET_DATA_VALUE_PTR(50U, &chartInstance->c1_b_acc);
+          _SFD_SET_DATA_VALUE_PTR(51U, c1_c_z);
+          _SFD_SET_DATA_VALUE_PTR(52U, &chartInstance->c1_c_stationid);
+          _SFD_SET_DATA_VALUE_PTR(53U, &chartInstance->c1_c_side);
+          _SFD_SET_DATA_VALUE_PTR(54U, &chartInstance->c1_f_i);
+          _SFD_SET_DATA_VALUE_PTR(55U, c1_d_z);
+          _SFD_SET_DATA_VALUE_PTR(56U, &chartInstance->c1_d_stationid);
+          _SFD_SET_DATA_VALUE_PTR(57U, &chartInstance->c1_d_side);
+          _SFD_SET_DATA_VALUE_PTR(58U, &chartInstance->c1_g_i);
+          _SFD_SET_DATA_VALUE_PTR(59U, c1_c_v);
+          _SFD_SET_DATA_VALUE_PTR(60U, &chartInstance->c1_c_j);
+          _SFD_SET_DATA_VALUE_PTR(61U, &chartInstance->c1_c_maxv);
+          _SFD_SET_DATA_VALUE_PTR(62U, c1_c_time);
+          _SFD_SET_DATA_VALUE_PTR(63U, &chartInstance->c1_h_i);
+          _SFD_SET_DATA_VALUE_PTR(64U, c1_c_distance);
+          _SFD_SET_DATA_VALUE_PTR(65U, &chartInstance->c1_c_acc);
+          _SFD_SET_DATA_VALUE_PTR(66U, c1_c_y1);
+          _SFD_SET_DATA_VALUE_PTR(67U, c1_d_v);
+          _SFD_SET_DATA_VALUE_PTR(68U, &chartInstance->c1_d_j);
+          _SFD_SET_DATA_VALUE_PTR(69U, &chartInstance->c1_d_maxv);
+          _SFD_SET_DATA_VALUE_PTR(70U, c1_d_time);
+          _SFD_SET_DATA_VALUE_PTR(71U, &chartInstance->c1_i_i);
+          _SFD_SET_DATA_VALUE_PTR(72U, c1_d_distance);
+          _SFD_SET_DATA_VALUE_PTR(73U, &chartInstance->c1_d_acc);
+          _SFD_SET_DATA_VALUE_PTR(74U, c1_d_y1);
+          _SFD_SET_DATA_VALUE_PTR(75U, c1_y2);
+          _SFD_SET_DATA_VALUE_PTR(76U, c1_b_y2);
+          _SFD_SET_DATA_VALUE_PTR(77U, c1_c_y2);
+          _SFD_SET_DATA_VALUE_PTR(78U, c1_d_y2);
+          _SFD_SET_DATA_VALUE_PTR(79U, c1_e_y2);
+          _SFD_SET_DATA_VALUE_PTR(80U, c1_f_y2);
+          _SFD_SET_DATA_VALUE_PTR(81U, c1_g_y2);
+          _SFD_SET_DATA_VALUE_PTR(82U, c1_h_y2);
         }
       }
     } else {
@@ -27236,7 +27289,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
 static const char* sf_get_instance_specialization()
 {
-  return "ByndtCgrZnHzZI4NpOHVXF";
+  return "ZQPxr26YD2iztwyNBMLOCG";
 }
 
 static void sf_opaque_initialize_c1_subwaycontrolsystem(void *chartInstanceVar)
@@ -27411,7 +27464,7 @@ static void mdlSetWorkWidths_c1_subwaycontrolsystem(SimStruct *S)
       sf_mark_chart_expressionable_inputs(S,sf_get_instance_specialization(),
         infoStruct,1,2);
       sf_mark_chart_reusable_outputs(S,sf_get_instance_specialization(),
-        infoStruct,1,3);
+        infoStruct,1,4);
     }
 
     sf_set_rtw_dwork_info(S,sf_get_instance_specialization(),infoStruct,1);
@@ -27420,10 +27473,10 @@ static void mdlSetWorkWidths_c1_subwaycontrolsystem(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(3776112918U));
-  ssSetChecksum1(S,(922742967U));
-  ssSetChecksum2(S,(4119584549U));
-  ssSetChecksum3(S,(1772031803U));
+  ssSetChecksum0(S,(3621486981U));
+  ssSetChecksum1(S,(2304177633U));
+  ssSetChecksum2(S,(3682901551U));
+  ssSetChecksum3(S,(1881917891U));
   ssSetNumContStates(S,29);
   ssSetExplicitFCSSCtrl(S,1);
   ssSupportsMultipleExecInstances(S,1);

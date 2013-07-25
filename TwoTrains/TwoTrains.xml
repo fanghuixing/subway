@@ -444,27 +444,26 @@ time&gt;=0</guard>
     <param name="y" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <param name="openTD" type="label" local="false" controlled="false" />
     <param name="closeTD" type="label" local="false" controlled="false" />
-    <param name="v_shut" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <param name="trainDoorsClosed" type="label" local="false" />
     <param name="needclose" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <param name="opencomplete" type="label" local="true" />
     <param name="reclose" type="label" local="true" />
     <param name="clamping" type="label" local="true" />
     <location id="3" name="closed" x="213.0" y="274.0" width="152.0" height="74.0">
-      <invariant>y==0 &amp; v_shut==0</invariant>
+      <invariant>y==0</invariant>
       <flow>y'==0</flow>
     </location>
     <location id="1" name="part" x="426.0" y="168.0" width="144.0" height="74.0">
-      <invariant>y&lt;=2 &amp; v_shut==0</invariant>
+      <invariant>y&lt;=2</invariant>
       <flow>y'==1</flow>
     </location>
     <location id="2" name="open" x="646.0" y="292.0" width="156.0" height="66.0">
-      <invariant>y==2 &amp; v_shut==0</invariant>
+      <invariant>y==2</invariant>
       <flow>y'==0</flow>
     </location>
     <location id="4" name="shut" x="425.0" y="389.0" width="160.0" height="68.0">
-      <invariant>y&gt;=0 &amp; -1&lt;=v_shut&lt;=0</invariant>
-      <flow>y'==v_shut</flow>
+      <invariant>y&gt;=0</invariant>
+      <flow>y'==-1</flow>
     </location>
     <transition source="1" target="2">
       <label>opencomplete</label>
@@ -486,13 +485,13 @@ time&gt;=0</guard>
     <transition source="4" target="3">
       <label>trainDoorsClosed</label>
       <guard>y==0</guard>
-      <assignment>needclose:=0 &amp; v_shut:=0</assignment>
-      <labelposition x="-30.0" y="-35.0" width="166.0" height="74.0" />
+      <assignment>needclose:=0</assignment>
+      <labelposition x="-20.0" y="-40.0" width="166.0" height="74.0" />
       <middlepoint x="216.5" y="388.5" />
     </transition>
     <transition source="4" target="1">
       <label>clamping</label>
-      <guard>y&gt;0 &amp; v_shut==0</guard>
+      <guard>y&gt;0</guard>
       <labelposition x="-126.0" y="-29.0" width="142.0" height="50.0" />
     </transition>
     <transition source="2" target="4">
@@ -511,24 +510,23 @@ time&gt;=0</guard>
     <param name="closeSD_T2" type="label" local="false" placement="east" />
     <param name="screenDoorsClosed_T1" type="label" local="false" />
     <param name="screenDoorsClosed_T2" type="label" local="false" />
-    <param name="v_shut" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <param name="opencomplete" type="label" local="true" />
     <param name="reclose" type="label" local="true" />
     <param name="clamping" type="label" local="true" />
     <location id="3" name="closed" x="257.0" y="270.0" width="132.0" height="64.0">
-      <invariant>y==0  &amp; v_shut==0</invariant>
+      <invariant>y==0</invariant>
       <flow>y'==0</flow>
     </location>
     <location id="4" name="shut" x="504.0" y="421.0" width="160.0" height="68.0">
-      <invariant>y&gt;=0 &amp; -1&lt;=v_shut&lt;=0</invariant>
-      <flow>y'==v_shut</flow>
+      <invariant>y&gt;=0</invariant>
+      <flow>y'==-1</flow>
     </location>
     <location id="2" name="part" x="503.0" y="149.0" width="126.0" height="72.0">
-      <invariant>y&lt;=2 &amp; v_shut==0</invariant>
+      <invariant>y&lt;=2</invariant>
       <flow>y'==1</flow>
     </location>
     <location id="5" name="open" x="833.0" y="275.0" width="128.0" height="72.0">
-      <invariant>y==2&amp; v_shut==0</invariant>
+      <invariant>y==2</invariant>
       <flow>y'==0</flow>
     </location>
     <transition source="3" target="2">
@@ -541,13 +539,13 @@ time&gt;=0</guard>
     </transition>
     <transition source="4" target="2">
       <label>clamping</label>
-      <guard>y&gt;0 &amp; v_shut==0</guard>
+      <guard>y&gt;0</guard>
       <labelposition x="-131.0" y="-31.0" width="142.0" height="50.0" />
     </transition>
     <transition source="4" target="3">
       <label>screenDoorsClosed_T1</label>
       <guard>y==0</guard>
-      <assignment>needclose:=0 &amp;  v_shut:=0</assignment>
+      <assignment>needclose:=0</assignment>
       <labelposition x="-188.0" y="-2.0" width="208.0" height="62.0" />
       <middlepoint x="426.5" y="317.5" />
       <waypoints>
@@ -593,7 +591,7 @@ time&gt;=0</guard>
     <transition source="4" target="3">
       <label>screenDoorsClosed_T2</label>
       <guard>y==0</guard>
-      <assignment>needclose:=0 &amp;  v_shut:=0</assignment>
+      <assignment>needclose:=0</assignment>
       <labelposition x="-24.0" y="15.0" width="184.0" height="60.0" />
       <middlepoint x="210.5" y="450.0" />
       <waypoints>
