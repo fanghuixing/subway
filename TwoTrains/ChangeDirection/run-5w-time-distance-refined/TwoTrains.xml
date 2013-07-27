@@ -16,7 +16,7 @@
     <param name="tau" type="label" local="true" />
     <param name="urStop" type="label" local="false" />
     <param name="urStart" type="label" local="false" />
-    <param name="Train_Urstopped" type="label" local="false" />
+    <param name="Train_Urstopped" type="label" local="false" placement="east" />
     <location id="1" name="init" x="961.0" y="101.0" width="168.0" height="90.0">
       <invariant>time&lt;=Delay</invariant>
       <flow>time'==1 &amp; v'==0 &amp; S'==0 &amp;
@@ -31,10 +31,11 @@ pos'==0 &amp; dir'==0&amp;j'==0</flow>
       <flow>time'==1 &amp; dir'==0&amp;j'==0 
 &amp; S'==0 &amp; v'==0 &amp; pos'==0</flow>
     </location>
-    <location id="4" name="run" x="711.0" y="512.0" width="162.0" height="90.0">
+    <location id="4" name="run" x="711.0" y="512.0" width="176.0" height="92.0">
       <invariant>S-pos&gt;=500 &amp; 0&lt;=v&lt;=20</invariant>
       <flow>v'==0.5 &amp;  pos'==v 
-&amp; S'==0 &amp; time'==0</flow>
+&amp; j'==0 &amp; dir'==0
+&amp;S'==0 &amp; time'==0</flow>
     </location>
     <location id="5" name="stablerun" x="462.0" y="474.0" width="130.0" height="90.0">
       <invariant>S-pos&gt;=500</invariant>
@@ -61,10 +62,10 @@ pos'==0 &amp; dir'==0&amp;j'==0</flow>
 &amp; j'==0 &amp; dir'==0
 &amp;S'==0 &amp; time'==0</flow>
     </location>
-    <location id="11" name="preRun" x="924.0" y="689.0" width="126.0" height="82.0">
+    <location id="11" name="preRun" x="924.0" y="689.0" width="156.0" height="82.0">
       <invariant>0&lt;=time&lt;=0.1</invariant>
       <flow>time'==1 &amp; S'==0 &amp;
-pos'==0 &amp; v'==0</flow>
+pos'==0 &amp; v'==0 &amp;j'==0</flow>
     </location>
     <location id="12" name="run1" x="1220.0" y="508.0" width="168.0" height="98.0">
       <invariant>pos-S&gt;=500 &amp; 0&lt;= v&lt;=20</invariant>
@@ -379,7 +380,7 @@ time&gt;=0</guard>
 0&lt;=v&lt;=0.1</guard>
       <assignment>v:=0 &amp; pos:=S 
 &amp; time:=0</assignment>
-      <labelposition x="-1.0" y="-39.0" width="186.0" height="96.0" />
+      <labelposition x="5.0" y="-39.0" width="186.0" height="96.0" />
       <middlepoint x="761.5" y="204.0" />
       <waypoints>
         <aftermiddle>832.0,253.0</aftermiddle>
@@ -444,7 +445,6 @@ time&gt;=0</guard>
     <param name="y" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <param name="openTD" type="label" local="false" controlled="false" />
     <param name="closeTD" type="label" local="false" controlled="false" />
-    
     <param name="trainDoorsClosed" type="label" local="false" />
     <param name="needclose" type="real" local="true" d1="1" d2="1" dynamics="any" />
     <param name="opencomplete" type="label" local="true" />
@@ -511,7 +511,6 @@ time&gt;=0</guard>
     <param name="closeSD_T2" type="label" local="false" placement="east" />
     <param name="screenDoorsClosed_T1" type="label" local="false" />
     <param name="screenDoorsClosed_T2" type="label" local="false" />
-    
     <param name="opencomplete" type="label" local="true" />
     <param name="reclose" type="label" local="true" />
     <param name="clamping" type="label" local="true" />
@@ -1230,7 +1229,7 @@ pos2&gt;pos1 &amp; t==1</guard>
     <param name="Delay" type="real" local="false" d1="1" d2="1" dynamics="const" controlled="false" />
     <param name="urStop" type="label" local="false" placement="east" />
     <param name="urStart" type="label" local="false" placement="east" />
-    <param name="Train_Urstopped" type="label" local="false" />
+    <param name="Train_Urstopped" type="label" local="false" placement="east" />
     <bind component="train" as="train" x="427.0" y="102.0" width="234.0" height="160.0">
       <map key="pos">pos</map>
       <map key="dir">dir</map>
