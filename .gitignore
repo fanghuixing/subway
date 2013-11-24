@@ -215,3 +215,5 @@ pip-log.txt
 .mr.developer.cfg
 spaceex-virtual-machine-server/
 spaceex/
+*.GEN
+*.TXT
