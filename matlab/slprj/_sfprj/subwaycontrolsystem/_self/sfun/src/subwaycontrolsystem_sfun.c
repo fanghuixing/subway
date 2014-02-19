@@ -72,10 +72,10 @@ unsigned int sf_subwaycontrolsystem_process_check_sum_call( int nlhs, mxArray *
       ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(0U);
       ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(0U);
     } else if (!strcmp(commandName,"makefile")) {
-      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1038116146U);
-      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(790683566U);
-      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1868137159U);
-      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2441430215U);
+      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1721133976U);
+      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1496135638U);
+      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1911949516U);
+      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(101151125U);
     } else if (nrhs==3 && !strcmp(commandName,"chart")) {
       unsigned int chartFileNumber;
       chartFileNumber = (unsigned int)mxGetScalar(prhs[2]);
@@ -109,10 +109,10 @@ unsigned int sf_subwaycontrolsystem_process_check_sum_call( int nlhs, mxArray *
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2465682574U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3301479066U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(672159605U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(988471823U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3494419816U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2260300794U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2247841395U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(821619644U);
   }
 
   return 1;
@@ -150,7 +150,7 @@ unsigned int sf_subwaycontrolsystem_autoinheritance_info( int nlhs, mxArray *
     switch (chartFileNumber) {
      case 1:
       {
-        if (strcmp(aiChksum, "gnkp7zUtegH0v9R8kbJpDE") == 0) {
+        if (strcmp(aiChksum, "5G0tknhXe6tRY2RHXQsNx") == 0) {
           extern mxArray *sf_c1_subwaycontrolsystem_get_autoinheritance_info
             (void);
           plhs[0] = sf_c1_subwaycontrolsystem_get_autoinheritance_info();

@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.582"
+    ComputedModelVersion    "1.588"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -52,21 +52,21 @@ Model {
 	Dimension		2
 	Object {
 	  $ObjectID		  5
-	  IsActive		  [0]
-	  ViewObjType		  "StateflowState"
-	  LoadSaveID		  "1421"
-	  Extents		  [1884.0, 909.0]
-	  ZoomFactor		  [1.1717042311605974]
-	  Offset		  [-67.190687160704442, 10.146507581632825]
+	  IsActive		  [1]
+	  ViewObjType		  "StateflowChart"
+	  LoadSaveID		  "1"
+	  Extents		  [1884.0, 913.0]
+	  ZoomFactor		  [0.3]
+	  Offset		  [-1918.8445751522117, -911.60747618537914]
 	}
 	Object {
 	  $ObjectID		  6
-	  IsActive		  [1]
-	  ViewObjType		  "SimulinkTopLevel"
-	  LoadSaveID		  "0"
+	  IsActive		  [0]
+	  ViewObjType		  "StateflowState"
+	  LoadSaveID		  "1267"
 	  Extents		  [1884.0, 913.0]
-	  ZoomFactor		  [0.68]
-	  Offset		  [0.0, 0.0]
+	  ZoomFactor		  [2.8771280693233177]
+	  Offset		  [2377.230174193548, 1376.4747686528922]
 	}
 	PropName		"EditorsInfo"
       }
@@ -78,9 +78,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "fofo"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Jul 25 19:59:03 2013"
-  RTWModifiedTimeStamp	  296683138
-  ModelVersionFormat	  "1.%<AutoIncrement:582>"
+  LastModifiedDate	  "Thu Feb 13 20:12:53 2014"
+  RTWModifiedTimeStamp	  314207204
+  ModelVersionFormat	  "1.%<AutoIncrement:588>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -683,7 +683,7 @@ Model {
 	  $ObjectID		  20
 	  Version		  "1.12.1"
 	  StartTime		  "0.0"
-	  StopTime		  "10000"
+	  StopTime		  "2000"
 	  AbsTol		  "auto"
 	  FixedStep		  "auto"
 	  InitialStep		  "auto"
@@ -1356,7 +1356,7 @@ Model {
   System {
     Name		    "subwaycontrolsystem"
     Location		    [1432, -8, 3368, 1088]
-    Open		    on
+    Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
     ScreenColor		    "white"
@@ -1369,13 +1369,13 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "68"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "70"
+    SIDHighWatermark	    "76"
     Block {
       BlockType		      SubSystem
       Name		      "MATLAB Function"
       SID		      "62"
       Ports		      [1, 1]
-      Position		      [865, 704, 940, 786]
+      Position		      [860, 759, 935, 841]
       ZOrder		      38
       ForegroundColor	      "blue"
       BackgroundColor	      "lightBlue"
@@ -1539,8 +1539,8 @@ Model {
       Name		      "PSDS stateflow chart"
       SID		      "1"
       RequirementInfo	      "{}  %GIDa_87fe0a43_5411_4934_b3a9_58160d32c6a6"
-      Ports		      [2, 4]
-      Position		      [1025, 385, 1550, 865]
+      Ports		      [2, 8]
+      Position		      [1025, 397, 1520, 1168]
       ZOrder		      -2
       ForegroundColor	      "blue"
       BackgroundColor	      "lightBlue"
@@ -1575,7 +1575,7 @@ Model {
       System {
 	Name			"PSDS stateflow chart"
 	Location		[1432, -8, 3368, 1088]
-	Open			off
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1587,7 +1587,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	"41"
+	SIDHighWatermark	"45"
 	Block {
 	  BlockType		  Inport
 	  Name			  "v_shutTD"
@@ -1610,7 +1610,7 @@ Model {
 	  Name			  " Demux "
 	  SID			  "1::34"
 	  Ports			  [1, 1]
-	  Position		  [270, 245, 320, 285]
+	  Position		  [270, 390, 320, 430]
 	  ZOrder		  2
 	  Outputs		  "1"
 	}
@@ -1619,11 +1619,11 @@ Model {
 	  Name			  " SFunction "
 	  SID			  "1::33"
 	  Tag			  "Stateflow S-Function subwaycontrolsystem 1"
-	  Ports			  [2, 5]
-	  Position		  [180, 105, 230, 225]
+	  Ports			  [2, 9]
+	  Position		  [180, 114, 230, 316]
 	  ZOrder		  1
 	  FunctionName		  "sf_sfun"
-	  PortCounts		  "[2 5]"
+	  PortCounts		  "[2 9]"
 	  EnableBusSupport	  on
 	  Port {
 	    PortNumber		    2
@@ -1649,12 +1649,36 @@ Model {
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
+	  Port {
+	    PortNumber		    6
+	    Name		    "ugflag_out0"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    7
+	    Name		    "ugflag_out1"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    8
+	    Name		    "ugflag_out2"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    9
+	    Name		    "ugflag_out3"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
 	}
 	Block {
 	  BlockType		  Terminator
 	  Name			  " Terminator "
 	  SID			  "1::36"
-	  Position		  [460, 256, 480, 274]
+	  Position		  [460, 401, 480, 419]
 	  ZOrder		  4
 	}
 	Block {
@@ -1690,6 +1714,42 @@ Model {
 	  Position		  [460, 206, 480, 224]
 	  ZOrder		  7
 	  Port			  "4"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "ugflag_out0"
+	  SID			  "1::42"
+	  Position		  [460, 246, 480, 264]
+	  ZOrder		  8
+	  Port			  "5"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "ugflag_out1"
+	  SID			  "1::43"
+	  Position		  [460, 281, 480, 299]
+	  ZOrder		  9
+	  Port			  "6"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "ugflag_out2"
+	  SID			  "1::44"
+	  Position		  [460, 316, 480, 334]
+	  ZOrder		  10
+	  Port			  "7"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "ugflag_out3"
+	  SID			  "1::45"
+	  Position		  [460, 351, 480, 369]
+	  ZOrder		  11
+	  Port			  "8"
 	  IconDisplay		  "Port number"
 	}
 	Line {
@@ -1734,6 +1794,38 @@ Model {
 	  SrcBlock		  " SFunction "
 	  SrcPort		  5
 	  DstBlock		  "dir1_out"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "ugflag_out0"
+	  Labels		  [0, 0]
+	  SrcBlock		  " SFunction "
+	  SrcPort		  6
+	  DstBlock		  "ugflag_out0"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "ugflag_out1"
+	  Labels		  [0, 0]
+	  SrcBlock		  " SFunction "
+	  SrcPort		  7
+	  DstBlock		  "ugflag_out1"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "ugflag_out2"
+	  Labels		  [0, 0]
+	  SrcBlock		  " SFunction "
+	  SrcPort		  8
+	  DstBlock		  "ugflag_out2"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "ugflag_out3"
+	  Labels		  [0, 0]
+	  SrcBlock		  " SFunction "
+	  SrcPort		  9
+	  DstBlock		  "ugflag_out3"
 	  DstPort		  1
 	}
 	Line {
@@ -2226,7 +2318,7 @@ Model {
       Name		      "direction-train-1"
       SID		      "70"
       Ports		      [1]
-      Position		      [1615, 779, 1940, 831]
+      Position		      [1615, 709, 1940, 761]
       ZOrder		      43
       ForegroundColor	      "blue"
       BackgroundColor	      "cyan"
@@ -2242,7 +2334,7 @@ Model {
       Name		      "screen-doors-open-close"
       SID		      "66"
       Ports		      [1]
-      Position		      [1620, 662, 1935, 708]
+      Position		      [1620, 617, 1935, 663]
       ZOrder		      42
       ForegroundColor	      "blue"
       BackgroundColor	      "lightBlue"
@@ -2259,7 +2351,7 @@ Model {
       Name		      "train-doors-open-close"
       SID		      "65"
       Ports		      [1]
-      Position		      [1620, 539, 1935, 591]
+      Position		      [1620, 519, 1935, 571]
       ZOrder		      41
       ForegroundColor	      "blue"
       BackgroundColor	      "lightBlue"
@@ -2276,7 +2368,7 @@ Model {
       Name		      "train-positions"
       SID		      "63"
       Ports		      [1]
-      Position		      [1620, 417, 1935, 473]
+      Position		      [1620, 422, 1935, 478]
       ZOrder		      39
       ForegroundColor	      "blue"
       BackgroundColor	      "lightBlue"
@@ -2284,6 +2376,70 @@ Model {
       FontSize		      22
       FontWeight	      "bold"
       VariableName	      "position"
+      MaxDataPoints	      "inf"
+      SampleTime	      "-1"
+      SaveFormat	      "Timeseries"
+    }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "urgent-flag-train-0"
+      SID		      "73"
+      Ports		      [1]
+      Position		      [1615, 804, 1940, 856]
+      ZOrder		      46
+      ForegroundColor	      "blue"
+      BackgroundColor	      "cyan"
+      FontSize		      22
+      FontWeight	      "bold"
+      VariableName	      "ugflag0"
+      MaxDataPoints	      "inf"
+      SampleTime	      "-1"
+      SaveFormat	      "Timeseries"
+    }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "urgent-flag-train-1"
+      SID		      "74"
+      Ports		      [1]
+      Position		      [1615, 899, 1940, 951]
+      ZOrder		      47
+      ForegroundColor	      "blue"
+      BackgroundColor	      "cyan"
+      FontSize		      22
+      FontWeight	      "bold"
+      VariableName	      "ugflag1"
+      MaxDataPoints	      "inf"
+      SampleTime	      "-1"
+      SaveFormat	      "Timeseries"
+    }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "urgent-flag-train-2"
+      SID		      "75"
+      Ports		      [1]
+      Position		      [1615, 994, 1940, 1046]
+      ZOrder		      48
+      ForegroundColor	      "blue"
+      BackgroundColor	      "cyan"
+      FontSize		      22
+      FontWeight	      "bold"
+      VariableName	      "ugflag2"
+      MaxDataPoints	      "inf"
+      SampleTime	      "-1"
+      SaveFormat	      "Timeseries"
+    }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "urgent-flag-train-3"
+      SID		      "76"
+      Ports		      [1]
+      Position		      [1615, 1089, 1940, 1141]
+      ZOrder		      49
+      ForegroundColor	      "blue"
+      BackgroundColor	      "cyan"
+      FontSize		      22
+      FontWeight	      "bold"
+      VariableName	      "ugflag3"
       MaxDataPoints	      "inf"
       SampleTime	      "-1"
       SaveFormat	      "Timeseries"
@@ -2405,7 +2561,7 @@ Model {
     Line {
       SrcBlock		      "Mux2"
       SrcPort		      1
-      Points		      [0, 205]
+      Points		      [0, 290]
       DstBlock		      "PSDS stateflow chart"
       DstPort		      1
     }
@@ -2510,7 +2666,7 @@ Model {
     Line {
       SrcBlock		      "Mux"
       SrcPort		      1
-      Points		      [52, 0; 0, 145]
+      Points		      [52, 0; 0, 200]
       DstBlock		      "MATLAB Function"
       DstPort		      1
     }
@@ -2531,6 +2687,7 @@ Model {
     Line {
       SrcBlock		      "MATLAB Function"
       SrcPort		      1
+      Points		      [70, 0]
       DstBlock		      "PSDS stateflow chart"
       DstPort		      2
     }
@@ -2558,6 +2715,31 @@ Model {
       DstBlock		      "direction-train-1"
       DstPort		      1
     }
+    Line {
+      SrcBlock		      "PSDS stateflow chart"
+      SrcPort		      5
+      DstBlock		      "urgent-flag-train-0"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "PSDS stateflow chart"
+      SrcPort		      6
+      DstBlock		      "urgent-flag-train-1"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "PSDS stateflow chart"
+      SrcPort		      7
+      Points		      [75, 0]
+      DstBlock		      "urgent-flag-train-2"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "PSDS stateflow chart"
+      SrcPort		      8
+      DstBlock		      "urgent-flag-train-3"
+      DstPort		      1
+    }
   }
 }
 # Finite State Machines
@@ -2572,15 +2754,15 @@ Stateflow {
     name		    "subwaycontrolsystem"
     created		    "18-May-2011 15:33:45"
     isLibrary		    0
-    firstTarget		    479
+    firstTarget		    507
     sfVersion		    76014001.001
   }
   chart {
     id			    2
     name		    "PSDS stateflow chart"
     windowPosition	    [-8 -8 1456 876]
-    viewLimits		    [2377.23 3032.05 1367.376 1683.316]
-    zoomFactor		    0.463
+    viewLimits		    [2377.954 2919.061 1394.447 1656.671]
+    zoomFactor		    0.383
     screen		    [1 1 1440 900 1.333333333333333]
     treeNode		    [0 3 0 0]
     viewObj		    31
@@ -2590,9 +2772,9 @@ Stateflow {
       x1		      40.094
       y1		      73.938
     }
-    ssIdHighWaterMark	    1825
+    ssIdHighWaterMark	    1869
     decomposition	    SET_CHART
-    firstData		    450
+    firstData		    474
     updateMethod	    CONTINUOUS
     chartFileNumber	    1
     userSpecifiedStateTransitionExecutionOrder 1
@@ -2603,12 +2785,12 @@ Stateflow {
   state {
     id			    3
     labelString		    "UrgentController"
-    position		    [1529.4633 40.3539 404.344 283.031]
+    position		    [2232.7966 17.0206 404.344 283.031]
     fontSize		    14
     chart		    2
-    treeNode		    [2 7 0 9]
-    firstTransition	    163
-    firstJunction	    162
+    treeNode		    [2 7 0 160]
+    firstTransition	    175
+    firstJunction	    174
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -2622,7 +2804,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    14
-    firstData		    157
+    firstData		    169
   }
   state {
     id			    4
@@ -2697,7 +2879,7 @@ Stateflow {
     ssIdNumber		    1318
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
-    firstData		    169
+    firstData		    181
     eml {
       isEML		      1
       script		      "function stopDecision(a)\n\ndis=int32(10000);\nneedstop=0;\n\nfor index=0:N-1\n    if a~= index &"
@@ -2714,8 +2896,8 @@ Stateflow {
     position		    [2699.6723 396.5887 404.344 283.031]
     fontSize		    14
     chart		    2
-    treeNode		    [2 10 3 18]
-    firstTransition	    174
+    treeNode		    [2 10 157 18]
+    firstTransition	    186
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -2729,7 +2911,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    16
-    firstData		    170
+    firstData		    182
   }
   state {
     id			    10
@@ -2850,8 +3032,8 @@ Stateflow {
     fontSize		    12
     chart		    2
     treeNode		    [2 19 9 31]
-    firstTransition	    195
-    firstJunction	    193
+    firstTransition	    207
+    firstJunction	    205
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -2864,7 +3046,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    19
-    firstData		    186
+    firstData		    198
   }
   state {
     id			    19
@@ -3042,20 +3224,20 @@ Stateflow {
     fontSize		    14
     chart		    2
     treeNode		    [2 32 18 40]
-    firstTransition	    223
+    firstTransition	    235
     superState		    SUBCHART
     subviewer		    2
     subviewS {
-      x1		      6.261
-      y1		      40.667
-      zoomFactor	      0.817
+      x1		      2377.23
+      y1		      1367.376
+      zoomFactor	      0.463
       pos		      [7218.138 3817 868.785 255.54]
     }
     ssIdNumber		    64
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    3
-    firstData		    219
+    firstData		    231
   }
   state {
     id			    32
@@ -3175,7 +3357,7 @@ Stateflow {
     arrowSize		    9
     chart		    2
     treeNode		    [2 41 31 45]
-    firstTransition	    236
+    firstTransition	    248
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -3189,7 +3371,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    1
-    firstData		    235
+    firstData		    247
   }
   state {
     id			    41
@@ -3256,7 +3438,7 @@ Stateflow {
     arrowSize		    9
     chart		    2
     treeNode		    [2 46 40 50]
-    firstTransition	    243
+    firstTransition	    255
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -3270,7 +3452,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    11
-    firstData		    242
+    firstData		    254
   }
   state {
     id			    46
@@ -3336,8 +3518,8 @@ Stateflow {
     fontSize		    12
     chart		    2
     treeNode		    [2 51 45 63]
-    firstTransition	    258
-    firstJunction	    256
+    firstTransition	    270
+    firstJunction	    268
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -3350,7 +3532,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    20
-    firstData		    249
+    firstData		    261
   }
   state {
     id			    51
@@ -3519,7 +3701,7 @@ Stateflow {
     fontSize		    14
     chart		    2
     treeNode		    [2 64 50 72]
-    firstTransition	    286
+    firstTransition	    298
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -3533,7 +3715,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    18
-    firstData		    282
+    firstData		    294
   }
   state {
     id			    64
@@ -3654,7 +3836,7 @@ Stateflow {
     fontSize		    14
     chart		    2
     treeNode		    [2 73 63 81]
-    firstTransition	    302
+    firstTransition	    314
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -3668,7 +3850,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    17
-    firstData		    298
+    firstData		    310
   }
   state {
     id			    73
@@ -3789,8 +3971,8 @@ Stateflow {
     fontSize		    12
     chart		    2
     treeNode		    [2 82 72 94]
-    firstTransition	    323
-    firstJunction	    321
+    firstTransition	    335
+    firstJunction	    333
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -3803,7 +3985,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    21
-    firstData		    314
+    firstData		    326
   }
   state {
     id			    82
@@ -3973,7 +4155,7 @@ Stateflow {
     arrowSize		    9
     chart		    2
     treeNode		    [2 95 81 99]
-    firstTransition	    348
+    firstTransition	    360
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -3987,7 +4169,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    12
-    firstData		    347
+    firstData		    359
   }
   state {
     id			    95
@@ -4053,8 +4235,8 @@ Stateflow {
     fontSize		    12
     chart		    2
     treeNode		    [2 100 94 112]
-    firstTransition	    363
-    firstJunction	    361
+    firstTransition	    375
+    firstJunction	    373
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -4067,7 +4249,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    15
-    firstData		    354
+    firstData		    366
   }
   state {
     id			    100
@@ -4237,7 +4419,7 @@ Stateflow {
     arrowSize		    9
     chart		    2
     treeNode		    [2 113 99 117]
-    firstTransition	    388
+    firstTransition	    400
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -4251,7 +4433,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    13
-    firstData		    387
+    firstData		    399
   }
   state {
     id			    113
@@ -4317,7 +4499,7 @@ Stateflow {
     fontSize		    14
     chart		    2
     treeNode		    [2 118 112 122]
-    firstTransition	    395
+    firstTransition	    407
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -4331,7 +4513,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    5
-    firstData		    394
+    firstData		    406
   }
   state {
     id			    118
@@ -4397,7 +4579,7 @@ Stateflow {
     fontSize		    14
     chart		    2
     treeNode		    [2 123 117 127]
-    firstTransition	    402
+    firstTransition	    414
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -4411,7 +4593,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    6
-    firstData		    401
+    firstData		    413
   }
   state {
     id			    123
@@ -4477,7 +4659,7 @@ Stateflow {
     fontSize		    14
     chart		    2
     treeNode		    [2 128 122 132]
-    firstTransition	    409
+    firstTransition	    421
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -4491,7 +4673,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    4
-    firstData		    408
+    firstData		    420
   }
   state {
     id			    128
@@ -4557,7 +4739,7 @@ Stateflow {
     fontSize		    14
     chart		    2
     treeNode		    [2 133 127 137]
-    firstTransition	    416
+    firstTransition	    428
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -4571,7 +4753,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    2
-    firstData		    415
+    firstData		    427
   }
   state {
     id			    133
@@ -4637,7 +4819,7 @@ Stateflow {
     fontSize		    14
     chart		    2
     treeNode		    [2 138 132 142]
-    firstTransition	    423
+    firstTransition	    435
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -4651,7 +4833,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    9
-    firstData		    422
+    firstData		    434
   }
   state {
     id			    138
@@ -4717,7 +4899,7 @@ Stateflow {
     fontSize		    14
     chart		    2
     treeNode		    [2 143 137 147]
-    firstTransition	    430
+    firstTransition	    442
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -4731,7 +4913,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    10
-    firstData		    429
+    firstData		    441
   }
   state {
     id			    143
@@ -4797,7 +4979,7 @@ Stateflow {
     fontSize		    14
     chart		    2
     treeNode		    [2 148 142 152]
-    firstTransition	    437
+    firstTransition	    449
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -4811,7 +4993,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    8
-    firstData		    436
+    firstData		    448
   }
   state {
     id			    148
@@ -4877,7 +5059,7 @@ Stateflow {
     fontSize		    14
     chart		    2
     treeNode		    [2 153 147 0]
-    firstTransition	    444
+    firstTransition	    456
     superState		    SUBCHART
     visible		    0
     subviewer		    2
@@ -4891,7 +5073,7 @@ Stateflow {
     type		    AND_STATE
     decomposition	    CLUSTER_STATE
     executionOrder	    7
-    firstData		    443
+    firstData		    455
   }
   state {
     id			    153
@@ -4950,11 +5132,203 @@ Stateflow {
     type		    OR_STATE
     decomposition	    CLUSTER_STATE
   }
-  data {
+  state {
     id			    157
+    labelString		    "Monitor0"
+    position		    [50 23.3333 404.344 283.031]
+    fontSize		    14
+    chart		    2
+    treeNode		    [2 159 166 9]
+    firstTransition	    462
+    superState		    SUBCHART
+    visible		    0
+    subviewer		    2
+    subviewS {
+      x1		      5826.583
+      y1		      3186.37
+      zoomFactor	      0.839
+      pos		      [2381.401 1453.647 534.213 143.824]
+    }
+    ssIdNumber		    1831
+    type		    AND_STATE
+    decomposition	    CLUSTER_STATE
+    executionOrder	    22
+  }
+  state {
+    id			    158
+    labelString		    "idle\ndu:ugflag_out0=0;\n"
+    position		    [2393.8309 1508.7215 103.4784 59.8909]
+    fontSize		    12
+    chart		    2
+    treeNode		    [157 0 159 0]
+    visible		    0
+    subviewer		    157
+    ssIdNumber		    1842
+    type		    OR_STATE
+    decomposition	    CLUSTER_STATE
+  }
+  state {
+    id			    159
+    labelString		    "urgentstate\ndu:ugflag_out0=1;"
+    position		    [2811.566 1505.2458 97.5697 66.8423]
+    fontSize		    12
+    chart		    2
+    treeNode		    [157 0 0 158]
+    visible		    0
+    subviewer		    157
+    ssIdNumber		    1845
+    type		    OR_STATE
+    decomposition	    CLUSTER_STATE
+  }
+  state {
+    id			    160
+    labelString		    "Monitor1"
+    position		    [490 20 404.344 283.031]
+    fontSize		    14
+    chart		    2
+    treeNode		    [2 161 3 163]
+    firstTransition	    465
+    superState		    SUBCHART
+    visible		    0
+    subviewer		    2
+    subviewS {
+      x1		      5826.583
+      y1		      3186.37
+      zoomFactor	      0.839
+      pos		      [2381.401 1453.647 534.213 143.824]
+    }
+    ssIdNumber		    1852
+    type		    AND_STATE
+    decomposition	    CLUSTER_STATE
+    executionOrder	    23
+  }
+  state {
+    id			    161
+    labelString		    "urgentstate\ndu:ugflag_out1=1;"
+    position		    [2811.566 1505.2458 97.5697 66.8423]
+    fontSize		    12
+    chart		    2
+    treeNode		    [160 0 0 162]
+    visible		    0
+    subviewer		    160
+    ssIdNumber		    1856
+    type		    OR_STATE
+    decomposition	    CLUSTER_STATE
+  }
+  state {
+    id			    162
+    labelString		    "idle\ndu:ugflag_out1=0;\n"
+    position		    [2393.8309 1508.7215 103.4784 59.8909]
+    fontSize		    12
+    chart		    2
+    treeNode		    [160 0 161 0]
+    visible		    0
+    subviewer		    160
+    ssIdNumber		    1857
+    type		    OR_STATE
+    decomposition	    CLUSTER_STATE
+  }
+  state {
+    id			    163
+    labelString		    "Monitor2"
+    position		    [1003.3333 20 404.344 283.031]
+    fontSize		    14
+    chart		    2
+    treeNode		    [2 164 160 166]
+    firstTransition	    468
+    superState		    SUBCHART
+    visible		    0
+    subviewer		    2
+    subviewS {
+      x1		      5826.583
+      y1		      3186.37
+      zoomFactor	      0.839
+      pos		      [2381.401 1453.647 534.213 143.824]
+    }
+    ssIdNumber		    1858
+    type		    AND_STATE
+    decomposition	    CLUSTER_STATE
+    executionOrder	    24
+  }
+  state {
+    id			    164
+    labelString		    "urgentstate\ndu:ugflag_out2=1;"
+    position		    [2811.566 1505.2458 97.5697 66.8423]
+    fontSize		    12
+    chart		    2
+    treeNode		    [163 0 0 165]
+    visible		    0
+    subviewer		    163
+    ssIdNumber		    1862
+    type		    OR_STATE
+    decomposition	    CLUSTER_STATE
+  }
+  state {
+    id			    165
+    labelString		    "idle\ndu:ugflag_out2=0;\n"
+    position		    [2393.8309 1508.7215 103.4784 59.8909]
+    fontSize		    12
+    chart		    2
+    treeNode		    [163 0 164 0]
+    visible		    0
+    subviewer		    163
+    ssIdNumber		    1863
+    type		    OR_STATE
+    decomposition	    CLUSTER_STATE
+  }
+  state {
+    id			    166
+    labelString		    "Monitor3"
+    position		    [1463.3333 20 404.344 283.031]
+    fontSize		    14
+    chart		    2
+    treeNode		    [2 167 163 157]
+    firstTransition	    471
+    superState		    SUBCHART
+    visible		    0
+    subviewer		    2
+    subviewS {
+      x1		      5826.583
+      y1		      3186.37
+      zoomFactor	      0.839
+      pos		      [2381.401 1453.647 534.213 143.824]
+    }
+    ssIdNumber		    1864
+    type		    AND_STATE
+    decomposition	    CLUSTER_STATE
+    executionOrder	    25
+  }
+  state {
+    id			    167
+    labelString		    "urgentstate\ndu:ugflag_out3=1;"
+    position		    [2811.566 1505.2458 97.5697 66.8423]
+    fontSize		    12
+    chart		    2
+    treeNode		    [166 0 0 168]
+    visible		    0
+    subviewer		    166
+    ssIdNumber		    1868
+    type		    OR_STATE
+    decomposition	    CLUSTER_STATE
+  }
+  state {
+    id			    168
+    labelString		    "idle\ndu:ugflag_out3=0;\n"
+    position		    [2393.8309 1508.7215 103.4784 59.8909]
+    fontSize		    12
+    chart		    2
+    treeNode		    [166 0 167 0]
+    visible		    0
+    subviewer		    166
+    ssIdNumber		    1869
+    type		    OR_STATE
+    decomposition	    CLUSTER_STATE
+  }
+  data {
+    id			    169
     ssIdNumber		    1264
     name		    "t"
-    linkNode		    [3 0 158]
+    linkNode		    [3 0 170]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -4968,10 +5342,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    158
+    id			    170
     ssIdNumber		    1325
     name		    "i"
-    linkNode		    [3 157 159]
+    linkNode		    [3 169 171]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -4984,10 +5358,10 @@ Stateflow {
     dataType		    "int32"
   }
   data {
-    id			    159
+    id			    171
     ssIdNumber		    1612
     name		    "RelevantIndex"
-    linkNode		    [3 158 160]
+    linkNode		    [3 170 172]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5004,10 +5378,10 @@ Stateflow {
     dataType		    "int32"
   }
   data {
-    id			    160
+    id			    172
     ssIdNumber		    1623
     name		    "tdis"
-    linkNode		    [3 159 161]
+    linkNode		    [3 171 173]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5020,10 +5394,10 @@ Stateflow {
     dataType		    "int32"
   }
   data {
-    id			    161
+    id			    173
     ssIdNumber		    1624
     name		    "dis"
-    linkNode		    [3 160 0]
+    linkNode		    [3 172 0]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5036,7 +5410,7 @@ Stateflow {
     dataType		    "int32"
   }
   junction {
-    id			    162
+    id			    174
     position		    [2717.016 1548.3585 7]
     chart		    2
     linkNode		    [3 0 0]
@@ -5045,7 +5419,7 @@ Stateflow {
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    163
+    id			    175
     labelString		    "[t>=0]{CalDistance(),i=i+1;}"
     labelPosition	    [2665.774 1480.51 145.5 17]
     fontSize		    12
@@ -5059,8 +5433,8 @@ Stateflow {
     }
     midPoint		    [2733.209 1467.4252]
     chart		    2
-    linkNode		    [3 0 164]
-    dataLimits		    [2625.427 2838.591 1467.26 1524.217]
+    linkNode		    [3 0 176]
+    dataLimits		    [2625.427 2838.591 1467.261 1524.217]
     subviewer		    3
     drawStyle		    SMART
     slide {
@@ -5070,7 +5444,7 @@ Stateflow {
     ssIdNumber		    1316
   }
   transition {
-    id			    164
+    id			    176
     labelString		    "[i==N&&t>=1]{i=0;}"
     labelPosition	    [2526.717 1484.321 101.25 17]
     fontSize		    12
@@ -5084,7 +5458,7 @@ Stateflow {
     }
     midPoint		    [2592.1151 1476.0934]
     chart		    2
-    linkNode		    [3 163 165]
+    linkNode		    [3 175 177]
     dataLimits		    [2565.278 2616.552 1475.976 1524.093]
     subviewer		    3
     drawStyle		    SMART
@@ -5095,7 +5469,7 @@ Stateflow {
     ssIdNumber		    1621
   }
   transition {
-    id			    165
+    id			    177
     labelString		    ""
     labelPosition	    [2451.325 1488.103 2 17]
     fontSize		    12
@@ -5108,7 +5482,7 @@ Stateflow {
     }
     midPoint		    [2435.9843 1509.5403]
     chart		    2
-    linkNode		    [3 164 166]
+    linkNode		    [3 176 178]
     dataLimits		    [2433.584 2438.384 1502.371 1524.71]
     subviewer		    3
     drawStyle		    SMART
@@ -5119,7 +5493,7 @@ Stateflow {
     ssIdNumber		    1287
   }
   transition {
-    id			    166
+    id			    178
     labelString		    "[t>=150]{i=0;}"
     labelPosition	    [2480.101 1526.019 73.5 17]
     fontSize		    12
@@ -5133,7 +5507,7 @@ Stateflow {
     }
     midPoint		    [2511.6316 1545.8767]
     chart		    2
-    linkNode		    [3 165 167]
+    linkNode		    [3 177 179]
     dataLimits		    [2478.193 2553.07 1543.477 1548.277]
     subviewer		    3
     drawStyle		    SMART
@@ -5144,7 +5518,7 @@ Stateflow {
     ssIdNumber		    1289
   }
   transition {
-    id			    167
+    id			    179
     labelString		    "[i!=N&&t>=0]"
     labelPosition	    [2650.265 1528.39 70.25 17]
     fontSize		    12
@@ -5153,12 +5527,12 @@ Stateflow {
       intersection	      [2 1 0 0.5 2642.7225 1548.3585 0 0]
     }
     dst {
-      id		      162
+      id		      174
       intersection	      [4 -1 0 0 2710.016 1548.3585 0 0]
     }
     midPoint		    [2672.3692 1548.3585]
     chart		    2
-    linkNode		    [3 166 168]
+    linkNode		    [3 178 180]
     dataLimits		    [2642.722 2710.016 1545.959 1550.759]
     stampAngle		    -0.7854
     subviewer		    3
@@ -5170,12 +5544,12 @@ Stateflow {
     ssIdNumber		    1295
   }
   transition {
-    id			    168
+    id			    180
     labelString		    "\n{stopDecision(i);}"
     labelPosition	    [2731.914 1515.693 92.5 32]
     fontSize		    12
     src {
-      id		      162
+      id		      174
       intersection	      [2 1 0 0 2724.016 1548.3585 0 0]
     }
     dst {
@@ -5184,7 +5558,7 @@ Stateflow {
     }
     midPoint		    [2769.7938 1548.3585]
     chart		    2
-    linkNode		    [3 167 0]
+    linkNode		    [3 179 0]
     dataLimits		    [2724.016 2823.572 1545.959 1550.759]
     stampAngle		    -0.7854
     subviewer		    3
@@ -5196,7 +5570,7 @@ Stateflow {
     ssIdNumber		    1313
   }
   data {
-    id			    169
+    id			    181
     ssIdNumber		    1319
     name		    "a"
     linkNode		    [8 0 0]
@@ -5212,10 +5586,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    170
+    id			    182
     ssIdNumber		    1533
     name		    "z"
-    linkNode		    [9 0 171]
+    linkNode		    [9 0 183]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5229,10 +5603,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    171
+    id			    183
     ssIdNumber		    1534
     name		    "stationid"
-    linkNode		    [9 170 172]
+    linkNode		    [9 182 184]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5245,10 +5619,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    172
+    id			    184
     ssIdNumber		    1535
     name		    "side"
-    linkNode		    [9 171 173]
+    linkNode		    [9 183 185]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5261,10 +5635,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    173
+    id			    185
     ssIdNumber		    1536
     name		    "i"
-    linkNode		    [9 172 0]
+    linkNode		    [9 184 0]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5278,7 +5652,7 @@ Stateflow {
     dataType		    "int32"
   }
   transition {
-    id			    174
+    id			    186
     labelString		    "[PSDClosed[stationid][side]==0]"
     labelPosition	    [7393.16 3578.151 171 17]
     fontSize		    12
@@ -5293,7 +5667,7 @@ Stateflow {
     }
     midPoint		    [7442.8723 3591.9086]
     chart		    2
-    linkNode		    [9 0 175]
+    linkNode		    [9 0 187]
     dataLimits		    [7416.095 7476.036 3591.941 3613.701]
     subviewer		    9
     drawStyle		    SMART
@@ -5304,7 +5678,7 @@ Stateflow {
     ssIdNumber		    1618
   }
   transition {
-    id			    175
+    id			    187
     labelString		    "[in(Train1_door.closed)==0]"
     labelPosition	    [7652.255 3580.601 173.25 18]
     fontSize		    14
@@ -5319,7 +5693,7 @@ Stateflow {
     }
     midPoint		    [7746 3596.25]
     chart		    2
-    linkNode		    [9 174 176]
+    linkNode		    [9 186 188]
     visible		    0
     dataLimits		    [7713.696 7788.75 3596.018 3611.076]
     stampAngle		    NaN
@@ -5332,7 +5706,7 @@ Stateflow {
     ssIdNumber		    1538
   }
   transition {
-    id			    176
+    id			    188
     labelPosition	    [7269.042 3609.495 9.745 17.965]
     fontSize		    14
     arrowSize		    5.181
@@ -5345,7 +5719,7 @@ Stateflow {
     }
     midPoint		    [7265.5314 3612.962]
     chart		    2
-    linkNode		    [9 175 177]
+    linkNode		    [9 187 189]
     visible		    0
     dataLimits		    [7263.977 7267.085 3604.487 3626.618]
     subviewer		    9
@@ -5356,7 +5730,7 @@ Stateflow {
     ssIdNumber		    1539
   }
   transition {
-    id			    177
+    id			    189
     labelString		    "[z>=5]{closeTD[i]=1;}"
     labelPosition	    [7679.27 3705.155 132.75 18]
     fontSize		    14
@@ -5371,7 +5745,7 @@ Stateflow {
     }
     midPoint		    [7840.2741 3679.4323]
     chart		    2
-    linkNode		    [9 176 178]
+    linkNode		    [9 188 190]
     visible		    0
     dataLimits		    [7813.75 7840.509 3639.694 3743.528]
     stampAngle		    NaN
@@ -5384,7 +5758,7 @@ Stateflow {
     ssIdNumber		    1540
   }
   transition {
-    id			    178
+    id			    190
     labelString		    "[z>=5]\n{closePSD[stationid][side]=1;}"
     labelPosition	    [7512.387 3605.715 186.5 34]
     fontSize		    14
@@ -5399,7 +5773,7 @@ Stateflow {
     }
     midPoint		    [7603.5081 3646.375]
     chart		    2
-    linkNode		    [9 177 179]
+    linkNode		    [9 189 191]
     visible		    0
     dataLimits		    [7507.765 7694.07 3644.821 3647.929]
     stampAngle		    NaN
@@ -5412,7 +5786,7 @@ Stateflow {
     ssIdNumber		    1541
   }
   transition {
-    id			    179
+    id			    191
     labelString		    "[stop[i]==1]\n{i=1,stationid=Train1.j,\nside=(dir[i]+1)/2}"
     labelPosition	    [7123.769 3582.112 141.5 50]
     fontSize		    14
@@ -5427,7 +5801,7 @@ Stateflow {
     }
     midPoint		    [7173.6174 3657.75]
     chart		    2
-    linkNode		    [9 178 180]
+    linkNode		    [9 190 192]
     visible		    0
     dataLimits		    [7120.734 7221.32 3656.196 3659.304]
     stampAngle		    NaN
@@ -5440,7 +5814,7 @@ Stateflow {
     ssIdNumber		    1542
   }
   transition {
-    id			    180
+    id			    192
     labelString		    "[z>=5]{start[i]=1;}"
     labelPosition	    [7302.19 3635.304 109.25 18]
     fontSize		    14
@@ -5455,7 +5829,7 @@ Stateflow {
     }
     midPoint		    [7356.8609 3660.3872]
     chart		    2
-    linkNode		    [9 179 181]
+    linkNode		    [9 191 193]
     visible		    0
     dataLimits		    [7302.456 7406.085 3658.833 3661.941]
     stampAngle		    NaN
@@ -5468,7 +5842,7 @@ Stateflow {
     ssIdNumber		    1543
   }
   transition {
-    id			    181
+    id			    193
     labelString		    "[z>=1&&stop[i]!=1]\n{position[i]=Train1.distance}"
     labelPosition	    [7276.503 3701.138 148.5 32]
     fontSize		    12
@@ -5483,7 +5857,7 @@ Stateflow {
     }
     midPoint		    [7270.6108 3697.9774]
     chart		    2
-    linkNode		    [9 180 182]
+    linkNode		    [9 192 194]
     visible		    0
     dataLimits		    [7238.308 7305.349 3668.545 3699.569]
     subviewer		    9
@@ -5495,7 +5869,7 @@ Stateflow {
     ssIdNumber		    1544
   }
   transition {
-    id			    182
+    id			    194
     labelString		    "[z>=5]{openPSD[stationid][side]=1;}"
     labelPosition	    [7050.478 3715.336 224.25 18]
     fontSize		    14
@@ -5510,7 +5884,7 @@ Stateflow {
     }
     midPoint		    [7045.4089 3717.5242]
     chart		    2
-    linkNode		    [9 181 183]
+    linkNode		    [9 193 195]
     visible		    0
     dataLimits		    [7043.855 7046.963 3697.077 3743.153]
     stampAngle		    NaN
@@ -5523,7 +5897,7 @@ Stateflow {
     ssIdNumber		    1545
   }
   transition {
-    id			    183
+    id			    195
     labelString		    "[z>=10]"
     labelPosition	    [7402.634 3748.219 48.75 18]
     fontSize		    14
@@ -5538,7 +5912,7 @@ Stateflow {
     }
     midPoint		    [7407.6394 3768]
     chart		    2
-    linkNode		    [9 182 184]
+    linkNode		    [9 194 196]
     visible		    0
     dataLimits		    [7358.125 7462.335 3766.446 3769.554]
     stampAngle		    NaN
@@ -5551,7 +5925,7 @@ Stateflow {
     ssIdNumber		    1546
   }
   transition {
-    id			    184
+    id			    196
     labelString		    "[z>=1]{openTD[i]=1;}"
     labelPosition	    [7137.833 3751.735 131.5 18]
     fontSize		    14
@@ -5566,7 +5940,7 @@ Stateflow {
     }
     midPoint		    [7195.041 3769.75]
     chart		    2
-    linkNode		    [9 183 185]
+    linkNode		    [9 195 197]
     visible		    0
     dataLimits		    [7120.693 7274.57 3768.196 3771.304]
     stampAngle		    NaN
@@ -5579,7 +5953,7 @@ Stateflow {
     ssIdNumber		    1547
   }
   transition {
-    id			    185
+    id			    197
     labelString		    "[z>=20&&z<=30]"
     labelPosition	    [7579.983 3737.202 106 18]
     fontSize		    14
@@ -5594,7 +5968,7 @@ Stateflow {
     }
     midPoint		    [7633.3583 3774.25]
     chart		    2
-    linkNode		    [9 184 0]
+    linkNode		    [9 196 0]
     visible		    0
     dataLimits		    [7544.515 7727.382 3772.696 3775.804]
     stampAngle		    NaN
@@ -5607,10 +5981,10 @@ Stateflow {
     ssIdNumber		    1548
   }
   data {
-    id			    186
+    id			    198
     ssIdNumber		    1632
     name		    "v"
-    linkNode		    [18 0 187]
+    linkNode		    [18 0 199]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5624,10 +5998,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    187
+    id			    199
     ssIdNumber		    1633
     name		    "j"
-    linkNode		    [18 186 188]
+    linkNode		    [18 198 200]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5640,10 +6014,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    188
+    id			    200
     ssIdNumber		    1634
     name		    "maxv"
-    linkNode		    [18 187 189]
+    linkNode		    [18 199 201]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5656,10 +6030,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    189
+    id			    201
     ssIdNumber		    1635
     name		    "time"
-    linkNode		    [18 188 190]
+    linkNode		    [18 200 202]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5673,10 +6047,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    190
+    id			    202
     ssIdNumber		    1636
     name		    "i"
-    linkNode		    [18 189 191]
+    linkNode		    [18 201 203]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5689,10 +6063,10 @@ Stateflow {
     dataType		    "int32"
   }
   data {
-    id			    191
+    id			    203
     ssIdNumber		    1637
     name		    "distance"
-    linkNode		    [18 190 192]
+    linkNode		    [18 202 204]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5706,10 +6080,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    192
+    id			    204
     ssIdNumber		    1638
     name		    "acc"
-    linkNode		    [18 191 0]
+    linkNode		    [18 203 0]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -5722,29 +6096,29 @@ Stateflow {
     dataType		    "double"
   }
   junction {
-    id			    193
+    id			    205
     position		    [384.232 141.4627 7]
     arrowSize		    10
     chart		    2
-    linkNode		    [18 0 194]
+    linkNode		    [18 0 206]
     visible		    0
     subviewer		    18
     ssIdNumber		    1640
     type		    CONNECTIVE_JUNCTION
   }
   junction {
-    id			    194
+    id			    206
     position		    [766.623 339.9809 7]
     arrowSize		    10
     chart		    2
-    linkNode		    [18 193 0]
+    linkNode		    [18 205 0]
     visible		    0
     subviewer		    18
     ssIdNumber		    1641
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    195
+    id			    207
     labelString		    "{i=0,start[i]=0,stop[i]=0,time=0,distance=0,\nv=0,dir[i]=1;}"
     labelPosition	    [898.793 35.983 224.75 32]
     fontSize		    12
@@ -5758,7 +6132,7 @@ Stateflow {
     }
     midPoint		    [1122.6461 55.1754]
     chart		    2
-    linkNode		    [18 0 196]
+    linkNode		    [18 0 208]
     visible		    0
     dataLimits		    [1119.646 1125.646 34.134 86.217]
     subviewer		    18
@@ -5769,7 +6143,7 @@ Stateflow {
     ssIdNumber		    1642
   }
   transition {
-    id			    196
+    id			    208
     labelString		    "[maxv<=20]"
     labelPosition	    [26.667 59.647 65 17]
     fontSize		    12
@@ -5784,7 +6158,7 @@ Stateflow {
     }
     midPoint		    [67.0886 89.1195]
     chart		    2
-    linkNode		    [18 195 197]
+    linkNode		    [18 207 209]
     visible		    0
     dataLimits		    [37.852 138.815 55.954 151.775]
     subviewer		    18
@@ -5796,7 +6170,7 @@ Stateflow {
     ssIdNumber		    1645
   }
   transition {
-    id			    197
+    id			    209
     labelString		    "[v>=maxv]"
     labelPosition	    [357.614 61.306 57.75 17]
     fontSize		    12
@@ -5811,7 +6185,7 @@ Stateflow {
     }
     midPoint		    [375.2385 82.6961]
     chart		    2
-    linkNode		    [18 196 198]
+    linkNode		    [18 208 210]
     visible		    0
     dataLimits		    [284.995 475.482 79.696 85.696]
     subviewer		    18
@@ -5823,7 +6197,7 @@ Stateflow {
     ssIdNumber		    1643
   }
   transition {
-    id			    198
+    id			    210
     labelString		    "[abs(distance-S[j])<=1]\n{stop[i]=1,v=0,start[i]=0;}"
     labelPosition	    [653.092 50.605 131.25 32]
     fontSize		    12
@@ -5838,7 +6212,7 @@ Stateflow {
     }
     midPoint		    [701.6686 85.8602]
     chart		    2
-    linkNode		    [18 197 199]
+    linkNode		    [18 209 211]
     visible		    0
     dataLimits		    [620.796 792.541 82.86 88.86]
     subviewer		    18
@@ -5850,7 +6224,7 @@ Stateflow {
     ssIdNumber		    1648
   }
   transition {
-    id			    199
+    id			    211
     labelString		    "[time>=Delay[i]]{stop[i]=1,j=0;}"
     labelPosition	    [878.478 71.772 160.75 17]
     fontSize		    12
@@ -5865,7 +6239,7 @@ Stateflow {
     }
     midPoint		    [962.3677 93.2497]
     chart		    2
-    linkNode		    [18 198 200]
+    linkNode		    [18 210 212]
     visible		    0
     dataLimits		    [869.097 1045.638 90.25 96.25]
     subviewer		    18
@@ -5877,7 +6251,7 @@ Stateflow {
     ssIdNumber		    1652
   }
   transition {
-    id			    200
+    id			    212
     labelString		    "[time>=30]\n{dir[i]=-dir[i],stop[i]=1,start[i]=0;}"
     labelPosition	    [944.677 266.747 166.75 32]
     fontSize		    12
@@ -5892,7 +6266,7 @@ Stateflow {
     }
     midPoint		    [1043.4511 179.8251]
     chart		    2
-    linkNode		    [18 199 201]
+    linkNode		    [18 211 213]
     visible		    0
     dataLimits		    [869.097 1121.918 98.255 344.282]
     subviewer		    18
@@ -5904,7 +6278,7 @@ Stateflow {
     ssIdNumber		    1656
   }
   transition {
-    id			    201
+    id			    213
     labelString		    "[urstop[i]==1]"
     labelPosition	    [301.322 115.901 71.75 17]
     fontSize		    12
@@ -5914,12 +6288,12 @@ Stateflow {
       intersection	      [3 0 1 0.0876 272.1904 110.4048 0 0]
     }
     dst {
-      id		      193
+      id		      205
       intersection	      [4 -1 0 0 377.232 141.4627 0 0]
     }
     midPoint		    [307.2128 138.4322]
     chart		    2
-    linkNode		    [18 200 202]
+    linkNode		    [18 212 214]
     visible		    0
     dataLimits		    [272.19 377.232 110.405 144.463]
     stampAngle		    0.7073
@@ -5932,7 +6306,7 @@ Stateflow {
     ssIdNumber		    1649
   }
   transition {
-    id			    202
+    id			    214
     labelString		    "[abs(distance-S[j])<=1]\n{stop[i]=1,start[i]=0;}"
     labelPosition	    [666.28 133.927 122.5 32]
     fontSize		    12
@@ -5947,7 +6321,7 @@ Stateflow {
     }
     midPoint		    [796.059 154.1803]
     chart		    2
-    linkNode		    [18 201 203]
+    linkNode		    [18 213 215]
     visible		    0
     dataLimits		    [790.03 805.088 112.248 186.113]
     stampAngle		    NaN
@@ -5960,7 +6334,7 @@ Stateflow {
     ssIdNumber		    1653
   }
   transition {
-    id			    203
+    id			    215
     labelString		    "[start[i]==1]\n{stop[i]=0,time=0;}"
     labelPosition	    [876.018 196.443 98.25 32]
     fontSize		    12
@@ -5975,7 +6349,7 @@ Stateflow {
     }
     midPoint		    [870.7249 224.7183]
     chart		    2
-    linkNode		    [18 202 204]
+    linkNode		    [18 214 216]
     visible		    0
     dataLimits		    [855.75 888.7 112.248 347.189]
     stampAngle		    NaN
@@ -5988,7 +6362,7 @@ Stateflow {
     ssIdNumber		    1655
   }
   transition {
-    id			    204
+    id			    216
     labelString		    "[urstop[i]==1]"
     labelPosition	    [404.892 127.001 71.75 17]
     fontSize		    12
@@ -5998,12 +6372,12 @@ Stateflow {
       intersection	      [3 0 1 0.6595 524.9616 125.1122 0 0]
     }
     dst {
-      id		      193
+      id		      205
       intersection	      [2 1 0 0 391.232 141.4627 0 0]
     }
     midPoint		    [478.6975 148.8881]
     chart		    2
-    linkNode		    [18 203 205]
+    linkNode		    [18 215 217]
     visible		    0
     dataLimits		    [391.232 524.962 125.112 149.032]
     subviewer		    18
@@ -6015,13 +6389,13 @@ Stateflow {
     ssIdNumber		    1647
   }
   transition {
-    id			    205
+    id			    217
     labelString		    ""
     labelPosition	    [466.098 184.464 0 0]
     fontSize		    12
     arrowSize		    10
     src {
-      id		      193
+      id		      205
       intersection	      [2 0.862 0.5069 0 390.2659 145.0113 0 0]
     }
     dst {
@@ -6030,7 +6404,7 @@ Stateflow {
     }
     midPoint		    [419.9508 173.8942]
     chart		    2
-    linkNode		    [18 204 206]
+    linkNode		    [18 216 218]
     visible		    0
     dataLimits		    [390.266 462.34 145.011 195.845]
     stampAngle		    1.7451
@@ -6043,7 +6417,7 @@ Stateflow {
     ssIdNumber		    1650
   }
   transition {
-    id			    206
+    id			    218
     labelString		    "[maxv>20]"
     labelPosition	    [21.609 286.98 58 17]
     fontSize		    12
@@ -6058,7 +6432,7 @@ Stateflow {
     }
     midPoint		    [62.6334 265.536]
     chart		    2
-    linkNode		    [18 205 207]
+    linkNode		    [18 217 219]
     visible		    0
     dataLimits		    [35.98 138.815 181.775 312.768]
     subviewer		    18
@@ -6070,7 +6444,7 @@ Stateflow {
     ssIdNumber		    1644
   }
   transition {
-    id			    207
+    id			    219
     labelString		    "[urstart[i]==1]"
     labelPosition	    [67.391 195.064 72.25 17]
     fontSize		    12
@@ -6085,7 +6459,7 @@ Stateflow {
     }
     midPoint		    [86.4442 216.2039]
     chart		    2
-    linkNode		    [18 206 208]
+    linkNode		    [18 218 220]
     visible		    0
     dataLimits		    [52.882 138.815 181.775 218.854]
     stampAngle		    -2.3562
@@ -6098,7 +6472,7 @@ Stateflow {
     ssIdNumber		    1646
   }
   transition {
-    id			    208
+    id			    220
     labelString		    "[urstop[i]==1]"
     labelPosition	    [615.516 187.132 71.75 17]
     fontSize		    12
@@ -6113,7 +6487,7 @@ Stateflow {
     }
     midPoint		    [655.5604 208.4253]
     chart		    2
-    linkNode		    [18 207 209]
+    linkNode		    [18 219 221]
     visible		    0
     dataLimits		    [606.645 694.476 205.425 211.425]
     subviewer		    18
@@ -6125,7 +6499,7 @@ Stateflow {
     ssIdNumber		    1654
   }
   transition {
-    id			    209
+    id			    221
     labelString		    "[v<=0.1]\n{urstopped[i]=1;}"
     labelPosition	    [355.565 184.76 89.75 32]
     fontSize		    12
@@ -6140,7 +6514,7 @@ Stateflow {
     }
     midPoint		    [407.9562 217.7071]
     chart		    2
-    linkNode		    [18 208 210]
+    linkNode		    [18 220 222]
     visible		    0
     dataLimits		    [343.573 462.34 214.707 220.707]
     subviewer		    18
@@ -6152,7 +6526,7 @@ Stateflow {
     ssIdNumber		    1651
   }
   transition {
-    id			    210
+    id			    222
     labelString		    "[urstop[i]==1]"
     labelPosition	    [326.1 266.137 71.75 17]
     fontSize		    12
@@ -6167,7 +6541,7 @@ Stateflow {
     }
     midPoint		    [423.5808 261.5526]
     chart		    2
-    linkNode		    [18 209 211]
+    linkNode		    [18 221 223]
     visible		    0
     dataLimits		    [285.065 462.34 240.781 289.77]
     subviewer		    18
@@ -6179,7 +6553,7 @@ Stateflow {
     ssIdNumber		    1658
   }
   transition {
-    id			    211
+    id			    223
     labelString		    "[urstop[i]==1]"
     labelPosition	    [543.324 272.565 71.75 17]
     fontSize		    12
@@ -6194,7 +6568,7 @@ Stateflow {
     }
     midPoint		    [530.0073 283.0684]
     chart		    2
-    linkNode		    [18 210 212]
+    linkNode		    [18 222 224]
     visible		    0
     dataLimits		    [527.007 533.007 255.855 300.282]
     subviewer		    18
@@ -6206,13 +6580,13 @@ Stateflow {
     ssIdNumber		    1659
   }
   transition {
-    id			    212
+    id			    224
     labelString		    "{acc=-v^2*0.001}"
     labelPosition	    [672.528 287.405 93.25 17]
     fontSize		    12
     arrowSize		    10
     src {
-      id		      194
+      id		      206
       intersection	      [1 0 -1 0 766.623 332.9809 0 0]
     }
     dst {
@@ -6221,7 +6595,7 @@ Stateflow {
     }
     midPoint		    [766.623 306.2772]
     chart		    2
-    linkNode		    [18 211 213]
+    linkNode		    [18 223 225]
     visible		    0
     dataLimits		    [763.623 769.623 269.573 332.981]
     stampAngle		    2.9083
@@ -6234,7 +6608,7 @@ Stateflow {
     ssIdNumber		    1657
   }
   transition {
-    id			    213
+    id			    225
     labelString		    "[v>=20]"
     labelPosition	    [373.399 300.911 42.25 17]
     fontSize		    12
@@ -6249,7 +6623,7 @@ Stateflow {
     }
     midPoint		    [361.5941 315.3494]
     chart		    2
-    linkNode		    [18 212 214]
+    linkNode		    [18 224 226]
     visible		    0
     dataLimits		    [285.065 448.123 312.349 318.349]
     subviewer		    18
@@ -6261,7 +6635,7 @@ Stateflow {
     ssIdNumber		    1665
   }
   transition {
-    id			    214
+    id			    226
     labelString		    "[abs(distance-S[j])<=500]"
     labelPosition	    [613.985 320.044 136 17]
     fontSize		    12
@@ -6271,12 +6645,12 @@ Stateflow {
       intersection	      [2 1 0 0.5967 591.5616 339.9809 0 0]
     }
     dst {
-      id		      194
+      id		      206
       intersection	      [4 -1 0 0 759.623 339.9809 0 0]
     }
     midPoint		    [670.5923 339.9809]
     chart		    2
-    linkNode		    [18 213 215]
+    linkNode		    [18 225 227]
     visible		    0
     dataLimits		    [591.562 759.623 336.981 342.981]
     stampAngle		    -1.2346
@@ -6289,7 +6663,7 @@ Stateflow {
     ssIdNumber		    1663
   }
   transition {
-    id			    215
+    id			    227
     labelString		    "[(dir[i]==1&&j<N-1)||(dir[i]==-1&&j>0)]{j=j+dir[i];}"
     labelPosition	    [192.026 397.123 250.25 17]
     fontSize		    12
@@ -6304,7 +6678,7 @@ Stateflow {
     }
     midPoint		    [582.3914 417.647]
     chart		    2
-    linkNode		    [18 214 216]
+    linkNode		    [18 226 228]
     visible		    0
     dataLimits		    [144.804 868.074 338.897 427.801]
     stampAngle		    2.1166
@@ -6317,7 +6691,7 @@ Stateflow {
     ssIdNumber		    1660
   }
   transition {
-    id			    216
+    id			    228
     labelString		    "[abs(distance-S[j])<=500]"
     labelPosition	    [285.985 355.436 136 17]
     fontSize		    12
@@ -6327,12 +6701,12 @@ Stateflow {
       intersection	      [3 0 1 0.1805 258.6722 338.897 0 0]
     }
     dst {
-      id		      194
+      id		      206
       intersection	      [3 0 1 0 766.623 346.9809 0 0]
     }
     midPoint		    [473.2183 376.7605]
     chart		    2
-    linkNode		    [18 215 217]
+    linkNode		    [18 227 229]
     visible		    0
     dataLimits		    [258.672 769.623 338.897 398.158]
     stampAngle		    -2.4893
@@ -6345,7 +6719,7 @@ Stateflow {
     ssIdNumber		    1664
   }
   transition {
-    id			    217
+    id			    229
     labelString		    "[j==0&&dir[i]==-1]"
     labelPosition	    [927.796 335.314 94.75 17]
     fontSize		    12
@@ -6360,7 +6734,7 @@ Stateflow {
     }
     midPoint		    [967.5671 355.3275]
     chart		    2
-    linkNode		    [18 216 218]
+    linkNode		    [18 228 230]
     visible		    0
     dataLimits		    [909.778 1035.356 352.327 358.327]
     stampAngle		    2.9821
@@ -6373,7 +6747,7 @@ Stateflow {
     ssIdNumber		    1661
   }
   transition {
-    id			    218
+    id			    230
     labelString		    "[j==N-1&&dir[i]==1]"
     labelPosition	    [927.851 385.066 103.5 17]
     fontSize		    12
@@ -6388,7 +6762,7 @@ Stateflow {
     }
     midPoint		    [967.5671 367.807]
     chart		    2
-    linkNode		    [18 217 0]
+    linkNode		    [18 229 0]
     visible		    0
     dataLimits		    [909.778 1035.356 364.807 370.807]
     stampAngle		    -0.7854
@@ -6400,10 +6774,10 @@ Stateflow {
     ssIdNumber		    1662
   }
   data {
-    id			    219
+    id			    231
     ssIdNumber		    76
     name		    "z"
-    linkNode		    [31 0 220]
+    linkNode		    [31 0 232]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -6417,10 +6791,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    220
+    id			    232
     ssIdNumber		    165
     name		    "stationid"
-    linkNode		    [31 219 221]
+    linkNode		    [31 231 233]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -6433,10 +6807,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    221
+    id			    233
     ssIdNumber		    166
     name		    "side"
-    linkNode		    [31 220 222]
+    linkNode		    [31 232 234]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -6449,10 +6823,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    222
+    id			    234
     ssIdNumber		    1457
     name		    "i"
-    linkNode		    [31 221 0]
+    linkNode		    [31 233 0]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -6466,7 +6840,7 @@ Stateflow {
     dataType		    "int32"
   }
   transition {
-    id			    223
+    id			    235
     labelString		    "[PSDClosed[stationid][side]==0]"
     labelPosition	    [7626.645 3824.861 171 17]
     fontSize		    12
@@ -6481,7 +6855,7 @@ Stateflow {
     }
     midPoint		    [7683.3584 3835.2377]
     chart		    2
-    linkNode		    [31 0 224]
+    linkNode		    [31 0 236]
     dataLimits		    [7649.575 7704.377 3834.562 3861.701]
     subviewer		    31
     drawStyle		    SMART
@@ -6492,7 +6866,7 @@ Stateflow {
     ssIdNumber		    1616
   }
   transition {
-    id			    224
+    id			    236
     labelString		    "[in(Train0_door.closed)==0]"
     labelPosition	    [7871.255 3828.601 173.25 18]
     fontSize		    14
@@ -6507,7 +6881,7 @@ Stateflow {
     }
     midPoint		    [7965 3844.25]
     chart		    2
-    linkNode		    [31 223 225]
+    linkNode		    [31 235 237]
     dataLimits		    [7932.696 8007.75 3844.018 3859.076]
     stampAngle		    NaN
     subviewer		    31
@@ -6519,7 +6893,7 @@ Stateflow {
     ssIdNumber		    104
   }
   transition {
-    id			    225
+    id			    237
     labelPosition	    [7501.247 3848.73 9.745 17.965]
     fontSize		    14
     arrowSize		    5.181
@@ -6532,7 +6906,7 @@ Stateflow {
     }
     midPoint		    [7484.5314 3860.962]
     chart		    2
-    linkNode		    [31 224 226]
+    linkNode		    [31 236 238]
     dataLimits		    [7482.977 7486.085 3852.487 3874.618]
     subviewer		    31
     drawStyle		    SMART
@@ -6543,7 +6917,7 @@ Stateflow {
     ssIdNumber		    63
   }
   transition {
-    id			    226
+    id			    238
     labelString		    "[z>=5]{closeTD[i]=1;}"
     labelPosition	    [7898.27 3953.155 132.75 18]
     fontSize		    14
@@ -6558,7 +6932,7 @@ Stateflow {
     }
     midPoint		    [8059.2741 3927.4323]
     chart		    2
-    linkNode		    [31 225 227]
+    linkNode		    [31 237 239]
     dataLimits		    [8032.75 8059.509 3887.694 3991.528]
     stampAngle		    NaN
     subviewer		    31
@@ -6570,7 +6944,7 @@ Stateflow {
     ssIdNumber		    57
   }
   transition {
-    id			    227
+    id			    239
     labelString		    "[z>=5]\n{closePSD[stationid][side]=1;}"
     labelPosition	    [7664.126 3938.258 186.5 34]
     fontSize		    14
@@ -6585,7 +6959,7 @@ Stateflow {
     }
     midPoint		    [7822.5081 3894.375]
     chart		    2
-    linkNode		    [31 226 228]
+    linkNode		    [31 238 240]
     dataLimits		    [7726.765 7913.07 3892.821 3895.929]
     stampAngle		    NaN
     subviewer		    31
@@ -6597,7 +6971,7 @@ Stateflow {
     ssIdNumber		    59
   }
   transition {
-    id			    228
+    id			    240
     labelString		    "[stop[i]==1]\n{i=0,stationid=Train0.j,\nside=(dir[i]+1)/2}"
     labelPosition	    [7342.769 3830.112 141.5 50]
     fontSize		    14
@@ -6612,7 +6986,7 @@ Stateflow {
     }
     midPoint		    [7392.6174 3905.75]
     chart		    2
-    linkNode		    [31 227 229]
+    linkNode		    [31 239 241]
     dataLimits		    [7339.734 7440.32 3904.196 3907.304]
     stampAngle		    NaN
     subviewer		    31
@@ -6624,7 +6998,7 @@ Stateflow {
     ssIdNumber		    45
   }
   transition {
-    id			    229
+    id			    241
     labelString		    "[z>=5]{start[i]=1;}"
     labelPosition	    [7521.19 3883.304 109.25 18]
     fontSize		    14
@@ -6639,7 +7013,7 @@ Stateflow {
     }
     midPoint		    [7575.8609 3908.3872]
     chart		    2
-    linkNode		    [31 228 230]
+    linkNode		    [31 240 242]
     dataLimits		    [7521.456 7625.085 3906.833 3909.941]
     stampAngle		    NaN
     subviewer		    31
@@ -6651,7 +7025,7 @@ Stateflow {
     ssIdNumber		    62
   }
   transition {
-    id			    230
+    id			    242
     labelString		    "[z>=1&&stop[i]!=1]\n{position[i]=Train0.distance}"
     labelPosition	    [7495.503 3949.138 148.5 32]
     fontSize		    12
@@ -6666,7 +7040,7 @@ Stateflow {
     }
     midPoint		    [7489.6108 3945.9774]
     chart		    2
-    linkNode		    [31 229 231]
+    linkNode		    [31 241 243]
     dataLimits		    [7457.308 7524.349 3916.545 3947.569]
     subviewer		    31
     drawStyle		    SMART
@@ -6677,7 +7051,7 @@ Stateflow {
     ssIdNumber		    1530
   }
   transition {
-    id			    231
+    id			    243
     labelString		    "[z>=5]{openPSD[stationid][side]=1;}"
     labelPosition	    [7269.478 3963.336 224.25 18]
     fontSize		    14
@@ -6692,7 +7066,7 @@ Stateflow {
     }
     midPoint		    [7264.4089 3965.5242]
     chart		    2
-    linkNode		    [31 230 232]
+    linkNode		    [31 242 244]
     dataLimits		    [7262.855 7265.963 3945.077 3991.153]
     stampAngle		    NaN
     subviewer		    31
@@ -6704,7 +7078,7 @@ Stateflow {
     ssIdNumber		    47
   }
   transition {
-    id			    232
+    id			    244
     labelString		    "[z>=10]"
     labelPosition	    [7621.634 3996.219 48.75 18]
     fontSize		    14
@@ -6719,7 +7093,7 @@ Stateflow {
     }
     midPoint		    [7626.6394 4016]
     chart		    2
-    linkNode		    [31 231 233]
+    linkNode		    [31 243 245]
     dataLimits		    [7577.125 7681.335 4014.446 4017.554]
     stampAngle		    NaN
     subviewer		    31
@@ -6731,7 +7105,7 @@ Stateflow {
     ssIdNumber		    51
   }
   transition {
-    id			    233
+    id			    245
     labelString		    "[z>=1]{openTD[i]=1;}"
     labelPosition	    [7356.833 3999.735 131.5 18]
     fontSize		    14
@@ -6746,7 +7120,7 @@ Stateflow {
     }
     midPoint		    [7414.041 4017.75]
     chart		    2
-    linkNode		    [31 232 234]
+    linkNode		    [31 244 246]
     dataLimits		    [7339.693 7493.57 4016.196 4019.304]
     stampAngle		    NaN
     subviewer		    31
@@ -6758,7 +7132,7 @@ Stateflow {
     ssIdNumber		    49
   }
   transition {
-    id			    234
+    id			    246
     labelString		    "[z>=20&&z<=30]"
     labelPosition	    [7798.983 3985.202 106 18]
     fontSize		    14
@@ -6773,7 +7147,7 @@ Stateflow {
     }
     midPoint		    [7852.3583 4022.25]
     chart		    2
-    linkNode		    [31 233 0]
+    linkNode		    [31 245 0]
     dataLimits		    [7763.515 7946.382 4020.696 4023.804]
     stampAngle		    NaN
     subviewer		    31
@@ -6785,7 +7159,7 @@ Stateflow {
     ssIdNumber		    54
   }
   data {
-    id			    235
+    id			    247
     ssIdNumber		    1050
     name		    "y1"
     linkNode		    [40 0 0]
@@ -6802,7 +7176,7 @@ Stateflow {
     dataType		    "double"
   }
   transition {
-    id			    236
+    id			    248
     labelString		    "[y1>=2]"
     labelPosition	    [300.978 49.186 48.75 18]
     fontSize		    14
@@ -6817,7 +7191,7 @@ Stateflow {
     }
     midPoint		    [303.6728 70.25]
     chart		    2
-    linkNode		    [40 0 237]
+    linkNode		    [40 0 249]
     visible		    0
     dataLimits		    [132.049 483.039 67.927 72.573]
     stampAngle		    NaN
@@ -6830,7 +7204,7 @@ Stateflow {
     ssIdNumber		    17
   }
   transition {
-    id			    237
+    id			    249
     labelString		    "[openTD[0]==1]/openTD[0]=0;"
     labelPosition	    [216.037 96.187 189.25 18]
     fontSize		    14
@@ -6845,7 +7219,7 @@ Stateflow {
     }
     midPoint		    [312.1429 124.4163]
     chart		    2
-    linkNode		    [40 236 238]
+    linkNode		    [40 248 250]
     visible		    0
     dataLimits		    [132.049 497.363 110.818 187.257]
     stampAngle		    NaN
@@ -6857,7 +7231,7 @@ Stateflow {
     ssIdNumber		    24
   }
   transition {
-    id			    238
+    id			    250
     labelString		    "[closeTD[0]==1]"
     labelPosition	    [219.332 181.513 101 18]
     fontSize		    14
@@ -6872,7 +7246,7 @@ Stateflow {
     }
     midPoint		    [375.72 218.1167]
     chart		    2
-    linkNode		    [40 237 239]
+    linkNode		    [40 249 251]
     visible		    0
     dataLimits		    [200.679 501.125 115.776 223.278]
     stampAngle		    NaN
@@ -6885,7 +7259,7 @@ Stateflow {
     ssIdNumber		    27
   }
   transition {
-    id			    239
+    id			    251
     labelString		    "[y1>0&&v_shutTD[0]==0]"
     labelPosition	    [64.568 148.054 159.25 18]
     fontSize		    14
@@ -6900,7 +7274,7 @@ Stateflow {
     }
     midPoint		    [58.75 164.474]
     chart		    2
-    linkNode		    [40 238 240]
+    linkNode		    [40 250 252]
     visible		    0
     dataLimits		    [56.427 61.073 124.066 197.14]
     stampAngle		    NaN
@@ -6913,7 +7287,7 @@ Stateflow {
     ssIdNumber		    23
   }
   transition {
-    id			    240
+    id			    252
     labelPosition	    [584.945 164.579 9.745 17.965]
     fontSize		    14
     arrowSize		    7.742
@@ -6926,7 +7300,7 @@ Stateflow {
     }
     midPoint		    [580.8157 170.168]
     chart		    2
-    linkNode		    [40 239 241]
+    linkNode		    [40 251 253]
     visible		    0
     dataLimits		    [578.492 583.137 160.148 187.257]
     subviewer		    40
@@ -6938,7 +7312,7 @@ Stateflow {
     ssIdNumber		    30
   }
   transition {
-    id			    241
+    id			    253
     labelString		    "[y1<=0]"
     labelPosition	    [333.816 236.118 48.75 18]
     fontSize		    14
@@ -6953,7 +7327,7 @@ Stateflow {
     }
     midPoint		    [339.188 254.9761]
     chart		    2
-    linkNode		    [40 240 0]
+    linkNode		    [40 252 0]
     visible		    0
     dataLimits		    [200.679 485.439 252.956 257.601]
     stampAngle		    NaN
@@ -6966,7 +7340,7 @@ Stateflow {
     ssIdNumber		    18
   }
   data {
-    id			    242
+    id			    254
     ssIdNumber		    1051
     name		    "y1"
     linkNode		    [45 0 0]
@@ -6983,7 +7357,7 @@ Stateflow {
     dataType		    "double"
   }
   transition {
-    id			    243
+    id			    255
     labelString		    "[y1>=2]"
     labelPosition	    [300.978 49.186 48.75 18]
     fontSize		    14
@@ -6998,7 +7372,7 @@ Stateflow {
     }
     midPoint		    [303.6728 70.25]
     chart		    2
-    linkNode		    [45 0 244]
+    linkNode		    [45 0 256]
     visible		    0
     dataLimits		    [132.049 483.039 67.927 72.573]
     stampAngle		    NaN
@@ -7011,7 +7385,7 @@ Stateflow {
     ssIdNumber		    291
   }
   transition {
-    id			    244
+    id			    256
     labelString		    "[openTD[1]==1]/openTD[1]=0;"
     labelPosition	    [216.037 96.187 189.25 18]
     fontSize		    14
@@ -7026,7 +7400,7 @@ Stateflow {
     }
     midPoint		    [312.1429 124.4163]
     chart		    2
-    linkNode		    [45 243 245]
+    linkNode		    [45 255 257]
     visible		    0
     dataLimits		    [132.049 497.363 110.818 187.257]
     stampAngle		    NaN
@@ -7038,7 +7412,7 @@ Stateflow {
     ssIdNumber		    292
   }
   transition {
-    id			    245
+    id			    257
     labelString		    "[closeTD[1]==1]"
     labelPosition	    [219.332 181.513 101 18]
     fontSize		    14
@@ -7053,7 +7427,7 @@ Stateflow {
     }
     midPoint		    [375.72 218.1167]
     chart		    2
-    linkNode		    [45 244 246]
+    linkNode		    [45 256 258]
     visible		    0
     dataLimits		    [200.679 501.125 115.776 223.278]
     stampAngle		    NaN
@@ -7066,7 +7440,7 @@ Stateflow {
     ssIdNumber		    293
   }
   transition {
-    id			    246
+    id			    258
     labelString		    "[y1>0&&v_shutTD[1]==0]"
     labelPosition	    [64.568 148.054 159.25 18]
     fontSize		    14
@@ -7081,7 +7455,7 @@ Stateflow {
     }
     midPoint		    [58.75 164.474]
     chart		    2
-    linkNode		    [45 245 247]
+    linkNode		    [45 257 259]
     visible		    0
     dataLimits		    [56.427 61.073 124.066 197.14]
     stampAngle		    NaN
@@ -7094,7 +7468,7 @@ Stateflow {
     ssIdNumber		    294
   }
   transition {
-    id			    247
+    id			    259
     labelPosition	    [584.945 164.579 9.745 17.965]
     fontSize		    14
     arrowSize		    7.742
@@ -7107,7 +7481,7 @@ Stateflow {
     }
     midPoint		    [580.8157 170.168]
     chart		    2
-    linkNode		    [45 246 248]
+    linkNode		    [45 258 260]
     visible		    0
     dataLimits		    [578.492 583.137 160.148 187.257]
     subviewer		    45
@@ -7118,7 +7492,7 @@ Stateflow {
     ssIdNumber		    295
   }
   transition {
-    id			    248
+    id			    260
     labelString		    "[y1<=0]"
     labelPosition	    [333.816 236.118 48.75 18]
     fontSize		    14
@@ -7133,7 +7507,7 @@ Stateflow {
     }
     midPoint		    [339.188 254.9761]
     chart		    2
-    linkNode		    [45 247 0]
+    linkNode		    [45 259 0]
     visible		    0
     dataLimits		    [200.679 485.439 252.956 257.601]
     stampAngle		    NaN
@@ -7146,10 +7520,10 @@ Stateflow {
     ssIdNumber		    296
   }
   data {
-    id			    249
+    id			    261
     ssIdNumber		    1678
     name		    "v"
-    linkNode		    [50 0 250]
+    linkNode		    [50 0 262]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -7163,10 +7537,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    250
+    id			    262
     ssIdNumber		    1679
     name		    "j"
-    linkNode		    [50 249 251]
+    linkNode		    [50 261 263]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -7179,10 +7553,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    251
+    id			    263
     ssIdNumber		    1680
     name		    "maxv"
-    linkNode		    [50 250 252]
+    linkNode		    [50 262 264]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -7195,10 +7569,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    252
+    id			    264
     ssIdNumber		    1681
     name		    "time"
-    linkNode		    [50 251 253]
+    linkNode		    [50 263 265]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -7212,10 +7586,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    253
+    id			    265
     ssIdNumber		    1682
     name		    "i"
-    linkNode		    [50 252 254]
+    linkNode		    [50 264 266]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -7228,10 +7602,10 @@ Stateflow {
     dataType		    "int32"
   }
   data {
-    id			    254
+    id			    266
     ssIdNumber		    1683
     name		    "distance"
-    linkNode		    [50 253 255]
+    linkNode		    [50 265 267]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -7245,10 +7619,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    255
+    id			    267
     ssIdNumber		    1684
     name		    "acc"
-    linkNode		    [50 254 0]
+    linkNode		    [50 266 0]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -7261,27 +7635,27 @@ Stateflow {
     dataType		    "double"
   }
   junction {
-    id			    256
+    id			    268
     position		    [376.1188 208.7155 7]
     chart		    2
-    linkNode		    [50 0 257]
+    linkNode		    [50 0 269]
     visible		    0
     subviewer		    50
     ssIdNumber		    1686
     type		    CONNECTIVE_JUNCTION
   }
   junction {
-    id			    257
+    id			    269
     position		    [482.712 427.4362 7]
     chart		    2
-    linkNode		    [50 256 0]
+    linkNode		    [50 268 0]
     visible		    0
     subviewer		    50
     ssIdNumber		    1687
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    258
+    id			    270
     labelString		    "{i=1,start[i]=0,stop[i]=0,\ntime=0,distance=0,\nv=0,dir[i]=1;}"
     labelPosition	    [807.625 78.013 123.5 47]
     fontSize		    12
@@ -7294,7 +7668,7 @@ Stateflow {
     }
     midPoint		    [794.0206 110.4553]
     chart		    2
-    linkNode		    [50 0 259]
+    linkNode		    [50 0 271]
     visible		    0
     dataLimits		    [791.621 796.421 65.854 163.056]
     subviewer		    50
@@ -7305,7 +7679,7 @@ Stateflow {
     ssIdNumber		    1688
   }
   transition {
-    id			    259
+    id			    271
     labelString		    "[v>=maxv]"
     labelPosition	    [503.371 57.84 57.75 17]
     fontSize		    12
@@ -7319,7 +7693,7 @@ Stateflow {
     }
     midPoint		    [519.1552 80.4753]
     chart		    2
-    linkNode		    [50 258 260]
+    linkNode		    [50 270 272]
     visible		    0
     dataLimits		    [481.657 564.653 78.075 82.875]
     subviewer		    50
@@ -7331,7 +7705,7 @@ Stateflow {
     ssIdNumber		    1689
   }
   transition {
-    id			    260
+    id			    272
     labelString		    "[maxv>20]"
     labelPosition	    [31.381 72.995 58 17]
     fontSize		    12
@@ -7346,7 +7720,7 @@ Stateflow {
     }
     midPoint		    [168.0199 534.2923]
     chart		    2
-    linkNode		    [50 259 261]
+    linkNode		    [50 271 273]
     visible		    0
     dataLimits		    [30.751 536.557 85.251 574.206]
     subviewer		    50
@@ -7358,7 +7732,7 @@ Stateflow {
     ssIdNumber		    1690
   }
   transition {
-    id			    261
+    id			    273
     labelString		    "[maxv<=20]"
     labelPosition	    [235.602 75.984 65 17]
     fontSize		    12
@@ -7372,7 +7746,7 @@ Stateflow {
     }
     midPoint		    [263.8744 92.0784]
     chart		    2
-    linkNode		    [50 260 262]
+    linkNode		    [50 272 274]
     visible		    0
     dataLimits		    [221.045 314.704 89.678 94.478]
     subviewer		    50
@@ -7384,7 +7758,7 @@ Stateflow {
     ssIdNumber		    1691
   }
   transition {
-    id			    262
+    id			    274
     labelString		    "[urstart[i]==1]"
     labelPosition	    [164.629 125.069 72.25 17]
     fontSize		    12
@@ -7398,7 +7772,7 @@ Stateflow {
     }
     midPoint		    [144.4668 132.6538]
     chart		    2
-    linkNode		    [50 261 263]
+    linkNode		    [50 273 275]
     visible		    0
     dataLimits		    [142.067 146.867 107.57 149.738]
     stampAngle		    -2.3562
@@ -7411,7 +7785,7 @@ Stateflow {
     ssIdNumber		    1692
   }
   transition {
-    id			    263
+    id			    275
     labelString		    "[urstop[i]==1]"
     labelPosition	    [432.908 177.634 71.75 17]
     fontSize		    12
@@ -7420,12 +7794,12 @@ Stateflow {
       intersection	      [3 0 1 0.7337 614.1327 109.4493 0 0]
     }
     dst {
-      id		      256
+      id		      268
       intersection	      [2 1 0 0 383.1188 208.7155 0 0]
     }
     midPoint		    [533.1393 189.596]
     chart		    2
-    linkNode		    [50 262 264]
+    linkNode		    [50 274 276]
     visible		    0
     dataLimits		    [383.119 614.133 109.449 211.115]
     subviewer		    50
@@ -7437,7 +7811,7 @@ Stateflow {
     ssIdNumber		    1693
   }
   transition {
-    id			    264
+    id			    276
     labelString		    "[abs(distance-S[j])<=1]\n{stop[i]=1,v=0,start[i]=0;}"
     labelPosition	    [570.643 186.841 131.25 32]
     fontSize		    12
@@ -7452,7 +7826,7 @@ Stateflow {
     }
     midPoint		    [710.9966 221.1337]
     chart		    2
-    linkNode		    [50 263 265]
+    linkNode		    [50 275 277]
     visible		    0
     dataLimits		    [707.684 768.189 109.449 294.24]
     subviewer		    50
@@ -7464,7 +7838,7 @@ Stateflow {
     ssIdNumber		    1694
   }
   transition {
-    id			    265
+    id			    277
     labelString		    "[urstop[i]==1]"
     labelPosition	    [392.276 144.761 71.75 17]
     fontSize		    12
@@ -7473,12 +7847,12 @@ Stateflow {
       intersection	      [3 0 1 0.6321 376.1188 119.8786 0 0]
     }
     dst {
-      id		      256
+      id		      268
       intersection	      [1 0 -1 0 376.1188 201.7155 0 0]
     }
     midPoint		    [376.1188 156.7971]
     chart		    2
-    linkNode		    [50 264 266]
+    linkNode		    [50 276 278]
     visible		    0
     dataLimits		    [373.719 378.519 119.879 201.715]
     stampAngle		    0.7073
@@ -7491,12 +7865,12 @@ Stateflow {
     ssIdNumber		    1695
   }
   transition {
-    id			    266
+    id			    278
     labelString		    ""
     labelPosition	    [348.217 191.887 0 0]
     fontSize		    12
     src {
-      id		      256
+      id		      268
       intersection	      [4 -1 0.0002 0 369.1188 208.7165 0 0]
     }
     dst {
@@ -7505,7 +7879,7 @@ Stateflow {
     }
     midPoint		    [277.5965 219.4031]
     chart		    2
-    linkNode		    [50 265 267]
+    linkNode		    [50 277 279]
     visible		    0
     dataLimits		    [222.714 369.119 208.717 277.124]
     stampAngle		    1.7451
@@ -7518,7 +7892,7 @@ Stateflow {
     ssIdNumber		    1696
   }
   transition {
-    id			    267
+    id			    279
     labelString		    "[v<=0.1]\n{urstopped[i]=1;}"
     labelPosition	    [169.832 235.514 89.75 32]
     fontSize		    12
@@ -7532,7 +7906,7 @@ Stateflow {
     }
     midPoint		    [165.6941 251.6208]
     chart		    2
-    linkNode		    [50 266 268]
+    linkNode		    [50 278 280]
     visible		    0
     dataLimits		    [163.294 168.094 218.118 277.124]
     subviewer		    50
@@ -7544,7 +7918,7 @@ Stateflow {
     ssIdNumber		    1697
   }
   transition {
-    id			    268
+    id			    280
     labelString		    "[time>=Delay[i]]{stop[i]=1,j=0;}"
     labelPosition	    [814.009 250.371 160.75 17]
     fontSize		    12
@@ -7559,7 +7933,7 @@ Stateflow {
     }
     midPoint		    [799.1502 249.9281]
     chart		    2
-    linkNode		    [50 267 269]
+    linkNode		    [50 279 281]
     visible		    0
     dataLimits		    [797.751 800.549 223.056 281.463]
     subviewer		    50
@@ -7571,7 +7945,7 @@ Stateflow {
     ssIdNumber		    1698
   }
   transition {
-    id			    269
+    id			    281
     labelString		    "[abs(distance-S[j])<=1]\n{stop[i]=1,start[i]=0;}"
     labelPosition	    [589.027 254.986 122.5 32]
     fontSize		    12
@@ -7586,7 +7960,7 @@ Stateflow {
     }
     midPoint		    [669.7918 315.8821]
     chart		    2
-    linkNode		    [50 268 270]
+    linkNode		    [50 280 282]
     visible		    0
     dataLimits		    [576.057 768.189 314.483 317.281]
     stampAngle		    NaN
@@ -7599,7 +7973,7 @@ Stateflow {
     ssIdNumber		    1699
   }
   transition {
-    id			    270
+    id			    282
     labelString		    "[urstop[i]==1]"
     labelPosition	    [301.813 351.577 71.75 17]
     fontSize		    12
@@ -7613,7 +7987,7 @@ Stateflow {
     }
     midPoint		    [329.7569 328.9808]
     chart		    2
-    linkNode		    [50 269 271]
+    linkNode		    [50 281 283]
     visible		    0
     dataLimits		    [235.935 415.579 326.581 331.381]
     subviewer		    50
@@ -7625,7 +7999,7 @@ Stateflow {
     ssIdNumber		    1700
   }
   transition {
-    id			    271
+    id			    283
     labelString		    "[start[i]==1]\n{stop[i]=0,time=0;}"
     labelPosition	    [815.737 354.954 98.25 32]
     fontSize		    12
@@ -7639,7 +8013,7 @@ Stateflow {
     }
     midPoint		    [843.9387 378.5426]
     chart		    2
-    linkNode		    [50 270 272]
+    linkNode		    [50 282 284]
     visible		    0
     dataLimits		    [831.364 845.545 344.393 401.394]
     stampAngle		    NaN
@@ -7652,7 +8026,7 @@ Stateflow {
     ssIdNumber		    1701
   }
   transition {
-    id			    272
+    id			    284
     labelString		    "[time>=30]\n{dir[i]=-dir[i],\nstop[i]=1,\nstart[i]=0;}"
     labelPosition	    [939.394 418.085 64.75 62]
     fontSize		    12
@@ -7667,7 +8041,7 @@ Stateflow {
     }
     midPoint		    [920.3115 446.6469]
     chart		    2
-    linkNode		    [50 271 273]
+    linkNode		    [50 283 285]
     visible		    0
     dataLimits		    [852.444 920.34 344.393 529.915]
     subviewer		    50
@@ -7679,13 +8053,13 @@ Stateflow {
     ssIdNumber		    1702
   }
   transition {
-    id			    273
+    id			    285
     labelString		    "{acc=-v^2*0.001}"
     labelPosition	    [502.406 382.878 93.25 17]
     fontSize		    12
     arrowSize		    4.663
     src {
-      id		      257
+      id		      269
       intersection	      [1 0 -1 0 482.712 420.4362 0 0]
     }
     dst {
@@ -7694,7 +8068,7 @@ Stateflow {
     }
     midPoint		    [482.712 389.8544]
     chart		    2
-    linkNode		    [50 272 274]
+    linkNode		    [50 284 286]
     visible		    0
     dataLimits		    [481.313 484.111 354.61 420.436]
     stampAngle		    2.9083
@@ -7707,7 +8081,7 @@ Stateflow {
     ssIdNumber		    1703
   }
   transition {
-    id			    274
+    id			    286
     labelString		    "[urstop[i]==1]"
     labelPosition	    [123.37 471.786 71.75 17]
     fontSize		    12
@@ -7721,7 +8095,7 @@ Stateflow {
     }
     midPoint		    [205.6078 472.1407]
     chart		    2
-    linkNode		    [50 273 275]
+    linkNode		    [50 285 287]
     visible		    0
     dataLimits		    [173.748 536.557 358.483 535.02]
     subviewer		    50
@@ -7733,7 +8107,7 @@ Stateflow {
     ssIdNumber		    1704
   }
   transition {
-    id			    275
+    id			    287
     labelString		    "[urstop[i]==1]"
     labelPosition	    [232.162 398.672 71.75 17]
     fontSize		    12
@@ -7747,7 +8121,7 @@ Stateflow {
     }
     midPoint		    [216.4516 409.2186]
     chart		    2
-    linkNode		    [50 274 276]
+    linkNode		    [50 286 288]
     visible		    0
     dataLimits		    [207.603 241.392 358.483 433.462]
     subviewer		    50
@@ -7759,7 +8133,7 @@ Stateflow {
     ssIdNumber		    1705
   }
   transition {
-    id			    276
+    id			    288
     labelString		    "[(dir[i]==1&&j<N-1)||(dir[i]==-1&&j>0)]\n{j=j+dir[i];}"
     labelPosition	    [612.49 381.248 197.75 32]
     fontSize		    12
@@ -7774,7 +8148,7 @@ Stateflow {
     }
     midPoint		    [710.3093 434.315]
     chart		    2
-    linkNode		    [50 275 277]
+    linkNode		    [50 287 289]
     visible		    0
     dataLimits		    [695.371 801.364 408.643 453.596]
     stampAngle		    2.1166
@@ -7787,7 +8161,7 @@ Stateflow {
     ssIdNumber		    1706
   }
   transition {
-    id			    277
+    id			    289
     labelString		    "[j==0&&dir[i]==-1]"
     labelPosition	    [834.358 466.478 94.75 17]
     fontSize		    12
@@ -7801,7 +8175,7 @@ Stateflow {
     }
     midPoint		    [875.3183 470.4601]
     chart		    2
-    linkNode		    [50 276 278]
+    linkNode		    [50 288 290]
     visible		    0
     dataLimits		    [831.364 878.001 413.456 529.864]
     stampAngle		    2.9821
@@ -7814,7 +8188,7 @@ Stateflow {
     ssIdNumber		    1707
   }
   transition {
-    id			    278
+    id			    290
     labelString		    "[j==N-1&&dir[i]==1]"
     labelPosition	    [755.165 456.505 103.5 17]
     fontSize		    12
@@ -7828,7 +8202,7 @@ Stateflow {
     }
     midPoint		    [762.5331 452.0226]
     chart		    2
-    linkNode		    [50 277 279]
+    linkNode		    [50 289 291]
     visible		    0
     dataLimits		    [747.037 801.364 420.45 517.33]
     stampAngle		    -0.7854
@@ -7840,7 +8214,7 @@ Stateflow {
     ssIdNumber		    1708
   }
   transition {
-    id			    279
+    id			    291
     labelString		    "[abs(distance-S[j])<=500]"
     labelPosition	    [345.368 397.798 136 17]
     fontSize		    12
@@ -7849,12 +8223,12 @@ Stateflow {
       intersection	      [2 1 0 0.1792 409.1543 427.4362 0 0]
     }
     dst {
-      id		      257
+      id		      269
       intersection	      [4 -1 0 0 475.712 427.4362 0 0]
     }
     midPoint		    [438.4331 427.4362]
     chart		    2
-    linkNode		    [50 278 280]
+    linkNode		    [50 290 292]
     visible		    0
     dataLimits		    [409.154 475.712 425.036 429.836]
     stampAngle		    -1.2346
@@ -7867,7 +8241,7 @@ Stateflow {
     ssIdNumber		    1709
   }
   transition {
-    id			    280
+    id			    292
     labelString		    "[abs(distance-S[j])<=500]"
     labelPosition	    [505.278 420.092 136 17]
     fontSize		    12
@@ -7876,12 +8250,12 @@ Stateflow {
       intersection	      [1 0 -1 0.138 560.1007 453.5963 0 0]
     }
     dst {
-      id		      257
+      id		      269
       intersection	      [2 0.9077 0.4196 0 489.0659 430.3735 0 0]
     }
     midPoint		    [535.7929 438.8175]
     chart		    2
-    linkNode		    [50 279 281]
+    linkNode		    [50 291 293]
     visible		    0
     dataLimits		    [489.066 560.101 430.374 453.596]
     stampAngle		    -2.4893
@@ -7894,7 +8268,7 @@ Stateflow {
     ssIdNumber		    1710
   }
   transition {
-    id			    281
+    id			    293
     labelString		    "[v>=20]"
     labelPosition	    [459.155 450.837 42.25 17]
     fontSize		    12
@@ -7908,7 +8282,7 @@ Stateflow {
     }
     midPoint		    [476.8557 464.3607]
     chart		    2
-    linkNode		    [50 280 0]
+    linkNode		    [50 292 0]
     visible		    0
     dataLimits		    [409.154 536.557 446.773 479.548]
     subviewer		    50
@@ -7920,10 +8294,10 @@ Stateflow {
     ssIdNumber		    1711
   }
   data {
-    id			    282
+    id			    294
     ssIdNumber		    1581
     name		    "z"
-    linkNode		    [63 0 283]
+    linkNode		    [63 0 295]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -7937,10 +8311,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    283
+    id			    295
     ssIdNumber		    1582
     name		    "stationid"
-    linkNode		    [63 282 284]
+    linkNode		    [63 294 296]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -7953,10 +8327,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    284
+    id			    296
     ssIdNumber		    1583
     name		    "side"
-    linkNode		    [63 283 285]
+    linkNode		    [63 295 297]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -7969,10 +8343,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    285
+    id			    297
     ssIdNumber		    1584
     name		    "i"
-    linkNode		    [63 284 0]
+    linkNode		    [63 296 0]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -7986,7 +8360,7 @@ Stateflow {
     dataType		    "int32"
   }
   transition {
-    id			    286
+    id			    298
     labelString		    "[PSDClosed[stationid][side]==0]"
     labelPosition	    [7379.868 3577.961 171 17]
     fontSize		    12
@@ -8001,7 +8375,7 @@ Stateflow {
     }
     midPoint		    [7447.5432 3590.5073]
     chart		    2
-    linkNode		    [63 0 287]
+    linkNode		    [63 0 299]
     dataLimits		    [7424.503 7476.97 3590.525 3613.701]
     subviewer		    63
     drawStyle		    SMART
@@ -8012,7 +8386,7 @@ Stateflow {
     ssIdNumber		    1620
   }
   transition {
-    id			    287
+    id			    299
     labelString		    "[in(Train3_door.closed)==0]"
     labelPosition	    [7652.255 3581.86 173.25 18]
     fontSize		    14
@@ -8027,7 +8401,7 @@ Stateflow {
     }
     midPoint		    [7746 3596.25]
     chart		    2
-    linkNode		    [63 286 288]
+    linkNode		    [63 298 300]
     visible		    0
     dataLimits		    [7713.696 7788.75 3596.018 3611.076]
     stampAngle		    NaN
@@ -8040,7 +8414,7 @@ Stateflow {
     ssIdNumber		    1586
   }
   transition {
-    id			    288
+    id			    300
     labelPosition	    [7269.042 3609.495 9.745 17.965]
     fontSize		    14
     arrowSize		    5.181
@@ -8053,7 +8427,7 @@ Stateflow {
     }
     midPoint		    [7265.5314 3612.962]
     chart		    2
-    linkNode		    [63 287 289]
+    linkNode		    [63 299 301]
     visible		    0
     dataLimits		    [7263.977 7267.085 3604.487 3626.618]
     subviewer		    63
@@ -8064,7 +8438,7 @@ Stateflow {
     ssIdNumber		    1587
   }
   transition {
-    id			    289
+    id			    301
     labelString		    "[z>=5]{closeTD[i]=1;}"
     labelPosition	    [7679.27 3705.155 132.75 18]
     fontSize		    14
@@ -8079,7 +8453,7 @@ Stateflow {
     }
     midPoint		    [7840.2741 3679.4323]
     chart		    2
-    linkNode		    [63 288 290]
+    linkNode		    [63 300 302]
     visible		    0
     dataLimits		    [7813.75 7840.509 3639.694 3743.528]
     stampAngle		    NaN
@@ -8092,7 +8466,7 @@ Stateflow {
     ssIdNumber		    1588
   }
   transition {
-    id			    290
+    id			    302
     labelString		    "[z>=5]\n{closePSD[stationid][side]=1;}"
     labelPosition	    [7514.255 3610.853 186.5 34]
     fontSize		    14
@@ -8107,7 +8481,7 @@ Stateflow {
     }
     midPoint		    [7603.5081 3646.375]
     chart		    2
-    linkNode		    [63 289 291]
+    linkNode		    [63 301 303]
     visible		    0
     dataLimits		    [7507.765 7694.07 3644.821 3647.929]
     stampAngle		    NaN
@@ -8120,7 +8494,7 @@ Stateflow {
     ssIdNumber		    1589
   }
   transition {
-    id			    291
+    id			    303
     labelString		    "[stop[i]==1]\n{i=3,stationid=Train3.j,\nside=(dir[i]+1)/2}"
     labelPosition	    [7123.302 3582.579 141.5 50]
     fontSize		    14
@@ -8135,7 +8509,7 @@ Stateflow {
     }
     midPoint		    [7173.6174 3657.75]
     chart		    2
-    linkNode		    [63 290 292]
+    linkNode		    [63 302 304]
     visible		    0
     dataLimits		    [7120.734 7221.32 3656.196 3659.304]
     stampAngle		    NaN
@@ -8148,7 +8522,7 @@ Stateflow {
     ssIdNumber		    1590
   }
   transition {
-    id			    292
+    id			    304
     labelString		    "[z>=5]{start[i]=1;}"
     labelPosition	    [7302.19 3635.304 109.25 18]
     fontSize		    14
@@ -8163,7 +8537,7 @@ Stateflow {
     }
     midPoint		    [7356.8609 3660.3872]
     chart		    2
-    linkNode		    [63 291 293]
+    linkNode		    [63 303 305]
     visible		    0
     dataLimits		    [7302.456 7406.085 3658.833 3661.941]
     stampAngle		    NaN
@@ -8176,7 +8550,7 @@ Stateflow {
     ssIdNumber		    1591
   }
   transition {
-    id			    293
+    id			    305
     labelString		    "[z>=1&&stop[i]!=1]\n{position[i]=Train3.distance}"
     labelPosition	    [7276.503 3701.138 148.5 32]
     fontSize		    12
@@ -8191,7 +8565,7 @@ Stateflow {
     }
     midPoint		    [7270.6108 3697.9774]
     chart		    2
-    linkNode		    [63 292 294]
+    linkNode		    [63 304 306]
     visible		    0
     dataLimits		    [7238.308 7305.349 3668.545 3699.569]
     subviewer		    63
@@ -8203,7 +8577,7 @@ Stateflow {
     ssIdNumber		    1592
   }
   transition {
-    id			    294
+    id			    306
     labelString		    "[z>=5]{openPSD[stationid][side]=1;}"
     labelPosition	    [7050.478 3715.336 224.25 18]
     fontSize		    14
@@ -8218,7 +8592,7 @@ Stateflow {
     }
     midPoint		    [7045.4089 3717.5242]
     chart		    2
-    linkNode		    [63 293 295]
+    linkNode		    [63 305 307]
     visible		    0
     dataLimits		    [7043.855 7046.963 3697.077 3743.153]
     stampAngle		    NaN
@@ -8231,7 +8605,7 @@ Stateflow {
     ssIdNumber		    1593
   }
   transition {
-    id			    295
+    id			    307
     labelString		    "[z>=10]"
     labelPosition	    [7402.634 3748.219 48.75 18]
     fontSize		    14
@@ -8246,7 +8620,7 @@ Stateflow {
     }
     midPoint		    [7407.6394 3768]
     chart		    2
-    linkNode		    [63 294 296]
+    linkNode		    [63 306 308]
     visible		    0
     dataLimits		    [7358.125 7462.335 3766.446 3769.554]
     stampAngle		    NaN
@@ -8259,7 +8633,7 @@ Stateflow {
     ssIdNumber		    1594
   }
   transition {
-    id			    296
+    id			    308
     labelString		    "[z>=1]{openTD[i]=1;}"
     labelPosition	    [7137.833 3751.735 131.5 18]
     fontSize		    14
@@ -8274,7 +8648,7 @@ Stateflow {
     }
     midPoint		    [7195.041 3769.75]
     chart		    2
-    linkNode		    [63 295 297]
+    linkNode		    [63 307 309]
     visible		    0
     dataLimits		    [7120.693 7274.57 3768.196 3771.304]
     stampAngle		    NaN
@@ -8287,7 +8661,7 @@ Stateflow {
     ssIdNumber		    1595
   }
   transition {
-    id			    297
+    id			    309
     labelString		    "[z>=20&&z<=30]"
     labelPosition	    [7579.983 3737.202 106 18]
     fontSize		    14
@@ -8302,7 +8676,7 @@ Stateflow {
     }
     midPoint		    [7633.3583 3774.25]
     chart		    2
-    linkNode		    [63 296 0]
+    linkNode		    [63 308 0]
     visible		    0
     dataLimits		    [7544.515 7727.382 3772.696 3775.804]
     stampAngle		    NaN
@@ -8315,10 +8689,10 @@ Stateflow {
     ssIdNumber		    1596
   }
   data {
-    id			    298
+    id			    310
     ssIdNumber		    1557
     name		    "z"
-    linkNode		    [72 0 299]
+    linkNode		    [72 0 311]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -8332,10 +8706,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    299
+    id			    311
     ssIdNumber		    1558
     name		    "stationid"
-    linkNode		    [72 298 300]
+    linkNode		    [72 310 312]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -8348,10 +8722,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    300
+    id			    312
     ssIdNumber		    1559
     name		    "side"
-    linkNode		    [72 299 301]
+    linkNode		    [72 311 313]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -8364,10 +8738,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    301
+    id			    313
     ssIdNumber		    1560
     name		    "i"
-    linkNode		    [72 300 0]
+    linkNode		    [72 312 0]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -8381,7 +8755,7 @@ Stateflow {
     dataType		    "int32"
   }
   transition {
-    id			    302
+    id			    314
     labelString		    "[PSDClosed[stationid][side]==0]"
     labelPosition	    [7400.714 3575.861 171 17]
     fontSize		    12
@@ -8396,7 +8770,7 @@ Stateflow {
     }
     midPoint		    [7442.8723 3590.9744]
     chart		    2
-    linkNode		    [72 0 303]
+    linkNode		    [72 0 315]
     dataLimits		    [7415.628 7479.772 3591.002 3613.701]
     subviewer		    72
     drawStyle		    SMART
@@ -8407,7 +8781,7 @@ Stateflow {
     ssIdNumber		    1619
   }
   transition {
-    id			    303
+    id			    315
     labelString		    "[in(Train2_door.closed)==0]"
     labelPosition	    [7652.255 3581.231 173.25 18]
     fontSize		    14
@@ -8422,7 +8796,7 @@ Stateflow {
     }
     midPoint		    [7746 3596.25]
     chart		    2
-    linkNode		    [72 302 304]
+    linkNode		    [72 314 316]
     visible		    0
     dataLimits		    [7713.696 7788.75 3596.018 3611.076]
     stampAngle		    NaN
@@ -8435,7 +8809,7 @@ Stateflow {
     ssIdNumber		    1562
   }
   transition {
-    id			    304
+    id			    316
     labelPosition	    [7269.042 3609.495 9.745 17.965]
     fontSize		    14
     arrowSize		    5.181
@@ -8448,7 +8822,7 @@ Stateflow {
     }
     midPoint		    [7265.5314 3612.962]
     chart		    2
-    linkNode		    [72 303 305]
+    linkNode		    [72 315 317]
     visible		    0
     dataLimits		    [7263.977 7267.085 3604.487 3626.618]
     subviewer		    72
@@ -8459,7 +8833,7 @@ Stateflow {
     ssIdNumber		    1563
   }
   transition {
-    id			    305
+    id			    317
     labelString		    "[z>=5]{closeTD[i]=1;}"
     labelPosition	    [7679.27 3705.155 132.75 18]
     fontSize		    14
@@ -8474,7 +8848,7 @@ Stateflow {
     }
     midPoint		    [7840.2741 3679.4323]
     chart		    2
-    linkNode		    [72 304 306]
+    linkNode		    [72 316 318]
     visible		    0
     dataLimits		    [7813.75 7840.509 3639.694 3743.528]
     stampAngle		    NaN
@@ -8487,7 +8861,7 @@ Stateflow {
     ssIdNumber		    1564
   }
   transition {
-    id			    306
+    id			    318
     labelString		    "[z>=5]\n{closePSD[stationid][side]=1;}"
     labelPosition	    [7512.854 3607.116 186.5 34]
     fontSize		    14
@@ -8502,7 +8876,7 @@ Stateflow {
     }
     midPoint		    [7603.5081 3646.375]
     chart		    2
-    linkNode		    [72 305 307]
+    linkNode		    [72 317 319]
     visible		    0
     dataLimits		    [7507.765 7694.07 3644.821 3647.929]
     stampAngle		    NaN
@@ -8515,7 +8889,7 @@ Stateflow {
     ssIdNumber		    1565
   }
   transition {
-    id			    307
+    id			    319
     labelString		    "[stop[i]==1]\n{i=2,stationid=Train2.j,\nside=(dir[i]+1)/2}"
     labelPosition	    [7123.769 3582.579 141.5 50]
     fontSize		    14
@@ -8530,7 +8904,7 @@ Stateflow {
     }
     midPoint		    [7173.6174 3657.75]
     chart		    2
-    linkNode		    [72 306 308]
+    linkNode		    [72 318 320]
     visible		    0
     dataLimits		    [7120.734 7221.32 3656.196 3659.304]
     stampAngle		    NaN
@@ -8543,7 +8917,7 @@ Stateflow {
     ssIdNumber		    1566
   }
   transition {
-    id			    308
+    id			    320
     labelString		    "[z>=5]{start[i]=1;}"
     labelPosition	    [7302.19 3635.304 109.25 18]
     fontSize		    14
@@ -8558,7 +8932,7 @@ Stateflow {
     }
     midPoint		    [7356.8609 3660.3872]
     chart		    2
-    linkNode		    [72 307 309]
+    linkNode		    [72 319 321]
     visible		    0
     dataLimits		    [7302.456 7406.085 3658.833 3661.941]
     stampAngle		    NaN
@@ -8571,7 +8945,7 @@ Stateflow {
     ssIdNumber		    1567
   }
   transition {
-    id			    309
+    id			    321
     labelString		    "[z>=1&&stop[i]!=1]\n{position[i]=Train2.distance}"
     labelPosition	    [7276.503 3702.072 148.5 32]
     fontSize		    12
@@ -8586,7 +8960,7 @@ Stateflow {
     }
     midPoint		    [7270.6108 3697.9774]
     chart		    2
-    linkNode		    [72 308 310]
+    linkNode		    [72 320 322]
     visible		    0
     dataLimits		    [7238.308 7305.349 3668.545 3699.569]
     subviewer		    72
@@ -8598,7 +8972,7 @@ Stateflow {
     ssIdNumber		    1568
   }
   transition {
-    id			    310
+    id			    322
     labelString		    "[z>=5]{openPSD[stationid][side]=1;}"
     labelPosition	    [7050.478 3715.336 224.25 18]
     fontSize		    14
@@ -8613,7 +8987,7 @@ Stateflow {
     }
     midPoint		    [7045.4089 3717.5242]
     chart		    2
-    linkNode		    [72 309 311]
+    linkNode		    [72 321 323]
     visible		    0
     dataLimits		    [7043.855 7046.963 3697.077 3743.153]
     stampAngle		    NaN
@@ -8626,7 +9000,7 @@ Stateflow {
     ssIdNumber		    1569
   }
   transition {
-    id			    311
+    id			    323
     labelString		    "[z>=10]"
     labelPosition	    [7402.634 3748.219 48.75 18]
     fontSize		    14
@@ -8641,7 +9015,7 @@ Stateflow {
     }
     midPoint		    [7407.6394 3768]
     chart		    2
-    linkNode		    [72 310 312]
+    linkNode		    [72 322 324]
     visible		    0
     dataLimits		    [7358.125 7462.335 3766.446 3769.554]
     stampAngle		    NaN
@@ -8654,7 +9028,7 @@ Stateflow {
     ssIdNumber		    1570
   }
   transition {
-    id			    312
+    id			    324
     labelString		    "[z>=1]{openTD[i]=1;}"
     labelPosition	    [7137.833 3751.735 131.5 18]
     fontSize		    14
@@ -8669,7 +9043,7 @@ Stateflow {
     }
     midPoint		    [7195.041 3769.75]
     chart		    2
-    linkNode		    [72 311 313]
+    linkNode		    [72 323 325]
     visible		    0
     dataLimits		    [7120.693 7274.57 3768.196 3771.304]
     stampAngle		    NaN
@@ -8682,7 +9056,7 @@ Stateflow {
     ssIdNumber		    1571
   }
   transition {
-    id			    313
+    id			    325
     labelString		    "[z>=20&&z<=30]"
     labelPosition	    [7579.983 3737.202 106 18]
     fontSize		    14
@@ -8697,7 +9071,7 @@ Stateflow {
     }
     midPoint		    [7633.3583 3774.25]
     chart		    2
-    linkNode		    [72 312 0]
+    linkNode		    [72 324 0]
     visible		    0
     dataLimits		    [7544.515 7727.382 3772.696 3775.804]
     stampAngle		    NaN
@@ -8710,10 +9084,10 @@ Stateflow {
     ssIdNumber		    1572
   }
   data {
-    id			    314
+    id			    326
     ssIdNumber		    1724
     name		    "v"
-    linkNode		    [81 0 315]
+    linkNode		    [81 0 327]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -8727,10 +9101,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    315
+    id			    327
     ssIdNumber		    1725
     name		    "j"
-    linkNode		    [81 314 316]
+    linkNode		    [81 326 328]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -8743,10 +9117,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    316
+    id			    328
     ssIdNumber		    1726
     name		    "maxv"
-    linkNode		    [81 315 317]
+    linkNode		    [81 327 329]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -8759,10 +9133,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    317
+    id			    329
     ssIdNumber		    1727
     name		    "time"
-    linkNode		    [81 316 318]
+    linkNode		    [81 328 330]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -8776,10 +9150,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    318
+    id			    330
     ssIdNumber		    1728
     name		    "i"
-    linkNode		    [81 317 319]
+    linkNode		    [81 329 331]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -8792,10 +9166,10 @@ Stateflow {
     dataType		    "int32"
   }
   data {
-    id			    319
+    id			    331
     ssIdNumber		    1729
     name		    "distance"
-    linkNode		    [81 318 320]
+    linkNode		    [81 330 332]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -8809,10 +9183,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    320
+    id			    332
     ssIdNumber		    1730
     name		    "acc"
-    linkNode		    [81 319 0]
+    linkNode		    [81 331 0]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -8825,27 +9199,27 @@ Stateflow {
     dataType		    "double"
   }
   junction {
-    id			    321
+    id			    333
     position		    [376.1188 208.7155 7]
     chart		    2
-    linkNode		    [81 0 322]
+    linkNode		    [81 0 334]
     visible		    0
     subviewer		    81
     ssIdNumber		    1732
     type		    CONNECTIVE_JUNCTION
   }
   junction {
-    id			    322
+    id			    334
     position		    [482.712 427.4362 7]
     chart		    2
-    linkNode		    [81 321 0]
+    linkNode		    [81 333 0]
     visible		    0
     subviewer		    81
     ssIdNumber		    1733
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    323
+    id			    335
     labelString		    "{i=2,start[i]=0,stop[i]=0,\ntime=0,distance=0,\nv=0,dir[i]=1;}"
     labelPosition	    [807.625 78.013 123.5 47]
     fontSize		    12
@@ -8858,7 +9232,7 @@ Stateflow {
     }
     midPoint		    [794.0206 110.4553]
     chart		    2
-    linkNode		    [81 0 324]
+    linkNode		    [81 0 336]
     visible		    0
     dataLimits		    [791.621 796.421 65.854 163.056]
     subviewer		    81
@@ -8869,7 +9243,7 @@ Stateflow {
     ssIdNumber		    1734
   }
   transition {
-    id			    324
+    id			    336
     labelString		    "[v>=maxv]"
     labelPosition	    [503.371 57.84 57.75 17]
     fontSize		    12
@@ -8883,7 +9257,7 @@ Stateflow {
     }
     midPoint		    [519.1552 80.4753]
     chart		    2
-    linkNode		    [81 323 325]
+    linkNode		    [81 335 337]
     visible		    0
     dataLimits		    [481.657 564.653 78.075 82.875]
     subviewer		    81
@@ -8895,7 +9269,7 @@ Stateflow {
     ssIdNumber		    1735
   }
   transition {
-    id			    325
+    id			    337
     labelString		    "[maxv>20]"
     labelPosition	    [31.381 72.995 58 17]
     fontSize		    12
@@ -8910,7 +9284,7 @@ Stateflow {
     }
     midPoint		    [168.0199 534.2923]
     chart		    2
-    linkNode		    [81 324 326]
+    linkNode		    [81 336 338]
     visible		    0
     dataLimits		    [30.751 536.557 85.251 574.206]
     subviewer		    81
@@ -8922,7 +9296,7 @@ Stateflow {
     ssIdNumber		    1736
   }
   transition {
-    id			    326
+    id			    338
     labelString		    "[maxv<=20]"
     labelPosition	    [235.602 75.984 65 17]
     fontSize		    12
@@ -8936,7 +9310,7 @@ Stateflow {
     }
     midPoint		    [263.8744 92.0784]
     chart		    2
-    linkNode		    [81 325 327]
+    linkNode		    [81 337 339]
     visible		    0
     dataLimits		    [221.045 314.704 89.678 94.478]
     subviewer		    81
@@ -8948,7 +9322,7 @@ Stateflow {
     ssIdNumber		    1737
   }
   transition {
-    id			    327
+    id			    339
     labelString		    "[urstart[i]==1]"
     labelPosition	    [164.629 125.069 72.25 17]
     fontSize		    12
@@ -8962,7 +9336,7 @@ Stateflow {
     }
     midPoint		    [144.4668 132.6538]
     chart		    2
-    linkNode		    [81 326 328]
+    linkNode		    [81 338 340]
     visible		    0
     dataLimits		    [142.067 146.867 107.57 149.738]
     stampAngle		    -2.3562
@@ -8975,7 +9349,7 @@ Stateflow {
     ssIdNumber		    1738
   }
   transition {
-    id			    328
+    id			    340
     labelString		    "[urstop[i]==1]"
     labelPosition	    [432.908 177.634 71.75 17]
     fontSize		    12
@@ -8984,12 +9358,12 @@ Stateflow {
       intersection	      [3 0 1 0.7337 614.1327 109.4493 0 0]
     }
     dst {
-      id		      321
+      id		      333
       intersection	      [2 1 0 0 383.1188 208.7155 0 0]
     }
     midPoint		    [533.1393 189.596]
     chart		    2
-    linkNode		    [81 327 329]
+    linkNode		    [81 339 341]
     visible		    0
     dataLimits		    [383.119 614.133 109.449 211.115]
     subviewer		    81
@@ -9001,7 +9375,7 @@ Stateflow {
     ssIdNumber		    1739
   }
   transition {
-    id			    329
+    id			    341
     labelString		    "[abs(distance-S[j])<=1]\n{stop[i]=1,v=0,start[i]=0;}"
     labelPosition	    [570.643 186.841 131.25 32]
     fontSize		    12
@@ -9016,7 +9390,7 @@ Stateflow {
     }
     midPoint		    [710.9966 221.1337]
     chart		    2
-    linkNode		    [81 328 330]
+    linkNode		    [81 340 342]
     visible		    0
     dataLimits		    [707.684 768.189 109.449 294.24]
     subviewer		    81
@@ -9028,7 +9402,7 @@ Stateflow {
     ssIdNumber		    1740
   }
   transition {
-    id			    330
+    id			    342
     labelString		    "[urstop[i]==1]"
     labelPosition	    [392.276 144.761 71.75 17]
     fontSize		    12
@@ -9037,12 +9411,12 @@ Stateflow {
       intersection	      [3 0 1 0.6321 376.1188 119.8786 0 0]
     }
     dst {
-      id		      321
+      id		      333
       intersection	      [1 0 -1 0 376.1188 201.7155 0 0]
     }
     midPoint		    [376.1188 156.7971]
     chart		    2
-    linkNode		    [81 329 331]
+    linkNode		    [81 341 343]
     visible		    0
     dataLimits		    [373.719 378.519 119.879 201.715]
     stampAngle		    0.7073
@@ -9055,12 +9429,12 @@ Stateflow {
     ssIdNumber		    1741
   }
   transition {
-    id			    331
+    id			    343
     labelString		    ""
     labelPosition	    [348.217 191.887 0 0]
     fontSize		    12
     src {
-      id		      321
+      id		      333
       intersection	      [4 -1 0.0002 0 369.1188 208.7165 0 0]
     }
     dst {
@@ -9069,7 +9443,7 @@ Stateflow {
     }
     midPoint		    [277.5965 219.4031]
     chart		    2
-    linkNode		    [81 330 332]
+    linkNode		    [81 342 344]
     visible		    0
     dataLimits		    [222.714 369.119 208.717 277.124]
     stampAngle		    1.7451
@@ -9082,7 +9456,7 @@ Stateflow {
     ssIdNumber		    1742
   }
   transition {
-    id			    332
+    id			    344
     labelString		    "[v<=0.1]\n{urstopped[i]=1;}"
     labelPosition	    [169.832 235.514 89.75 32]
     fontSize		    12
@@ -9096,7 +9470,7 @@ Stateflow {
     }
     midPoint		    [165.6941 251.6208]
     chart		    2
-    linkNode		    [81 331 333]
+    linkNode		    [81 343 345]
     visible		    0
     dataLimits		    [163.294 168.094 218.118 277.124]
     subviewer		    81
@@ -9108,7 +9482,7 @@ Stateflow {
     ssIdNumber		    1743
   }
   transition {
-    id			    333
+    id			    345
     labelString		    "[time>=Delay[i]]{stop[i]=1,j=0;}"
     labelPosition	    [814.009 250.371 160.75 17]
     fontSize		    12
@@ -9123,7 +9497,7 @@ Stateflow {
     }
     midPoint		    [799.1502 249.9281]
     chart		    2
-    linkNode		    [81 332 334]
+    linkNode		    [81 344 346]
     visible		    0
     dataLimits		    [797.751 800.549 223.056 281.463]
     subviewer		    81
@@ -9135,7 +9509,7 @@ Stateflow {
     ssIdNumber		    1744
   }
   transition {
-    id			    334
+    id			    346
     labelString		    "[abs(distance-S[j])<=1]\n{stop[i]=1,start[i]=0;}"
     labelPosition	    [589.027 254.986 122.5 32]
     fontSize		    12
@@ -9150,7 +9524,7 @@ Stateflow {
     }
     midPoint		    [669.7918 315.8821]
     chart		    2
-    linkNode		    [81 333 335]
+    linkNode		    [81 345 347]
     visible		    0
     dataLimits		    [576.057 768.189 314.483 317.281]
     stampAngle		    NaN
@@ -9163,7 +9537,7 @@ Stateflow {
     ssIdNumber		    1745
   }
   transition {
-    id			    335
+    id			    347
     labelString		    "[urstop[i]==1]"
     labelPosition	    [301.813 351.577 71.75 17]
     fontSize		    12
@@ -9177,7 +9551,7 @@ Stateflow {
     }
     midPoint		    [329.7569 328.9808]
     chart		    2
-    linkNode		    [81 334 336]
+    linkNode		    [81 346 348]
     visible		    0
     dataLimits		    [235.935 415.579 326.581 331.381]
     subviewer		    81
@@ -9189,7 +9563,7 @@ Stateflow {
     ssIdNumber		    1746
   }
   transition {
-    id			    336
+    id			    348
     labelString		    "[start[i]==1]\n{stop[i]=0,time=0;}"
     labelPosition	    [815.737 354.954 98.25 32]
     fontSize		    12
@@ -9203,7 +9577,7 @@ Stateflow {
     }
     midPoint		    [843.9387 378.5426]
     chart		    2
-    linkNode		    [81 335 337]
+    linkNode		    [81 347 349]
     visible		    0
     dataLimits		    [831.364 845.545 344.393 401.394]
     stampAngle		    NaN
@@ -9216,7 +9590,7 @@ Stateflow {
     ssIdNumber		    1747
   }
   transition {
-    id			    337
+    id			    349
     labelString		    "[time>=30]\n{dir[i]=-dir[i],\nstop[i]=1,\nstart[i]=0;}"
     labelPosition	    [939.394 418.085 64.75 62]
     fontSize		    12
@@ -9231,7 +9605,7 @@ Stateflow {
     }
     midPoint		    [920.3115 446.6469]
     chart		    2
-    linkNode		    [81 336 338]
+    linkNode		    [81 348 350]
     visible		    0
     dataLimits		    [852.444 920.34 344.393 529.915]
     subviewer		    81
@@ -9243,13 +9617,13 @@ Stateflow {
     ssIdNumber		    1748
   }
   transition {
-    id			    338
+    id			    350
     labelString		    "{acc=-v^2*0.001}"
     labelPosition	    [502.406 382.878 93.25 17]
     fontSize		    12
     arrowSize		    4.663
     src {
-      id		      322
+      id		      334
       intersection	      [1 0 -1 0 482.712 420.4362 0 0]
     }
     dst {
@@ -9258,7 +9632,7 @@ Stateflow {
     }
     midPoint		    [482.712 389.8544]
     chart		    2
-    linkNode		    [81 337 339]
+    linkNode		    [81 349 351]
     visible		    0
     dataLimits		    [481.313 484.111 354.61 420.436]
     stampAngle		    2.9083
@@ -9271,7 +9645,7 @@ Stateflow {
     ssIdNumber		    1749
   }
   transition {
-    id			    339
+    id			    351
     labelString		    "[urstop[i]==1]"
     labelPosition	    [123.37 471.786 71.75 17]
     fontSize		    12
@@ -9285,7 +9659,7 @@ Stateflow {
     }
     midPoint		    [205.6078 472.1407]
     chart		    2
-    linkNode		    [81 338 340]
+    linkNode		    [81 350 352]
     visible		    0
     dataLimits		    [173.748 536.557 358.483 535.02]
     subviewer		    81
@@ -9297,7 +9671,7 @@ Stateflow {
     ssIdNumber		    1750
   }
   transition {
-    id			    340
+    id			    352
     labelString		    "[urstop[i]==1]"
     labelPosition	    [232.162 398.672 71.75 17]
     fontSize		    12
@@ -9311,7 +9685,7 @@ Stateflow {
     }
     midPoint		    [216.4516 409.2186]
     chart		    2
-    linkNode		    [81 339 341]
+    linkNode		    [81 351 353]
     visible		    0
     dataLimits		    [207.603 241.392 358.483 433.462]
     subviewer		    81
@@ -9323,7 +9697,7 @@ Stateflow {
     ssIdNumber		    1751
   }
   transition {
-    id			    341
+    id			    353
     labelString		    "[(dir[i]==1&&j<N-1)||(dir[i]==-1&&j>0)]\n{j=j+dir[i];}"
     labelPosition	    [612.49 381.248 197.75 32]
     fontSize		    12
@@ -9338,7 +9712,7 @@ Stateflow {
     }
     midPoint		    [710.3093 434.315]
     chart		    2
-    linkNode		    [81 340 342]
+    linkNode		    [81 352 354]
     visible		    0
     dataLimits		    [695.371 801.364 408.643 453.596]
     stampAngle		    2.1166
@@ -9351,7 +9725,7 @@ Stateflow {
     ssIdNumber		    1752
   }
   transition {
-    id			    342
+    id			    354
     labelString		    "[j==0&&dir[i]==-1]"
     labelPosition	    [834.358 466.478 94.75 17]
     fontSize		    12
@@ -9365,7 +9739,7 @@ Stateflow {
     }
     midPoint		    [875.3183 470.4601]
     chart		    2
-    linkNode		    [81 341 343]
+    linkNode		    [81 353 355]
     visible		    0
     dataLimits		    [831.364 878.001 413.456 529.864]
     stampAngle		    2.9821
@@ -9378,7 +9752,7 @@ Stateflow {
     ssIdNumber		    1753
   }
   transition {
-    id			    343
+    id			    355
     labelString		    "[j==N-1&&dir[i]==1]"
     labelPosition	    [755.165 456.505 103.5 17]
     fontSize		    12
@@ -9392,7 +9766,7 @@ Stateflow {
     }
     midPoint		    [762.5331 452.0226]
     chart		    2
-    linkNode		    [81 342 344]
+    linkNode		    [81 354 356]
     visible		    0
     dataLimits		    [747.037 801.364 420.45 517.33]
     stampAngle		    -0.7854
@@ -9404,7 +9778,7 @@ Stateflow {
     ssIdNumber		    1754
   }
   transition {
-    id			    344
+    id			    356
     labelString		    "[abs(distance-S[j])<=500]"
     labelPosition	    [345.368 397.798 136 17]
     fontSize		    12
@@ -9413,12 +9787,12 @@ Stateflow {
       intersection	      [2 1 0 0.1792 409.1543 427.4362 0 0]
     }
     dst {
-      id		      322
+      id		      334
       intersection	      [4 -1 0 0 475.712 427.4362 0 0]
     }
     midPoint		    [438.4331 427.4362]
     chart		    2
-    linkNode		    [81 343 345]
+    linkNode		    [81 355 357]
     visible		    0
     dataLimits		    [409.154 475.712 425.036 429.836]
     stampAngle		    -1.2346
@@ -9431,7 +9805,7 @@ Stateflow {
     ssIdNumber		    1755
   }
   transition {
-    id			    345
+    id			    357
     labelString		    "[abs(distance-S[j])<=500]"
     labelPosition	    [505.278 420.092 136 17]
     fontSize		    12
@@ -9440,12 +9814,12 @@ Stateflow {
       intersection	      [1 0 -1 0.138 560.1007 453.5963 0 0]
     }
     dst {
-      id		      322
+      id		      334
       intersection	      [2 0.9077 0.4196 0 489.0659 430.3735 0 0]
     }
     midPoint		    [535.7929 438.8175]
     chart		    2
-    linkNode		    [81 344 346]
+    linkNode		    [81 356 358]
     visible		    0
     dataLimits		    [489.066 560.101 430.374 453.596]
     stampAngle		    -2.4893
@@ -9458,7 +9832,7 @@ Stateflow {
     ssIdNumber		    1756
   }
   transition {
-    id			    346
+    id			    358
     labelString		    "[v>=20]"
     labelPosition	    [459.155 450.837 42.25 17]
     fontSize		    12
@@ -9472,7 +9846,7 @@ Stateflow {
     }
     midPoint		    [476.8557 464.3607]
     chart		    2
-    linkNode		    [81 345 0]
+    linkNode		    [81 357 0]
     visible		    0
     dataLimits		    [409.154 536.557 446.773 479.548]
     subviewer		    81
@@ -9484,7 +9858,7 @@ Stateflow {
     ssIdNumber		    1757
   }
   data {
-    id			    347
+    id			    359
     ssIdNumber		    1052
     name		    "y1"
     linkNode		    [94 0 0]
@@ -9501,7 +9875,7 @@ Stateflow {
     dataType		    "double"
   }
   transition {
-    id			    348
+    id			    360
     labelString		    "[y1>=2]"
     labelPosition	    [300.978 49.186 48.75 18]
     fontSize		    14
@@ -9516,7 +9890,7 @@ Stateflow {
     }
     midPoint		    [303.6728 70.25]
     chart		    2
-    linkNode		    [94 0 349]
+    linkNode		    [94 0 361]
     visible		    0
     dataLimits		    [132.049 483.039 67.927 72.573]
     stampAngle		    NaN
@@ -9529,7 +9903,7 @@ Stateflow {
     ssIdNumber		    579
   }
   transition {
-    id			    349
+    id			    361
     labelString		    "[openTD[2]==1]/openTD[2]=0;"
     labelPosition	    [216.037 96.187 189.25 18]
     fontSize		    14
@@ -9544,7 +9918,7 @@ Stateflow {
     }
     midPoint		    [312.1429 124.4163]
     chart		    2
-    linkNode		    [94 348 350]
+    linkNode		    [94 360 362]
     visible		    0
     dataLimits		    [132.049 497.363 110.818 187.257]
     stampAngle		    NaN
@@ -9556,7 +9930,7 @@ Stateflow {
     ssIdNumber		    580
   }
   transition {
-    id			    350
+    id			    362
     labelString		    "[closeTD[2]==1]"
     labelPosition	    [219.332 181.513 101 18]
     fontSize		    14
@@ -9571,7 +9945,7 @@ Stateflow {
     }
     midPoint		    [375.72 218.1167]
     chart		    2
-    linkNode		    [94 349 351]
+    linkNode		    [94 361 363]
     visible		    0
     dataLimits		    [200.679 501.125 115.776 223.278]
     stampAngle		    NaN
@@ -9584,7 +9958,7 @@ Stateflow {
     ssIdNumber		    581
   }
   transition {
-    id			    351
+    id			    363
     labelString		    "[y1>0&&v_shutTD[2]==0]"
     labelPosition	    [65.423 148.054 159.25 18]
     fontSize		    14
@@ -9599,7 +9973,7 @@ Stateflow {
     }
     midPoint		    [58.75 164.474]
     chart		    2
-    linkNode		    [94 350 352]
+    linkNode		    [94 362 364]
     visible		    0
     dataLimits		    [56.427 61.073 124.066 197.14]
     stampAngle		    NaN
@@ -9612,7 +9986,7 @@ Stateflow {
     ssIdNumber		    582
   }
   transition {
-    id			    352
+    id			    364
     labelPosition	    [584.945 164.579 9.745 17.965]
     fontSize		    14
     arrowSize		    7.742
@@ -9625,7 +9999,7 @@ Stateflow {
     }
     midPoint		    [580.8157 170.168]
     chart		    2
-    linkNode		    [94 351 353]
+    linkNode		    [94 363 365]
     visible		    0
     dataLimits		    [578.492 583.137 160.148 187.257]
     subviewer		    94
@@ -9636,7 +10010,7 @@ Stateflow {
     ssIdNumber		    583
   }
   transition {
-    id			    353
+    id			    365
     labelString		    "[y1<=0]"
     labelPosition	    [333.816 236.118 48.75 18]
     fontSize		    14
@@ -9651,7 +10025,7 @@ Stateflow {
     }
     midPoint		    [339.188 254.9761]
     chart		    2
-    linkNode		    [94 352 0]
+    linkNode		    [94 364 0]
     visible		    0
     dataLimits		    [200.679 485.439 252.956 257.601]
     stampAngle		    NaN
@@ -9664,10 +10038,10 @@ Stateflow {
     ssIdNumber		    584
   }
   data {
-    id			    354
+    id			    366
     ssIdNumber		    1414
     name		    "v"
-    linkNode		    [99 0 355]
+    linkNode		    [99 0 367]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -9681,10 +10055,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    355
+    id			    367
     ssIdNumber		    1415
     name		    "j"
-    linkNode		    [99 354 356]
+    linkNode		    [99 366 368]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -9697,10 +10071,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    356
+    id			    368
     ssIdNumber		    1416
     name		    "maxv"
-    linkNode		    [99 355 357]
+    linkNode		    [99 367 369]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -9713,10 +10087,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    357
+    id			    369
     ssIdNumber		    1417
     name		    "time"
-    linkNode		    [99 356 358]
+    linkNode		    [99 368 370]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -9730,10 +10104,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    358
+    id			    370
     ssIdNumber		    1418
     name		    "i"
-    linkNode		    [99 357 359]
+    linkNode		    [99 369 371]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -9746,10 +10120,10 @@ Stateflow {
     dataType		    "int32"
   }
   data {
-    id			    359
+    id			    371
     ssIdNumber		    1419
     name		    "distance"
-    linkNode		    [99 358 360]
+    linkNode		    [99 370 372]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -9763,10 +10137,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    360
+    id			    372
     ssIdNumber		    1420
     name		    "acc"
-    linkNode		    [99 359 0]
+    linkNode		    [99 371 0]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -9779,27 +10153,27 @@ Stateflow {
     dataType		    "double"
   }
   junction {
-    id			    361
+    id			    373
     position		    [376.1188 208.7155 7]
     chart		    2
-    linkNode		    [99 0 362]
+    linkNode		    [99 0 374]
     visible		    0
     subviewer		    99
     ssIdNumber		    1422
     type		    CONNECTIVE_JUNCTION
   }
   junction {
-    id			    362
+    id			    374
     position		    [482.712 427.4362 7]
     chart		    2
-    linkNode		    [99 361 0]
+    linkNode		    [99 373 0]
     visible		    0
     subviewer		    99
     ssIdNumber		    1423
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    363
+    id			    375
     labelString		    "{i=3,start[i]=0,stop[i]=0,\ntime=0,distance=0,\nv=0,dir[i]=1;}"
     labelPosition	    [807.625 78.013 123.5 47]
     fontSize		    12
@@ -9812,7 +10186,7 @@ Stateflow {
     }
     midPoint		    [794.0206 110.4553]
     chart		    2
-    linkNode		    [99 0 364]
+    linkNode		    [99 0 376]
     visible		    0
     dataLimits		    [791.621 796.421 65.854 163.056]
     subviewer		    99
@@ -9823,7 +10197,7 @@ Stateflow {
     ssIdNumber		    1424
   }
   transition {
-    id			    364
+    id			    376
     labelString		    "[v>=maxv]"
     labelPosition	    [503.371 57.84 57.75 17]
     fontSize		    12
@@ -9837,7 +10211,7 @@ Stateflow {
     }
     midPoint		    [519.1552 80.4753]
     chart		    2
-    linkNode		    [99 363 365]
+    linkNode		    [99 375 377]
     visible		    0
     dataLimits		    [481.657 564.653 78.075 82.875]
     subviewer		    99
@@ -9849,7 +10223,7 @@ Stateflow {
     ssIdNumber		    1425
   }
   transition {
-    id			    365
+    id			    377
     labelString		    "[maxv>20]"
     labelPosition	    [31.381 72.995 58 17]
     fontSize		    12
@@ -9864,7 +10238,7 @@ Stateflow {
     }
     midPoint		    [168.0199 534.2923]
     chart		    2
-    linkNode		    [99 364 366]
+    linkNode		    [99 376 378]
     dataLimits		    [30.751 536.557 85.251 574.206]
     subviewer		    99
     drawStyle		    SMART
@@ -9875,7 +10249,7 @@ Stateflow {
     ssIdNumber		    1625
   }
   transition {
-    id			    366
+    id			    378
     labelString		    "[maxv<=20]"
     labelPosition	    [235.602 75.984 65 17]
     fontSize		    12
@@ -9889,7 +10263,7 @@ Stateflow {
     }
     midPoint		    [263.8744 92.0784]
     chart		    2
-    linkNode		    [99 365 367]
+    linkNode		    [99 377 379]
     visible		    0
     dataLimits		    [221.045 314.704 89.678 94.478]
     subviewer		    99
@@ -9901,7 +10275,7 @@ Stateflow {
     ssIdNumber		    1426
   }
   transition {
-    id			    367
+    id			    379
     labelString		    "[urstart[i]==1]"
     labelPosition	    [164.629 125.069 72.25 17]
     fontSize		    12
@@ -9915,7 +10289,7 @@ Stateflow {
     }
     midPoint		    [144.4668 132.6538]
     chart		    2
-    linkNode		    [99 366 368]
+    linkNode		    [99 378 380]
     dataLimits		    [142.067 146.867 107.57 149.738]
     stampAngle		    -2.3562
     subviewer		    99
@@ -9927,7 +10301,7 @@ Stateflow {
     ssIdNumber		    1630
   }
   transition {
-    id			    368
+    id			    380
     labelString		    "[urstop[i]==1]"
     labelPosition	    [432.908 177.634 71.75 17]
     fontSize		    12
@@ -9936,12 +10310,12 @@ Stateflow {
       intersection	      [3 0 1 0.7337 614.1327 109.4493 0 0]
     }
     dst {
-      id		      361
+      id		      373
       intersection	      [2 1 0 0 383.1188 208.7155 0 0]
     }
     midPoint		    [533.1393 189.596]
     chart		    2
-    linkNode		    [99 367 369]
+    linkNode		    [99 379 381]
     visible		    0
     dataLimits		    [383.119 614.133 109.449 211.115]
     subviewer		    99
@@ -9953,7 +10327,7 @@ Stateflow {
     ssIdNumber		    1427
   }
   transition {
-    id			    369
+    id			    381
     labelString		    "[abs(distance-S[j])<=1]\n{stop[i]=1,v=0,start[i]=0;}"
     labelPosition	    [570.643 186.841 131.25 32]
     fontSize		    12
@@ -9968,7 +10342,7 @@ Stateflow {
     }
     midPoint		    [710.9966 221.1337]
     chart		    2
-    linkNode		    [99 368 370]
+    linkNode		    [99 380 382]
     visible		    0
     dataLimits		    [707.684 768.189 109.449 294.24]
     subviewer		    99
@@ -9980,7 +10354,7 @@ Stateflow {
     ssIdNumber		    1428
   }
   transition {
-    id			    370
+    id			    382
     labelString		    "[urstop[i]==1]"
     labelPosition	    [392.276 144.761 71.75 17]
     fontSize		    12
@@ -9989,12 +10363,12 @@ Stateflow {
       intersection	      [3 0 1 0.6321 376.1188 119.8786 0 0]
     }
     dst {
-      id		      361
+      id		      373
       intersection	      [1 0 -1 0 376.1188 201.7155 0 0]
     }
     midPoint		    [376.1188 156.7971]
     chart		    2
-    linkNode		    [99 369 371]
+    linkNode		    [99 381 383]
     visible		    0
     dataLimits		    [373.719 378.519 119.879 201.715]
     stampAngle		    0.7073
@@ -10007,12 +10381,12 @@ Stateflow {
     ssIdNumber		    1429
   }
   transition {
-    id			    371
+    id			    383
     labelString		    ""
     labelPosition	    [348.217 191.887 0 0]
     fontSize		    12
     src {
-      id		      361
+      id		      373
       intersection	      [4 -1 0.0002 0 369.1188 208.7165 0 0]
     }
     dst {
@@ -10021,7 +10395,7 @@ Stateflow {
     }
     midPoint		    [277.5965 219.4031]
     chart		    2
-    linkNode		    [99 370 372]
+    linkNode		    [99 382 384]
     visible		    0
     dataLimits		    [222.714 369.119 208.717 277.124]
     stampAngle		    1.7451
@@ -10034,7 +10408,7 @@ Stateflow {
     ssIdNumber		    1431
   }
   transition {
-    id			    372
+    id			    384
     labelString		    "[v<=0.1]\n{urstopped[i]=1;}"
     labelPosition	    [169.832 235.514 89.75 32]
     fontSize		    12
@@ -10048,7 +10422,7 @@ Stateflow {
     }
     midPoint		    [165.6941 251.6208]
     chart		    2
-    linkNode		    [99 371 373]
+    linkNode		    [99 383 385]
     visible		    0
     dataLimits		    [163.294 168.094 218.118 277.124]
     subviewer		    99
@@ -10060,7 +10434,7 @@ Stateflow {
     ssIdNumber		    1430
   }
   transition {
-    id			    373
+    id			    385
     labelString		    "[time>=Delay[i]]{stop[i]=1,j=0;}"
     labelPosition	    [814.009 250.371 160.75 17]
     fontSize		    12
@@ -10075,7 +10449,7 @@ Stateflow {
     }
     midPoint		    [799.1502 249.9281]
     chart		    2
-    linkNode		    [99 372 374]
+    linkNode		    [99 384 386]
     visible		    0
     dataLimits		    [797.751 800.549 223.056 281.463]
     subviewer		    99
@@ -10087,7 +10461,7 @@ Stateflow {
     ssIdNumber		    1432
   }
   transition {
-    id			    374
+    id			    386
     labelString		    "[abs(distance-S[j])<=1]\n{stop[i]=1,start[i]=0;}"
     labelPosition	    [589.027 254.986 122.5 32]
     fontSize		    12
@@ -10102,7 +10476,7 @@ Stateflow {
     }
     midPoint		    [669.7918 315.8821]
     chart		    2
-    linkNode		    [99 373 375]
+    linkNode		    [99 385 387]
     visible		    0
     dataLimits		    [576.057 768.189 314.483 317.281]
     stampAngle		    NaN
@@ -10115,7 +10489,7 @@ Stateflow {
     ssIdNumber		    1433
   }
   transition {
-    id			    375
+    id			    387
     labelString		    "[urstop[i]==1]"
     labelPosition	    [301.813 351.577 71.75 17]
     fontSize		    12
@@ -10129,7 +10503,7 @@ Stateflow {
     }
     midPoint		    [329.7569 328.9808]
     chart		    2
-    linkNode		    [99 374 376]
+    linkNode		    [99 386 388]
     visible		    0
     dataLimits		    [235.935 415.579 326.581 331.381]
     subviewer		    99
@@ -10141,7 +10515,7 @@ Stateflow {
     ssIdNumber		    1434
   }
   transition {
-    id			    376
+    id			    388
     labelString		    "[start[i]==1]\n{stop[i]=0,time=0;}"
     labelPosition	    [815.737 354.954 98.25 32]
     fontSize		    12
@@ -10155,7 +10529,7 @@ Stateflow {
     }
     midPoint		    [843.9387 378.5426]
     chart		    2
-    linkNode		    [99 375 377]
+    linkNode		    [99 387 389]
     visible		    0
     dataLimits		    [831.364 845.545 344.393 401.394]
     stampAngle		    NaN
@@ -10168,7 +10542,7 @@ Stateflow {
     ssIdNumber		    1435
   }
   transition {
-    id			    377
+    id			    389
     labelString		    "[time>=30]\n{dir[i]=-dir[i],\nstop[i]=1,\nstart[i]=0;}"
     labelPosition	    [939.394 418.085 64.75 62]
     fontSize		    12
@@ -10183,7 +10557,7 @@ Stateflow {
     }
     midPoint		    [920.3115 446.6469]
     chart		    2
-    linkNode		    [99 376 378]
+    linkNode		    [99 388 390]
     visible		    0
     dataLimits		    [852.444 920.34 344.393 529.915]
     subviewer		    99
@@ -10195,13 +10569,13 @@ Stateflow {
     ssIdNumber		    1436
   }
   transition {
-    id			    378
+    id			    390
     labelString		    "{acc=-v^2*0.001}"
     labelPosition	    [502.406 382.878 93.25 17]
     fontSize		    12
     arrowSize		    4.663
     src {
-      id		      362
+      id		      374
       intersection	      [1 0 -1 0 482.712 420.4362 0 0]
     }
     dst {
@@ -10210,7 +10584,7 @@ Stateflow {
     }
     midPoint		    [482.712 389.8544]
     chart		    2
-    linkNode		    [99 377 379]
+    linkNode		    [99 389 391]
     visible		    0
     dataLimits		    [481.313 484.111 354.61 420.436]
     stampAngle		    2.9083
@@ -10223,7 +10597,7 @@ Stateflow {
     ssIdNumber		    1439
   }
   transition {
-    id			    379
+    id			    391
     labelString		    "[urstop[i]==1]"
     labelPosition	    [123.37 471.786 71.75 17]
     fontSize		    12
@@ -10237,7 +10611,7 @@ Stateflow {
     }
     midPoint		    [205.6078 472.1407]
     chart		    2
-    linkNode		    [99 378 380]
+    linkNode		    [99 390 392]
     visible		    0
     dataLimits		    [173.748 536.557 358.483 535.02]
     subviewer		    99
@@ -10249,7 +10623,7 @@ Stateflow {
     ssIdNumber		    1437
   }
   transition {
-    id			    380
+    id			    392
     labelString		    "[urstop[i]==1]"
     labelPosition	    [232.162 398.672 71.75 17]
     fontSize		    12
@@ -10263,7 +10637,7 @@ Stateflow {
     }
     midPoint		    [216.4516 409.2186]
     chart		    2
-    linkNode		    [99 379 381]
+    linkNode		    [99 391 393]
     visible		    0
     dataLimits		    [207.603 241.392 358.483 433.462]
     subviewer		    99
@@ -10275,7 +10649,7 @@ Stateflow {
     ssIdNumber		    1438
   }
   transition {
-    id			    381
+    id			    393
     labelString		    "[(dir[i]==1&&j<N-1)||(dir[i]==-1&&j>0)]\n{j=j+dir[i];}"
     labelPosition	    [612.49 381.248 197.75 32]
     fontSize		    12
@@ -10290,7 +10664,7 @@ Stateflow {
     }
     midPoint		    [710.3093 434.315]
     chart		    2
-    linkNode		    [99 380 382]
+    linkNode		    [99 392 394]
     visible		    0
     dataLimits		    [695.371 801.364 408.643 453.596]
     stampAngle		    2.1166
@@ -10303,7 +10677,7 @@ Stateflow {
     ssIdNumber		    1440
   }
   transition {
-    id			    382
+    id			    394
     labelString		    "[j==0&&dir[i]==-1]"
     labelPosition	    [834.358 466.478 94.75 17]
     fontSize		    12
@@ -10317,7 +10691,7 @@ Stateflow {
     }
     midPoint		    [875.3183 470.4601]
     chart		    2
-    linkNode		    [99 381 383]
+    linkNode		    [99 393 395]
     visible		    0
     dataLimits		    [831.364 878.001 413.456 529.864]
     stampAngle		    2.9821
@@ -10330,7 +10704,7 @@ Stateflow {
     ssIdNumber		    1441
   }
   transition {
-    id			    383
+    id			    395
     labelString		    "[j==N-1&&dir[i]==1]"
     labelPosition	    [755.165 456.505 103.5 17]
     fontSize		    12
@@ -10344,7 +10718,7 @@ Stateflow {
     }
     midPoint		    [762.5331 452.0226]
     chart		    2
-    linkNode		    [99 382 384]
+    linkNode		    [99 394 396]
     visible		    0
     dataLimits		    [747.037 801.364 420.45 517.33]
     stampAngle		    -0.7854
@@ -10356,7 +10730,7 @@ Stateflow {
     ssIdNumber		    1442
   }
   transition {
-    id			    384
+    id			    396
     labelString		    "[abs(distance-S[j])<=500]"
     labelPosition	    [345.368 397.798 136 17]
     fontSize		    12
@@ -10365,12 +10739,12 @@ Stateflow {
       intersection	      [2 1 0 0.1792 409.1543 427.4362 0 0]
     }
     dst {
-      id		      362
+      id		      374
       intersection	      [4 -1 0 0 475.712 427.4362 0 0]
     }
     midPoint		    [438.4331 427.4362]
     chart		    2
-    linkNode		    [99 383 385]
+    linkNode		    [99 395 397]
     visible		    0
     dataLimits		    [409.154 475.712 425.036 429.836]
     stampAngle		    -1.2346
@@ -10383,7 +10757,7 @@ Stateflow {
     ssIdNumber		    1443
   }
   transition {
-    id			    385
+    id			    397
     labelString		    "[abs(distance-S[j])<=500]"
     labelPosition	    [505.278 420.092 136 17]
     fontSize		    12
@@ -10392,12 +10766,12 @@ Stateflow {
       intersection	      [1 0 -1 0.138 560.1007 453.5963 0 0]
     }
     dst {
-      id		      362
+      id		      374
       intersection	      [2 0.9077 0.4196 0 489.0659 430.3735 0 0]
     }
     midPoint		    [535.7929 438.8175]
     chart		    2
-    linkNode		    [99 384 386]
+    linkNode		    [99 396 398]
     visible		    0
     dataLimits		    [489.066 560.101 430.374 453.596]
     stampAngle		    -2.4893
@@ -10410,7 +10784,7 @@ Stateflow {
     ssIdNumber		    1444
   }
   transition {
-    id			    386
+    id			    398
     labelString		    "[v>=20]"
     labelPosition	    [459.155 450.837 42.25 17]
     fontSize		    12
@@ -10424,7 +10798,7 @@ Stateflow {
     }
     midPoint		    [476.8557 464.3607]
     chart		    2
-    linkNode		    [99 385 0]
+    linkNode		    [99 397 0]
     visible		    0
     dataLimits		    [409.154 536.557 446.773 479.548]
     subviewer		    99
@@ -10436,7 +10810,7 @@ Stateflow {
     ssIdNumber		    1445
   }
   data {
-    id			    387
+    id			    399
     ssIdNumber		    1053
     name		    "y1"
     linkNode		    [112 0 0]
@@ -10453,7 +10827,7 @@ Stateflow {
     dataType		    "double"
   }
   transition {
-    id			    388
+    id			    400
     labelString		    "[y1>=2]"
     labelPosition	    [300.978 49.186 48.75 18]
     fontSize		    14
@@ -10468,7 +10842,7 @@ Stateflow {
     }
     midPoint		    [303.6728 70.25]
     chart		    2
-    linkNode		    [112 0 389]
+    linkNode		    [112 0 401]
     visible		    0
     dataLimits		    [132.049 483.039 67.927 72.573]
     stampAngle		    NaN
@@ -10481,7 +10855,7 @@ Stateflow {
     ssIdNumber		    651
   }
   transition {
-    id			    389
+    id			    401
     labelString		    "[openTD[3]==1]/openTD[3]=0;"
     labelPosition	    [217.151 96.562 189.25 18]
     fontSize		    14
@@ -10496,7 +10870,7 @@ Stateflow {
     }
     midPoint		    [312.4046 124.7978]
     chart		    2
-    linkNode		    [112 388 390]
+    linkNode		    [112 400 402]
     visible		    0
     dataLimits		    [132.049 497.791 110.818 188.112]
     stampAngle		    NaN
@@ -10508,7 +10882,7 @@ Stateflow {
     ssIdNumber		    652
   }
   transition {
-    id			    390
+    id			    402
     labelString		    "[closeTD[3]==1]"
     labelPosition	    [219.332 181.513 101 18]
     fontSize		    14
@@ -10523,7 +10897,7 @@ Stateflow {
     }
     midPoint		    [375.72 218.1167]
     chart		    2
-    linkNode		    [112 389 391]
+    linkNode		    [112 401 403]
     visible		    0
     dataLimits		    [200.679 501.125 115.776 223.278]
     stampAngle		    NaN
@@ -10536,7 +10910,7 @@ Stateflow {
     ssIdNumber		    653
   }
   transition {
-    id			    391
+    id			    403
     labelString		    "[y1>0&&v_shutTD[3]==0]"
     labelPosition	    [64.568 148.054 159.25 18]
     fontSize		    14
@@ -10551,7 +10925,7 @@ Stateflow {
     }
     midPoint		    [58.75 164.474]
     chart		    2
-    linkNode		    [112 390 392]
+    linkNode		    [112 402 404]
     visible		    0
     dataLimits		    [56.427 61.073 124.066 197.14]
     stampAngle		    NaN
@@ -10564,7 +10938,7 @@ Stateflow {
     ssIdNumber		    654
   }
   transition {
-    id			    392
+    id			    404
     labelPosition	    [585.372 165.434 9.745 17.965]
     fontSize		    14
     arrowSize		    7.742
@@ -10577,7 +10951,7 @@ Stateflow {
     }
     midPoint		    [581.2431 171.0227]
     chart		    2
-    linkNode		    [112 391 393]
+    linkNode		    [112 403 405]
     visible		    0
     dataLimits		    [578.919 583.564 161.002 188.112]
     subviewer		    112
@@ -10588,7 +10962,7 @@ Stateflow {
     ssIdNumber		    655
   }
   transition {
-    id			    393
+    id			    405
     labelString		    "[y1<=0]"
     labelPosition	    [331.144 236.619 48.75 18]
     fontSize		    14
@@ -10603,7 +10977,7 @@ Stateflow {
     }
     midPoint		    [339.4016 255.4034]
     chart		    2
-    linkNode		    [112 392 0]
+    linkNode		    [112 404 0]
     visible		    0
     dataLimits		    [200.678 485.867 253.81 258.455]
     stampAngle		    NaN
@@ -10616,7 +10990,7 @@ Stateflow {
     ssIdNumber		    656
   }
   data {
-    id			    394
+    id			    406
     ssIdNumber		    180
     name		    "y2"
     linkNode		    [117 0 0]
@@ -10633,7 +11007,7 @@ Stateflow {
     dataType		    "double"
   }
   transition {
-    id			    395
+    id			    407
     labelString		    "[y2>=2]"
     labelPosition	    [253.48 55.427 48.726 17.965]
     fontSize		    14
@@ -10648,7 +11022,7 @@ Stateflow {
     }
     midPoint		    [262.9244 77.1119]
     chart		    2
-    linkNode		    [117 0 396]
+    linkNode		    [117 0 408]
     visible		    0
     dataLimits		    [124.867 408.528 74.96 79.488]
     stampAngle		    NaN
@@ -10661,7 +11035,7 @@ Stateflow {
     ssIdNumber		    182
   }
   transition {
-    id			    396
+    id			    408
     labelString		    "[openPSD[1][0]==1]{PSDClosed[1][0]=0}\n/openPSD[1][0]=0;"
     labelPosition	    [143.267 100.726 253.75 34]
     fontSize		    14
@@ -10676,7 +11050,7 @@ Stateflow {
     }
     midPoint		    [294.7069 134.8209]
     chart		    2
-    linkNode		    [117 395 397]
+    linkNode		    [117 407 409]
     visible		    0
     dataLimits		    [124.866 416.451 117.165 220.016]
     stampAngle		    NaN
@@ -10690,7 +11064,7 @@ Stateflow {
     ssIdNumber		    183
   }
   transition {
-    id			    397
+    id			    409
     labelString		    "[y2>0&&v_shutPSD[1][0]==0]"
     labelPosition	    [60.309 172.686 184.75 18]
     fontSize		    14
@@ -10705,7 +11079,7 @@ Stateflow {
     }
     midPoint		    [58 177.7854]
     chart		    2
-    linkNode		    [117 396 398]
+    linkNode		    [117 408 410]
     visible		    0
     dataLimits		    [55.736 60.264 130.225 217.8]
     stampAngle		    NaN
@@ -10718,7 +11092,7 @@ Stateflow {
     ssIdNumber		    184
   }
   transition {
-    id			    398
+    id			    410
     labelString		    "[closePSD[1][0]==1]"
     labelPosition	    [248.322 205.596 126.5 18]
     fontSize		    14
@@ -10733,7 +11107,7 @@ Stateflow {
     }
     midPoint		    [379.5709 209.8186]
     chart		    2
-    linkNode		    [117 397 399]
+    linkNode		    [117 409 411]
     visible		    0
     dataLimits		    [231.151 425.344 143.408 237.344]
     stampAngle		    NaN
@@ -10747,7 +11121,7 @@ Stateflow {
     ssIdNumber		    185
   }
   transition {
-    id			    399
+    id			    411
     labelString		    "{PSDClosed[1][0]=1}"
     labelPosition	    [428.536 171.516 130.5 18]
     fontSize		    14
@@ -10761,7 +11135,7 @@ Stateflow {
     }
     midPoint		    [501.27 200.0814]
     chart		    2
-    linkNode		    [117 398 400]
+    linkNode		    [117 410 412]
     visible		    0
     dataLimits		    [499.004 503.531 187.879 220.016]
     subviewer		    117
@@ -10772,7 +11146,7 @@ Stateflow {
     ssIdNumber		    186
   }
   transition {
-    id			    400
+    id			    412
     labelString		    "[y2<=0]{PSDClosed[1][0]=1}"
     labelPosition	    [238.517 259.35 177.25 18]
     fontSize		    14
@@ -10787,7 +11161,7 @@ Stateflow {
     }
     midPoint		    [314.7303 282.1312]
     chart		    2
-    linkNode		    [117 399 0]
+    linkNode		    [117 411 0]
     visible		    0
     dataLimits		    [231.151 405.856 279.867 284.395]
     stampAngle		    NaN
@@ -10800,7 +11174,7 @@ Stateflow {
     ssIdNumber		    187
   }
   data {
-    id			    401
+    id			    413
     ssIdNumber		    192
     name		    "y2"
     linkNode		    [122 0 0]
@@ -10817,7 +11191,7 @@ Stateflow {
     dataType		    "double"
   }
   transition {
-    id			    402
+    id			    414
     labelString		    "[y2>=2]"
     labelPosition	    [253.48 55.427 48.726 17.965]
     fontSize		    14
@@ -10832,7 +11206,7 @@ Stateflow {
     }
     midPoint		    [262.9244 77.1119]
     chart		    2
-    linkNode		    [122 0 403]
+    linkNode		    [122 0 415]
     visible		    0
     dataLimits		    [124.867 408.528 74.96 79.488]
     stampAngle		    NaN
@@ -10845,7 +11219,7 @@ Stateflow {
     ssIdNumber		    194
   }
   transition {
-    id			    403
+    id			    415
     labelString		    "[openPSD[1][1]==1]{PSDClosed[1][1]=0}\n/openPSD[1][1]=0;"
     labelPosition	    [142.125 100.726 253.75 34]
     fontSize		    14
@@ -10860,7 +11234,7 @@ Stateflow {
     }
     midPoint		    [294.7069 134.8209]
     chart		    2
-    linkNode		    [122 402 404]
+    linkNode		    [122 414 416]
     visible		    0
     dataLimits		    [124.866 416.451 117.165 220.016]
     stampAngle		    NaN
@@ -10874,7 +11248,7 @@ Stateflow {
     ssIdNumber		    195
   }
   transition {
-    id			    404
+    id			    416
     labelString		    "[y2>0&&v_shutPSD[1][1]==0]"
     labelPosition	    [60.309 172.686 184.75 18]
     fontSize		    14
@@ -10889,7 +11263,7 @@ Stateflow {
     }
     midPoint		    [58 177.7854]
     chart		    2
-    linkNode		    [122 403 405]
+    linkNode		    [122 415 417]
     visible		    0
     dataLimits		    [55.736 60.264 130.225 217.8]
     stampAngle		    NaN
@@ -10902,7 +11276,7 @@ Stateflow {
     ssIdNumber		    196
   }
   transition {
-    id			    405
+    id			    417
     labelString		    "[closePSD[1][1]==1]"
     labelPosition	    [248.322 205.596 126.5 18]
     fontSize		    14
@@ -10917,7 +11291,7 @@ Stateflow {
     }
     midPoint		    [379.5709 209.8186]
     chart		    2
-    linkNode		    [122 404 406]
+    linkNode		    [122 416 418]
     visible		    0
     dataLimits		    [231.151 425.344 143.408 237.344]
     stampAngle		    NaN
@@ -10931,7 +11305,7 @@ Stateflow {
     ssIdNumber		    197
   }
   transition {
-    id			    406
+    id			    418
     labelString		    "{PSDClosed[1][1]=1}"
     labelPosition	    [419.779 169.832 130.5 18]
     fontSize		    14
@@ -10945,7 +11319,7 @@ Stateflow {
     }
     midPoint		    [501.27 200.0814]
     chart		    2
-    linkNode		    [122 405 407]
+    linkNode		    [122 417 419]
     visible		    0
     dataLimits		    [499.004 503.531 187.879 220.016]
     subviewer		    122
@@ -10956,7 +11330,7 @@ Stateflow {
     ssIdNumber		    198
   }
   transition {
-    id			    407
+    id			    419
     labelString		    "[y2<=0]{PSDClosed[1][1]=1}"
     labelPosition	    [235.149 259.35 177.25 18]
     fontSize		    14
@@ -10971,7 +11345,7 @@ Stateflow {
     }
     midPoint		    [314.7303 282.1312]
     chart		    2
-    linkNode		    [122 406 0]
+    linkNode		    [122 418 0]
     visible		    0
     dataLimits		    [231.151 405.856 279.867 284.395]
     stampAngle		    NaN
@@ -10984,7 +11358,7 @@ Stateflow {
     ssIdNumber		    199
   }
   data {
-    id			    408
+    id			    420
     ssIdNumber		    168
     name		    "y2"
     linkNode		    [127 0 0]
@@ -11001,7 +11375,7 @@ Stateflow {
     dataType		    "double"
   }
   transition {
-    id			    409
+    id			    421
     labelString		    "[y2>=2]"
     labelPosition	    [253.48 55.427 48.726 17.965]
     fontSize		    14
@@ -11016,7 +11390,7 @@ Stateflow {
     }
     midPoint		    [262.9244 77.1119]
     chart		    2
-    linkNode		    [127 0 410]
+    linkNode		    [127 0 422]
     visible		    0
     dataLimits		    [124.867 408.528 74.96 79.488]
     stampAngle		    NaN
@@ -11029,7 +11403,7 @@ Stateflow {
     ssIdNumber		    170
   }
   transition {
-    id			    410
+    id			    422
     labelString		    "[openPSD[0][1]==1]{PSDClosed[0][1]=0}\n/openPSD[0][1]=0;"
     labelPosition	    [147.776 108.927 253.75 34]
     fontSize		    14
@@ -11044,7 +11418,7 @@ Stateflow {
     }
     midPoint		    [298.7368 145.705]
     chart		    2
-    linkNode		    [127 409 411]
+    linkNode		    [127 421 423]
     visible		    0
     dataLimits		    [124.866 418.814 117.165 240.874]
     stampAngle		    NaN
@@ -11058,7 +11432,7 @@ Stateflow {
     ssIdNumber		    171
   }
   transition {
-    id			    411
+    id			    423
     labelString		    "[y2>0&&v_shutPSD[0][1]==0]"
     labelPosition	    [60.309 172.686 184.75 18]
     fontSize		    14
@@ -11073,7 +11447,7 @@ Stateflow {
     }
     midPoint		    [58 177.7854]
     chart		    2
-    linkNode		    [127 410 412]
+    linkNode		    [127 422 424]
     visible		    0
     dataLimits		    [55.736 60.264 130.225 217.8]
     stampAngle		    NaN
@@ -11086,7 +11460,7 @@ Stateflow {
     ssIdNumber		    172
   }
   transition {
-    id			    412
+    id			    424
     labelString		    "[closePSD[0][1]==1]"
     labelPosition	    [248.322 205.596 126.5 18]
     fontSize		    14
@@ -11101,7 +11475,7 @@ Stateflow {
     }
     midPoint		    [379.5709 209.8186]
     chart		    2
-    linkNode		    [127 411 413]
+    linkNode		    [127 423 425]
     visible		    0
     dataLimits		    [231.151 425.344 143.408 237.344]
     stampAngle		    NaN
@@ -11115,7 +11489,7 @@ Stateflow {
     ssIdNumber		    173
   }
   transition {
-    id			    413
+    id			    425
     labelString		    "{PSDClosed[0][1]=1}"
     labelPosition	    [424.183 186.848 130.5 18]
     fontSize		    14
@@ -11129,7 +11503,7 @@ Stateflow {
     }
     midPoint		    [503.6329 220.9399]
     chart		    2
-    linkNode		    [127 412 414]
+    linkNode		    [127 424 426]
     visible		    0
     dataLimits		    [501.367 505.894 208.737 240.874]
     subviewer		    127
@@ -11140,7 +11514,7 @@ Stateflow {
     ssIdNumber		    174
   }
   transition {
-    id			    414
+    id			    426
     labelString		    "[y2<=0]{PSDClosed[0][1]=1}"
     labelPosition	    [234.863 265.625 177.25 18]
     fontSize		    14
@@ -11155,7 +11529,7 @@ Stateflow {
     }
     midPoint		    [315.9118 294.9063]
     chart		    2
-    linkNode		    [127 413 0]
+    linkNode		    [127 425 0]
     visible		    0
     dataLimits		    [231.151 408.219 286.823 305.254]
     stampAngle		    NaN
@@ -11168,7 +11542,7 @@ Stateflow {
     ssIdNumber		    175
   }
   data {
-    id			    415
+    id			    427
     ssIdNumber		    167
     name		    "y2"
     linkNode		    [132 0 0]
@@ -11185,7 +11559,7 @@ Stateflow {
     dataType		    "double"
   }
   transition {
-    id			    416
+    id			    428
     labelString		    "[y2>=2]"
     labelPosition	    [253.48 55.427 48.726 17.965]
     fontSize		    14
@@ -11200,7 +11574,7 @@ Stateflow {
     }
     midPoint		    [262.9244 77.1119]
     chart		    2
-    linkNode		    [132 0 417]
+    linkNode		    [132 0 429]
     visible		    0
     dataLimits		    [124.867 408.528 74.96 79.488]
     stampAngle		    NaN
@@ -11213,7 +11587,7 @@ Stateflow {
     ssIdNumber		    32
   }
   transition {
-    id			    417
+    id			    429
     labelString		    "[openPSD[0][0]==1]{PSDClosed[0][0]=0}\n/openPSD[0][0]=0;"
     labelPosition	    [150.203 92.648 253.75 34]
     fontSize		    14
@@ -11228,7 +11602,7 @@ Stateflow {
     }
     midPoint		    [294.7069 134.8209]
     chart		    2
-    linkNode		    [132 416 418]
+    linkNode		    [132 428 430]
     visible		    0
     dataLimits		    [124.866 416.451 117.165 220.016]
     stampAngle		    NaN
@@ -11242,7 +11616,7 @@ Stateflow {
     ssIdNumber		    33
   }
   transition {
-    id			    418
+    id			    430
     labelString		    "[y2>0&&v_shutPSD[0][0]==0]"
     labelPosition	    [60.309 172.686 184.75 18]
     fontSize		    14
@@ -11257,7 +11631,7 @@ Stateflow {
     }
     midPoint		    [58 177.7854]
     chart		    2
-    linkNode		    [132 417 419]
+    linkNode		    [132 429 431]
     visible		    0
     dataLimits		    [55.736 60.264 130.225 217.8]
     stampAngle		    NaN
@@ -11270,7 +11644,7 @@ Stateflow {
     ssIdNumber		    35
   }
   transition {
-    id			    419
+    id			    431
     labelString		    "[closePSD[0][0]==1]"
     labelPosition	    [248.322 205.596 126.5 18]
     fontSize		    14
@@ -11285,7 +11659,7 @@ Stateflow {
     }
     midPoint		    [379.5709 209.8186]
     chart		    2
-    linkNode		    [132 418 420]
+    linkNode		    [132 430 432]
     visible		    0
     dataLimits		    [231.151 425.344 143.408 237.344]
     stampAngle		    NaN
@@ -11299,7 +11673,7 @@ Stateflow {
     ssIdNumber		    34
   }
   transition {
-    id			    420
+    id			    432
     labelString		    "{PSDClosed[0][0]=1}"
     labelPosition	    [432.935 167.662 130.5 18]
     fontSize		    14
@@ -11313,7 +11687,7 @@ Stateflow {
     }
     midPoint		    [501.27 200.0814]
     chart		    2
-    linkNode		    [132 419 421]
+    linkNode		    [132 431 433]
     visible		    0
     dataLimits		    [499.004 503.531 187.879 220.016]
     subviewer		    132
@@ -11324,7 +11698,7 @@ Stateflow {
     ssIdNumber		    36
   }
   transition {
-    id			    421
+    id			    433
     labelString		    "[y2<=0]{PSDClosed[0][0]=1}"
     labelPosition	    [233.854 263.052 177.25 18]
     fontSize		    14
@@ -11339,7 +11713,7 @@ Stateflow {
     }
     midPoint		    [314.7303 282.1312]
     chart		    2
-    linkNode		    [132 420 0]
+    linkNode		    [132 432 0]
     visible		    0
     dataLimits		    [231.151 405.856 279.867 284.395]
     stampAngle		    NaN
@@ -11352,7 +11726,7 @@ Stateflow {
     ssIdNumber		    37
   }
   data {
-    id			    422
+    id			    434
     ssIdNumber		    228
     name		    "y2"
     linkNode		    [137 0 0]
@@ -11369,7 +11743,7 @@ Stateflow {
     dataType		    "double"
   }
   transition {
-    id			    423
+    id			    435
     labelString		    "[y2>=2]"
     labelPosition	    [253.48 55.427 48.726 17.965]
     fontSize		    14
@@ -11384,7 +11758,7 @@ Stateflow {
     }
     midPoint		    [262.9244 77.1119]
     chart		    2
-    linkNode		    [137 0 424]
+    linkNode		    [137 0 436]
     visible		    0
     dataLimits		    [124.867 408.528 74.96 79.488]
     stampAngle		    NaN
@@ -11397,7 +11771,7 @@ Stateflow {
     ssIdNumber		    230
   }
   transition {
-    id			    424
+    id			    436
     labelString		    "[openPSD[3][0]==1]{PSDClosed[3][0]=0}\n/openPSD[3][0]=0;"
     labelPosition	    [142.125 100.726 253.75 34]
     fontSize		    14
@@ -11412,7 +11786,7 @@ Stateflow {
     }
     midPoint		    [294.7069 134.8209]
     chart		    2
-    linkNode		    [137 423 425]
+    linkNode		    [137 435 437]
     visible		    0
     dataLimits		    [124.866 416.451 117.165 220.016]
     stampAngle		    NaN
@@ -11426,7 +11800,7 @@ Stateflow {
     ssIdNumber		    231
   }
   transition {
-    id			    425
+    id			    437
     labelString		    "[y2>0&&v_shutPSD[3][0]==0]"
     labelPosition	    [60.309 172.686 184.75 18]
     fontSize		    14
@@ -11441,7 +11815,7 @@ Stateflow {
     }
     midPoint		    [58 177.7854]
     chart		    2
-    linkNode		    [137 424 426]
+    linkNode		    [137 436 438]
     visible		    0
     dataLimits		    [55.736 60.264 130.225 217.8]
     stampAngle		    NaN
@@ -11454,7 +11828,7 @@ Stateflow {
     ssIdNumber		    232
   }
   transition {
-    id			    426
+    id			    438
     labelString		    "[closePSD[3][0]==1]"
     labelPosition	    [248.322 205.596 126.5 18]
     fontSize		    14
@@ -11469,7 +11843,7 @@ Stateflow {
     }
     midPoint		    [379.5709 209.8186]
     chart		    2
-    linkNode		    [137 425 427]
+    linkNode		    [137 437 439]
     visible		    0
     dataLimits		    [231.151 425.344 143.408 237.344]
     stampAngle		    NaN
@@ -11483,7 +11857,7 @@ Stateflow {
     ssIdNumber		    233
   }
   transition {
-    id			    427
+    id			    439
     labelString		    "{PSDClosed[3][0]=1}"
     labelPosition	    [421.8 170.169 130.5 18]
     fontSize		    14
@@ -11497,7 +11871,7 @@ Stateflow {
     }
     midPoint		    [501.27 200.0814]
     chart		    2
-    linkNode		    [137 426 428]
+    linkNode		    [137 438 440]
     visible		    0
     dataLimits		    [499.004 503.531 187.879 220.016]
     subviewer		    137
@@ -11508,7 +11882,7 @@ Stateflow {
     ssIdNumber		    234
   }
   transition {
-    id			    428
+    id			    440
     labelString		    "[y2<=0]{PSDClosed[3][0]=1}"
     labelPosition	    [237.17 253.624 177.25 18]
     fontSize		    14
@@ -11523,7 +11897,7 @@ Stateflow {
     }
     midPoint		    [314.7303 282.1312]
     chart		    2
-    linkNode		    [137 427 0]
+    linkNode		    [137 439 0]
     visible		    0
     dataLimits		    [231.151 405.856 279.867 284.395]
     stampAngle		    NaN
@@ -11536,7 +11910,7 @@ Stateflow {
     ssIdNumber		    235
   }
   data {
-    id			    429
+    id			    441
     ssIdNumber		    240
     name		    "y2"
     linkNode		    [142 0 0]
@@ -11553,7 +11927,7 @@ Stateflow {
     dataType		    "double"
   }
   transition {
-    id			    430
+    id			    442
     labelString		    "[y2>=2]"
     labelPosition	    [253.48 55.427 48.726 17.965]
     fontSize		    14
@@ -11568,7 +11942,7 @@ Stateflow {
     }
     midPoint		    [262.9244 77.1119]
     chart		    2
-    linkNode		    [142 0 431]
+    linkNode		    [142 0 443]
     visible		    0
     dataLimits		    [124.867 408.528 74.96 79.488]
     stampAngle		    NaN
@@ -11581,7 +11955,7 @@ Stateflow {
     ssIdNumber		    242
   }
   transition {
-    id			    431
+    id			    443
     labelString		    "[openPSD[3][1]==1]{PSDClosed[3][1]=0}\n/openPSD[3][1]=0;"
     labelPosition	    [142.125 100.726 253.75 34]
     fontSize		    14
@@ -11596,7 +11970,7 @@ Stateflow {
     }
     midPoint		    [294.7069 134.8209]
     chart		    2
-    linkNode		    [142 430 432]
+    linkNode		    [142 442 444]
     visible		    0
     dataLimits		    [124.866 416.451 117.165 220.016]
     stampAngle		    NaN
@@ -11610,7 +11984,7 @@ Stateflow {
     ssIdNumber		    243
   }
   transition {
-    id			    432
+    id			    444
     labelString		    "[y2>0&&v_shutPSD[3][1]==0]"
     labelPosition	    [60.309 172.686 184.75 18]
     fontSize		    14
@@ -11625,7 +11999,7 @@ Stateflow {
     }
     midPoint		    [58 177.7854]
     chart		    2
-    linkNode		    [142 431 433]
+    linkNode		    [142 443 445]
     visible		    0
     dataLimits		    [55.736 60.264 130.225 217.8]
     stampAngle		    NaN
@@ -11638,7 +12012,7 @@ Stateflow {
     ssIdNumber		    244
   }
   transition {
-    id			    433
+    id			    445
     labelString		    "[closePSD[3][1]==1]"
     labelPosition	    [248.322 205.596 126.5 18]
     fontSize		    14
@@ -11653,7 +12027,7 @@ Stateflow {
     }
     midPoint		    [379.5709 209.8186]
     chart		    2
-    linkNode		    [142 432 434]
+    linkNode		    [142 444 446]
     visible		    0
     dataLimits		    [231.151 425.344 143.408 237.344]
     stampAngle		    NaN
@@ -11667,7 +12041,7 @@ Stateflow {
     ssIdNumber		    245
   }
   transition {
-    id			    434
+    id			    446
     labelString		    "{PSDClosed[3][1]=1}"
     labelPosition	    [420.789 165.453 130.5 18]
     fontSize		    14
@@ -11681,7 +12055,7 @@ Stateflow {
     }
     midPoint		    [501.27 200.0814]
     chart		    2
-    linkNode		    [142 433 435]
+    linkNode		    [142 445 447]
     visible		    0
     dataLimits		    [499.004 503.531 187.879 220.016]
     subviewer		    142
@@ -11692,7 +12066,7 @@ Stateflow {
     ssIdNumber		    246
   }
   transition {
-    id			    435
+    id			    447
     labelString		    "[y2<=0]{PSDClosed[3][1]=1}"
     labelPosition	    [235.149 260.361 177.25 18]
     fontSize		    14
@@ -11707,7 +12081,7 @@ Stateflow {
     }
     midPoint		    [314.7303 282.1312]
     chart		    2
-    linkNode		    [142 434 0]
+    linkNode		    [142 446 0]
     visible		    0
     dataLimits		    [231.151 405.856 279.867 284.395]
     stampAngle		    NaN
@@ -11720,7 +12094,7 @@ Stateflow {
     ssIdNumber		    247
   }
   data {
-    id			    436
+    id			    448
     ssIdNumber		    216
     name		    "y2"
     linkNode		    [147 0 0]
@@ -11737,7 +12111,7 @@ Stateflow {
     dataType		    "double"
   }
   transition {
-    id			    437
+    id			    449
     labelString		    "[y2>=2]"
     labelPosition	    [253.48 55.427 48.726 17.965]
     fontSize		    14
@@ -11752,7 +12126,7 @@ Stateflow {
     }
     midPoint		    [262.9244 77.1119]
     chart		    2
-    linkNode		    [147 0 438]
+    linkNode		    [147 0 450]
     visible		    0
     dataLimits		    [124.867 408.528 74.96 79.488]
     stampAngle		    NaN
@@ -11765,7 +12139,7 @@ Stateflow {
     ssIdNumber		    218
   }
   transition {
-    id			    438
+    id			    450
     labelString		    "[openPSD[2][1]==1]{PSDClosed[2][1]=0}\n/openPSD[2][1]=0;"
     labelPosition	    [141.678 100.726 253.75 34]
     fontSize		    14
@@ -11780,7 +12154,7 @@ Stateflow {
     }
     midPoint		    [294.7069 134.8209]
     chart		    2
-    linkNode		    [147 437 439]
+    linkNode		    [147 449 451]
     visible		    0
     dataLimits		    [124.866 416.451 117.165 220.016]
     stampAngle		    NaN
@@ -11794,7 +12168,7 @@ Stateflow {
     ssIdNumber		    219
   }
   transition {
-    id			    439
+    id			    451
     labelString		    "[y2>0&&v_shutPSD[2][1]==0]"
     labelPosition	    [60.309 172.686 184.75 18]
     fontSize		    14
@@ -11809,7 +12183,7 @@ Stateflow {
     }
     midPoint		    [58 177.7854]
     chart		    2
-    linkNode		    [147 438 440]
+    linkNode		    [147 450 452]
     visible		    0
     dataLimits		    [55.736 60.264 130.225 217.8]
     stampAngle		    NaN
@@ -11822,7 +12196,7 @@ Stateflow {
     ssIdNumber		    220
   }
   transition {
-    id			    440
+    id			    452
     labelString		    "[closePSD[2][1]==1]"
     labelPosition	    [248.322 205.596 126.5 18]
     fontSize		    14
@@ -11837,7 +12211,7 @@ Stateflow {
     }
     midPoint		    [379.5709 209.8186]
     chart		    2
-    linkNode		    [147 439 441]
+    linkNode		    [147 451 453]
     visible		    0
     dataLimits		    [231.151 425.344 143.408 237.344]
     stampAngle		    NaN
@@ -11851,7 +12225,7 @@ Stateflow {
     ssIdNumber		    221
   }
   transition {
-    id			    441
+    id			    453
     labelString		    "{PSDClosed[2][1]=1}"
     labelPosition	    [425.046 168.203 130.5 18]
     fontSize		    14
@@ -11865,7 +12239,7 @@ Stateflow {
     }
     midPoint		    [501.27 200.0814]
     chart		    2
-    linkNode		    [147 440 442]
+    linkNode		    [147 452 454]
     visible		    0
     dataLimits		    [499.004 503.531 187.879 220.016]
     subviewer		    147
@@ -11876,7 +12250,7 @@ Stateflow {
     ssIdNumber		    222
   }
   transition {
-    id			    442
+    id			    454
     labelString		    "[y2<=0]{PSDClosed[2][1]=1}"
     labelPosition	    [233.465 260.698 177.25 18]
     fontSize		    14
@@ -11891,7 +12265,7 @@ Stateflow {
     }
     midPoint		    [314.7303 282.1312]
     chart		    2
-    linkNode		    [147 441 0]
+    linkNode		    [147 453 0]
     visible		    0
     dataLimits		    [231.151 405.856 279.867 284.395]
     stampAngle		    NaN
@@ -11904,7 +12278,7 @@ Stateflow {
     ssIdNumber		    223
   }
   data {
-    id			    443
+    id			    455
     ssIdNumber		    204
     name		    "y2"
     linkNode		    [152 0 0]
@@ -11921,7 +12295,7 @@ Stateflow {
     dataType		    "double"
   }
   transition {
-    id			    444
+    id			    456
     labelString		    "[y2>=2]"
     labelPosition	    [253.48 55.427 48.726 17.965]
     fontSize		    14
@@ -11936,7 +12310,7 @@ Stateflow {
     }
     midPoint		    [262.9244 77.1119]
     chart		    2
-    linkNode		    [152 0 445]
+    linkNode		    [152 0 457]
     visible		    0
     dataLimits		    [124.867 408.528 74.96 79.488]
     stampAngle		    NaN
@@ -11949,7 +12323,7 @@ Stateflow {
     ssIdNumber		    206
   }
   transition {
-    id			    445
+    id			    457
     labelString		    "[openPSD[2][0]==1]{PSDClosed[2][0]=0}\n/openPSD[2][0]=0;"
     labelPosition	    [142.572 101.173 253.75 34]
     fontSize		    14
@@ -11964,7 +12338,7 @@ Stateflow {
     }
     midPoint		    [294.7069 134.8209]
     chart		    2
-    linkNode		    [152 444 446]
+    linkNode		    [152 456 458]
     visible		    0
     dataLimits		    [124.866 416.451 117.165 220.016]
     stampAngle		    NaN
@@ -11978,7 +12352,7 @@ Stateflow {
     ssIdNumber		    207
   }
   transition {
-    id			    446
+    id			    458
     labelString		    "[y2>0&&v_shutPSD[2][0]==0]"
     labelPosition	    [60.309 172.686 184.75 18]
     fontSize		    14
@@ -11993,7 +12367,7 @@ Stateflow {
     }
     midPoint		    [58 177.7854]
     chart		    2
-    linkNode		    [152 445 447]
+    linkNode		    [152 457 459]
     visible		    0
     dataLimits		    [55.736 60.264 130.225 217.8]
     stampAngle		    NaN
@@ -12006,7 +12380,7 @@ Stateflow {
     ssIdNumber		    208
   }
   transition {
-    id			    447
+    id			    459
     labelString		    "[closePSD[2][0]==1]"
     labelPosition	    [248.322 205.596 126.5 18]
     fontSize		    14
@@ -12021,7 +12395,7 @@ Stateflow {
     }
     midPoint		    [379.5709 209.8186]
     chart		    2
-    linkNode		    [152 446 448]
+    linkNode		    [152 458 460]
     visible		    0
     dataLimits		    [231.151 425.344 143.408 237.344]
     stampAngle		    NaN
@@ -12035,7 +12409,7 @@ Stateflow {
     ssIdNumber		    209
   }
   transition {
-    id			    448
+    id			    460
     labelString		    "{PSDClosed[2][0]=1}"
     labelPosition	    [427.189 162.422 130.5 18]
     fontSize		    14
@@ -12049,7 +12423,7 @@ Stateflow {
     }
     midPoint		    [501.27 200.0814]
     chart		    2
-    linkNode		    [152 447 449]
+    linkNode		    [152 459 461]
     visible		    0
     dataLimits		    [499.004 503.531 187.879 220.016]
     subviewer		    152
@@ -12060,7 +12434,7 @@ Stateflow {
     ssIdNumber		    210
   }
   transition {
-    id			    449
+    id			    461
     labelString		    "[y2<=0]{PSDClosed[2][0]=1}"
     labelPosition	    [237.507 264.403 177.25 18]
     fontSize		    14
@@ -12075,7 +12449,7 @@ Stateflow {
     }
     midPoint		    [314.7303 282.1312]
     chart		    2
-    linkNode		    [152 448 0]
+    linkNode		    [152 460 0]
     visible		    0
     dataLimits		    [231.151 405.856 279.867 284.395]
     stampAngle		    NaN
@@ -12087,11 +12461,313 @@ Stateflow {
     executionOrder	    1
     ssIdNumber		    211
   }
+  transition {
+    id			    462
+    labelString		    ""
+    labelPosition	    [2466.459 1492.508 2 17]
+    fontSize		    12
+    src {
+      intersection	      [0 -0 1 0 2448.9806 1486.3826 0 0]
+    }
+    dst {
+      id		      158
+      intersection	      [1 0 -1 0.5332 2449.0034 1508.7215 0 0]
+    }
+    midPoint		    [2448.992 1493.5521]
+    chart		    2
+    linkNode		    [157 0 463]
+    visible		    0
+    dataLimits		    [2446.603 2451.403 1486.383 1508.722]
+    subviewer		    157
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1835
+  }
+  transition {
+    id			    463
+    labelString		    "[in(Train0.urgent_dec)==1 || in(Train0.urgent_stop)==1]"
+    labelPosition	    [2508.41 1512.448 294.25 17]
+    fontSize		    12
+    src {
+      id		      158
+      intersection	      [2 1 0 0.2467 2497.3093 1523.4964 0 0]
+    }
+    dst {
+      id		      159
+      intersection	      [4 -1 -0 0.727 2811.566 1523.4964 0 0]
+    }
+    midPoint		    [2650.4376 1523.4964]
+    chart		    2
+    linkNode		    [157 462 464]
+    dataLimits		    [2497.309 2811.566 1521.096 1525.896]
+    subviewer		    157
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1846
+  }
+  transition {
+    id			    464
+    labelString		    "[in(Train0.urgent_dec)==0 && in(Train0.urgent_stop)==0]"
+    labelPosition	    [2507.321 1556.461 304.25 17]
+    fontSize		    12
+    src {
+      id		      159
+      intersection	      [4 -1 0 0.3526 2811.566 1548.5213 0 0]
+    }
+    dst {
+      id		      158
+      intersection	      [2 1 -0 0.6645 2497.3093 1548.5213 0 0]
+    }
+    midPoint		    [2658.4376 1548.5213]
+    chart		    2
+    linkNode		    [157 463 0]
+    dataLimits		    [2497.309 2811.566 1546.121 1550.921]
+    subviewer		    157
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1847
+  }
+  transition {
+    id			    465
+    labelString		    ""
+    labelPosition	    [2466.459 1492.508 2 17]
+    fontSize		    12
+    src {
+      intersection	      [0 -0 1 0 2448.9806 1486.3826 0 0]
+    }
+    dst {
+      id		      162
+      intersection	      [1 0 -1 0.5332 2449.0034 1508.7215 0 0]
+    }
+    midPoint		    [2448.992 1493.5521]
+    chart		    2
+    linkNode		    [160 0 466]
+    visible		    0
+    dataLimits		    [2446.603 2451.403 1486.383 1508.722]
+    subviewer		    160
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1853
+  }
+  transition {
+    id			    466
+    labelString		    "[in(Train1.urgent_dec)==1 || in(Train1.urgent_stop)==1]"
+    labelPosition	    [2508.41 1512.448 294.25 17]
+    fontSize		    12
+    src {
+      id		      162
+      intersection	      [2 1 0 0.2467 2497.3093 1523.4964 0 0]
+    }
+    dst {
+      id		      161
+      intersection	      [4 -1 -0 0.727 2811.566 1523.4964 0 0]
+    }
+    midPoint		    [2650.4376 1523.4964]
+    chart		    2
+    linkNode		    [160 465 467]
+    visible		    0
+    dataLimits		    [2497.309 2811.566 1521.096 1525.896]
+    subviewer		    160
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1854
+  }
+  transition {
+    id			    467
+    labelString		    "[in(Train1.urgent_dec)==0 && in(Train1.urgent_stop)==0]"
+    labelPosition	    [2507.321 1556.461 304.25 17]
+    fontSize		    12
+    src {
+      id		      161
+      intersection	      [4 -1 0 0.3526 2811.566 1548.5213 0 0]
+    }
+    dst {
+      id		      162
+      intersection	      [2 1 -0 0.6645 2497.3093 1548.5213 0 0]
+    }
+    midPoint		    [2658.4376 1548.5213]
+    chart		    2
+    linkNode		    [160 466 0]
+    visible		    0
+    dataLimits		    [2497.309 2811.566 1546.121 1550.921]
+    subviewer		    160
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1855
+  }
+  transition {
+    id			    468
+    labelString		    ""
+    labelPosition	    [2466.459 1492.508 2 17]
+    fontSize		    12
+    src {
+      intersection	      [0 -0 1 0 2448.9806 1486.3826 0 0]
+    }
+    dst {
+      id		      165
+      intersection	      [1 0 -1 0.5332 2449.0034 1508.7215 0 0]
+    }
+    midPoint		    [2448.992 1493.5521]
+    chart		    2
+    linkNode		    [163 0 469]
+    visible		    0
+    dataLimits		    [2446.603 2451.403 1486.383 1508.722]
+    subviewer		    163
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1859
+  }
+  transition {
+    id			    469
+    labelString		    "[in(Train2.urgent_dec)==1 || in(Train2.urgent_stop)==1]"
+    labelPosition	    [2508.41 1512.448 294.25 17]
+    fontSize		    12
+    src {
+      id		      165
+      intersection	      [2 1 0 0.2467 2497.3093 1523.4964 0 0]
+    }
+    dst {
+      id		      164
+      intersection	      [4 -1 -0 0.727 2811.566 1523.4964 0 0]
+    }
+    midPoint		    [2650.4376 1523.4964]
+    chart		    2
+    linkNode		    [163 468 470]
+    visible		    0
+    dataLimits		    [2497.309 2811.566 1521.096 1525.896]
+    subviewer		    163
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1860
+  }
+  transition {
+    id			    470
+    labelString		    "[in(Train2.urgent_dec)==0 && in(Train2.urgent_stop)==0]"
+    labelPosition	    [2507.321 1556.461 304.25 17]
+    fontSize		    12
+    src {
+      id		      164
+      intersection	      [4 -1 0 0.3526 2811.566 1548.5213 0 0]
+    }
+    dst {
+      id		      165
+      intersection	      [2 1 -0 0.6645 2497.3093 1548.5213 0 0]
+    }
+    midPoint		    [2658.4376 1548.5213]
+    chart		    2
+    linkNode		    [163 469 0]
+    visible		    0
+    dataLimits		    [2497.309 2811.566 1546.121 1550.921]
+    subviewer		    163
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1861
+  }
+  transition {
+    id			    471
+    labelString		    ""
+    labelPosition	    [2466.459 1492.508 2 17]
+    fontSize		    12
+    src {
+      intersection	      [0 -0 1 0 2448.9806 1486.3826 0 0]
+    }
+    dst {
+      id		      168
+      intersection	      [1 0 -1 0.5332 2449.0034 1508.7215 0 0]
+    }
+    midPoint		    [2448.992 1493.5521]
+    chart		    2
+    linkNode		    [166 0 472]
+    visible		    0
+    dataLimits		    [2446.603 2451.403 1486.383 1508.722]
+    subviewer		    166
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1865
+  }
+  transition {
+    id			    472
+    labelString		    "[in(Train3.urgent_dec)==1 || in(Train3.urgent_stop)==1]"
+    labelPosition	    [2508.41 1512.448 294.25 17]
+    fontSize		    12
+    src {
+      id		      168
+      intersection	      [2 1 0 0.2467 2497.3093 1523.4964 0 0]
+    }
+    dst {
+      id		      167
+      intersection	      [4 -1 -0 0.727 2811.566 1523.4964 0 0]
+    }
+    midPoint		    [2650.4376 1523.4964]
+    chart		    2
+    linkNode		    [166 471 473]
+    visible		    0
+    dataLimits		    [2497.309 2811.566 1521.096 1525.896]
+    subviewer		    166
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1866
+  }
+  transition {
+    id			    473
+    labelString		    "[in(Train3.urgent_dec)==0 && in(Train3.urgent_stop)==0]"
+    labelPosition	    [2507.321 1556.461 304.25 17]
+    fontSize		    12
+    src {
+      id		      167
+      intersection	      [4 -1 0 0.3526 2811.566 1548.5213 0 0]
+    }
+    dst {
+      id		      168
+      intersection	      [2 1 -0 0.6645 2497.3093 1548.5213 0 0]
+    }
+    midPoint		    [2658.4376 1548.5213]
+    chart		    2
+    linkNode		    [166 472 0]
+    visible		    0
+    dataLimits		    [2497.309 2811.566 1546.121 1550.921]
+    subviewer		    166
+    drawStyle		    SMART
+    slide {
+      sticky		      BOTH_STICK
+    }
+    executionOrder	    1
+    ssIdNumber		    1867
+  }
   data {
-    id			    450
+    id			    474
     ssIdNumber		    19
     name		    "v_shutTD"
-    linkNode		    [2 0 451]
+    linkNode		    [2 0 475]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -12109,10 +12785,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    451
+    id			    475
     ssIdNumber		    73
     name		    "v_shutPSD"
-    linkNode		    [2 450 452]
+    linkNode		    [2 474 476]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -12129,10 +12805,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    452
+    id			    476
     ssIdNumber		    80
     name		    "start"
-    linkNode		    [2 451 453]
+    linkNode		    [2 475 477]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12148,10 +12824,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    453
+    id			    477
     ssIdNumber		    81
     name		    "stop"
-    linkNode		    [2 452 454]
+    linkNode		    [2 476 478]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12168,10 +12844,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    454
+    id			    478
     ssIdNumber		    82
     name		    "openPSD"
-    linkNode		    [2 453 455]
+    linkNode		    [2 477 479]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12187,10 +12863,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    455
+    id			    479
     ssIdNumber		    83
     name		    "closePSD"
-    linkNode		    [2 454 456]
+    linkNode		    [2 478 480]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12206,10 +12882,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    456
+    id			    480
     ssIdNumber		    88
     name		    "distance_out"
-    linkNode		    [2 455 457]
+    linkNode		    [2 479 481]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -12226,10 +12902,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    457
+    id			    481
     ssIdNumber		    127
     name		    "Delay"
-    linkNode		    [2 456 458]
+    linkNode		    [2 480 482]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12254,10 +12930,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    458
+    id			    482
     ssIdNumber		    798
     name		    "openTD"
-    linkNode		    [2 457 459]
+    linkNode		    [2 481 483]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12273,10 +12949,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    459
+    id			    483
     ssIdNumber		    799
     name		    "closeTD"
-    linkNode		    [2 458 460]
+    linkNode		    [2 482 484]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12292,10 +12968,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    460
+    id			    484
     ssIdNumber		    800
     name		    "S"
-    linkNode		    [2 459 461]
+    linkNode		    [2 483 485]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12312,10 +12988,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    461
+    id			    485
     ssIdNumber		    920
     name		    "urstart"
-    linkNode		    [2 460 462]
+    linkNode		    [2 484 486]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12331,10 +13007,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    462
+    id			    486
     ssIdNumber		    921
     name		    "urstop"
-    linkNode		    [2 461 463]
+    linkNode		    [2 485 487]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12350,10 +13026,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    463
+    id			    487
     ssIdNumber		    1068
     name		    "N"
-    linkNode		    [2 462 464]
+    linkNode		    [2 486 488]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12367,10 +13043,10 @@ Stateflow {
     dataType		    "int32"
   }
   data {
-    id			    464
+    id			    488
     ssIdNumber		    1082
     name		    "y1_out"
-    linkNode		    [2 463 465]
+    linkNode		    [2 487 489]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -12387,10 +13063,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    465
+    id			    489
     ssIdNumber		    1083
     name		    "y2_out"
-    linkNode		    [2 464 466]
+    linkNode		    [2 488 490]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -12407,10 +13083,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    466
+    id			    490
     ssIdNumber		    1314
     name		    "urstopped"
-    linkNode		    [2 465 467]
+    linkNode		    [2 489 491]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12426,10 +13102,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    467
+    id			    491
     ssIdNumber		    1327
     name		    "dir"
-    linkNode		    [2 466 468]
+    linkNode		    [2 490 492]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12445,10 +13121,10 @@ Stateflow {
     dataType		    "int32"
   }
   data {
-    id			    468
+    id			    492
     ssIdNumber		    1531
     name		    "position"
-    linkNode		    [2 467 469]
+    linkNode		    [2 491 493]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12464,10 +13140,10 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    469
+    id			    493
     ssIdNumber		    1617
     name		    "PSDClosed"
-    linkNode		    [2 468 470]
+    linkNode		    [2 492 494]
     scope		    LOCAL_DATA
     machine		    1
     props {
@@ -12483,10 +13159,78 @@ Stateflow {
     dataType		    "double"
   }
   data {
-    id			    470
+    id			    494
     ssIdNumber		    1825
     name		    "dir1_out"
-    linkNode		    [2 469 0]
+    linkNode		    [2 493 495]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      type {
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "double"
+  }
+  data {
+    id			    495
+    ssIdNumber		    1848
+    name		    "ugflag_out0"
+    linkNode		    [2 494 496]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      type {
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "double"
+  }
+  data {
+    id			    496
+    ssIdNumber		    1849
+    name		    "ugflag_out1"
+    linkNode		    [2 495 497]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      type {
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "double"
+  }
+  data {
+    id			    497
+    ssIdNumber		    1850
+    name		    "ugflag_out2"
+    linkNode		    [2 496 498]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      type {
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "double"
+  }
+  data {
+    id			    498
+    ssIdNumber		    1851
+    name		    "ugflag_out3"
+    linkNode		    [2 497 0]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -12500,26 +13244,26 @@ Stateflow {
     dataType		    "double"
   }
   instance {
-    id			    471
+    id			    499
     name		    "PSDS stateflow chart"
     machine		    1
     chart		    2
   }
   chart {
-    id			    472
+    id			    500
     name		    "MATLAB Function"
     windowPosition	    [357.12 483.496 167 391]
     viewLimits		    [0 156.75 0 153.75]
     screen		    [1 1 1280 1024 1.041666666666667]
-    treeNode		    [0 473 0 0]
-    firstTransition	    477
-    firstJunction	    476
-    viewObj		    472
+    treeNode		    [0 501 0 0]
+    firstTransition	    505
+    firstJunction	    504
+    viewObj		    500
     machine		    1
     ssIdHighWaterMark	    5
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
-    firstData		    474
+    firstData		    502
     chartFileNumber	    2
     disableImplicitCasting  1
     eml {
@@ -12527,14 +13271,14 @@ Stateflow {
     }
   }
   state {
-    id			    473
+    id			    501
     labelString		    "eML_blk_kernel()"
     position		    [18 64.5 118 66]
     fontSize		    12
-    chart		    472
-    treeNode		    [472 0 0 0]
+    chart		    500
+    treeNode		    [500 0 0 0]
     superState		    SUBCHART
-    subviewer		    472
+    subviewer		    500
     ssIdNumber		    1
     type		    FUNC_STATE
     decomposition	    CLUSTER_STATE
@@ -12546,10 +13290,10 @@ Stateflow {
     }
   }
   data {
-    id			    474
+    id			    502
     ssIdNumber		    4
     name		    "u"
-    linkNode		    [472 0 475]
+    linkNode		    [500 0 503]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -12565,10 +13309,10 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    475
+    id			    503
     ssIdNumber		    5
     name		    "y"
-    linkNode		    [472 474 0]
+    linkNode		    [500 502 0]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -12585,16 +13329,16 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   junction {
-    id			    476
+    id			    504
     position		    [23.5747 49.5747 7]
-    chart		    472
-    linkNode		    [472 0 0]
-    subviewer		    472
+    chart		    500
+    linkNode		    [500 0 0]
+    subviewer		    500
     ssIdNumber		    3
     type		    CONNECTIVE_JUNCTION
   }
   transition {
-    id			    477
+    id			    505
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [32.125 19.875 102.544 14.964]
     fontSize		    12
@@ -12602,14 +13346,14 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      476
+      id		      504
       intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
-    chart		    472
-    linkNode		    [472 0 0]
+    chart		    500
+    linkNode		    [500 0 0]
     dataLimits		    [21.175 25.975 14.625 42.575]
-    subviewer		    472
+    subviewer		    500
     drawStyle		    SMART
     slide {
       sticky		      BOTH_STICK
@@ -12618,22 +13362,22 @@ Stateflow {
     ssIdNumber		    2
   }
   instance {
-    id			    478
+    id			    506
     name		    "MATLAB Function"
     machine		    1
-    chart		    472
+    chart		    500
   }
   target {
-    id			    479
+    id			    507
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1
-    linkNode		    [1 0 480]
+    linkNode		    [1 0 508]
   }
   target {
-    id			    480
+    id			    508
     name		    "rtw"
     machine		    1
-    linkNode		    [1 479 0]
+    linkNode		    [1 507 0]
   }
 }
